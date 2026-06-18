@@ -1,0 +1,6 @@
+*.csv
+*.xlsx
+*.xls
+__pycache__/
+.streamlit/secrets.toml
+losstime_db.csv
