@@ -1,15 +1,13 @@
 """
-[한솔테크닉스 HEVH] LOSSTIME 분석 대시보드 v3
-- 로그인 기능 추가
-- 타임별 히트맵 추가
-- Streamlit Cloud 배포용
+[한솔테크닉스 HEVH] LOSSTIME 분석 대시보드 v3.1
+- 날짜 파싱 수정 (베트남식 DD.MM)
+- DAY/NIGHT 파일명 인식 수정
 실행: python -m streamlit run dashboard.py
 """
 
 import re
 import io
 import os
-import time
 import pandas as pd
 import streamlit as st
 import plotly.express as px
@@ -47,12 +45,6 @@ st.markdown("""
           padding:10px; border-radius:4px; margin:4px 0; }
 .pm-p3 { background:#fefce8; border-left:4px solid #eab308;
           padding:10px; border-radius:4px; margin:4px 0; }
-.login-box {
-    max-width: 400px; margin: 100px auto;
-    padding: 40px; border-radius: 12px;
-    box-shadow: 0 4px 24px rgba(0,0,0,0.1);
-    background: white;
-}
 </style>
 """, unsafe_allow_html=True)
 
@@ -92,20 +84,14 @@ PROC_COLOR = {"AI":"#ef4444","SMT":"#3b82f6","MI":"#10b981"}
 # 로그인
 # ─────────────────────────────────────────────
 def check_login():
-    """
-    Streamlit Cloud: secrets.toml에서 비밀번호 읽기
-    로컬: 기본값 사용
-    """
     try:
-        users = st.secrets["users"]
+        return st.secrets["users"]
     except Exception:
-        # 로컬 실행 시 기본 계정
-        users = {
+        return {
             "hansol":  "hevh2024",
             "vietnam": "hevh2024",
             "korea":   "hevh2024",
         }
-    return users
 
 def login_page():
     st.markdown("""
@@ -115,7 +101,7 @@ def login_page():
     </div>
     """, unsafe_allow_html=True)
 
-    col1, col2, col3 = st.columns([1,1.2,1])
+    col1,col2,col3 = st.columns([1,1.2,1])
     with col2:
         with st.form("login_form"):
             st.markdown("#### 🔐 로그인")
@@ -124,7 +110,6 @@ def login_page():
                                      placeholder="PW 입력")
             submitted = st.form_submit_button(
                 "로그인", use_container_width=True, type="primary")
-
             if submitted:
                 users = check_login()
                 if username in users and users[username] == password:
@@ -204,6 +189,7 @@ def is_line_cell(val):
 def get_label(row):
     return str(row[1] or "").strip().upper() if len(row)>1 else ""
 
+# ★ 수정된 함수들
 def detect_process(fn):
     fu = fn.upper()
     if "AI REPORT" in fu:  return "AI"
@@ -213,19 +199,31 @@ def detect_process(fn):
 
 def parse_date(text):
     if not text: return None
-    t = str(text)
+    t = str(text).strip()
+
+    # DAY/NIGHT 제거
+    t = re.sub(r'\b(DAY|NIGHT)\b', '', t, flags=re.I).strip()
+
+    # ★ DD.MM 또는 DD.M (베트남식) → 2026-MM-DD
+    m = re.search(r'\b(\d{1,2})\.(\d{1,2})\b', t)
+    if m:
+        a, b = int(m.group(1)), int(m.group(2))
+        if 1 <= a <= 31 and 1 <= b <= 12:
+            return f"2026-{b:02d}-{a:02d}"
+
+    # DD/MM 형식
     m = re.search(r'(\d{1,2})/(\d{1,2})', t)
     if m:
-        d,mo = int(m.group(1)),int(m.group(2))
-        if 1<=d<=31 and 1<=mo<=12: return f"2026-{mo:02d}-{d:02d}"
-    m = re.search(r'(\d{1,2})[.\-](\d{1,2})(?:[,\s\(\)]|$)', t)
-    if m:
-        a,b = int(m.group(1)),int(m.group(2))
-        if 1<=a<=31 and 1<=b<=12: return f"2026-{b:02d}-{a:02d}"
+        a, b = int(m.group(1)), int(m.group(2))
+        if 1 <= a <= 31 and 1 <= b <= 12:
+            return f"2026-{b:02d}-{a:02d}"
+
     return None
 
 def detect_shift(sn, fn):
-    return "NIGHT" if "NIGHT" in (sn+fn).upper() else "DAY"
+    combined = (sn + fn).upper()
+    if "NIGHT" in combined: return "NIGHT"
+    return "DAY"
 
 def normalize_line(raw):
     s = str(raw).strip()
@@ -316,7 +314,7 @@ def parse_files(uploaded_files):
             status.warning(f"⏭️ 스킵: {fn}")
             continue
         file_date = parse_date(fn) or "UNKNOWN"
-        status.info(f"📂 처리 중: {fn}")
+        status.info(f"📂 처리 중: {fn} → {process} / {file_date}")
         try:
             wb = load_workbook(uf, data_only=True)
         except Exception as e:
@@ -409,9 +407,7 @@ def dashboard():
     </div>
     """, unsafe_allow_html=True)
 
-    # ── 사이드바 ──────────────────────────────
     with st.sidebar:
-        # 로그인 정보
         st.markdown(f"👤 **{st.session_state.get('username','')}** 님")
         if st.button("🚪 로그아웃", use_container_width=True):
             st.session_state["logged_in"] = False
@@ -483,7 +479,7 @@ def dashboard():
             ["TOTAL(일계)","타임별(A~K)"],
             horizontal=True)
 
-    # ── 필터 적용 ──────────────────────────────
+    # ── 필터 적용 ──
     df = st.session_state.get("df", pd.DataFrame())
     if df.empty:
         st.info("👈 파일을 업로드하거나 DB를 불러오세요.")
@@ -510,13 +506,13 @@ def dashboard():
         st.warning("⚠️ 조건에 맞는 데이터가 없습니다.")
         return
 
-    # ── KPI ────────────────────────────────────
+    # ── KPI ──
     total_min = int(total_df["loss_min"].sum()) if not total_df.empty else 0
     total_hr  = total_min // 60
     n_lines   = total_df["line"].nunique() if not total_df.empty else 0
     n_days    = fdf["date"].nunique()
 
-    if not total_df.empty and len(total_df)>0:
+    if not total_df.empty:
         ws_line    = total_df.groupby("line")["loss_min"].sum()
         worst_line = ws_line.idxmax()
         worst_min  = int(ws_line.max())
@@ -538,13 +534,13 @@ def dashboard():
 
     st.divider()
 
-    # ── 탭 ─────────────────────────────────────
+    # ── 탭 ──
     tab1,tab2,tab3,tab4,tab5,tab6 = st.tabs([
         "📊 손실 분석","📈 트렌드","🕐 타임별 분석",
         "🔍 상세 조회","🔧 설비보전 PM","⬇️ 다운로드"
     ])
 
-    # ── TAB1: 손실 분석 ────────────────────────
+    # ── TAB1 ──
     with tab1:
         if total_df.empty:
             st.warning("TOTAL 데이터 없음")
@@ -555,8 +551,8 @@ def dashboard():
                 ts = (total_df.groupby("loss_type_name")["loss_min"]
                       .sum().reset_index()
                       .sort_values("loss_min",ascending=True)
-                      .rename(columns={
-                          "loss_type_name":"유형","loss_min":"손실(분)"}))
+                      .rename(columns={"loss_type_name":"유형",
+                                       "loss_min":"손실(분)"}))
                 fig = px.bar(ts, x="손실(분)", y="유형",
                              orientation="h", color="손실(분)",
                              color_continuous_scale="Reds", height=450)
@@ -585,7 +581,7 @@ def dashboard():
             fig3.update_layout(margin=dict(l=0,r=0,t=20,b=0))
             col_pie.plotly_chart(fig3, use_container_width=True)
 
-    # ── TAB2: 트렌드 ───────────────────────────
+    # ── TAB2 ──
     with tab2:
         if total_df.empty:
             st.warning("TOTAL 데이터 없음")
@@ -615,10 +611,9 @@ def dashboard():
                                xaxis_tickangle=-30)
             st.plotly_chart(fig5, use_container_width=True)
 
-    # ── TAB3: 타임별 분석 ★ 신규 ──────────────
+    # ── TAB3: 타임별 ──
     with tab3:
         st.subheader("🕐 타임별 손실 히트맵")
-
         slot_df = df[
             (df["date"] >= date_range[0]) &
             (df["date"] <= date_range[1]) &
@@ -631,16 +626,13 @@ def dashboard():
         if slot_df.empty:
             st.warning("타임별 데이터 없음")
         else:
-            # 히트맵: 라인 × 시간대
             slot_order = ["A","B","C","D","E","F","G","H","I","J","K"]
             pivot = (slot_df.groupby(["line","time_slot"])["loss_min"]
                      .sum().reset_index())
             pivot_table = pivot.pivot(
                 index="line", columns="time_slot", values="loss_min"
             ).fillna(0)
-            # 컬럼 순서 정렬
-            cols_sorted = [c for c in slot_order
-                           if c in pivot_table.columns]
+            cols_sorted = [c for c in slot_order if c in pivot_table.columns]
             pivot_table = pivot_table[cols_sorted]
 
             fig_heat = px.imshow(
@@ -648,21 +640,18 @@ def dashboard():
                 color_continuous_scale="Reds",
                 aspect="auto",
                 height=max(400, len(pivot_table)*30),
-                labels={"x":"시간대","y":"라인",
-                        "color":"손실(분)"},
+                labels={"x":"시간대","y":"라인","color":"손실(분)"},
                 title="라인 × 시간대 손실 히트맵"
             )
             fig_heat.update_layout(margin=dict(l=0,r=0,t=40,b=0))
             st.plotly_chart(fig_heat, use_container_width=True)
 
-            # 시간대별 합계 바차트
             st.subheader("시간대별 손실 합계")
             slot_sum = (slot_df.groupby(["time_slot","process"])["loss_min"]
                         .sum().reset_index())
             slot_sum["time_slot"] = pd.Categorical(
                 slot_sum["time_slot"], categories=slot_order, ordered=True)
             slot_sum = slot_sum.sort_values("time_slot")
-
             fig_slot = px.bar(
                 slot_sum, x="time_slot", y="loss_min",
                 color="process", color_discrete_map=PROC_COLOR,
@@ -671,7 +660,6 @@ def dashboard():
             fig_slot.update_layout(margin=dict(l=0,r=0,t=20,b=0))
             st.plotly_chart(fig_slot, use_container_width=True)
 
-            # 타임별 상세 테이블
             st.subheader("타임별 상세")
             slot_detail = (slot_df.groupby(
                 ["date","shift","line","time_slot","loss_type_name"])
@@ -679,7 +667,7 @@ def dashboard():
                 .sort_values(["date","line","time_slot"]))
             st.dataframe(slot_detail, use_container_width=True, height=400)
 
-    # ── TAB4: 상세 조회 ────────────────────────
+    # ── TAB4 ──
     with tab4:
         st.subheader("상세 데이터 조회")
         search = st.text_input("🔍 키워드 (라인/원인/모델)")
@@ -694,11 +682,9 @@ def dashboard():
                     search, case=False, na=False)
             )
             show_df = show_df[m]
-
         st.caption(f"총 {len(show_df):,}건")
         disp = ["date","shift","process","line","time_slot",
-                "model","loss_min","loss_type_name","complexity",
-                "loss_detail"]
+                "model","loss_min","loss_type_name","complexity","loss_detail"]
         disp = [c for c in disp if c in show_df.columns]
         if not show_df.empty:
             st.dataframe(show_df[disp].reset_index(drop=True),
@@ -706,7 +692,7 @@ def dashboard():
         else:
             st.info("검색 결과 없음")
 
-    # ── TAB5: 설비보전 PM ──────────────────────
+    # ── TAB5 ──
     with tab5:
         st.subheader("🔧 설비보전 PM 우선순위")
         if total_df.empty:
@@ -721,8 +707,7 @@ def dashboard():
                      .groupby(["process","line","loss_type_name"])["loss_min"]
                      .agg(["sum","count"]).reset_index()
                      .sort_values("sum",ascending=False)
-                     .rename(columns={"sum":"누계손실(분)",
-                                      "count":"발생횟수"}))
+                     .rename(columns={"sum":"누계손실(분)","count":"발생횟수"}))
 
             def pm_grade(row):
                 if row["발생횟수"]>=5 or row["누계손실(분)"]>=500:
@@ -750,7 +735,7 @@ def dashboard():
                         {int(row['발생횟수'])}회
                     </div>""", unsafe_allow_html=True)
 
-    # ── TAB6: 다운로드 ─────────────────────────
+    # ── TAB6 ──
     with tab6:
         st.subheader("⬇️ 데이터 다운로드")
         col_a,col_b = st.columns(2)
@@ -796,7 +781,6 @@ def dashboard():
 def main():
     if "logged_in" not in st.session_state:
         st.session_state["logged_in"] = False
-
     if not st.session_state["logged_in"]:
         login_page()
     else:
