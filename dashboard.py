@@ -22,7 +22,7 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-st.markdown("""
+st.markdown("""    
 <style>
 /* Streamlit 상단 헤더 완전 숨김 */
 header[data-testid="stHeader"] {
@@ -42,9 +42,6 @@ header[data-testid="stHeader"] {
     margin-bottom: 4px;
     border-bottom: 2px solid #e2e8f0;
 }
-... (이하 기존 CSS 동일)
-</style>
-""", unsafe_allow_html=True)
 
 /* ── 헤더 — 배경 없는 타이틀형 ── */
 .main-header {
