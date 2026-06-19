@@ -32,19 +32,19 @@ st.markdown("""
 /* 기본 */
 .block-container { padding-top: 1.8rem !important; padding-bottom: 1rem !important; }
 
-/* 헤더 */
+/* 헤더 — border-radius 균일 수정 */
 .main-header {
     background: linear-gradient(135deg, #1e3a5f 0%, #1d4ed8 100%);
     padding: 22px 28px;
-    border-radius: 12px;
+    border-radius: 14px !important;   /* ← 균일하게 */
+    -webkit-border-radius: 14px !important;
+    -moz-border-radius: 14px !important;
     margin-top: 12px;
-    margin-bottom: 18px;
+    margin-bottom: 14px;
     color: white;
     box-sizing: border-box;
     width: 100%;
-    display: block;
-    overflow: visible !important;
-    white-space: normal !important;
+    overflow: hidden !important;      /* ← 내부 요소가 튀어나오지 않게 */
 }
 .main-header h3 {
     margin: 0 0 6px 0;
@@ -52,7 +52,6 @@ st.markdown("""
     font-weight: 700;
     white-space: normal !important;
     word-break: break-word;
-    overflow: visible !important;
     line-height: 1.4;
     letter-spacing: -0.3px;
 }
@@ -64,25 +63,58 @@ st.markdown("""
     word-break: break-word;
 }
 
-/* KPI 카드 */
-.kpi-card {
+/* KPI 바 — 한 줄 압축형 */
+.kpi-bar {
+    display: flex;
+    align-items: center;
     background: #ffffff;
     border: 1px solid #e2e8f0;
     border-radius: 10px;
-    padding: 14px 10px 10px;
-    text-align: center;
-    min-height: 76px;
+    padding: 10px 20px;
+    margin-bottom: 16px;
+    gap: 0;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.06);
 }
-.kpi-val {
-    font-size: 20px;
+.kpi-item {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 4px 16px;
+    cursor: pointer;
+    border-radius: 8px;
+    transition: background 0.15s;
+}
+.kpi-item:hover {
+    background: #f8fafc;
+}
+.kpi-sep {
+    width: 1px;
+    height: 36px;
+    background: #e2e8f0;
+    flex-shrink: 0;
+}
+.kpi-icon {
+    font-size: 22px;
+    line-height: 1;
+}
+.kpi-texts {}
+.kpi-val2 {
+    font-size: 17px;
     font-weight: 700;
     color: #1e293b;
-    line-height: 1.3;
+    line-height: 1.2;
+    white-space: nowrap;
 }
-.kpi-lbl {
+.kpi-lbl2 {
     font-size: 11px;
     color: #94a3b8;
-    margin-top: 3px;
+    margin-top: 1px;
+    white-space: nowrap;
+}
+.kpi-home {
+    flex-shrink: 0;
+    padding-left: 12px;
 }
 
 /* 상세박스 */
@@ -129,59 +161,34 @@ st.markdown("""
     margin: 20px 0;
 }
 
-/* ────────────────────────────────
-   사이드바 — 회색톤 전면 적용
-──────────────────────────────── */
+/* 사이드바 — 회색톤 */
 section[data-testid="stSidebar"] {
     min-width: 240px !important;
     max-width: 260px !important;
-    background-color: #f1f5f9 !important;   /* 전체 배경 — 연회색 */
+    background-color: #f1f5f9 !important;
 }
 section[data-testid="stSidebar"] .block-container {
     padding: 1rem 0.9rem;
     background-color: #f1f5f9 !important;
 }
-
-/* 사이드바 텍스트 */
 section[data-testid="stSidebar"] * {
-    color: #374151 !important;              /* 기본 글자 — 짙은 회색 */
+    color: #374151 !important;
 }
-section[data-testid="stSidebar"] .stCaption,
-section[data-testid="stSidebar"] caption {
-    color: #6b7280 !important;              /* 캡션 — 중간 회색 */
-    font-size: 12px !important;
-}
-
-/* 사이드바 divider */
 section[data-testid="stSidebar"] hr {
     border-color: #cbd5e1 !important;
 }
-
-/* 사이드바 expander */
 section[data-testid="stSidebar"] [data-testid="stExpander"] {
     background-color: #e8edf2 !important;
     border: 1px solid #cbd5e1 !important;
     border-radius: 8px !important;
 }
-
-/* 사이드바 multiselect 태그 — 회색톤 */
 section[data-testid="stSidebar"] [data-testid="stMultiSelect"] span[data-baseweb="tag"] {
-    background-color: #475569 !important;   /* 태그 배경 — 슬레이트 회색 */
+    background-color: #475569 !important;
     color: #ffffff !important;
 }
 section[data-testid="stSidebar"] [data-testid="stMultiSelect"] span[data-baseweb="tag"] span {
     color: #ffffff !important;
 }
-
-/* 사이드바 select_slider 트랙 */
-section[data-testid="stSidebar"] [data-testid="stSlider"] div[role="slider"] {
-    background-color: #64748b !important;
-}
-section[data-testid="stSidebar"] [data-testid="stSlider"] div[data-testid="stSliderTrack"] > div {
-    background-color: #64748b !important;
-}
-
-/* 사이드바 버튼 */
 section[data-testid="stSidebar"] div[data-testid="stButton"] button {
     background-color: #e2e8f0 !important;
     color: #1e293b !important;
@@ -191,8 +198,6 @@ section[data-testid="stSidebar"] div[data-testid="stButton"] button {
 section[data-testid="stSidebar"] div[data-testid="stButton"] button:hover {
     background-color: #cbd5e1 !important;
 }
-
-/* 사이드바 primary 버튼 (분석/누적) */
 section[data-testid="stSidebar"] div[data-testid="stButton"] button[kind="primary"] {
     background-color: #475569 !important;
     color: #ffffff !important;
