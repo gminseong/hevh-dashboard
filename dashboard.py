@@ -1,7 +1,7 @@
 """
-[한솔테크닉스 HEVH] LOSSTIME + SCRAP 분석 대시보드 v3.6
-- 음수값 제거 (괄호 표기 처리)
-- 그래프 y축 0 이상 고정
+[한솔테크닉스 HEVH] LOSSTIME + SCRAP 분석 대시보드 v3.7
+- 공정별 비중 파이차트 클릭 상호작용 추가
+- 음수값 제거
 - 손실유형 내림차순 + 고정색상
 - 날짜 필터 6월 기본값
 - GitHub 자동 저장/로드
@@ -20,9 +20,6 @@ import plotly.graph_objects as go
 from openpyxl import load_workbook
 from openpyxl.chartsheet import Chartsheet
 
-# ─────────────────────────────────────────────
-# 페이지 설정
-# ─────────────────────────────────────────────
 st.set_page_config(
     page_title="HEVH 분석 대시보드",
     page_icon="🏭",
@@ -58,9 +55,6 @@ st.markdown("""
 </style>
 """, unsafe_allow_html=True)
 
-# ─────────────────────────────────────────────
-# 상수
-# ─────────────────────────────────────────────
 DAY_SLOTS   = ["A","B","C","D","E","F"]
 NIGHT_SLOTS = ["F","G","H","I","J","K"]
 DB_PATH     = "losstime_db.csv"
@@ -130,93 +124,79 @@ SCRAP_CAUSE_RULES = [
 ]
 
 OPER_MAP   = {"P-AUTO":"AI","P-SMD":"SMT","P-PBA":"MI"}
-PROC_COLOR = {"AI":"#ef4444","SMT":"#3b82f6","MI":"#10b981"}
+PROC_COLOR = {"AI":"#ef4444","SMT":"#3b82f6","MI":"#10b981","기타":"#9ca3af"}
 
 # ─────────────────────────────────────────────
 # GitHub DB 관리
 # ─────────────────────────────────────────────
 def get_github_config():
     try:
-        token = st.secrets["github"]["token"]
-        repo  = st.secrets["github"]["repo"]
-        return token, repo
+        return st.secrets["github"]["token"], st.secrets["github"]["repo"]
     except Exception:
         return None, None
 
 def github_load_csv(filename):
     token, repo = get_github_config()
     if not token:
-        try:
-            return pd.read_csv(filename, encoding="utf-8-sig")
-        except FileNotFoundError:
-            return pd.DataFrame()
+        try: return pd.read_csv(filename, encoding="utf-8-sig")
+        except FileNotFoundError: return pd.DataFrame()
     url = f"https://api.github.com/repos/{repo}/contents/{filename}"
-    headers = {"Authorization": f"token {token}",
-               "Accept": "application/vnd.github.v3+json"}
+    headers = {"Authorization":f"token {token}",
+               "Accept":"application/vnd.github.v3+json"}
     try:
         r = requests.get(url, headers=headers, timeout=10)
         if r.status_code == 200:
-            content = base64.b64decode(r.json()["content"]).decode("utf-8")
-            return pd.read_csv(io.StringIO(content))
+            return pd.read_csv(io.StringIO(
+                base64.b64decode(r.json()["content"]).decode("utf-8")))
         return pd.DataFrame()
-    except Exception:
-        return pd.DataFrame()
+    except: return pd.DataFrame()
 
-def github_save_csv(df, filename, commit_msg=None):
+def github_save_csv(df, filename, msg=None):
     token, repo = get_github_config()
     if not token:
-        df.to_csv(filename, index=False, encoding="utf-8-sig")
-        return True
+        df.to_csv(filename, index=False, encoding="utf-8-sig"); return True
     url = f"https://api.github.com/repos/{repo}/contents/{filename}"
-    headers = {"Authorization": f"token {token}",
-               "Accept": "application/vnd.github.v3+json"}
+    headers = {"Authorization":f"token {token}",
+               "Accept":"application/vnd.github.v3+json"}
     sha = None
     try:
         r = requests.get(url, headers=headers, timeout=10)
-        if r.status_code == 200:
-            sha = r.json().get("sha")
-    except Exception:
-        pass
+        if r.status_code == 200: sha = r.json().get("sha")
+    except: pass
     csv_str = df.to_csv(index=False, encoding="utf-8-sig")
     content  = base64.b64encode(csv_str.encode("utf-8-sig")).decode()
-    payload  = {"message": commit_msg or f"DB업데이트: {filename}",
-                "content": content}
+    payload  = {"message":msg or f"DB업데이트:{filename}","content":content}
     if sha: payload["sha"] = sha
     try:
         r = requests.put(url, headers=headers, json=payload, timeout=15)
-        return r.status_code in [200, 201]
-    except Exception:
-        return False
+        return r.status_code in [200,201]
+    except: return False
 
 # ─────────────────────────────────────────────
 # 로그인
 # ─────────────────────────────────────────────
 def check_login():
-    try:
-        return st.secrets["users"]
-    except Exception:
-        return {"hansol":"hevh2024","vietnam":"hevh2024","korea":"hevh2024"}
+    try: return st.secrets["users"]
+    except: return {"hansol":"hevh2024","vietnam":"hevh2024","korea":"hevh2024"}
 
 def login_page():
     st.markdown("""
-    <div style="text-align:center; margin-top:60px;">
+    <div style="text-align:center;margin-top:60px;">
         <h2>🏭 한솔테크닉스 HEVH</h2>
         <h4 style="color:#64748b;">LOSSTIME + SCRAP 분석 대시보드</h4>
-    </div>
-    """, unsafe_allow_html=True)
-    col1,col2,col3 = st.columns([1,1.2,1])
-    with col2:
+    </div>""", unsafe_allow_html=True)
+    _,col,_ = st.columns([1,1.2,1])
+    with col:
         with st.form("login_form"):
             st.markdown("#### 🔐 로그인")
-            username = st.text_input("아이디", placeholder="ID 입력")
-            password = st.text_input("비밀번호", type="password",
-                                     placeholder="PW 입력")
+            u = st.text_input("아이디", placeholder="ID 입력")
+            p = st.text_input("비밀번호", type="password", placeholder="PW 입력")
             if st.form_submit_button("로그인", use_container_width=True,
                                      type="primary"):
                 users = check_login()
-                if username in users and users[username]==password:
-                    st.session_state["logged_in"] = True
-                    st.session_state["username"]  = username
+                if u in users and users[u]==p:
+                    st.session_state["logged_in"]=True
+                    st.session_state["username"]=u
                     st.rerun()
                 else:
                     st.error("❌ 아이디 또는 비밀번호가 틀렸습니다.")
@@ -266,29 +246,22 @@ def extract_model_per_slot(model_row, slots):
         if idx >= len(slots): break
         v  = str(cell or "").strip()
         mm = re.search(r'(L\d{2}[A-Z0-9_\-\.]+)', v, re.I)
-        if mm:
-            result[slots[idx]] = mm.group(1); last = mm.group(1)
+        if mm:   result[slots[idx]]=mm.group(1); last=mm.group(1)
         elif v and v.lower() not in ["none","—","-",""]:
-            result[slots[idx]] = v; last = v
-        elif last:
-            result[slots[idx]] = last
+            result[slots[idx]]=v; last=v
+        elif last: result[slots[idx]]=last
     return result
 
-# ★ 음수/괄호 표기 처리
 def parse_losstime(val):
     if val is None: return 0.0
     s = str(val).strip()
-    # 괄호 표기 (521) → 0
-    if s.startswith("(") and s.endswith(")"):
-        return 0.0
+    if s.startswith("(") and s.endswith(")"): return 0.0
     m = re.search(r'(\d+\.?\d*)', s)
-    v = float(m.group(1)) if m else 0.0
-    return max(0.0, v)  # ★ 음수 방지
+    return max(0.0, float(m.group(1)) if m else 0.0)
 
 def is_line_cell(val):
-    return bool(re.match(
-        r'^(SA\s*\d+|PA\s*\d+|PS\s*\d+|MI\s*\d+)',
-        str(val or "").strip(), re.I))
+    return bool(re.match(r'^(SA\s*\d+|PA\s*\d+|PS\s*\d+|MI\s*\d+)',
+                         str(val or "").strip(), re.I))
 
 def get_label(row):
     return str(row[1] or "").strip().upper() if len(row)>1 else ""
@@ -335,34 +308,27 @@ def parse_sheet(ws, process, date_str, shift):
         row = rows[i]
         c1  = row[1] if len(row)>1 else None
         if not is_line_cell(c1): i+=1; continue
-
         line = normalize_line(str(c1))
         model_row=loss_row=cause_row=action_row=None
-
         for j in range(i+1, min(i+14,len(rows))):
-            r   = rows[j]; lbl = get_label(r)
+            r=rows[j]; lbl=get_label(r)
             if is_line_cell(r[1] if len(r)>1 else None) and j>i+1: break
             if "MODEL"    in lbl and model_row  is None: model_row  = r
             if "LOSSTIME" in lbl and loss_row   is None: loss_row   = r
             elif lbl=="CAUSE"  and cause_row  is None: cause_row  = r
             elif lbl=="ACTION" and action_row is None: action_row = r
-
         if loss_row:
-            loss_vals = []
+            loss_vals=[]
             for c in range(2, 2+len(slots)):
                 try:
-                    v  = loss_row[c] if c<len(loss_row) else None
-                    s  = str(v or "")
-                    mm = re.search(r'(\d+)\s*min', s, re.I)
-                    loss_vals.append(
-                        float(mm.group(1)) if mm else parse_losstime(v))
+                    v=loss_row[c] if c<len(loss_row) else None
+                    s=str(v or "")
+                    mm=re.search(r'(\d+)\s*min',s,re.I)
+                    loss_vals.append(float(mm.group(1)) if mm else parse_losstime(v))
                 except: loss_vals.append(0.0)
             while len(loss_vals)<len(slots): loss_vals.append(0.0)
-
-            # ★ 음수값 전체 0으로 치환
-            loss_vals = [max(0.0, v) for v in loss_vals]
+            loss_vals = [max(0.0,v) for v in loss_vals]
             total     = sum(loss_vals)
-
             models      = extract_model_per_slot(model_row, slots)
             slot_causes = extract_slot_causes(cause_row, slots)
             cause_all   = " | ".join(v for v in slot_causes.values() if v)
@@ -371,68 +337,62 @@ def parse_sheet(ws, process, date_str, shift):
             action      = " | ".join(
                 str(v) for v in (list(action_row[2:9]) if action_row else [])
                 if v and str(v).strip())
-
             for idx,slot in enumerate(slots):
-                lv = loss_vals[idx] if idx<len(loss_vals) else 0.0
-                if lv > 0:
-                    cs = slot_causes.get(slot,"")
+                lv=loss_vals[idx] if idx<len(loss_vals) else 0.0
+                if lv>0:
+                    cs=slot_causes.get(slot,"")
                     if not cs:
                         for s2 in slots:
-                            if slot_causes.get(s2,""):
-                                cs = slot_causes[s2]; break
-                    code,name = classify_loss_type(cs)
+                            if slot_causes.get(s2,""): cs=slot_causes[s2]; break
+                    code,name=classify_loss_type(cs)
                     records.append({
                         "date":date_str,"shift":shift,"process":process,
-                        "line":line,"time_slot":slot,
-                        "model":models.get(slot,""),
-                        "loss_min":lv,"loss_type_code":code,
-                        "loss_type_name":name,"complexity":complexity,
-                        "loss_detail":cs,"action":action
+                        "line":line,"time_slot":slot,"model":models.get(slot,""),
+                        "loss_min":lv,"loss_type_code":code,"loss_type_name":name,
+                        "complexity":complexity,"loss_detail":cs,"action":action
                     })
-            if total > 0:
-                code_t,name_t = classify_loss_type(cause_all)
+            if total>0:
+                code_t,name_t=classify_loss_type(cause_all)
                 records.append({
                     "date":date_str,"shift":shift,"process":process,
-                    "line":line,"time_slot":"TOTAL",
-                    "model":models.get(slots[0],""),
-                    "loss_min":total,"loss_type_code":code_t,
-                    "loss_type_name":name_t,"complexity":complexity,
-                    "loss_detail":cause_all,"action":action
+                    "line":line,"time_slot":"TOTAL","model":models.get(slots[0],""),
+                    "loss_min":total,"loss_type_code":code_t,"loss_type_name":name_t,
+                    "complexity":complexity,"loss_detail":cause_all,"action":action
                 })
-        i += 1
+        i+=1
     return records
 
 def parse_scrap_file(uploaded_file):
-    records = []
+    records=[]
     try:
-        fn = uploaded_file.name.lower()
-        df = pd.read_excel(uploaded_file,
-                           engine="xlrd" if fn.endswith(".xls") else "openpyxl")
+        fn=uploaded_file.name.lower()
+        df=pd.read_excel(uploaded_file,
+                         engine="xlrd" if fn.endswith(".xls") else "openpyxl")
     except Exception as e:
         st.error(f"스크랩 파일 읽기 실패: {e}"); return pd.DataFrame()
-    df.columns = [str(c).strip() for c in df.columns]
+    df.columns=[str(c).strip() for c in df.columns]
     for r in ["Work Date","Start Line","Tran Comment"]:
         if r not in df.columns:
             st.warning(f"컬럼 없음: {r}"); return pd.DataFrame()
-    for _, row in df.iterrows():
+    for _,row in df.iterrows():
         try:
-            work_date   = str(row.get("Work Date","")).strip()[:10]
-            start_line  = normalize_scrap_line(row.get("Start Line",""))
-            comment     = str(row.get("Tran Comment","")).strip()
-            model_desc  = str(row.get("Model Mat Desc","")).strip()
-            oper_desc   = str(row.get("Oper Desc","")).strip()
-            result_grp  = str(row.get("Result Group","")).strip()
-            result_cd   = str(row.get("Result Code","")).strip()
-            result_desc = str(row.get("Result Desc","")).strip()
-            reason_cd   = str(row.get("Reason Code","")).strip()
-            reason_desc = str(row.get("Reason Desc","")).strip()
-            qty         = int(row.get("Qty",1) or 1)
-            mm    = re.search(r'(L\d{2}[A-Z0-9_\-\.]+)', model_desc, re.I)
-            model = mm.group(1) if mm else model_desc
-            process = OPER_MAP.get(oper_desc,"기타")
-            cc,cn   = classify_scrap_cause(comment)
-            is_auto = "Y" if "ATUO_SCRAP" in comment.upper() or \
-                             "AUTO_SCRAP" in comment.upper() else "N"
+            work_date  =str(row.get("Work Date","")).strip()[:10]
+            start_line =normalize_scrap_line(row.get("Start Line",""))
+            comment    =str(row.get("Tran Comment","")).strip()
+            model_desc =str(row.get("Model Mat Desc","")).strip()
+            oper_desc  =str(row.get("Oper Desc","")).strip()
+            result_grp =str(row.get("Result Group","")).strip()
+            result_cd  =str(row.get("Result Code","")).strip()
+            result_desc=str(row.get("Result Desc","")).strip()
+            reason_cd  =str(row.get("Reason Code","")).strip()
+            reason_desc=str(row.get("Reason Desc","")).strip()
+            qty        =int(row.get("Qty",1) or 1)
+            mm=re.search(r'(L\d{2}[A-Z0-9_\-\.]+)',model_desc,re.I)
+            model  =mm.group(1) if mm else model_desc
+            process=OPER_MAP.get(oper_desc,"기타")
+            cc,cn  =classify_scrap_cause(comment)
+            is_auto="Y" if "ATUO_SCRAP" in comment.upper() or \
+                           "AUTO_SCRAP" in comment.upper() else "N"
             records.append({
                 "work_date":work_date,"process":process,"line":start_line,
                 "model":model,"qty":qty,"cause_code":cc,"cause_name":cn,
@@ -440,7 +400,7 @@ def parse_scrap_file(uploaded_file):
                 "result_desc":result_desc,"reason_code":reason_cd,
                 "reason_desc":reason_desc,"is_auto":is_auto,"comment":comment,
             })
-        except Exception: continue
+        except: continue
     return pd.DataFrame(records)
 
 def parse_files(uploaded_files):
@@ -469,17 +429,14 @@ def parse_files(uploaded_files):
                 if isinstance(ws,Chartsheet): continue
                 shift=detect_shift(sn,fn)
                 ds=fd if fd!="UNKNOWN" else (parse_date(sn) or "UNKNOWN")
-                try:
-                    loss_records.extend(parse_sheet(ws,process,ds,shift))
-                except Exception as e:
-                    st.warning(f"파싱오류[{sn}]: {e}")
+                try: loss_records.extend(parse_sheet(ws,process,ds,shift))
+                except Exception as e: st.warning(f"파싱오류[{sn}]: {e}")
         prog.progress((fi+1)/len(uploaded_files))
     status.empty(); prog.empty()
     ldf=pd.DataFrame(loss_records)
     if not ldf.empty and "date" in ldf.columns:
         ldf=ldf[ldf["date"]!="UNKNOWN"].reset_index(drop=True)
-    sdf=pd.concat(scrap_list,ignore_index=True) \
-        if scrap_list else pd.DataFrame()
+    sdf=pd.concat(scrap_list,ignore_index=True) if scrap_list else pd.DataFrame()
     return ldf, sdf
 
 # ─────────────────────────────────────────────
@@ -530,8 +487,7 @@ def to_excel(df):
         ts=(tdf.groupby("loss_type_name")["loss_min"]
             .agg(["sum","count"]).reset_index()
             .sort_values("sum",ascending=False)
-            .rename(columns={"loss_type_name":"유형",
-                             "sum":"손실(분)","count":"건수"}))
+            .rename(columns={"loss_type_name":"유형","sum":"손실(분)","count":"건수"}))
         ts.to_excel(w,sheet_name="손실유형별",index=False)
         df.to_excel(w,sheet_name="원본데이터",index=False)
     return buf.getvalue()
@@ -558,20 +514,17 @@ def dashboard():
     <div class="main-header">
         <h2>🏭 한솔테크닉스 HEVH — LOSSTIME + SCRAP 분석 대시보드</h2>
         <p style="margin:0;opacity:0.85">AI / SMT / PBA(MI) 공정 | 호치민 법인</p>
-    </div>
-    """, unsafe_allow_html=True)
+    </div>""", unsafe_allow_html=True)
 
     with st.sidebar:
         st.markdown(f"👤 **{st.session_state.get('username','')}** 님")
-        if st.button("🚪 로그아웃", use_container_width=True):
+        if st.button("🚪 로그아웃",use_container_width=True):
             st.session_state["logged_in"]=False; st.rerun()
-
         st.divider()
         st.header("📂 파일 업로드")
         st.caption("LOSSTIME + SCRAP 동시 가능")
         uploaded=st.file_uploader("xlsx / xls (여러 개)",
-                                  type=["xlsx","xls"],
-                                  accept_multiple_files=True)
+                                  type=["xlsx","xls"],accept_multiple_files=True)
         if uploaded:
             if st.button("🚀 분석 시작 / DB 누적",
                          type="primary",use_container_width=True):
@@ -579,21 +532,17 @@ def dashboard():
                     nl,ns=parse_files(uploaded)
                 if not nl.empty:
                     ex=load_db(); mg=merge_db(ex,nl)
-                    with st.spinner("GitHub 저장..."):
-                        ok=save_db(mg)
+                    with st.spinner("GitHub 저장..."): ok=save_db(mg)
                     st.session_state["df"]=mg
                     st.success(f"✅ LOSSTIME {len(nl):,}건 → "
                                f"{'GitHub저장' if ok else '로컬저장'}")
                 if not ns.empty:
                     es=load_scrap_db(); ms=merge_scrap_db(es,ns)
-                    with st.spinner("GitHub 저장..."):
-                        ok2=save_scrap_db(ms)
+                    with st.spinner("GitHub 저장..."): ok2=save_scrap_db(ms)
                     st.session_state["scrap_df"]=ms
                     st.success(f"✅ SCRAP {len(ns):,}건 → "
                                f"{'GitHub저장' if ok2 else '로컬저장'}")
-                if nl.empty and ns.empty:
-                    st.error("파싱 데이터 없음")
-
+                if nl.empty and ns.empty: st.error("파싱 데이터 없음")
         st.divider()
         if st.button("💾 DB 불러오기 (GitHub)",use_container_width=True):
             with st.spinner("로드 중..."):
@@ -604,44 +553,32 @@ def dashboard():
             if not sdb.empty:
                 st.session_state["scrap_df"]=sdb
                 st.success(f"✅ SCRAP {len(sdb):,}건")
-            if db.empty and sdb.empty:
-                st.warning("저장된 DB 없음")
-
+            if db.empty and sdb.empty: st.warning("저장된 DB 없음")
         st.divider()
         st.header("🔍 조회 필터")
         df_all=st.session_state.get("df",pd.DataFrame())
         if df_all.empty:
             st.info("데이터를 먼저 불러오세요."); return
-
         dates=sorted([d for d in df_all["date"].dropna().unique()
                       if d!="UNKNOWN"])
         if not dates:
             st.warning("유효한 날짜 없음"); return
-
-        # ★ 6월 기본값
         june=[d for d in dates if d.startswith("2026-06")]
         def_s=june[0]  if june else dates[0]
         def_e=june[-1] if june else dates[-1]
-
         if len(dates)>=2:
             date_range=st.select_slider("날짜 범위",options=dates,
                                         value=(def_s,def_e))
         else:
-            date_range=(dates[0],dates[0])
-            st.info(f"날짜: {dates[0]}")
-
-        procs=st.multiselect("공정",["AI","SMT","MI"],
-                             default=["AI","SMT","MI"])
-        shifts=st.multiselect("주야간",["DAY","NIGHT"],
-                              default=["DAY","NIGHT"])
+            date_range=(dates[0],dates[0]); st.info(f"날짜: {dates[0]}")
+        procs=st.multiselect("공정",["AI","SMT","MI"],default=["AI","SMT","MI"])
+        shifts=st.multiselect("주야간",["DAY","NIGHT"],default=["DAY","NIGHT"])
         lines_all=sorted(df_all["line"].dropna().unique())
         sel_lines=st.multiselect("라인 (미선택=전체)",lines_all)
         types_all=sorted(df_all["loss_type_name"].dropna().unique())
         sel_types=st.multiselect("손실유형 (미선택=전체)",types_all)
-        view_mode=st.radio("조회 단위",["TOTAL(일계)","타임별(A~K)"],
-                           horizontal=True)
+        view_mode=st.radio("조회 단위",["TOTAL(일계)","타임별(A~K)"],horizontal=True)
 
-    # ── 필터 적용 ──
     df=st.session_state.get("df",pd.DataFrame())
     scrap_df=st.session_state.get("scrap_df",pd.DataFrame())
     if df.empty:
@@ -678,12 +615,10 @@ def dashboard():
         (c2,f"{n_lines}개","분석 라인 수","line"),
         (c3,f"{n_days}일","분석 일수","date"),
         (c4,f"{scrap_total:,}ea","스크랩 누계","scrap"),
-        (c5,f"{len(scrap_df):,}건" if not scrap_df.empty else "0건",
-            "스크랩 이력","scrap_hist"),
+        (c5,f"{len(scrap_df):,}건" if not scrap_df.empty else "0건","스크랩 이력","scrap_hist"),
     ]:
         with col:
-            if st.button(f"{val}\n{lbl}",key=f"kpi_{key}",
-                         use_container_width=True):
+            if st.button(f"{val}\n{lbl}",key=f"kpi_{key}",use_container_width=True):
                 st.session_state["kpi_focus"]=key
 
     focus=st.session_state.get("kpi_focus")
@@ -691,28 +626,24 @@ def dashboard():
         with st.expander("📊 손실유형별 상세",expanded=True):
             ts=(total_df.groupby("loss_type_name")["loss_min"]
                 .sum().reset_index().sort_values("loss_min",ascending=False))
-            st.dataframe(ts.rename(columns={
-                "loss_type_name":"유형","loss_min":"손실(분)"}),
-                use_container_width=True)
+            st.dataframe(ts.rename(columns={"loss_type_name":"유형","loss_min":"손실(분)"}),
+                         use_container_width=True)
     elif focus=="line" and not total_df.empty:
         with st.expander("📋 라인별 누계 상세",expanded=True):
             ls=(total_df.groupby(["process","line"])["loss_min"]
                 .sum().reset_index().sort_values("loss_min",ascending=False))
-            st.dataframe(ls.rename(columns={"loss_min":"손실(분)"}),
-                         use_container_width=True)
+            st.dataframe(ls.rename(columns={"loss_min":"손실(분)"}),use_container_width=True)
     elif focus=="date" and not total_df.empty:
         with st.expander("📅 날짜별 상세",expanded=True):
             ds=(total_df.groupby(["date","process"])["loss_min"]
                 .sum().reset_index().sort_values("date"))
-            st.dataframe(ds.rename(columns={"loss_min":"손실(분)"}),
-                         use_container_width=True)
+            st.dataframe(ds.rename(columns={"loss_min":"손실(분)"}),use_container_width=True)
     elif focus in ["scrap","scrap_hist"] and not scrap_df.empty:
         with st.expander("📛 스크랩 상세",expanded=True):
             st.dataframe(scrap_df,use_container_width=True,height=300)
 
     st.divider()
 
-    # ── 탭 ──
     tab1,tab2,tab3,tab4,tab5,tab6,tab7=st.tabs([
         "📊 손실 분석","📈 트렌드","🕐 타임별",
         "📛 스크랩 분석","🔍 상세 조회","🔧 설비보전 PM","⬇️ 다운로드"
@@ -732,11 +663,10 @@ def dashboard():
                     .rename(columns={"loss_type_name":"유형","loss_min":"손실(분)"}))
                 fig=px.bar(ts,x="손실(분)",y="유형",orientation="h",
                            color="유형",color_discrete_map=TYPE_COLOR,height=520)
-                fig.update_layout(
-                    showlegend=False,
-                    margin=dict(l=0,r=0,t=20,b=0),
-                    yaxis=dict(categoryorder="total ascending"),
-                    xaxis=dict(rangemode="tozero"))  # ★ x축 0 이상
+                fig.update_layout(showlegend=False,
+                                  margin=dict(l=0,r=0,t=20,b=0),
+                                  yaxis=dict(categoryorder="total ascending"),
+                                  xaxis=dict(rangemode="tozero"))
                 ct=st.plotly_chart(fig,use_container_width=True,
                                    on_select="rerun",key="type_chart")
                 if ct and ct.get("selection",{}).get("points"):
@@ -761,11 +691,9 @@ def dashboard():
                     .sort_values("loss_min",ascending=False).head(15))
                 fig2=px.bar(ls,x="line",y="loss_min",
                             color="process",color_discrete_map=PROC_COLOR,
-                            height=520,
-                            labels={"loss_min":"손실(분)","line":"라인"})
-                fig2.update_layout(
-                    margin=dict(l=0,r=0,t=20,b=0),
-                    yaxis=dict(rangemode="tozero"))  # ★ y축 0 이상
+                            height=520,labels={"loss_min":"손실(분)","line":"라인"})
+                fig2.update_layout(margin=dict(l=0,r=0,t=20,b=0),
+                                   yaxis=dict(rangemode="tozero"))
                 cl=st.plotly_chart(fig2,use_container_width=True,
                                    on_select="rerun",key="line_chart")
                 if cl and cl.get("selection",{}).get("points"):
@@ -782,13 +710,66 @@ def dashboard():
                         st.dataframe(ld.reset_index(drop=True),
                                      use_container_width=True,height=300)
 
-            st.subheader("공정별 비중")
+            # ★ 공정별 비중 파이차트 + 클릭 상호작용
+            st.subheader("공정별 비중 (클릭 → 상세)")
             ps=total_df.groupby("process")["loss_min"].sum().reset_index()
-            cp,_=st.columns([1,2])
-            fig3=px.pie(ps,values="loss_min",names="process",
-                        color="process",color_discrete_map=PROC_COLOR,height=320)
-            fig3.update_layout(margin=dict(l=0,r=0,t=20,b=0))
-            cp.plotly_chart(fig3,use_container_width=True)
+            # 기타 제외 (AI/SMT/MI만)
+            ps=ps[ps["process"].isin(["AI","SMT","MI"])]
+
+            col_pie,col_pie_detail=st.columns([1,1])
+            with col_pie:
+                fig3=px.pie(ps,values="loss_min",names="process",
+                            color="process",color_discrete_map=PROC_COLOR,
+                            height=380)
+                fig3.update_traces(
+                    textposition="inside",
+                    textinfo="percent+label+value",
+                    hovertemplate="<b>%{label}</b><br>손실: %{value:,}분<br>비중: %{percent}<extra></extra>")
+                fig3.update_layout(margin=dict(l=0,r=0,t=20,b=0))
+                cp_click=st.plotly_chart(fig3,use_container_width=True,
+                                         on_select="rerun",key="proc_pie_chart")
+
+            with col_pie_detail:
+                # ★ 클릭 시 해당 공정 상세
+                if cp_click and cp_click.get("selection",{}).get("points"):
+                    sel_proc=cp_click["selection"]["points"][0].get("label","")
+                    if sel_proc:
+                        st.markdown(f"""
+                        <div class="detail-box">
+                        <b>📋 [{sel_proc}] 공정 라인별 손실</b>
+                        </div>""", unsafe_allow_html=True)
+
+                        # 라인별 합계
+                        proc_line=(total_df[total_df["process"]==sel_proc]
+                                   .groupby("line")["loss_min"]
+                                   .sum().reset_index()
+                                   .sort_values("loss_min",ascending=False)
+                                   .rename(columns={"loss_min":"손실(분)"}))
+                        proc_line["비중(%)"]=(
+                            proc_line["손실(분)"]/proc_line["손실(분)"].sum()*100
+                        ).round(1)
+                        st.dataframe(proc_line.reset_index(drop=True),
+                                     use_container_width=True,height=180)
+
+                        # 손실유형별
+                        st.markdown(f"**{sel_proc} 손실유형 분포**")
+                        proc_type=(total_df[total_df["process"]==sel_proc]
+                                   .groupby("loss_type_name")["loss_min"]
+                                   .sum().reset_index()
+                                   .sort_values("loss_min",ascending=False)
+                                   .rename(columns={"loss_type_name":"유형",
+                                                    "loss_min":"손실(분)"}))
+                        fig_pt=px.bar(proc_type,x="손실(분)",y="유형",
+                                      orientation="h",
+                                      color="유형",
+                                      color_discrete_map=TYPE_COLOR,
+                                      height=250)
+                        fig_pt.update_layout(showlegend=False,
+                                             margin=dict(l=0,r=0,t=10,b=0),
+                                             yaxis=dict(categoryorder="total ascending"))
+                        st.plotly_chart(fig_pt,use_container_width=True)
+                else:
+                    st.info("👈 파이차트에서 공정을 클릭하세요")
 
     # ── TAB2 ──
     with tab2:
@@ -805,15 +786,13 @@ def dashboard():
             st.plotly_chart(fig4,use_container_width=True)
 
             st.subheader("DAY vs NIGHT")
-            sc=(total_df.groupby(["shift","loss_type_name"])["loss_min"]
-                .sum().reset_index())
+            sc=(total_df.groupby(["shift","loss_type_name"])["loss_min"].sum().reset_index())
             fig5=px.bar(sc,x="loss_type_name",y="loss_min",color="shift",
                         color_discrete_map={"DAY":"#f59e0b","NIGHT":"#6366f1"},
                         barmode="group",height=380,
                         labels={"loss_min":"손실(분)","loss_type_name":"손실유형"})
             fig5.update_layout(margin=dict(l=0,r=0,t=20,b=0),
-                               xaxis_tickangle=-30,
-                               yaxis=dict(rangemode="tozero"))
+                               xaxis_tickangle=-30,yaxis=dict(rangemode="tozero"))
             st.plotly_chart(fig5,use_container_width=True)
 
     # ── TAB3 ──
@@ -830,10 +809,8 @@ def dashboard():
             st.warning("타임별 데이터 없음")
         else:
             slot_order=["A","B","C","D","E","F","G","H","I","J","K"]
-            pivot=(slot_df.groupby(["line","time_slot"])["loss_min"]
-                   .sum().reset_index())
-            pt=pivot.pivot(index="line",columns="time_slot",
-                           values="loss_min").fillna(0)
+            pivot=(slot_df.groupby(["line","time_slot"])["loss_min"].sum().reset_index())
+            pt=pivot.pivot(index="line",columns="time_slot",values="loss_min").fillna(0)
             pt=pt[[c for c in slot_order if c in pt.columns]]
             fh=px.imshow(pt,color_continuous_scale="Reds",aspect="auto",
                          height=max(400,len(pt)*30),
@@ -843,16 +820,13 @@ def dashboard():
             st.plotly_chart(fh,use_container_width=True)
 
             st.subheader("시간대별 손실 합계")
-            ss=(slot_df.groupby(["time_slot","process"])["loss_min"]
-                .sum().reset_index())
-            ss["time_slot"]=pd.Categorical(ss["time_slot"],
-                                            categories=slot_order,ordered=True)
+            ss=(slot_df.groupby(["time_slot","process"])["loss_min"].sum().reset_index())
+            ss["time_slot"]=pd.Categorical(ss["time_slot"],categories=slot_order,ordered=True)
             ss=ss.sort_values("time_slot")
             fs=px.bar(ss,x="time_slot",y="loss_min",color="process",
                       color_discrete_map=PROC_COLOR,barmode="stack",height=350,
                       labels={"loss_min":"손실(분)","time_slot":"시간대"})
-            fs.update_layout(margin=dict(l=0,r=0,t=20,b=0),
-                             yaxis=dict(rangemode="tozero"))
+            fs.update_layout(margin=dict(l=0,r=0,t=20,b=0),yaxis=dict(rangemode="tozero"))
             st.plotly_chart(fs,use_container_width=True)
 
             st.subheader("타임별 상세")
@@ -870,8 +844,7 @@ def dashboard():
             sd_dates=sorted(scrap_df["work_date"].dropna().unique())
             if len(sd_dates)>=2:
                 sr=st.select_slider("스크랩 날짜 범위",options=sd_dates,
-                                    value=(sd_dates[0],sd_dates[-1]),
-                                    key="scrap_date")
+                                    value=(sd_dates[0],sd_dates[-1]),key="scrap_date")
                 sdf2=scrap_df[(scrap_df["work_date"]>=sr[0])&
                               (scrap_df["work_date"]<=sr[1])].copy()
             else:
@@ -894,7 +867,6 @@ def dashboard():
                         <div class="metric-lbl">{lbl}</div>
                     </div>""", unsafe_allow_html=True)
                 st.divider()
-
                 ca,cb=st.columns(2)
                 with ca:
                     st.subheader("원인별 파레토 (클릭 → 상세)")
@@ -902,36 +874,31 @@ def dashboard():
                         .sort_values("qty",ascending=False))
                     cg["누계%"]=(cg["qty"].cumsum()/cg["qty"].sum()*100).round(1)
                     fp=go.Figure()
-                    fp.add_bar(x=cg["cause_name"],y=cg["qty"],
-                               name="수량",marker_color="#ef4444")
+                    fp.add_bar(x=cg["cause_name"],y=cg["qty"],name="수량",
+                               marker_color="#ef4444")
                     fp.add_scatter(x=cg["cause_name"],y=cg["누계%"],
-                                   mode="lines+markers",name="누계%",
-                                   yaxis="y2",
+                                   mode="lines+markers",name="누계%",yaxis="y2",
                                    line=dict(color="#1e3a5f",width=2))
                     fp.update_layout(
-                        yaxis2=dict(overlaying="y",side="right",
-                                    range=[0,110],ticksuffix="%"),
+                        yaxis2=dict(overlaying="y",side="right",range=[0,110],ticksuffix="%"),
                         yaxis=dict(rangemode="tozero"),
-                        height=400,margin=dict(l=0,r=0,t=20,b=0),
-                        xaxis_tickangle=-30)
+                        height=400,margin=dict(l=0,r=0,t=20,b=0),xaxis_tickangle=-30)
                     cc2=st.plotly_chart(fp,use_container_width=True,
-                                        on_select="rerun",
-                                        key="scrap_cause_chart")
+                                        on_select="rerun",key="scrap_cause_chart")
                     if cc2 and cc2.get("selection",{}).get("points"):
                         sc2=cc2["selection"]["points"][0].get("x","")
                         if sc2:
                             st.markdown(f"**📋 [{sc2}] 상세**")
                             cd=sdf2[sdf2["cause_name"]==sc2][
-                                ["work_date","process","line","model",
-                                 "qty","comment"]].sort_values("work_date")
+                                ["work_date","process","line","model","qty","comment"]
+                            ].sort_values("work_date")
                             st.dataframe(cd.reset_index(drop=True),
                                          use_container_width=True,height=250)
                 with cb:
                     st.subheader("공정별 비중")
                     pg=sdf2.groupby("process")["qty"].sum().reset_index()
                     fpc=px.pie(pg,values="qty",names="process",
-                               color="process",color_discrete_map=PROC_COLOR,
-                               height=400)
+                               color="process",color_discrete_map=PROC_COLOR,height=400)
                     fpc.update_layout(margin=dict(l=0,r=0,t=20,b=0))
                     st.plotly_chart(fpc,use_container_width=True)
 
@@ -956,11 +923,9 @@ def dashboard():
                                      use_container_width=True,height=250)
 
                 st.subheader("날짜별 트렌드")
-                dg=(sdf2.groupby(["work_date","process"])["qty"]
-                    .sum().reset_index())
+                dg=(sdf2.groupby(["work_date","process"])["qty"].sum().reset_index())
                 fdt=px.line(dg,x="work_date",y="qty",color="process",
-                            color_discrete_map=PROC_COLOR,markers=True,
-                            height=320,
+                            color_discrete_map=PROC_COLOR,markers=True,height=320,
                             labels={"qty":"수량","work_date":"날짜"})
                 fdt.update_layout(margin=dict(l=0,r=0,t=20,b=0),
                                   yaxis=dict(rangemode="tozero"))
@@ -972,13 +937,11 @@ def dashboard():
                      .agg(["sum","count"]).reset_index()
                      .sort_values("sum",ascending=False)
                      .rename(columns={"sum":"수량","count":"발생횟수"}))
-
                 def sg(row):
                     if row["수량"]>=10 or row["발생횟수"]>=5: return "🔴🔴 즉시개선"
                     elif row["수량"]>=5  or row["발생횟수"]>=3: return "🔴 긴급"
                     elif row["수량"]>=3  or row["발생횟수"]>=2: return "🟠 주의"
                     else: return "🟡 모니터링"
-
                 imp["우선순위"]=imp.apply(sg,axis=1)
                 for _,row in imp.head(10).iterrows():
                     g=str(row["우선순위"])
@@ -997,14 +960,10 @@ def dashboard():
                 srch=st.text_input("🔍 키워드 (모델/라인/원인/코멘트)")
                 sshow=sdf2.copy()
                 if srch:
-                    ms2=(sshow["model"].astype(str).str.contains(
-                             srch,case=False,na=False)|
-                         sshow["line"].astype(str).str.contains(
-                             srch,case=False,na=False)|
-                         sshow["cause_name"].astype(str).str.contains(
-                             srch,case=False,na=False)|
-                         sshow["comment"].astype(str).str.contains(
-                             srch,case=False,na=False))
+                    ms2=(sshow["model"].astype(str).str.contains(srch,case=False,na=False)|
+                         sshow["line"].astype(str).str.contains(srch,case=False,na=False)|
+                         sshow["cause_name"].astype(str).str.contains(srch,case=False,na=False)|
+                         sshow["comment"].astype(str).str.contains(srch,case=False,na=False))
                     sshow=sshow[ms2]
                 dc=["work_date","process","line","model","qty",
                     "cause_name","is_auto","result_desc","comment"]
@@ -1030,8 +989,7 @@ def dashboard():
         if not sdf3.empty:
             st.dataframe(sdf3[dc2].reset_index(drop=True),
                          use_container_width=True,height=500)
-        else:
-            st.info("검색 결과 없음")
+        else: st.info("검색 결과 없음")
 
     # ── TAB6 ──
     with tab6:
@@ -1047,24 +1005,18 @@ def dashboard():
                 .agg(["sum","count"]).reset_index()
                 .sort_values("sum",ascending=False)
                 .rename(columns={"sum":"누계손실(분)","count":"발생횟수"}))
-
             def pmg(row):
-                if row["발생횟수"]>=5 or row["누계손실(분)"]>=500:
-                    return "🔴🔴 P1 즉시"
-                elif row["발생횟수"]>=3 or row["누계손실(분)"]>=200:
-                    return "🔴 P1"
-                elif row["발생횟수"]>=2 or row["누계손실(분)"]>=100:
-                    return "🟠 P2"
+                if row["발생횟수"]>=5 or row["누계손실(분)"]>=500: return "🔴🔴 P1 즉시"
+                elif row["발생횟수"]>=3 or row["누계손실(분)"]>=200: return "🔴 P1"
+                elif row["발생횟수"]>=2 or row["누계손실(분)"]>=100: return "🟠 P2"
                 else: return "🟡 P3"
-
             if pm.empty:
                 st.info("설비 불량 데이터 없음")
             else:
                 pm["PM등급"]=pm.apply(pmg,axis=1)
                 for _,row in pm.iterrows():
                     g=str(row["PM등급"])
-                    cls=("pm-p1" if "P1" in g
-                         else "pm-p2" if "P2" in g else "pm-p3")
+                    cls=("pm-p1" if "P1" in g else "pm-p2" if "P2" in g else "pm-p3")
                     st.markdown(f"""
                     <div class="{cls}">
                         <b>{g}</b> &nbsp;|&nbsp;
@@ -1080,31 +1032,24 @@ def dashboard():
         ca2,cb2,cc2=st.columns(3)
         with ca2:
             st.markdown("#### 📊 LOSSTIME 엑셀")
-            st.download_button("📥 LOSSTIME 다운로드",
-                               data=to_excel(fdf),
+            st.download_button("📥 LOSSTIME 다운로드",data=to_excel(fdf),
                                file_name="HEVH_LOSSTIME_리포트.xlsx",
                                mime="application/vnd.openxmlformats-officedocument"
-                                    ".spreadsheetml.sheet",
-                               use_container_width=True)
+                                    ".spreadsheetml.sheet",use_container_width=True)
         with cb2:
             st.markdown("#### 📛 SCRAP 엑셀")
             if not scrap_df.empty:
-                st.download_button("📥 SCRAP 다운로드",
-                                   data=to_excel_scrap(scrap_df),
+                st.download_button("📥 SCRAP 다운로드",data=to_excel_scrap(scrap_df),
                                    file_name="HEVH_SCRAP_리포트.xlsx",
                                    mime="application/vnd.openxmlformats-officedocument"
-                                        ".spreadsheetml.sheet",
-                                   use_container_width=True)
-            else:
-                st.info("스크랩 데이터 없음")
+                                        ".spreadsheetml.sheet",use_container_width=True)
+            else: st.info("스크랩 데이터 없음")
         with cc2:
             st.markdown("#### 📋 CSV")
             st.download_button("📥 CSV 다운로드",
-                               data=fdf.to_csv(index=False,
-                                   encoding="utf-8-sig").encode("utf-8-sig"),
+                               data=fdf.to_csv(index=False,encoding="utf-8-sig").encode("utf-8-sig"),
                                file_name="HEVH_LOSSTIME_데이터.csv",
-                               mime="text/csv",
-                               use_container_width=True)
+                               mime="text/csv",use_container_width=True)
         st.divider()
         st.markdown("#### 🗄️ DB 현황")
         cd1,cd2=st.columns(2)
@@ -1112,8 +1057,7 @@ def dashboard():
             dba=load_db()
             if not dba.empty:
                 st.info(f"LOSSTIME: {len(dba):,}건 | "
-                        f"{dba['date'].nunique()}일 | "
-                        f"{dba['line'].nunique()}개 라인")
+                        f"{dba['date'].nunique()}일 | {dba['line'].nunique()}개 라인")
                 if st.button("🗑️ LOSSTIME DB 초기화"):
                     github_save_csv(pd.DataFrame(),DB_PATH,"DB초기화")
                     st.session_state.pop("df",None)
@@ -1122,8 +1066,7 @@ def dashboard():
             sdba=load_scrap_db()
             if not sdba.empty:
                 st.info(f"SCRAP: {len(sdba):,}건 | "
-                        f"{int(sdba['qty'].sum())}ea | "
-                        f"{sdba['line'].nunique()}개 라인")
+                        f"{int(sdba['qty'].sum())}ea | {sdba['line'].nunique()}개 라인")
                 if st.button("🗑️ SCRAP DB 초기화"):
                     github_save_csv(pd.DataFrame(),SCRAP_DB,"SCRAP DB초기화")
                     st.session_state.pop("scrap_df",None)
@@ -1135,10 +1078,8 @@ def dashboard():
 def main():
     if "logged_in" not in st.session_state:
         st.session_state["logged_in"]=False
-    if not st.session_state["logged_in"]:
-        login_page()
-    else:
-        dashboard()
+    if not st.session_state["logged_in"]: login_page()
+    else: dashboard()
 
 if __name__=="__main__":
     main()
