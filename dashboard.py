@@ -161,6 +161,31 @@ st.markdown("""
     margin: 20px 0;
 }
 
+/* 사이드바 축소 시 메인 영역 자동 확장 */
+section[data-testid="stSidebar"][aria-expanded="false"] {
+    min-width: 0px !important;
+    max-width: 0px !important;
+    overflow: hidden !important;
+}
+
+section[data-testid="stSidebar"][aria-expanded="false"] ~ 
+section[data-testid="stMain"] {
+    margin-left: 0px !important;
+    width: 100% !important;
+}
+
+/* 메인 영역 — 사이드바 상태에 따라 자동 조절 */
+section[data-testid="stMain"] {
+    transition: margin-left 0.3s ease, width 0.3s ease;
+}
+
+/* 사이드바 열릴 때 */
+section[data-testid="stSidebar"][aria-expanded="true"] ~ 
+section[data-testid="stMain"] {
+    margin-left: 260px !important;
+}
+
+
 /* 사이드바 — 회색톤 */
 section[data-testid="stSidebar"] {
     min-width: 240px !important;
