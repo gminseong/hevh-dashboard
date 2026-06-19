@@ -22,44 +22,15 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-st.markdown("""    
+st.markdown("""
 <style>
-/* 툴바만 숨기고 사이드바 토글은 유지 */
-header[data-testid="stHeader"] {
-    background: transparent !important;
-    height: 0 !important;
-    min-height: 0 !important;
-}
-
-/* 툴바 버튼들만 숨김 (토글 제외) */
-header[data-testid="stHeader"] button:not([kind="header"]) {
-    display: none !important;
-}
-
-/* Share, 별, 연필, GitHub 아이콘만 숨김 */
-[data-testid="stToolbar"] {
-    display: none !important;
-}
-
-[data-testid="stDecoration"] {
-    display: none !important;
-}
-
 /* 기본 */
 .block-container {
     padding-top: 1.8rem !important;
     padding-bottom: 1rem !important;
-    margin-top: 0 !important;
 }
 
-/* ── 헤더 — 배경 없는 타이틀형 ── */
-.main-header {
-    padding: 8px 4px 14px;
-    margin-bottom: 4px;
-    border-bottom: 2px solid #e2e8f0;
-}
-
-/* ── 헤더 — 배경 없는 타이틀형 ── */
+/* 헤더 - 배경 없는 타이틀형 */
 .main-header {
     padding: 8px 4px 14px;
     margin-bottom: 4px;
@@ -79,7 +50,7 @@ header[data-testid="stHeader"] button:not([kind="header"]) {
     color: #64748b;
 }
 
-/* ── 강조 배너 ── */
+/* 강조 배너 */
 .info-banner {
     background: linear-gradient(135deg, #1e3a5f 0%, #1d4ed8 100%);
     border-radius: 14px;
@@ -114,7 +85,7 @@ header[data-testid="stHeader"] button:not([kind="header"]) {
     margin-left: 20px;
 }
 
-/* ── KPI 카드 ── */
+/* KPI 카드 */
 .kpi-card {
     background: #f1f5f9;
     border: 1px solid #e2e8f0;
@@ -149,7 +120,7 @@ header[data-testid="stHeader"] button:not([kind="header"]) {
     margin-top: 5px;
 }
 
-/* ── 상세박스 ── */
+/* 상세박스 */
 .detail-box {
     background: #f8fafc;
     border-left: 3px solid #3b82f6;
@@ -160,7 +131,7 @@ header[data-testid="stHeader"] button:not([kind="header"]) {
     color: #1e293b;
 }
 
-/* ── PM 등급 ── */
+/* PM 등급 */
 .pm-p1 {
     background: #fef2f2;
     border-left: 4px solid #dc2626;
@@ -186,14 +157,14 @@ header[data-testid="stHeader"] button:not([kind="header"]) {
     font-size: 13px;
 }
 
-/* ── 섹션 구분선 ── */
+/* 섹션 구분선 */
 .section-divider {
     border: none;
     border-top: 1px solid #e2e8f0;
     margin: 20px 0;
 }
 
-/* ── 사이드바 — 회색톤 ── */
+/* 사이드바 - 회색톤 */
 section[data-testid="stSidebar"] {
     min-width: 240px !important;
     max-width: 260px !important;
@@ -239,7 +210,7 @@ section[data-testid="stSidebar"] div[data-testid="stButton"] button[kind="primar
     background-color: #334155 !important;
 }
 
-/* ── 사이드바 축소 시 메인 영역 확장 ── */
+/* 사이드바 축소시 메인 영역 확장 */
 section[data-testid="stSidebar"][aria-expanded="false"] {
     min-width: 0px !important;
     max-width: 0px !important;
@@ -249,7 +220,7 @@ section[data-testid="stMain"] {
     transition: margin-left 0.3s ease, width 0.3s ease;
 }
 
-/* ── 버튼 ── */
+/* 버튼 */
 div[data-testid="stButton"] button {
     border-radius: 7px !important;
     font-size: 13px !important;
@@ -297,41 +268,41 @@ PROC_COLOR = {
 }
 
 LOSS_TYPE_RULES = [
-    ("NEW_OP",       "신규OP교육",         ["new op","đào tạo","op mới"]),
+    ("NEW_OP",       "신규OP교육",         ["new op","dao tao","op moi"]),
     ("MAGAZINE",     "Magazine부족",       ["magazine","magazin","mag"]),
-    ("WAITING_SMT",  "SMT대기",            ["waiting semi","đợi semi","chờ semi"]),
-    ("MATERIAL",     "자재부족",           ["thiếu liệu","chờ liệu","đợi liệu",
-                                            "thiếu hàng","chờ hàng","thiếu vật tư"]),
-    ("CHANGE_MODEL", "모델교체",           ["change model","đổi model","tách lot",
-                                            "cover work","đổi ca","chuyển model"]),
-    ("PRINTER",      "Printer불량",        ["printer","priter","lỗi keo","tràn keo"]),
-    ("MOUTER",       "Mouter불량",         ["moutor","mounter","stopper","băng tải"]),
+    ("WAITING_SMT",  "SMT대기",            ["waiting semi","doi semi","cho semi"]),
+    ("MATERIAL",     "자재부족",           ["thieu lieu","cho lieu","doi lieu",
+                                            "thieu hang","cho hang","thieu vat tu"]),
+    ("CHANGE_MODEL", "모델교체",           ["change model","doi model","tach lot",
+                                            "cover work","doi ca","chuyen model"]),
+    ("PRINTER",      "Printer불량",        ["printer","priter","loi keo","tran keo"]),
+    ("MOUTER",       "Mouter불량",         ["moutor","mounter","stopper","bang tai"]),
     ("INSERT_RH3",   "RH3삽입불량",        ["rh3","rh 3","rhu"]),
     ("INSERT_XGZ",   "XGZ불량",            ["xzg","xgz"]),
-    ("INSERT_AXIAL", "Axial불량",          ["axial","radial","cắm rớt","rad lỗi"]),
+    ("INSERT_AXIAL", "Axial불량",          ["axial","radial","cam rot","rad loi"]),
     ("INSERT_JUMP",  "Jumper불량",         ["jumper","jump "]),
-    ("COATING",      "Coating/Reflow불량", ["coating","reflow","flux","nhiệt"]),
+    ("COATING",      "Coating/Reflow불량", ["coating","reflow","flux","nhiet"]),
     ("AOI_SAOI",     "AOI/S-AOI불량",      ["saoi","s-aoi","aoi"]),
     ("WAVE",         "Wave Solder불량",    ["wave solder","wave"]),
     ("SPI",          "SPI불량",            ["spi"]),
     ("INLOADER",     "Inloader불량",       ["inloader"]),
-    ("ICT_ATE",      "ICT/ATE불량",        ["ict","ate","ft lỗi"]),
-    ("EQUIP_FAIL",   "설비고장(기타)",     ["hư","lỗi máy","stop line","spare"]),
-    ("DONE_PLAN",    "계획완료",           ["done plan","hết plan","kết thúc"]),
+    ("ICT_ATE",      "ICT/ATE불량",        ["ict","ate","ft loi"]),
+    ("EQUIP_FAIL",   "설비고장(기타)",     ["hu","loi may","stop line","spare"]),
+    ("DONE_PLAN",    "계획완료",           ["done plan","het plan","ket thuc"]),
     ("SAMPLE",       "샘플/테스트",        ["sample"]),
     ("ETC",          "기타",               []),
 ]
 
 SCRAP_CAUSE_RULES = [
-    ("BROKEN_DROP",  "낙하/파손",     ["rớt","rơi","bể","vỡ","broken","drop","rộng","sập"]),
-    ("BROKEN_BI",    "Burn-in파손",   ["burn in","burin","tủ burin","ốc","tuột"]),
-    ("SOLDER",       "납불량",        ["tràn keo","solder over","hàn","keo"]),
-    ("CRACK",        "크랙/균열",     ["nứt","crack","bể mạch"]),
-    ("PAD_DAMAGE",   "Pad손상",       ["tróc pad","pad đồng","tróc"]),
-    ("EYELET",       "Eyelet불량",    ["eyelet","thiếu eyelet"]),
-    ("SENSOR",       "센서불량",      ["sensor","cảm biến","chinh lai sensor"]),
+    ("BROKEN_DROP",  "낙하/파손",     ["rot","roi","be","vo","broken","drop","rong","sap"]),
+    ("BROKEN_BI",    "Burn-in파손",   ["burn in","burin","tu burin","oc","tuot"]),
+    ("SOLDER",       "납불량",        ["tran keo","solder over","han","keo"]),
+    ("CRACK",        "크랙/균열",     ["nut","crack","be mach"]),
+    ("PAD_DAMAGE",   "Pad손상",       ["troc pad","pad dong","troc"]),
+    ("EYELET",       "Eyelet불량",    ["eyelet","thieu eyelet"]),
+    ("SENSOR",       "센서불량",      ["sensor","cam bien","chinh lai sensor"]),
     ("MAGAZINE",     "Magazine불량",  ["magazine","megazine","mag"]),
-    ("NEW_OP",       "신규OP실수",    ["op mới","thời vụ","mới","new op"]),
+    ("NEW_OP",       "신규OP실수",    ["op moi","thoi vu","moi","new op"]),
     ("AUTO",         "자동판정(ATE)", ["atuo_scrap","auto_scrap"]),
     ("ETC",          "기타",          []),
 ]
@@ -457,7 +428,7 @@ def extract_model_per_slot(model_row, slots):
         v  = str(cell or "").strip()
         mm = re.search(r'(L\d{2}[A-Z0-9_\-\.]+)',v,re.I)
         if mm: result[slots[idx]]=mm.group(1); last=mm.group(1)
-        elif v and v.lower() not in ["none","—","-",""]:
+        elif v and v.lower() not in ["none","-",""]:
             result[slots[idx]]=v; last=v
         elif last: result[slots[idx]]=last
     return result
@@ -519,6 +490,7 @@ def parse_sheet(ws, process, date_str, shift):
         if not is_line_cell(c1): i+=1; continue
         line=normalize_line(str(c1))
         model_row=loss_row=cause_row=action_row=None
+        target_row=actual_row=None
         for j in range(i+1,min(i+14,len(rows))):
             r=rows[j]; lbl=get_label(r)
             if is_line_cell(r[1] if len(r)>1 else None) and j>i+1: break
@@ -526,6 +498,8 @@ def parse_sheet(ws, process, date_str, shift):
             if "LOSSTIME" in lbl and loss_row   is None: loss_row=r
             elif lbl=="CAUSE"  and cause_row  is None: cause_row=r
             elif lbl=="ACTION" and action_row is None: action_row=r
+            elif "TARGET" in lbl and target_row is None: target_row=r
+            elif "ACTUAL" in lbl and actual_row is None: actual_row=r
         if loss_row:
             loss_vals=[]
             for c in range(2,2+len(slots)):
@@ -545,6 +519,23 @@ def parse_sheet(ws, process, date_str, shift):
             action=" | ".join(
                 str(v) for v in (list(action_row[2:9]) if action_row else [])
                 if v and str(v).strip())
+
+            # TARGET/ACTUAL 파싱
+            target_total=0.0
+            actual_total=0.0
+            if target_row:
+                for c in range(2,2+len(slots)):
+                    try:
+                        v=target_row[c] if c<len(target_row) else None
+                        target_total+=parse_losstime(v)
+                    except: pass
+            if actual_row:
+                for c in range(2,2+len(slots)):
+                    try:
+                        v=actual_row[c] if c<len(actual_row) else None
+                        actual_total+=parse_losstime(v)
+                    except: pass
+
             for idx,slot in enumerate(slots):
                 lv=loss_vals[idx] if idx<len(loss_vals) else 0.0
                 if lv>0:
@@ -558,7 +549,8 @@ def parse_sheet(ws, process, date_str, shift):
                         "line":line,"time_slot":slot,"model":models.get(slot,""),
                         "loss_min":round(lv,1),"loss_type_code":code,
                         "loss_type_name":name,"complexity":complexity,
-                        "loss_detail":cs,"action":action})
+                        "loss_detail":cs,"action":action,
+                        "target":0,"actual":0})
             if total>0:
                 code_t,name_t=classify_loss_type(cause_all)
                 records.append({
@@ -566,7 +558,9 @@ def parse_sheet(ws, process, date_str, shift):
                     "line":line,"time_slot":"TOTAL","model":models.get(slots[0],""),
                     "loss_min":round(total,1),"loss_type_code":code_t,
                     "loss_type_name":name_t,"complexity":complexity,
-                    "loss_detail":cause_all,"action":action})
+                    "loss_detail":cause_all,"action":action,
+                    "target":round(target_total,0),
+                    "actual":round(actual_total,0)})
         i+=1
     return records
 
@@ -616,15 +610,15 @@ def parse_files(uploaded_files):
     for fi,uf in enumerate(uploaded_files):
         fn=uf.name; process=detect_process(fn)
         if process=="UNKNOWN":
-            status.warning(f"⏭️ 스킵: {fn}")
+            status.warning(f"skip: {fn}")
         elif process=="SCRAP":
-            status.info(f"📂 스크랩: {fn}")
+            status.info(f"scrap: {fn}")
             sdf=parse_scrap_file(uf)
             if not sdf.empty:
-                scrap_list.append(sdf); status.success(f"✅ {len(sdf):,}건")
+                scrap_list.append(sdf); status.success(f"OK {len(sdf):,}")
         else:
             fd=parse_date(fn) or "UNKNOWN"
-            status.info(f"📂 {fn} → {process}/{fd}")
+            status.info(f"{fn} -> {process}/{fd}")
             try: wb=load_workbook(uf,data_only=True)
             except Exception as e:
                 status.error(f"열기실패: {e}")
@@ -720,19 +714,17 @@ def reset_all():
 # ─────────────────────────────────────────────
 def dashboard():
 
-    # ── 앱 시작 시 자동 DB 로드 ──
-    if "df" not in st.session_state or "scrap_df" not in st.session_state:
-        with st.spinner("DB 자동 로드 중..."):
-            if "df" not in st.session_state:
-                db = load_db()
-                if not db.empty:
-                    st.session_state["df"] = db
-            if "scrap_df" not in st.session_state:
-                sdb = load_scrap_db()
-                if not sdb.empty:
-                    st.session_state["scrap_df"] = sdb
+    # 앱 시작시 자동 DB 로드
+    if "df" not in st.session_state:
+        db=load_db()
+        if not db.empty:
+            st.session_state["df"]=db
+    if "scrap_df" not in st.session_state:
+        sdb=load_scrap_db()
+        if not sdb.empty:
+            st.session_state["scrap_df"]=sdb
 
-    # ── 사이드바 ──
+    # 사이드바
     with st.sidebar:
         st.markdown(f"**👤 {st.session_state.get('username','')}**")
         if st.button("로그아웃", use_container_width=True):
@@ -752,13 +744,13 @@ def dashboard():
                         ex=load_db(); mg=merge_db(ex,nl)
                         with st.spinner("저장..."): ok=save_db(mg)
                         st.session_state["df"]=mg
-                        st.success(f"✅ {len(nl):,}건 "
+                        st.success(f"OK {len(nl):,}건 "
                                    f"{'GitHub' if ok else '로컬'}")
                     if not ns.empty:
                         es=load_scrap_db(); ms=merge_scrap_db(es,ns)
                         with st.spinner("저장..."): ok2=save_scrap_db(ms)
                         st.session_state["scrap_df"]=ms
-                        st.success(f"✅ SCRAP {len(ns):,}건")
+                        st.success(f"OK SCRAP {len(ns):,}건")
                     if nl.empty and ns.empty: st.error("파싱 실패")
 
         if st.button("💾 DB 불러오기", use_container_width=True):
@@ -766,10 +758,10 @@ def dashboard():
                 db=load_db(); sdb=load_scrap_db()
             if not db.empty:
                 st.session_state["df"]=db
-                st.success(f"✅ {len(db):,}건")
+                st.success(f"OK {len(db):,}건")
             if not sdb.empty:
                 st.session_state["scrap_df"]=sdb
-                st.success(f"✅ SCRAP {len(sdb):,}건")
+                st.success(f"OK SCRAP {len(sdb):,}건")
             if db.empty and sdb.empty: st.warning("DB 없음")
 
         st.divider()
@@ -813,7 +805,7 @@ def dashboard():
                                ["TOTAL(일계)","타임별(A~K)"],
                                horizontal=True)
 
-    # ── 메인 ──
+    # 메인
     df=st.session_state.get("df",pd.DataFrame())
     scrap_df=st.session_state.get("scrap_df",pd.DataFrame())
     if df.empty:
@@ -841,7 +833,7 @@ def dashboard():
     if fdf.empty:
         st.warning("조건에 맞는 데이터 없음"); return
 
-    # ── KPI 계산 ──
+    # KPI 계산
     total_min   = round(total_df["loss_min"].sum(),1) if not total_df.empty else 0
     total_hr    = round(total_min/60,1)
     n_lines     = total_df["line"].nunique() if not total_df.empty else 0
@@ -851,15 +843,14 @@ def dashboard():
     if "kpi_focus" not in st.session_state:
         st.session_state["kpi_focus"] = None
 
-    # ── 헤더 ──
+    # 헤더
     st.markdown("""
     <div class="main-header">
         <h1>🏭 한솔테크닉스 HEVH</h1>
-        <p>LOSSTIME + SCRAP 분석 대시보드 &nbsp;|&nbsp;
-           AI / SMT / PBA(MI) 공정 &nbsp;|&nbsp; 호치민 법인</p>
+        <p>LOSSTIME + SCRAP 분석 대시보드 | AI / SMT / PBA(MI) 공정 | 호치민 법인</p>
     </div>""", unsafe_allow_html=True)
 
-    # ── 정보 배너 ──
+    # 정보 배너
     date_from = date_range[0][5:] if date_range else ""
     date_to   = date_range[1][5:] if date_range else ""
     proc_str  = ", ".join(procs) if procs else "전체"
@@ -882,9 +873,9 @@ def dashboard():
     </div>
     """, unsafe_allow_html=True)
 
-    # ── KPI 카드 (4개) ──
-    kc1,kc2,kc3,kc4,kc5 = st.columns([1,1,1,1,0.22])
-    kpi_data = [
+    # KPI 카드
+    kc1,kc2,kc3,kc4,kc5=st.columns([1,1,1,1,0.22])
+    kpi_data=[
         (kc1,"⏱️",f"{total_min:,.1f}분",f"({total_hr}h)","총 손실","loss"),
         (kc2,"📍",f"{n_lines}개","","분석 라인","line"),
         (kc3,"📅",f"{n_days}일","","분석 일수","date"),
@@ -892,8 +883,8 @@ def dashboard():
     ]
     for col,icon,val1,val2,lbl,key in kpi_data:
         with col:
-            is_active = st.session_state["kpi_focus"]==key
-            cls = "kpi-card-active" if is_active else "kpi-card"
+            is_active=st.session_state["kpi_focus"]==key
+            cls="kpi-card-active" if is_active else "kpi-card"
             st.markdown(f"""
             <div class="{cls}">
                 <div class="kpi-val">
@@ -901,29 +892,24 @@ def dashboard():
                 </div>
                 <div class="kpi-lbl">{icon} {lbl}</div>
             </div>""", unsafe_allow_html=True)
-            if st.button(
-                "▼ 닫기" if is_active else "↗ 상세",
-                key=f"kpi_{key}",
-                use_container_width=True,
-                type="secondary"
-            ):
-                st.session_state["kpi_focus"]=(
-                    None if is_active else key)
+            if st.button("▼ 닫기" if is_active else "↗ 상세",
+                         key=f"kpi_{key}",
+                         use_container_width=True,
+                         type="secondary"):
+                st.session_state["kpi_focus"]=(None if is_active else key)
                 st.rerun()
 
     with kc5:
-        st.markdown("<div style='height:54px'></div>",
-                    unsafe_allow_html=True)
+        st.markdown("<div style='height:54px'></div>",unsafe_allow_html=True)
         if st.button("🏠",use_container_width=True,help="초기화"):
             reset_all(); st.rerun()
 
-    # ── KPI 드릴다운 ──
+    # KPI 드릴다운
     focus=st.session_state.get("kpi_focus")
     if focus=="loss" and not total_df.empty:
         with st.expander("📊 손실유형 상세",expanded=True):
             ts=(total_df.groupby("loss_type_name")["loss_min"]
-                .sum().reset_index()
-                .sort_values("loss_min",ascending=False))
+                .sum().reset_index().sort_values("loss_min",ascending=False))
             ts["loss_min"]=ts["loss_min"].round(1)
             st.dataframe(ts.rename(
                 columns={"loss_type_name":"유형","loss_min":"손실(분)"}),
@@ -931,8 +917,7 @@ def dashboard():
     elif focus=="line" and not total_df.empty:
         with st.expander("📋 라인별 상세",expanded=True):
             ls=(total_df.groupby(["process","line"])["loss_min"]
-                .sum().reset_index()
-                .sort_values("loss_min",ascending=False))
+                .sum().reset_index().sort_values("loss_min",ascending=False))
             ls["loss_min"]=ls["loss_min"].round(1)
             st.dataframe(ls.rename(columns={"loss_min":"손실(분)"}),
                          use_container_width=True,height=250)
@@ -949,18 +934,17 @@ def dashboard():
 
     st.divider()
 
-    # ── 탭 ──
+    # 탭
     tab1,tab2,tab3,tab4,tab5,tab6,tab7,tab8=st.tabs([
         "📊 손실 분석","🏭 라인별","📈 트렌드","🕐 타임별",
         "📛 스크랩","🔍 상세 조회","🔧 PM","⬇️ 다운로드"
     ])
 
-    # ════════ TAB1 — 손실 분석 ════════
+    # ════════ TAB1 - 손실 분석 ════════
     with tab1:
         if total_df.empty:
             st.warning("TOTAL 데이터 없음")
         else:
-            # 1순위: 날짜별 트렌드 + 시간대별
             col_trend,col_slot=st.columns(2)
             with col_trend:
                 st.markdown("#### 📈 날짜별 손실 트렌드")
@@ -1006,7 +990,6 @@ def dashboard():
 
             st.markdown("<hr class='section-divider'>",unsafe_allow_html=True)
 
-            # 2순위: 손실유형 + 라인별
             col_l,col_r=st.columns(2)
             with col_l:
                 st.markdown("#### 손실유형별 누계")
@@ -1066,7 +1049,6 @@ def dashboard():
 
             st.markdown("<hr class='section-divider'>",unsafe_allow_html=True)
 
-            # 3순위: 공정별 비중
             st.markdown("#### 공정별 비중")
             ps=total_df.groupby("process")["loss_min"].sum().reset_index()
             ps=ps[ps["process"].isin(["AI","SMT","MI"])]
@@ -1089,7 +1071,7 @@ def dashboard():
                 for bcol,proc in zip([b1,b2,b3],["AI","SMT","MI"]):
                     with bcol:
                         is_sel=st.session_state["sel_proc"]==proc
-                        if st.button(f"{'✅ ' if is_sel else ''}{proc}",
+                        if st.button(f"{'OK ' if is_sel else ''}{proc}",
                                      key=f"proc_btn_{proc}",
                                      use_container_width=True,
                                      type="primary" if is_sel else "secondary"):
@@ -1112,13 +1094,12 @@ def dashboard():
                                  yaxis=dict(categoryorder="total ascending"))
                 st.plotly_chart(ft,use_container_width=True)
 
-    # ════════ TAB2 — 라인별 분석 ════════
+    # ════════ TAB2 - 라인별 ════════
     with tab2:
         if total_df.empty:
             st.warning("TOTAL 데이터 없음")
         else:
             st.markdown("#### 🏭 라인별 상세 분석")
-
             proc_sel=st.radio("공정 선택",["전체","AI","SMT","MI"],
                               horizontal=True,key="line_tab_proc")
             if proc_sel=="전체":
@@ -1129,7 +1110,6 @@ def dashboard():
             if line_df.empty:
                 st.warning("데이터 없음")
             else:
-                # 라인별 누계 막대
                 st.markdown("##### 라인별 누계 손실")
                 ls2=(line_df.groupby(["process","line"])["loss_min"]
                      .sum().reset_index()
@@ -1146,14 +1126,12 @@ def dashboard():
                 cl2=st.plotly_chart(fig_l,use_container_width=True,
                                     on_select="rerun",key="line_tab_chart")
 
-                # 클릭 연동
                 sel_line=""
                 if cl2 and cl2.get("selection",{}).get("points"):
                     sel_line=cl2["selection"]["points"][0].get("x","")
 
                 st.markdown("<hr class='section-divider'>",unsafe_allow_html=True)
 
-                # 라인 선택
                 all_lines=sorted(line_df["line"].dropna().unique())
                 col_sel,_=st.columns([1,3])
                 with col_sel:
@@ -1172,7 +1150,6 @@ def dashboard():
                         (df["time_slot"]!="TOTAL")
                     ].copy()
 
-                    # KPI 4개
                     total_line=round(ld["loss_min"].sum(),1)
                     m1,m2,m3,m4=st.columns(4)
                     for col,val,lbl in [
@@ -1190,9 +1167,8 @@ def dashboard():
                     st.markdown("<br>",unsafe_allow_html=True)
                     col_a,col_b=st.columns(2)
 
-                    # 손실유형 파이
                     with col_a:
-                        st.markdown(f"##### {chosen} — 손실유형 비중")
+                        st.markdown(f"##### {chosen} - 손실유형 비중")
                         lt=(ld.groupby("loss_type_name")["loss_min"]
                             .sum().reset_index()
                             .sort_values("loss_min",ascending=False))
@@ -1204,9 +1180,8 @@ def dashboard():
                         fp2.update_layout(margin=dict(l=0,r=0,t=10,b=0),showlegend=False)
                         st.plotly_chart(fp2,use_container_width=True)
 
-                    # 날짜별 트렌드
                     with col_b:
-                        st.markdown(f"##### {chosen} — 날짜별 트렌드")
+                        st.markdown(f"##### {chosen} - 날짜별 트렌드")
                         dt2=(ld.groupby(["date","shift"])["loss_min"]
                              .sum().reset_index())
                         dt2["loss_min"]=dt2["loss_min"].round(1)
@@ -1219,9 +1194,8 @@ def dashboard():
                                              legend=dict(orientation="h",y=1.05))
                         st.plotly_chart(fig_dt,use_container_width=True)
 
-                    # 시간대별 히트맵
                     if not slot_ld.empty:
-                        st.markdown(f"##### {chosen} — 시간대별 손실 패턴")
+                        st.markdown(f"##### {chosen} - 시간대별 손실 패턴")
                         slot_order=["A","B","C","D","E","F","G","H","I","J","K"]
                         hm=(slot_ld.groupby(["date","time_slot"])["loss_min"]
                             .sum().reset_index())
@@ -1234,8 +1208,7 @@ def dashboard():
                         fhm.update_layout(margin=dict(l=0,r=0,t=10,b=0))
                         st.plotly_chart(fhm,use_container_width=True)
 
-                    # 상세 내역
-                    st.markdown(f"##### {chosen} — 상세 내역")
+                    st.markdown(f"##### {chosen} - 상세 내역")
                     show_ld=ld[["date","shift","time_slot","model",
                                 "loss_min","loss_type_name","loss_detail","action"]
                                ].sort_values(["date","shift"])
@@ -1243,7 +1216,7 @@ def dashboard():
                     st.dataframe(show_ld.reset_index(drop=True),
                                  use_container_width=True,height=300)
 
-    # ════════ TAB3 — 트렌드 ════════
+    # ════════ TAB3 - 트렌드 ════════
     with tab3:
         if total_df.empty:
             st.warning("TOTAL 데이터 없음")
@@ -1269,9 +1242,9 @@ def dashboard():
                                xaxis_tickangle=-30,yaxis=dict(rangemode="tozero"))
             st.plotly_chart(fig5,use_container_width=True)
 
-    # ════════ TAB4 — 타임별 ════════
+    # ════════ TAB4 - 타임별 ════════
     with tab4:
-        st.markdown("#### 라인 × 시간대 히트맵")
+        st.markdown("#### 라인 x 시간대 히트맵")
         slot_df=df[
             (df["date"]>=date_range[0])&(df["date"]<=date_range[1])&
             (df["shift"].isin(shifts or ["DAY","NIGHT"]))&
@@ -1310,11 +1283,11 @@ def dashboard():
             sd["loss_min"]=sd["loss_min"].round(1)
             st.dataframe(sd,use_container_width=True,height=360)
 
-    # ════════ TAB5 — 스크랩 ════════
+    # ════════ TAB5 - 스크랩 ════════
     with tab5:
         st.markdown("#### 📛 스크랩 분석")
         if scrap_df.empty:
-            st.info("스크랩 데이터 없음. 파일명에 'SCRAP'/'스크랩' 포함 후 업로드.")
+            st.info("스크랩 데이터 없음. 파일명에 SCRAP/스크랩 포함 후 업로드.")
         else:
             sd_dates=sorted(scrap_df["work_date"].dropna().unique())
             if len(sd_dates)>=2:
@@ -1428,7 +1401,7 @@ def dashboard():
                     cls=("pm-p1" if "즉시" in g or "긴급" in g
                          else "pm-p2" if "주의" in g else "pm-p3")
                     st.markdown(f"""<div class="{cls}">
-                        <b>{g}</b> &nbsp;|&nbsp; {row['process']} {row['line']} —
+                        <b>{g}</b> &nbsp;|&nbsp; {row['process']} {row['line']} -
                         {row['cause_name']} &nbsp;|&nbsp;
                         <b>{int(row['수량']):,}ea</b> / {int(row['발생횟수'])}회
                     </div>""",unsafe_allow_html=True)
@@ -1450,7 +1423,7 @@ def dashboard():
                 st.dataframe(sshow[dc].reset_index(drop=True),
                              use_container_width=True,height=360)
 
-    # ════════ TAB6 — 상세 조회 ════════
+    # ════════ TAB6 - 상세 조회 ════════
     with tab6:
         st.markdown("#### 상세 데이터 조회")
         srch2=st.text_input("🔍 키워드 (라인/원인/모델)")
@@ -1471,7 +1444,7 @@ def dashboard():
         else:
             st.info("검색 결과 없음")
 
-    # ════════ TAB7 — PM ════════
+    # ════════ TAB7 - PM ════════
     with tab7:
         st.markdown("#### 🔧 설비보전 PM 우선순위")
         if total_df.empty:
@@ -1499,14 +1472,14 @@ def dashboard():
                     g=str(row["PM등급"])
                     cls=("pm-p1" if "P1" in g else "pm-p2" if "P2" in g else "pm-p3")
                     st.markdown(f"""<div class="{cls}">
-                        <b>{g}</b> &nbsp;|&nbsp; {row['process']} {row['line']} —
+                        <b>{g}</b> &nbsp;|&nbsp; {row['process']} {row['line']} -
                         {row['loss_type_name']} &nbsp;|&nbsp;
                         <b>{row['누계손실(분)']:,.1f}분</b> / {int(row['발생횟수'])}회
                     </div>""",unsafe_allow_html=True)
 
-    # ════════ TAB8 — 다운로드 ════════
+    # ════════ TAB8 - 다운로드 ════════
     with tab8:
-        st.markdown("#### ⬇️ 다운로드")
+        st.markdown("#### 다운로드")
         ca2,cb2,cc2=st.columns(3)
         with ca2:
             st.download_button("📥 LOSSTIME 엑셀",data=to_excel(fdf),
