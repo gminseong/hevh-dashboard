@@ -24,12 +24,30 @@ st.set_page_config(
 
 st.markdown("""
 <style>
+/* GitHub 아이콘 숨김 */
+a[href*="github.com"] {
+    display: none !important;
+}
+[data-testid="stToolbarActionButton"] {
+    display: none !important;
+}
+header[data-testid="stHeader"] a {
+    display: none !important;
+}
+
+/* Manage app 버튼 숨김 */
+[data-testid="manage-app-button"] {
+    display: none !important;
+}
+footer {
+    display: none !important;
+}
+
 /* 기본 */
 .block-container {
     padding-top: 1.8rem !important;
     padding-bottom: 1rem !important;
 }
-
 /* 헤더 - 배경 없는 타이틀형 */
 .main-header {
     padding: 8px 4px 14px;
