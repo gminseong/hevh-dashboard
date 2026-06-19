@@ -35,27 +35,32 @@ st.markdown("""
 /* 헤더 ── 잘림 완전 수정 */
 .main-header {
     background: linear-gradient(135deg, #1e3a5f 0%, #1d4ed8 100%);
-    padding: 16px 24px;
+    padding: 22px 28px;
     border-radius: 12px;
     margin-bottom: 18px;
     color: white;
     box-sizing: border-box;
     width: 100%;
-    overflow: visible;
+    display: block;
+    overflow: visible !important;
+    white-space: normal !important;
 }
 .main-header h3 {
-    margin: 0 0 4px 0;
-    font-size: 17px;
+    margin: 0 0 6px 0;
+    font-size: 22px;          /* ← 글자 크게 */
     font-weight: 700;
-    white-space: normal;
-    word-break: keep-all;
+    white-space: normal !important;
+    word-break: break-word;   /* ← 넘치면 줄바꿈 */
+    overflow: visible !important;
     line-height: 1.4;
+    letter-spacing: -0.3px;
 }
 .main-header p {
     margin: 0;
-    font-size: 12px;
-    opacity: 0.80;
-    white-space: normal;
+    font-size: 13px;          /* ← 부제목도 크게 */
+    opacity: 0.85;
+    white-space: normal !important;
+    word-break: break-word;
 }
 
 /* KPI 카드 */
@@ -123,7 +128,7 @@ st.markdown("""
     margin: 20px 0;
 }
 
-/* 사이드바 — 240~260px 확대 */
+/* 사이드바 */
 section[data-testid="stSidebar"] {
     min-width: 240px !important;
     max-width: 260px !important;
