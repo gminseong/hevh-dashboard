@@ -24,6 +24,16 @@ st.set_page_config(
 
 st.markdown("""
 <style>
+/* Streamlit 워터마크/배지 숨김 */
+#MainMenu {
+    display: none !important;
+}
+footer {
+    display: none !important;
+}
+[data-testid="stAppViewBlockContainer"] > div:last-child {
+    display: none !important;
+}
 /* Streamlit 우하단 배지 */
 div[class*="viewerBadge"] {
     display: none !important;
