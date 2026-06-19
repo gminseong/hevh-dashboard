@@ -691,8 +691,21 @@ def reset_all():
 # ─────────────────────────────────────────────
 def dashboard():
 
+    # ── 앱 시작 시 자동 DB 로드 ──
+    if "df" not in st.session_state or "scrap_df" not in st.session_state:
+        with st.spinner("DB 자동 로드 중..."):
+            if "df" not in st.session_state:
+                db = load_db()
+                if not db.empty:
+                    st.session_state["df"] = db
+            if "scrap_df" not in st.session_state:
+                sdb = load_scrap_db()
+                if not sdb.empty:
+                    st.session_state["scrap_df"] = sdb
+
     # ── 사이드바 ──
     with st.sidebar:
+    ... (이하 기존 코드)
         st.markdown(f"**👤 {st.session_state.get('username','')}**")
         if st.button("로그아웃", use_container_width=True):
             st.session_state["logged_in"]=False; st.rerun()
