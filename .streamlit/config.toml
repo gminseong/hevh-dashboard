@@ -6,5 +6,5 @@ textColor = "#1e293b"
 font = "sans serif"
 
 [client]
-toolbarMode = "viewer"
+toolbarMode = "minimal"
 showErrorDetails = false
