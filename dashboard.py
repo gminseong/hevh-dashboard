@@ -1276,15 +1276,34 @@ def dashboard():
         if not has_pa:
             st.warning("Plan/Actual 데이터 없음 - DB 초기화 후 파일 재업로드 필요")
         else:
-            proc_pa=st.radio("공정",["전체","AI","SMT","MI"],
-                             horizontal=True,key="pa_proc")
-            if proc_pa!="전체":
-                pa_df=pa_df[pa_df["process"]==proc_pa].copy()
+            # 날짜 조회 필터
+            pa_dates=sorted(pa_df["date"].dropna().unique())
+            col_f1,col_f2,col_f3=st.columns([1,1,1])
+            with col_f1:
+                proc_pa=st.radio("공정",["전체","AI","SMT","MI"],
+                                 horizontal=True,key="pa_proc")
+            with col_f2:
+                shift_pa=st.radio("주야간",["전체","DAY","NIGHT"],
+                                  horizontal=True,key="pa_shift")
+            with col_f3:
+                if len(pa_dates)>=2:
+                    date_pa=st.select_slider(
+                        "날짜 범위",options=pa_dates,
+                        value=(pa_dates[0],pa_dates[-1]),
+                        key="pa_date")
+                else:
+                    date_pa=(pa_dates[0],pa_dates[0]) if pa_dates else (None,None)
+                    st.caption(f"📅 {pa_dates[0] if pa_dates else '-'}")
+
+            # 필터 적용
+            if date_pa[0]: pa_df=pa_df[(pa_df["date"]>=date_pa[0])&(pa_df["date"]<=date_pa[1])]
+            if proc_pa!="전체":  pa_df=pa_df[pa_df["process"]==proc_pa]
+            if shift_pa!="전체": pa_df=pa_df[pa_df["shift"]==shift_pa]
 
             if pa_df.empty:
                 st.warning("데이터 없음")
             else:
-                # KPI
+                # ── KPI ──
                 if proc_pa=="MI":
                     t_mi  = pa_df["target_mi"].sum()
                     a_mi  = pa_df["actual_mi"].sum()
@@ -1296,18 +1315,17 @@ def dashboard():
                     ach_ate = round(a_ate/t_ate*100,1) if t_ate>0 else 0
 
                     c1,c2,c3,c4,c5,c6=st.columns(6)
-                    for col,val,lbl,is_gap in [
-                        (c1,f"{int(t_mi):,}","MI TARGET",False),
-                        (c2,f"{int(a_mi):,}","MI ACTUAL",False),
-                        (c3,f"{int(gap_mi):+,}","MI GAP",True),
-                        (c4,f"{int(t_ate):,}","ATE TARGET",False),
-                        (c5,f"{int(a_ate):,}","ATE ACTUAL",False),
-                        (c6,f"{int(gap_ate):+,}","ATE GAP",True),
+                    for col,val,lbl,gap_val in [
+                        (c1,f"{int(t_mi):,}",  "MI TARGET",  None),
+                        (c2,f"{int(a_mi):,}",  "MI ACTUAL",  None),
+                        (c3,f"{int(gap_mi):+,}","MI GAP",    gap_mi),
+                        (c4,f"{int(t_ate):,}", "ATE TARGET", None),
+                        (c5,f"{int(a_ate):,}", "ATE ACTUAL", None),
+                        (c6,f"{int(gap_ate):+,}","ATE GAP",  gap_ate),
                     ]:
-                        gap_val = gap_mi if lbl=="MI GAP" else gap_ate
-                        if is_gap:
-                            cls = "kpi-card-green" if gap_val>=0 else "kpi-card-red"
-                            vcls= "kpi-val-green"  if gap_val>=0 else "kpi-val-red"
+                        if gap_val is not None:
+                            cls ="kpi-card-green" if gap_val>=0 else "kpi-card-red"
+                            vcls="kpi-val-green"  if gap_val>=0 else "kpi-val-red"
                         else:
                             cls="kpi-card"; vcls="kpi-val"
                         col.markdown(f"""
@@ -1316,27 +1334,43 @@ def dashboard():
                             <div class="kpi-lbl">{lbl}</div>
                         </div>""",unsafe_allow_html=True)
 
+                    # 달성률 KPI
+                    r1,r2=st.columns(2)
+                    for col,val,lbl,v in [
+                        (r1,f"{ach_mi}%", f"MI 달성률 ({int(a_mi):,}/{int(t_mi):,})",  ach_mi),
+                        (r2,f"{ach_ate}%",f"ATE 달성률 ({int(a_ate):,}/{int(t_ate):,})",ach_ate),
+                    ]:
+                        cls="kpi-card-green" if v>=100 else ("kpi-card" if v>=90 else "kpi-card-red")
+                        vcls="kpi-val-green" if v>=100 else ("kpi-val"  if v>=90 else "kpi-val-red")
+                        col.markdown(f"""
+                        <div class="{cls}">
+                            <div class="{vcls}">{val}</div>
+                            <div class="kpi-lbl">🎯 {lbl}</div>
+                        </div>""",unsafe_allow_html=True)
+
                     st.markdown("<br>",unsafe_allow_html=True)
 
-                    # MI vs ATE 라인별 달성률
+                    # MI / ATE 라인별 달성률 차트
                     col_mi,col_ate=st.columns(2)
                     with col_mi:
                         st.markdown("##### MI 라인별 달성률")
                         mi_line=(pa_df.groupby("line")[["target_mi","actual_mi"]].sum().reset_index())
                         mi_line=mi_line[mi_line["target_mi"]>0]
                         mi_line["달성률"]=((mi_line["actual_mi"]/mi_line["target_mi"])*100).round(1)
-                        mi_line["GAP"]=mi_line["actual_mi"]-mi_line["target_mi"]
+                        mi_line["GAP"]=(mi_line["actual_mi"]-mi_line["target_mi"]).astype(int)
                         mi_line=mi_line.sort_values("달성률",ascending=True)
-                        colors=[("#16a34a" if v>=100 else "#dc2626") for v in mi_line["달성률"]]
                         fig_mi=go.Figure(go.Bar(
                             x=mi_line["달성률"],y=mi_line["line"],orientation="h",
-                            marker_color=colors,
-                            text=[f"{v:.1f}%" for v in mi_line["달성률"]],
+                            marker_color=[get_ach_color(v) for v in mi_line["달성률"]],
+                            text=[f"{v:.1f}%  (GAP:{g:+,})" for v,g in
+                                  zip(mi_line["달성률"],mi_line["GAP"])],
                             textposition="outside"))
                         fig_mi.add_vline(x=100,line_dash="dash",line_color="#94a3b8")
-                        fig_mi.update_layout(margin=dict(l=0,r=0,t=10,b=0),
-                                             xaxis=dict(range=[0,max(130,mi_line["달성률"].max()+10)]),
-                                             height=max(300,len(mi_line)*35))
+                        fig_mi.update_layout(
+                            margin=dict(l=0,r=80,t=10,b=0),
+                            xaxis=dict(range=[0,max(130,mi_line["달성률"].max()+15)]),
+                            height=max(300,len(mi_line)*40),
+                            plot_bgcolor="#f8fafc")
                         st.plotly_chart(fig_mi,use_container_width=True)
 
                     with col_ate:
@@ -1344,38 +1378,41 @@ def dashboard():
                         ate_line=(pa_df.groupby("line")[["target_ate","actual_ate"]].sum().reset_index())
                         ate_line=ate_line[ate_line["target_ate"]>0]
                         ate_line["달성률"]=((ate_line["actual_ate"]/ate_line["target_ate"])*100).round(1)
-                        ate_line["GAP"]=ate_line["actual_ate"]-ate_line["target_ate"]
+                        ate_line["GAP"]=(ate_line["actual_ate"]-ate_line["target_ate"]).astype(int)
                         ate_line=ate_line.sort_values("달성률",ascending=True)
-                        colors2=[("#16a34a" if v>=100 else "#dc2626") for v in ate_line["달성률"]]
                         fig_ate=go.Figure(go.Bar(
                             x=ate_line["달성률"],y=ate_line["line"],orientation="h",
-                            marker_color=colors2,
-                            text=[f"{v:.1f}%" for v in ate_line["달성률"]],
+                            marker_color=[get_ach_color(v) for v in ate_line["달성률"]],
+                            text=[f"{v:.1f}%  (GAP:{g:+,})" for v,g in
+                                  zip(ate_line["달성률"],ate_line["GAP"])],
                             textposition="outside"))
                         fig_ate.add_vline(x=100,line_dash="dash",line_color="#94a3b8")
-                        fig_ate.update_layout(margin=dict(l=0,r=0,t=10,b=0),
-                                              xaxis=dict(range=[0,max(130,ate_line["달성률"].max()+10)]),
-                                              height=max(300,len(ate_line)*35))
+                        fig_ate.update_layout(
+                            margin=dict(l=0,r=80,t=10,b=0),
+                            xaxis=dict(range=[0,max(130,ate_line["달성률"].max()+15)]),
+                            height=max(300,len(ate_line)*40),
+                            plot_bgcolor="#f8fafc")
                         st.plotly_chart(fig_ate,use_container_width=True)
 
                 else:
-                    # AI / SMT
-                    t_sum2=pa_df["target"].sum()
-                    a_sum2=pa_df["actual"].sum()
-                    gap2=a_sum2-t_sum2
-                    ach2=round(a_sum2/t_sum2*100,1) if t_sum2>0 else 0
+                    # AI / SMT / 전체
+                    t_col = "target"
+                    a_col = "actual"
+                    t_sum2=pa_df[t_col].sum()
+                    a_sum2=pa_df[a_col].sum()
+                    gap2  =a_sum2-t_sum2
+                    ach2  =round(a_sum2/t_sum2*100,1) if t_sum2>0 else 0
 
                     c1,c2,c3,c4=st.columns(4)
-                    for col,val,lbl,is_gap in [
-                        (c1,f"{int(t_sum2):,}","TARGET",False),
-                        (c2,f"{int(a_sum2):,}","ACTUAL",False),
-                        (c3,f"{int(gap2):+,}","GAP",True),
-                        (c4,f"{ach2}%","달성률",True),
+                    for col,val,lbl,gap_val in [
+                        (c1,f"{int(t_sum2):,}","TARGET",None),
+                        (c2,f"{int(a_sum2):,}","ACTUAL",None),
+                        (c3,f"{int(gap2):+,}", "GAP",   gap2),
+                        (c4,f"{ach2}%",        "달성률", ach2-100),
                     ]:
-                        if is_gap:
-                            g_val=gap2 if lbl=="GAP" else (ach2-100)
-                            cls="kpi-card-green" if g_val>=0 else "kpi-card-red"
-                            vcls="kpi-val-green" if g_val>=0 else "kpi-val-red"
+                        if gap_val is not None:
+                            cls ="kpi-card-green" if gap_val>=0 else "kpi-card-red"
+                            vcls="kpi-val-green"  if gap_val>=0 else "kpi-val-red"
                         else:
                             cls="kpi-card"; vcls="kpi-val"
                         col.markdown(f"""
@@ -1386,21 +1423,23 @@ def dashboard():
 
                     st.markdown("<br>",unsafe_allow_html=True)
                     st.markdown("##### 라인별 달성률")
-                    la=(pa_df.groupby(["process","line"])[["target","actual"]].sum().reset_index())
-                    la=la[la["target"]>0]
-                    la["달성률"]=((la["actual"]/la["target"])*100).round(1)
-                    la["GAP"]=la["actual"]-la["target"]
+                    la=(pa_df.groupby(["process","line"])[[t_col,a_col]].sum().reset_index())
+                    la=la[la[t_col]>0]
+                    la["달성률"]=((la[a_col]/la[t_col])*100).round(1)
+                    la["GAP"]=(la[a_col]-la[t_col]).astype(int)
                     la=la.sort_values("달성률",ascending=True)
-                    colors3=[("#16a34a" if v>=100 else "#dc2626") for v in la["달성률"]]
                     fig_la=go.Figure(go.Bar(
                         x=la["달성률"],y=la["line"],orientation="h",
-                        marker_color=colors3,
-                        text=[f"{v:.1f}%" for v in la["달성률"]],
+                        marker_color=[get_ach_color(v) for v in la["달성률"]],
+                        text=[f"{v:.1f}%  (GAP:{g:+,})" for v,g in
+                              zip(la["달성률"],la["GAP"])],
                         textposition="outside"))
                     fig_la.add_vline(x=100,line_dash="dash",line_color="#94a3b8")
-                    fig_la.update_layout(margin=dict(l=0,r=0,t=10,b=0),
-                                         xaxis=dict(range=[0,max(130,la["달성률"].max()+10)]),
-                                         height=max(300,len(la)*35))
+                    fig_la.update_layout(
+                        margin=dict(l=0,r=80,t=10,b=0),
+                        xaxis=dict(range=[0,max(130,la["달성률"].max()+15)]),
+                        height=max(300,len(la)*40),
+                        plot_bgcolor="#f8fafc")
                     st.plotly_chart(fig_la,use_container_width=True)
 
                 st.markdown("<hr class='section-divider'>",unsafe_allow_html=True)
@@ -1412,28 +1451,42 @@ def dashboard():
                                                    "target_ate","actual_ate"]].sum().reset_index())
                     fig_pa=go.Figure()
                     fig_pa.add_scatter(x=dt_pa["date"],y=dt_pa["target_mi"],
-                                       name="MI Target",line=dict(dash="dash",color="#94a3b8"))
+                                       name="MI Target",
+                                       line=dict(dash="dash",color="#94a3b8"))
                     fig_pa.add_scatter(x=dt_pa["date"],y=dt_pa["actual_mi"],
-                                       name="MI Actual",line=dict(color="#10b981"),mode="lines+markers")
+                                       name="MI Actual",
+                                       line=dict(color="#10b981",width=2),
+                                       mode="lines+markers")
                     fig_pa.add_scatter(x=dt_pa["date"],y=dt_pa["target_ate"],
-                                       name="ATE Target",line=dict(dash="dot",color="#cbd5e1"))
+                                       name="ATE Target",
+                                       line=dict(dash="dot",color="#cbd5e1"))
                     fig_pa.add_scatter(x=dt_pa["date"],y=dt_pa["actual_ate"],
-                                       name="ATE Actual",line=dict(color="#3b82f6"),mode="lines+markers")
+                                       name="ATE Actual",
+                                       line=dict(color="#3b82f6",width=2),
+                                       mode="lines+markers")
                 else:
                     dt_pa=(pa_df.groupby(["date","process"])[["target","actual"]].sum().reset_index())
-                    fig_pa=px.line(dt_pa,x="date",y="actual",color="process",
-                                   color_discrete_map=PROC_COLOR,markers=True,
-                                   labels={"actual":"실적","date":"날짜"})
+                    fig_pa=go.Figure()
                     for proc in dt_pa["process"].unique():
                         sub=dt_pa[dt_pa["process"]==proc]
+                        c=PROC_COLOR.get(proc,"#94a3b8")
                         fig_pa.add_scatter(x=sub["date"],y=sub["target"],
                                            name=f"{proc} Target",
-                                           line=dict(dash="dash"),
-                                           marker=dict(color=PROC_COLOR.get(proc,"#94a3b8")))
-                fig_pa.update_layout(margin=dict(l=0,r=0,t=10,b=0),
-                                     yaxis=dict(rangemode="tozero"),height=360,
-                                     legend=dict(orientation="h",y=1.05))
+                                           line=dict(dash="dash",color=c),
+                                           opacity=0.5)
+                        fig_pa.add_scatter(x=sub["date"],y=sub["actual"],
+                                           name=f"{proc} Actual",
+                                           line=dict(color=c,width=2),
+                                           mode="lines+markers")
+                fig_pa.update_layout(
+                    margin=dict(l=0,r=0,t=10,b=0),
+                    yaxis=dict(rangemode="tozero"),
+                    height=360,
+                    legend=dict(orientation="h",y=1.05),
+                    plot_bgcolor="#f8fafc")
                 st.plotly_chart(fig_pa,use_container_width=True)
+
+                st.markdown("<hr class='section-divider'>",unsafe_allow_html=True)
 
                 # 상세 테이블
                 st.markdown("##### 라인별 상세")
@@ -1441,15 +1494,15 @@ def dashboard():
                     show_pa=(pa_df.groupby(["date","shift","line"])[
                         ["target_mi","actual_mi","target_ate","actual_ate","loss_min"]
                     ].sum().reset_index())
-                    show_pa["MI_GAP"]=show_pa["actual_mi"]-show_pa["target_mi"]
-                    show_pa["ATE_GAP"]=show_pa["actual_ate"]-show_pa["target_ate"]
-                    show_pa["MI_달성률"]=((show_pa["actual_mi"]/show_pa["target_mi"].replace(0,float("nan")))*100).round(1)
+                    show_pa["MI_GAP"]  =(show_pa["actual_mi"] -show_pa["target_mi"]).astype(int)
+                    show_pa["ATE_GAP"] =(show_pa["actual_ate"]-show_pa["target_ate"]).astype(int)
+                    show_pa["MI_달성률"] =((show_pa["actual_mi"] /show_pa["target_mi"].replace(0,float("nan")))*100).round(1)
                     show_pa["ATE_달성률"]=((show_pa["actual_ate"]/show_pa["target_ate"].replace(0,float("nan")))*100).round(1)
                 else:
                     show_pa=(pa_df.groupby(["date","shift","process","line"])[
                         ["target","actual","loss_min"]
                     ].sum().reset_index())
-                    show_pa["GAP"]=show_pa["actual"]-show_pa["target"]
+                    show_pa["GAP"]   =(show_pa["actual"]-show_pa["target"]).astype(int)
                     show_pa["달성률"]=((show_pa["actual"]/show_pa["target"].replace(0,float("nan")))*100).round(1)
                 st.dataframe(show_pa.sort_values(["date","line"]).reset_index(drop=True),
                              use_container_width=True,height=360)
