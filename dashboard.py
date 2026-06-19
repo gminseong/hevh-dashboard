@@ -24,8 +24,24 @@ st.set_page_config(
 
 st.markdown("""    
 <style>
-/* Streamlit 상단 헤더 완전 숨김 */
+/* 툴바만 숨기고 사이드바 토글은 유지 */
 header[data-testid="stHeader"] {
+    background: transparent !important;
+    height: 0 !important;
+    min-height: 0 !important;
+}
+
+/* 툴바 버튼들만 숨김 (토글 제외) */
+header[data-testid="stHeader"] button:not([kind="header"]) {
+    display: none !important;
+}
+
+/* Share, 별, 연필, GitHub 아이콘만 숨김 */
+[data-testid="stToolbar"] {
+    display: none !important;
+}
+
+[data-testid="stDecoration"] {
     display: none !important;
 }
 
