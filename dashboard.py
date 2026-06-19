@@ -762,7 +762,7 @@ def to_excel_scrap(df):
     return buf.getvalue()
 
 def reset_all():
-        if v >= 100:  return "#16a34a"
+    if v >= 100:  return "#16a34a"
     elif v >= 90: return "#475569"
     elif v >= 80: return "#f97316"
     else:         return "#dc2626"
