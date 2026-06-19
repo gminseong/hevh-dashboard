@@ -705,7 +705,6 @@ def dashboard():
 
     # ── 사이드바 ──
     with st.sidebar:
-    ... (이하 기존 코드)
         st.markdown(f"**👤 {st.session_state.get('username','')}**")
         if st.button("로그아웃", use_container_width=True):
             st.session_state["logged_in"]=False; st.rerun()
