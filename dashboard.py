@@ -836,13 +836,34 @@ def dashboard():
     if fdf.empty:
         st.warning("조건에 맞는 데이터 없음"); return
 
-       # ── 헤더 ──
-       
-    st.markdown("""
+      # ── 헤더 ──
+    # 날짜 범위 계산
+    date_from = date_range[0][5:] if date_range else ""
+    date_to   = date_range[1][5:] if date_range else ""
+
+    st.markdown(f"""
     <div class="main-header">
-        <h3>🏭 한솔테크닉스 HEVH — LOSSTIME + SCRAP 분석 대시보드</h3>
-        <p>AI / SMT / PBA(MI) 공정 | 호치민 법인</p>
-    </div>""", unsafe_allow_html=True)
+        <h1>🏭 한솔테크닉스 HEVH</h1>
+        <p>LOSSTIME + SCRAP 분석 대시보드 &nbsp;|&nbsp;
+           AI / SMT / PBA(MI) 공정 &nbsp;|&nbsp; 호치민 법인</p>
+    </div>
+
+    <div class="info-banner">
+        <div class="info-banner-left">
+            <h4>📊 분석 현황 요약</h4>
+            <p>
+                📅 분석 기간: {date_from} ~ {date_to}
+                &nbsp;&nbsp;|&nbsp;&nbsp;
+                🏭 공정: {", ".join(procs) if procs else "전체"}
+                &nbsp;&nbsp;|&nbsp;&nbsp;
+                🌙 {", ".join(shifts) if shifts else "전체"}
+            </p>
+        </div>
+        <div class="info-banner-badge">
+            ⏱️ 총 {total_min:,.0f}분 ({total_hr}h)
+        </div>
+    </div>
+    """, unsafe_allow_html=True)
 
     # ── KPI 계산 ──
     total_min   = round(total_df["loss_min"].sum(), 1) if not total_df.empty else 0
