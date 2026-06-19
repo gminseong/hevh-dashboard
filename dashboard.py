@@ -24,6 +24,19 @@ st.set_page_config(
 
 st.markdown("""
 <style>
+/* Streamlit 우하단 배지 */
+div[class*="viewerBadge"] {
+    display: none !important;
+}
+iframe[title*="streamlit"] {
+    display: none !important;
+}
+.viewerBadge_container__1QSob {
+    display: none !important;
+}
+.viewerBadge_link__1S137 {
+    display: none !important;
+}
 /* GitHub 아이콘 숨김 */
 a[href*="github.com"] {
     display: none !important;
