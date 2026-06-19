@@ -1,9 +1,8 @@
 """
-[한솔테크닉스 HEVH] LOSSTIME + SCRAP 분석 대시보드 v3.7
-- 공정별 비중 파이차트 클릭 상호작용 추가
-- 음수값 제거
-- 손실유형 내림차순 + 고정색상
-- 날짜 필터 6월 기본값
+[한솔테크닉스 HEVH] LOSSTIME + SCRAP 분석 대시보드 v3.9
+- 헤더 클릭 → 초기화면(필터 리셋)
+- 수치 소수점 1자리
+- 공정별 파이차트 클릭 → 손실유형 바차트
 - GitHub 자동 저장/로드
 실행: python -m streamlit run dashboard.py
 """
@@ -33,14 +32,16 @@ st.markdown("""
     background: linear-gradient(90deg, #1e3a5f, #2563eb);
     padding: 20px; border-radius: 10px; margin-bottom: 20px;
     color: white; text-align: center;
+    cursor: pointer;
 }
+.main-header:hover { opacity: 0.9; }
 .metric-box {
     background: #f8fafc; border: 1px solid #e2e8f0;
     border-radius: 8px; padding: 16px; text-align: center;
     margin-bottom: 8px;
 }
 .metric-box:hover { background:#e8f4fd; border-color:#2563eb; }
-.metric-val { font-size: 32px; font-weight: bold; color: #1e3a5f; }
+.metric-val { font-size: 28px; font-weight: bold; color: #1e3a5f; }
 .metric-lbl { font-size: 13px; color: #64748b; margin-top: 4px; }
 .pm-p1 { background:#fef2f2; border-left:4px solid #dc2626;
           padding:10px; border-radius:4px; margin:4px 0; }
@@ -132,11 +133,10 @@ PROC_COLOR = {"AI":"#ef4444","SMT":"#3b82f6","MI":"#10b981","기타":"#9ca3af"}
 def get_github_config():
     try:
         return st.secrets["github"]["token"], st.secrets["github"]["repo"]
-    except Exception:
-        return None, None
+    except: return None, None
 
 def github_load_csv(filename):
-    token, repo = get_github_config()
+    token,repo = get_github_config()
     if not token:
         try: return pd.read_csv(filename, encoding="utf-8-sig")
         except FileNotFoundError: return pd.DataFrame()
@@ -145,14 +145,14 @@ def github_load_csv(filename):
                "Accept":"application/vnd.github.v3+json"}
     try:
         r = requests.get(url, headers=headers, timeout=10)
-        if r.status_code == 200:
+        if r.status_code==200:
             return pd.read_csv(io.StringIO(
                 base64.b64decode(r.json()["content"]).decode("utf-8")))
         return pd.DataFrame()
     except: return pd.DataFrame()
 
 def github_save_csv(df, filename, msg=None):
-    token, repo = get_github_config()
+    token,repo = get_github_config()
     if not token:
         df.to_csv(filename, index=False, encoding="utf-8-sig"); return True
     url = f"https://api.github.com/repos/{repo}/contents/{filename}"
@@ -161,7 +161,7 @@ def github_save_csv(df, filename, msg=None):
     sha = None
     try:
         r = requests.get(url, headers=headers, timeout=10)
-        if r.status_code == 200: sha = r.json().get("sha")
+        if r.status_code==200: sha = r.json().get("sha")
     except: pass
     csv_str = df.to_csv(index=False, encoding="utf-8-sig")
     content  = base64.b64encode(csv_str.encode("utf-8-sig")).decode()
@@ -232,7 +232,7 @@ def extract_slot_causes(cause_row, slots):
     if not cause_row: return result
     cells = list(cause_row)[2:2+len(slots)]
     for idx,cell in enumerate(cells):
-        if idx >= len(slots): break
+        if idx>=len(slots): break
         if cell is not None and str(cell).strip() not in ["","None","—","-"]:
             result[slots[idx]] = " ".join(str(cell).strip().split())
     return result
@@ -243,7 +243,7 @@ def extract_model_per_slot(model_row, slots):
     cells = list(model_row)[2:2+len(slots)]
     last  = ""
     for idx,cell in enumerate(cells):
-        if idx >= len(slots): break
+        if idx>=len(slots): break
         v  = str(cell or "").strip()
         mm = re.search(r'(L\d{2}[A-Z0-9_\-\.]+)', v, re.I)
         if mm:   result[slots[idx]]=mm.group(1); last=mm.group(1)
@@ -327,8 +327,8 @@ def parse_sheet(ws, process, date_str, shift):
                     loss_vals.append(float(mm.group(1)) if mm else parse_losstime(v))
                 except: loss_vals.append(0.0)
             while len(loss_vals)<len(slots): loss_vals.append(0.0)
-            loss_vals = [max(0.0,v) for v in loss_vals]
-            total     = sum(loss_vals)
+            loss_vals   = [max(0.0,v) for v in loss_vals]
+            total       = sum(loss_vals)
             models      = extract_model_per_slot(model_row, slots)
             slot_causes = extract_slot_causes(cause_row, slots)
             cause_all   = " | ".join(v for v in slot_causes.values() if v)
@@ -348,16 +348,18 @@ def parse_sheet(ws, process, date_str, shift):
                     records.append({
                         "date":date_str,"shift":shift,"process":process,
                         "line":line,"time_slot":slot,"model":models.get(slot,""),
-                        "loss_min":lv,"loss_type_code":code,"loss_type_name":name,
-                        "complexity":complexity,"loss_detail":cs,"action":action
+                        "loss_min":round(lv,1),"loss_type_code":code,
+                        "loss_type_name":name,"complexity":complexity,
+                        "loss_detail":cs,"action":action
                     })
             if total>0:
                 code_t,name_t=classify_loss_type(cause_all)
                 records.append({
                     "date":date_str,"shift":shift,"process":process,
                     "line":line,"time_slot":"TOTAL","model":models.get(slots[0],""),
-                    "loss_min":total,"loss_type_code":code_t,"loss_type_name":name_t,
-                    "complexity":complexity,"loss_detail":cause_all,"action":action
+                    "loss_min":round(total,1),"loss_type_code":code_t,
+                    "loss_type_name":name_t,"complexity":complexity,
+                    "loss_detail":cause_all,"action":action
                 })
         i+=1
     return records
@@ -414,13 +416,11 @@ def parse_files(uploaded_files):
             status.info(f"📂 스크랩: {fn}")
             sdf=parse_scrap_file(uf)
             if not sdf.empty:
-                scrap_list.append(sdf)
-                status.success(f"✅ {len(sdf):,}건")
+                scrap_list.append(sdf); status.success(f"✅ {len(sdf):,}건")
         else:
             fd=parse_date(fn) or "UNKNOWN"
             status.info(f"📂 {fn} → {process}/{fd}")
-            try:
-                wb=load_workbook(uf,data_only=True)
+            try: wb=load_workbook(uf,data_only=True)
             except Exception as e:
                 status.error(f"열기실패: {e}")
                 prog.progress((fi+1)/len(uploaded_files)); continue
@@ -481,13 +481,16 @@ def to_excel(df):
         ls=(tdf.groupby(["process","line"])["loss_min"]
             .sum().reset_index().sort_values("loss_min",ascending=False)
             .rename(columns={"loss_min":"누계손실(분)"}))
+        ls["누계손실(분)"]=ls["누계손실(분)"].round(1)
         ls["누계(시간)"]=(ls["누계손실(분)"]/60).round(1)
         ls.insert(0,"순위",range(1,len(ls)+1))
         ls.to_excel(w,sheet_name="라인별누계",index=False)
         ts=(tdf.groupby("loss_type_name")["loss_min"]
             .agg(["sum","count"]).reset_index()
             .sort_values("sum",ascending=False)
-            .rename(columns={"loss_type_name":"유형","sum":"손실(분)","count":"건수"}))
+            .rename(columns={"loss_type_name":"유형",
+                             "sum":"손실(분)","count":"건수"}))
+        ts["손실(분)"]=ts["손실(분)"].round(1)
         ts.to_excel(w,sheet_name="손실유형별",index=False)
         df.to_excel(w,sheet_name="원본데이터",index=False)
     return buf.getvalue()
@@ -507,18 +510,40 @@ def to_excel_scrap(df):
     return buf.getvalue()
 
 # ─────────────────────────────────────────────
+# 초기화 함수
+# ─────────────────────────────────────────────
+def reset_filters():
+    keys_to_clear = [
+        "kpi_focus","date_range_s","date_range_e",
+        "proc_pie_chart","type_chart","line_chart",
+        "scrap_cause_chart","scrap_line_chart",
+    ]
+    for k in keys_to_clear:
+        if k in st.session_state:
+            del st.session_state[k]
+
+# ─────────────────────────────────────────────
 # 메인 대시보드
 # ─────────────────────────────────────────────
 def dashboard():
-    st.markdown("""
-    <div class="main-header">
-        <h2>🏭 한솔테크닉스 HEVH — LOSSTIME + SCRAP 분석 대시보드</h2>
-        <p style="margin:0;opacity:0.85">AI / SMT / PBA(MI) 공정 | 호치민 법인</p>
-    </div>""", unsafe_allow_html=True)
+    # ★ 헤더 클릭 → 초기화
+    col_hd, col_reset = st.columns([6,1])
+    with col_hd:
+        st.markdown("""
+        <div class="main-header">
+            <h2>🏭 한솔테크닉스 HEVH — LOSSTIME + SCRAP 분석 대시보드</h2>
+            <p style="margin:0;opacity:0.85">AI / SMT / PBA(MI) 공정 | 호치민 법인</p>
+        </div>""", unsafe_allow_html=True)
+    with col_reset:
+        st.markdown("<br>", unsafe_allow_html=True)
+        if st.button("🏠 홈", use_container_width=True, help="필터 초기화"):
+            reset_filters()
+            st.rerun()
 
+    # ── 사이드바 ──
     with st.sidebar:
         st.markdown(f"👤 **{st.session_state.get('username','')}** 님")
-        if st.button("🚪 로그아웃",use_container_width=True):
+        if st.button("🚪 로그아웃", use_container_width=True):
             st.session_state["logged_in"]=False; st.rerun()
         st.divider()
         st.header("📂 파일 업로드")
@@ -579,6 +604,7 @@ def dashboard():
         sel_types=st.multiselect("손실유형 (미선택=전체)",types_all)
         view_mode=st.radio("조회 단위",["TOTAL(일계)","타임별(A~K)"],horizontal=True)
 
+    # ── 필터 적용 ──
     df=st.session_state.get("df",pd.DataFrame())
     scrap_df=st.session_state.get("scrap_df",pd.DataFrame())
     if df.empty:
@@ -600,8 +626,8 @@ def dashboard():
         st.warning("⚠️ 조건에 맞는 데이터 없음"); return
 
     # ── KPI ──
-    total_min=int(total_df["loss_min"].sum()) if not total_df.empty else 0
-    total_hr=total_min//60
+    total_min=round(total_df["loss_min"].sum(),1) if not total_df.empty else 0
+    total_hr=round(total_min/60,1)
     n_lines=total_df["line"].nunique() if not total_df.empty else 0
     n_days=fdf["date"].nunique()
     scrap_total=int(scrap_df["qty"].sum()) if not scrap_df.empty else 0
@@ -611,14 +637,16 @@ def dashboard():
 
     c1,c2,c3,c4,c5=st.columns(5)
     for col,val,lbl,key in [
-        (c1,f"{total_min:,}분",f"총 손실 ({total_hr}시간)","loss"),
+        (c1,f"{total_min:,.1f}분",f"총 손실 ({total_hr}시간)","loss"),
         (c2,f"{n_lines}개","분석 라인 수","line"),
         (c3,f"{n_days}일","분석 일수","date"),
         (c4,f"{scrap_total:,}ea","스크랩 누계","scrap"),
-        (c5,f"{len(scrap_df):,}건" if not scrap_df.empty else "0건","스크랩 이력","scrap_hist"),
+        (c5,f"{len(scrap_df):,}건" if not scrap_df.empty else "0건",
+            "스크랩 이력","scrap_hist"),
     ]:
         with col:
-            if st.button(f"{val}\n{lbl}",key=f"kpi_{key}",use_container_width=True):
+            if st.button(f"{val}\n{lbl}",key=f"kpi_{key}",
+                         use_container_width=True):
                 st.session_state["kpi_focus"]=key
 
     focus=st.session_state.get("kpi_focus")
@@ -626,18 +654,24 @@ def dashboard():
         with st.expander("📊 손실유형별 상세",expanded=True):
             ts=(total_df.groupby("loss_type_name")["loss_min"]
                 .sum().reset_index().sort_values("loss_min",ascending=False))
-            st.dataframe(ts.rename(columns={"loss_type_name":"유형","loss_min":"손실(분)"}),
-                         use_container_width=True)
+            ts["loss_min"]=ts["loss_min"].round(1)
+            st.dataframe(ts.rename(columns={
+                "loss_type_name":"유형","loss_min":"손실(분)"}),
+                use_container_width=True)
     elif focus=="line" and not total_df.empty:
         with st.expander("📋 라인별 누계 상세",expanded=True):
             ls=(total_df.groupby(["process","line"])["loss_min"]
                 .sum().reset_index().sort_values("loss_min",ascending=False))
-            st.dataframe(ls.rename(columns={"loss_min":"손실(분)"}),use_container_width=True)
+            ls["loss_min"]=ls["loss_min"].round(1)
+            st.dataframe(ls.rename(columns={"loss_min":"손실(분)"}),
+                         use_container_width=True)
     elif focus=="date" and not total_df.empty:
         with st.expander("📅 날짜별 상세",expanded=True):
             ds=(total_df.groupby(["date","process"])["loss_min"]
                 .sum().reset_index().sort_values("date"))
-            st.dataframe(ds.rename(columns={"loss_min":"손실(분)"}),use_container_width=True)
+            ds["loss_min"]=ds["loss_min"].round(1)
+            st.dataframe(ds.rename(columns={"loss_min":"손실(분)"}),
+                         use_container_width=True)
     elif focus in ["scrap","scrap_hist"] and not scrap_df.empty:
         with st.expander("📛 스크랩 상세",expanded=True):
             st.dataframe(scrap_df,use_container_width=True,height=300)
@@ -661,6 +695,7 @@ def dashboard():
                     .sum().reset_index()
                     .sort_values("loss_min",ascending=False)
                     .rename(columns={"loss_type_name":"유형","loss_min":"손실(분)"}))
+                ts["손실(분)"]=ts["손실(분)"].round(1)
                 fig=px.bar(ts,x="손실(분)",y="유형",orientation="h",
                            color="유형",color_discrete_map=TYPE_COLOR,height=520)
                 fig.update_layout(showlegend=False,
@@ -681,6 +716,7 @@ def dashboard():
                             ["date","shift","line","time_slot","model",
                              "loss_min","loss_detail"]
                         ].sort_values(["date","line"])
+                        dd["loss_min"]=dd["loss_min"].round(1)
                         st.dataframe(dd.reset_index(drop=True),
                                      use_container_width=True,height=300)
 
@@ -689,6 +725,7 @@ def dashboard():
                 ls=(total_df.groupby(["process","line"])["loss_min"]
                     .sum().reset_index()
                     .sort_values("loss_min",ascending=False).head(15))
+                ls["loss_min"]=ls["loss_min"].round(1)
                 fig2=px.bar(ls,x="line",y="loss_min",
                             color="process",color_discrete_map=PROC_COLOR,
                             height=520,labels={"loss_min":"손실(분)","line":"라인"})
@@ -707,69 +744,56 @@ def dashboard():
                             ["date","shift","time_slot","model",
                              "loss_min","loss_type_name","loss_detail"]
                         ].sort_values(["date","time_slot"])
+                        ld["loss_min"]=ld["loss_min"].round(1)
                         st.dataframe(ld.reset_index(drop=True),
                                      use_container_width=True,height=300)
 
-            # ★ 공정별 비중 파이차트 + 클릭 상호작용
-            st.subheader("공정별 비중 (클릭 → 상세)")
+            # ★ 공정별 비중 파이차트 + 클릭 → 손실유형 바차트
+            st.subheader("공정별 비중 (클릭 → 손실유형 확인)")
             ps=total_df.groupby("process")["loss_min"].sum().reset_index()
-            # 기타 제외 (AI/SMT/MI만)
             ps=ps[ps["process"].isin(["AI","SMT","MI"])]
+            ps["loss_min"]=ps["loss_min"].round(1)
 
-            col_pie,col_pie_detail=st.columns([1,1])
+            col_pie, col_type = st.columns([1, 1.2])
             with col_pie:
                 fig3=px.pie(ps,values="loss_min",names="process",
                             color="process",color_discrete_map=PROC_COLOR,
                             height=380)
                 fig3.update_traces(
                     textposition="inside",
-                    textinfo="percent+label+value",
-                    hovertemplate="<b>%{label}</b><br>손실: %{value:,}분<br>비중: %{percent}<extra></extra>")
+                    textinfo="percent+label",
+                    hovertemplate="<b>%{label}</b><br>손실: %{value:,.1f}분<br>비중: %{percent}<extra></extra>")
                 fig3.update_layout(margin=dict(l=0,r=0,t=20,b=0))
                 cp_click=st.plotly_chart(fig3,use_container_width=True,
                                          on_select="rerun",key="proc_pie_chart")
 
-            with col_pie_detail:
-                # ★ 클릭 시 해당 공정 상세
+            with col_type:
+                # 클릭된 공정 또는 기본값(가장 큰 공정)
                 if cp_click and cp_click.get("selection",{}).get("points"):
                     sel_proc=cp_click["selection"]["points"][0].get("label","")
-                    if sel_proc:
-                        st.markdown(f"""
-                        <div class="detail-box">
-                        <b>📋 [{sel_proc}] 공정 라인별 손실</b>
-                        </div>""", unsafe_allow_html=True)
-
-                        # 라인별 합계
-                        proc_line=(total_df[total_df["process"]==sel_proc]
-                                   .groupby("line")["loss_min"]
-                                   .sum().reset_index()
-                                   .sort_values("loss_min",ascending=False)
-                                   .rename(columns={"loss_min":"손실(분)"}))
-                        proc_line["비중(%)"]=(
-                            proc_line["손실(분)"]/proc_line["손실(분)"].sum()*100
-                        ).round(1)
-                        st.dataframe(proc_line.reset_index(drop=True),
-                                     use_container_width=True,height=180)
-
-                        # 손실유형별
-                        st.markdown(f"**{sel_proc} 손실유형 분포**")
-                        proc_type=(total_df[total_df["process"]==sel_proc]
-                                   .groupby("loss_type_name")["loss_min"]
-                                   .sum().reset_index()
-                                   .sort_values("loss_min",ascending=False)
-                                   .rename(columns={"loss_type_name":"유형",
-                                                    "loss_min":"손실(분)"}))
-                        fig_pt=px.bar(proc_type,x="손실(분)",y="유형",
-                                      orientation="h",
-                                      color="유형",
-                                      color_discrete_map=TYPE_COLOR,
-                                      height=250)
-                        fig_pt.update_layout(showlegend=False,
-                                             margin=dict(l=0,r=0,t=10,b=0),
-                                             yaxis=dict(categoryorder="total ascending"))
-                        st.plotly_chart(fig_pt,use_container_width=True)
                 else:
-                    st.info("👈 파이차트에서 공정을 클릭하세요")
+                    sel_proc=ps.sort_values("loss_min",ascending=False).iloc[0]["process"] \
+                             if not ps.empty else "MI"
+
+                if sel_proc:
+                    proc_type=(total_df[total_df["process"]==sel_proc]
+                               .groupby("loss_type_name")["loss_min"]
+                               .sum().reset_index()
+                               .sort_values("loss_min",ascending=True)
+                               .rename(columns={"loss_type_name":"유형",
+                                                "loss_min":"손실(분)"}))
+                    proc_type["손실(분)"]=proc_type["손실(분)"].round(1)
+                    st.markdown(f"**📊 {sel_proc} 공정 손실유형**")
+                    ft=px.bar(proc_type,x="손실(분)",y="유형",
+                              orientation="h",
+                              color="유형",
+                              color_discrete_map=TYPE_COLOR,
+                              height=380)
+                    ft.update_layout(showlegend=False,
+                                     margin=dict(l=0,r=0,t=10,b=0),
+                                     xaxis=dict(rangemode="tozero"),
+                                     yaxis=dict(categoryorder="total ascending"))
+                    st.plotly_chart(ft,use_container_width=True)
 
     # ── TAB2 ──
     with tab2:
@@ -778,6 +802,7 @@ def dashboard():
         else:
             st.subheader("날짜별 손실 트렌드")
             dt=(total_df.groupby(["date","process"])["loss_min"].sum().reset_index())
+            dt["loss_min"]=dt["loss_min"].round(1)
             fig4=px.line(dt,x="date",y="loss_min",color="process",
                          color_discrete_map=PROC_COLOR,markers=True,height=380,
                          labels={"loss_min":"손실(분)","date":"날짜"})
@@ -787,6 +812,7 @@ def dashboard():
 
             st.subheader("DAY vs NIGHT")
             sc=(total_df.groupby(["shift","loss_type_name"])["loss_min"].sum().reset_index())
+            sc["loss_min"]=sc["loss_min"].round(1)
             fig5=px.bar(sc,x="loss_type_name",y="loss_min",color="shift",
                         color_discrete_map={"DAY":"#f59e0b","NIGHT":"#6366f1"},
                         barmode="group",height=380,
@@ -810,7 +836,8 @@ def dashboard():
         else:
             slot_order=["A","B","C","D","E","F","G","H","I","J","K"]
             pivot=(slot_df.groupby(["line","time_slot"])["loss_min"].sum().reset_index())
-            pt=pivot.pivot(index="line",columns="time_slot",values="loss_min").fillna(0)
+            pt=pivot.pivot(index="line",columns="time_slot",
+                           values="loss_min").fillna(0).round(1)
             pt=pt[[c for c in slot_order if c in pt.columns]]
             fh=px.imshow(pt,color_continuous_scale="Reds",aspect="auto",
                          height=max(400,len(pt)*30),
@@ -821,18 +848,22 @@ def dashboard():
 
             st.subheader("시간대별 손실 합계")
             ss=(slot_df.groupby(["time_slot","process"])["loss_min"].sum().reset_index())
-            ss["time_slot"]=pd.Categorical(ss["time_slot"],categories=slot_order,ordered=True)
+            ss["loss_min"]=ss["loss_min"].round(1)
+            ss["time_slot"]=pd.Categorical(ss["time_slot"],
+                                            categories=slot_order,ordered=True)
             ss=ss.sort_values("time_slot")
             fs=px.bar(ss,x="time_slot",y="loss_min",color="process",
                       color_discrete_map=PROC_COLOR,barmode="stack",height=350,
                       labels={"loss_min":"손실(분)","time_slot":"시간대"})
-            fs.update_layout(margin=dict(l=0,r=0,t=20,b=0),yaxis=dict(rangemode="tozero"))
+            fs.update_layout(margin=dict(l=0,r=0,t=20,b=0),
+                             yaxis=dict(rangemode="tozero"))
             st.plotly_chart(fs,use_container_width=True)
 
             st.subheader("타임별 상세")
             sd=(slot_df.groupby(["date","shift","line","time_slot",
                                   "loss_type_name","loss_detail"])["loss_min"]
                 .sum().reset_index().sort_values(["date","line","time_slot"]))
+            sd["loss_min"]=sd["loss_min"].round(1)
             st.dataframe(sd,use_container_width=True,height=400)
 
     # ── TAB4: 스크랩 ──
@@ -880,9 +911,11 @@ def dashboard():
                                    mode="lines+markers",name="누계%",yaxis="y2",
                                    line=dict(color="#1e3a5f",width=2))
                     fp.update_layout(
-                        yaxis2=dict(overlaying="y",side="right",range=[0,110],ticksuffix="%"),
+                        yaxis2=dict(overlaying="y",side="right",
+                                    range=[0,110],ticksuffix="%"),
                         yaxis=dict(rangemode="tozero"),
-                        height=400,margin=dict(l=0,r=0,t=20,b=0),xaxis_tickangle=-30)
+                        height=400,margin=dict(l=0,r=0,t=20,b=0),
+                        xaxis_tickangle=-30)
                     cc2=st.plotly_chart(fp,use_container_width=True,
                                         on_select="rerun",key="scrap_cause_chart")
                     if cc2 and cc2.get("selection",{}).get("points"):
@@ -987,6 +1020,7 @@ def dashboard():
              "model","loss_min","loss_type_name","complexity","loss_detail"]
         dc2=[c for c in dc2 if c in sdf3.columns]
         if not sdf3.empty:
+            sdf3["loss_min"]=sdf3["loss_min"].round(1)
             st.dataframe(sdf3[dc2].reset_index(drop=True),
                          use_container_width=True,height=500)
         else: st.info("검색 결과 없음")
@@ -1005,6 +1039,7 @@ def dashboard():
                 .agg(["sum","count"]).reset_index()
                 .sort_values("sum",ascending=False)
                 .rename(columns={"sum":"누계손실(분)","count":"발생횟수"}))
+            pm["누계손실(분)"]=pm["누계손실(분)"].round(1)
             def pmg(row):
                 if row["발생횟수"]>=5 or row["누계손실(분)"]>=500: return "🔴🔴 P1 즉시"
                 elif row["발생횟수"]>=3 or row["누계손실(분)"]>=200: return "🔴 P1"
@@ -1022,7 +1057,7 @@ def dashboard():
                         <b>{g}</b> &nbsp;|&nbsp;
                         {row['process']} {row['line']} —
                         {row['loss_type_name']} &nbsp;|&nbsp;
-                        누계 <b>{int(row['누계손실(분)']):,}분</b> /
+                        누계 <b>{row['누계손실(분)']:,.1f}분</b> /
                         {int(row['발생횟수'])}회
                     </div>""", unsafe_allow_html=True)
 
