@@ -30,17 +30,14 @@ st.set_page_config(
 st.markdown("""
 <style>
 /* 기본 */
-.block-container { 
-    padding-top: 1.8rem !important;   /* ← 1.2rem → 1.8rem */
-    padding-bottom: 1rem !important; 
-}
+.block-container { padding-top: 1.8rem !important; padding-bottom: 1rem !important; }
 
-/* 헤더 ── 잘림 완전 수정 */
+/* 헤더 */
 .main-header {
     background: linear-gradient(135deg, #1e3a5f 0%, #1d4ed8 100%);
     padding: 22px 28px;
     border-radius: 12px;
-    margin-top: 12px;        /* ← 이거 추가 */
+    margin-top: 12px;
     margin-bottom: 18px;
     color: white;
     box-sizing: border-box;
@@ -51,17 +48,17 @@ st.markdown("""
 }
 .main-header h3 {
     margin: 0 0 6px 0;
-    font-size: 22px;          /* ← 글자 크게 */
+    font-size: 22px;
     font-weight: 700;
     white-space: normal !important;
-    word-break: break-word;   /* ← 넘치면 줄바꿈 */
+    word-break: break-word;
     overflow: visible !important;
     line-height: 1.4;
     letter-spacing: -0.3px;
 }
 .main-header p {
     margin: 0;
-    font-size: 13px;          /* ← 부제목도 크게 */
+    font-size: 13px;
     opacity: 0.85;
     white-space: normal !important;
     word-break: break-word;
@@ -132,17 +129,80 @@ st.markdown("""
     margin: 20px 0;
 }
 
-/* 사이드바 */
+/* ────────────────────────────────
+   사이드바 — 회색톤 전면 적용
+──────────────────────────────── */
 section[data-testid="stSidebar"] {
     min-width: 240px !important;
     max-width: 260px !important;
-    background: #f8fafc;
+    background-color: #f1f5f9 !important;   /* 전체 배경 — 연회색 */
 }
 section[data-testid="stSidebar"] .block-container {
     padding: 1rem 0.9rem;
+    background-color: #f1f5f9 !important;
 }
 
-/* 버튼 */
+/* 사이드바 텍스트 */
+section[data-testid="stSidebar"] * {
+    color: #374151 !important;              /* 기본 글자 — 짙은 회색 */
+}
+section[data-testid="stSidebar"] .stCaption,
+section[data-testid="stSidebar"] caption {
+    color: #6b7280 !important;              /* 캡션 — 중간 회색 */
+    font-size: 12px !important;
+}
+
+/* 사이드바 divider */
+section[data-testid="stSidebar"] hr {
+    border-color: #cbd5e1 !important;
+}
+
+/* 사이드바 expander */
+section[data-testid="stSidebar"] [data-testid="stExpander"] {
+    background-color: #e8edf2 !important;
+    border: 1px solid #cbd5e1 !important;
+    border-radius: 8px !important;
+}
+
+/* 사이드바 multiselect 태그 — 회색톤 */
+section[data-testid="stSidebar"] [data-testid="stMultiSelect"] span[data-baseweb="tag"] {
+    background-color: #475569 !important;   /* 태그 배경 — 슬레이트 회색 */
+    color: #ffffff !important;
+}
+section[data-testid="stSidebar"] [data-testid="stMultiSelect"] span[data-baseweb="tag"] span {
+    color: #ffffff !important;
+}
+
+/* 사이드바 select_slider 트랙 */
+section[data-testid="stSidebar"] [data-testid="stSlider"] div[role="slider"] {
+    background-color: #64748b !important;
+}
+section[data-testid="stSidebar"] [data-testid="stSlider"] div[data-testid="stSliderTrack"] > div {
+    background-color: #64748b !important;
+}
+
+/* 사이드바 버튼 */
+section[data-testid="stSidebar"] div[data-testid="stButton"] button {
+    background-color: #e2e8f0 !important;
+    color: #1e293b !important;
+    border: 1px solid #cbd5e1 !important;
+    border-radius: 7px !important;
+}
+section[data-testid="stSidebar"] div[data-testid="stButton"] button:hover {
+    background-color: #cbd5e1 !important;
+}
+
+/* 사이드바 primary 버튼 (분석/누적) */
+section[data-testid="stSidebar"] div[data-testid="stButton"] button[kind="primary"] {
+    background-color: #475569 !important;
+    color: #ffffff !important;
+    border: none !important;
+}
+section[data-testid="stSidebar"] div[data-testid="stButton"] button[kind="primary"]:hover {
+    background-color: #334155 !important;
+}
+
+/* 메인 버튼 */
 div[data-testid="stButton"] button {
     border-radius: 7px !important;
     font-size: 13px !important;
