@@ -29,39 +29,60 @@ st.set_page_config(
 
 st.markdown("""
 <style>
-/* 기본 */
-.block-container { padding-top: 1.8rem !important; padding-bottom: 1rem !important; }
-
-/* 헤더 — border-radius 균일 수정 */
+/* 헤더 — 배경 없는 타이틀형 */
 .main-header {
-    background: linear-gradient(135deg, #1e3a5f 0%, #1d4ed8 100%);
-    padding: 22px 28px;
-    border-radius: 14px !important;   /* ← 균일하게 */
-    -webkit-border-radius: 14px !important;
-    -moz-border-radius: 14px !important;
-    margin-top: 12px;
-    margin-bottom: 14px;
-    color: white;
-    box-sizing: border-box;
-    width: 100%;
-    overflow: hidden !important;      /* ← 내부 요소가 튀어나오지 않게 */
+    padding: 8px 4px 16px;
+    margin-bottom: 4px;
+    border-bottom: 2px solid #e2e8f0;
 }
-.main-header h3 {
-    margin: 0 0 6px 0;
-    font-size: 22px;
-    font-weight: 700;
-    white-space: normal !important;
+.main-header h1 {
+    margin: 0 0 4px 0;
+    font-size: 28px;
+    font-weight: 800;
+    color: #0f172a;
+    line-height: 1.2;
     word-break: break-word;
-    line-height: 1.4;
-    letter-spacing: -0.3px;
 }
 .main-header p {
     margin: 0;
     font-size: 13px;
-    opacity: 0.85;
-    white-space: normal !important;
-    word-break: break-word;
+    color: #64748b;
 }
+
+/* 강조 배너 */
+.info-banner {
+    background: linear-gradient(135deg, #1e3a5f 0%, #1d4ed8 100%);
+    border-radius: 14px;
+    padding: 20px 28px;
+    margin: 16px 0 20px;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.info-banner-left h4 {
+    margin: 0 0 6px 0;
+    font-size: 17px;
+    font-weight: 700;
+}
+.info-banner-left p {
+    margin: 0;
+    font-size: 12px;
+    opacity: 0.85;
+}
+.info-banner-badge {
+    background: white;
+    color: #1e3a5f;
+    border-radius: 10px;
+    padding: 10px 18px;
+    font-size: 13px;
+    font-weight: 700;
+    white-space: nowrap;
+    flex-shrink: 0;
+    margin-left: 20px;
+}
+</style>
+""", unsafe_allow_html=True)
 
 /* KPI 바 — 한 줄 압축형 */
 .kpi-bar {
@@ -816,6 +837,35 @@ def dashboard():
         st.warning("조건에 맞는 데이터 없음"); return
 
        # ── 헤더 ──
+           # ── 헤더 ──
+    # 날짜 범위 계산
+    date_from = date_range[0][5:] if date_range else ""
+    date_to   = date_range[1][5:] if date_range else ""
+
+    st.markdown(f"""
+    <div class="main-header">
+        <h1>🏭 한솔테크닉스 HEVH</h1>
+        <p>LOSSTIME + SCRAP 분석 대시보드 &nbsp;|&nbsp;
+           AI / SMT / PBA(MI) 공정 &nbsp;|&nbsp; 호치민 법인</p>
+    </div>
+
+    <div class="info-banner">
+        <div class="info-banner-left">
+            <h4>📊 분석 현황 요약</h4>
+            <p>
+                📅 분석 기간: {date_from} ~ {date_to}
+                &nbsp;&nbsp;|&nbsp;&nbsp;
+                🏭 공정: {", ".join(procs) if procs else "전체"}
+                &nbsp;&nbsp;|&nbsp;&nbsp;
+                🌙 {", ".join(shifts) if shifts else "전체"}
+            </p>
+        </div>
+        <div class="info-banner-badge">
+            ⏱️ 총 {total_min:,.0f}분 ({total_hr}h)
+        </div>
+    </div>
+    """, unsafe_allow_html=True)
+    
     st.markdown("""
     <div class="main-header">
         <h3>🏭 한솔테크닉스 HEVH — LOSSTIME + SCRAP 분석 대시보드</h3>
