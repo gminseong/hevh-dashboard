@@ -4,3 +4,4 @@ openpyxl
 xlsxwriter
 plotly
 xlrd
+requests
