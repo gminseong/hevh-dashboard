@@ -790,7 +790,7 @@ def dashboard():
     if fdf.empty:
         st.warning("조건에 맞는 데이터 없음"); return
 
-      # ── 헤더 ──
+       # ── 헤더 ──
     st.markdown("""
     <div class="main-header">
         <h3>🏭 한솔테크닉스 HEVH — LOSSTIME + SCRAP 분석 대시보드</h3>
@@ -807,11 +807,11 @@ def dashboard():
     if "kpi_focus" not in st.session_state:
         st.session_state["kpi_focus"] = None
 
-    # ── KPI 한 줄 바 ──
-    kc1, kc2, kc3, kc4, kc5 = st.columns([1, 1, 1, 1, 0.28])
+    # ── KPI 카드 ──
+    kc1, kc2, kc3, kc4, kc5 = st.columns([1, 1, 1, 1, 0.22])
 
     kpi_data = [
-        (kc1, "⏱️", f"{total_min:,.1f}분", f"({total_hr}h)", "총 손실", "loss"),
+        (kc1, "⏱️", f"{total_min:,.1f}분", f"({total_hr}h)", "총 손실",   "loss"),
         (kc2, "📍", f"{n_lines}개",          "",              "분석 라인", "line"),
         (kc3, "📅", f"{n_days}일",            "",              "분석 일수", "date"),
         (kc4, "📛", f"{scrap_total:,}ea",    "",              "스크랩",    "scrap"),
@@ -820,45 +820,61 @@ def dashboard():
     for col, icon, val1, val2, lbl, key in kpi_data:
         with col:
             is_active = st.session_state["kpi_focus"] == key
-            # 카드 배경색 — 활성 시 강조
-            bg = "#eef2ff" if is_active else "#ffffff"
-            border = "2px solid #4f46e5" if is_active else "1px solid #e2e8f0"
+            bg     = "#e2e8f0" if is_active else "#f1f5f9"
+            border = "1.5px solid #94a3b8" if is_active else "1px solid #e2e8f0"
+            val_color = "#0f172a" if is_active else "#1e293b"
             st.markdown(f"""
             <div style="
                 background:{bg};
                 border:{border};
                 border-radius:10px;
-                padding:12px 16px 8px;
-                text-align:left;
-                box-shadow:0 1px 3px rgba(0,0,0,0.06);
+                padding:14px 18px 10px;
+                box-shadow:0 1px 2px rgba(0,0,0,0.05);
+                margin-bottom:4px;
             ">
-                <div style="font-size:20px;font-weight:700;color:#1e293b;
-                            line-height:1.2;white-space:nowrap;">
-                    {val1} <span style="font-size:14px;color:#64748b;
-                                        font-weight:500;">{val2}</span>
+                <div style="
+                    font-size:21px;
+                    font-weight:700;
+                    color:{val_color};
+                    line-height:1.2;
+                    white-space:nowrap;
+                ">
+                    {val1}&nbsp;<span style="
+                        font-size:13px;
+                        color:#64748b;
+                        font-weight:400;
+                    ">{val2}</span>
                 </div>
-                <div style="font-size:12px;color:#94a3b8;margin-top:4px;">
+                <div style="
+                    font-size:12px;
+                    color:#64748b;
+                    margin-top:5px;
+                    display:flex;
+                    align-items:center;
+                    gap:4px;
+                ">
                     {icon} {lbl}
                 </div>
             </div>
             """, unsafe_allow_html=True)
-            # 드릴다운 버튼
+
             if st.button(
                 "▼ 닫기" if is_active else "↗ 상세",
                 key=f"kpi_{key}",
                 use_container_width=True,
-                type="primary" if is_active else "secondary"
+                type="secondary"
             ):
                 st.session_state["kpi_focus"] = (
                     None if is_active else key)
                 st.rerun()
 
     with kc5:
-        st.markdown("<div style='height:52px'></div>", unsafe_allow_html=True)
+        st.markdown("<div style='height:54px'></div>",
+                    unsafe_allow_html=True)
         if st.button("🏠", use_container_width=True, help="초기화"):
             reset_all(); st.rerun()
 
-    # ── KPI 드릴다운 상세 ──
+    # ── KPI 드릴다운 ──
     focus = st.session_state.get("kpi_focus")
     if focus == "loss" and not total_df.empty:
         with st.expander("📊 손실유형 상세", expanded=True):
@@ -867,22 +883,22 @@ def dashboard():
                   .sort_values("loss_min", ascending=False))
             ts["loss_min"] = ts["loss_min"].round(1)
             st.dataframe(ts.rename(
-                columns={"loss_type_name": "유형", "loss_min": "손실(분)"}),
+                columns={"loss_type_name":"유형","loss_min":"손실(분)"}),
                 use_container_width=True, height=250)
     elif focus == "line" and not total_df.empty:
         with st.expander("📋 라인별 상세", expanded=True):
-            ls = (total_df.groupby(["process", "line"])["loss_min"]
+            ls = (total_df.groupby(["process","line"])["loss_min"]
                   .sum().reset_index()
                   .sort_values("loss_min", ascending=False))
             ls["loss_min"] = ls["loss_min"].round(1)
-            st.dataframe(ls.rename(columns={"loss_min": "손실(분)"}),
+            st.dataframe(ls.rename(columns={"loss_min":"손실(분)"}),
                          use_container_width=True, height=250)
     elif focus == "date" and not total_df.empty:
         with st.expander("📅 날짜별 상세", expanded=True):
-            ds = (total_df.groupby(["date", "process"])["loss_min"]
+            ds = (total_df.groupby(["date","process"])["loss_min"]
                   .sum().reset_index().sort_values("date"))
             ds["loss_min"] = ds["loss_min"].round(1)
-            st.dataframe(ds.rename(columns={"loss_min": "손실(분)"}),
+            st.dataframe(ds.rename(columns={"loss_min":"손실(분)"}),
                          use_container_width=True, height=250)
     elif focus == "scrap" and not scrap_df.empty:
         with st.expander("📛 스크랩 상세", expanded=True):
