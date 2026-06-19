@@ -30,13 +30,17 @@ st.set_page_config(
 st.markdown("""
 <style>
 /* 기본 */
-.block-container { padding-top: 1.2rem !important; padding-bottom: 1rem !important; }
+.block-container { 
+    padding-top: 1.8rem !important;   /* ← 1.2rem → 1.8rem */
+    padding-bottom: 1rem !important; 
+}
 
 /* 헤더 ── 잘림 완전 수정 */
 .main-header {
     background: linear-gradient(135deg, #1e3a5f 0%, #1d4ed8 100%);
     padding: 22px 28px;
     border-radius: 12px;
+    margin-top: 12px;        /* ← 이거 추가 */
     margin-bottom: 18px;
     color: white;
     box-sizing: border-box;
