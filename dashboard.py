@@ -762,14 +762,17 @@ def to_excel_scrap(df):
     return buf.getvalue()
 
 def reset_all():
-    if v >= 100:  return "#16a34a"
-    elif v >= 90: return "#475569"
-    elif v >= 80: return "#f97316"
-    else:         return "#dc2626"
     keys=["kpi_focus","sel_proc","type_chart","line_chart",
           "proc_pie_chart","scrap_cause_chart","scrap_line_chart"]
     for k in keys:
         if k in st.session_state: del st.session_state[k]
+
+# ← 여기에 추가
+def get_ach_color(v):
+    if v >= 100:  return "#16a34a"
+    elif v >= 90: return "#475569"
+    elif v >= 80: return "#f97316"
+    else:         return "#dc2626"
 
 # ─────────────────────────────────────────────
 # 대시보드
