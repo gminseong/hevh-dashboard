@@ -1,6 +1,8 @@
 """
-[한솔테크닉스 HEVH] LOSSTIME + SCRAP 분석 대시보드 v3.5
-- 손실유형 그래프 내림차순 + 고정색상
+[한솔테크닉스 HEVH] LOSSTIME + SCRAP 분석 대시보드 v3.6
+- 음수값 제거 (괄호 표기 처리)
+- 그래프 y축 0 이상 고정
+- 손실유형 내림차순 + 고정색상
 - 날짜 필터 6월 기본값
 - GitHub 자동 저장/로드
 실행: python -m streamlit run dashboard.py
@@ -64,7 +66,6 @@ NIGHT_SLOTS = ["F","G","H","I","J","K"]
 DB_PATH     = "losstime_db.csv"
 SCRAP_DB    = "scrap_db.csv"
 
-# ★ 손실유형 고정 색상
 TYPE_COLOR = {
     "모델교체":           "#dc2626",
     "Magazine부족":       "#f97316",
@@ -88,7 +89,6 @@ TYPE_COLOR = {
     "Inloader불량":       "#9ca3af",
 }
 
-# ★ 세분화된 손실유형 규칙 (Magazine부족 분리)
 LOSS_TYPE_RULES = [
     ("NEW_OP",       "신규OP교육",         ["new op","đào tạo","op mới"]),
     ("MAGAZINE",     "Magazine부족",       ["magazine","magazin","mag"]),
@@ -253,10 +253,8 @@ def extract_slot_causes(cause_row, slots):
     cells = list(cause_row)[2:2+len(slots)]
     for idx,cell in enumerate(cells):
         if idx >= len(slots): break
-        slot = slots[idx]
         if cell is not None and str(cell).strip() not in ["","None","—","-"]:
-            val = " ".join(str(cell).strip().split())
-            result[slot] = val
+            result[slots[idx]] = " ".join(str(cell).strip().split())
     return result
 
 def extract_model_per_slot(model_row, slots):
@@ -276,10 +274,16 @@ def extract_model_per_slot(model_row, slots):
             result[slots[idx]] = last
     return result
 
+# ★ 음수/괄호 표기 처리
 def parse_losstime(val):
     if val is None: return 0.0
-    m = re.search(r'(\d+\.?\d*)', str(val))
-    return float(m.group(1)) if m else 0.0
+    s = str(val).strip()
+    # 괄호 표기 (521) → 0
+    if s.startswith("(") and s.endswith(")"):
+        return 0.0
+    m = re.search(r'(\d+\.?\d*)', s)
+    v = float(m.group(1)) if m else 0.0
+    return max(0.0, v)  # ★ 음수 방지
 
 def is_line_cell(val):
     return bool(re.match(
@@ -355,7 +359,10 @@ def parse_sheet(ws, process, date_str, shift):
                 except: loss_vals.append(0.0)
             while len(loss_vals)<len(slots): loss_vals.append(0.0)
 
-            total       = sum(loss_vals)
+            # ★ 음수값 전체 0으로 치환
+            loss_vals = [max(0.0, v) for v in loss_vals]
+            total     = sum(loss_vals)
+
             models      = extract_model_per_slot(model_row, slots)
             slot_causes = extract_slot_causes(cause_row, slots)
             cause_all   = " | ".join(v for v in slot_causes.values() if v)
@@ -422,10 +429,10 @@ def parse_scrap_file(uploaded_file):
             qty         = int(row.get("Qty",1) or 1)
             mm    = re.search(r'(L\d{2}[A-Z0-9_\-\.]+)', model_desc, re.I)
             model = mm.group(1) if mm else model_desc
-            process     = OPER_MAP.get(oper_desc,"기타")
-            cc,cn       = classify_scrap_cause(comment)
-            is_auto     = "Y" if "ATUO_SCRAP" in comment.upper() or \
-                                 "AUTO_SCRAP" in comment.upper() else "N"
+            process = OPER_MAP.get(oper_desc,"기타")
+            cc,cn   = classify_scrap_cause(comment)
+            is_auto = "Y" if "ATUO_SCRAP" in comment.upper() or \
+                             "AUTO_SCRAP" in comment.upper() else "N"
             records.append({
                 "work_date":work_date,"process":process,"line":start_line,
                 "model":model,"qty":qty,"cause_code":cc,"cause_name":cn,
@@ -484,9 +491,9 @@ def load_db():
         df=df[df["date"]!="UNKNOWN"].reset_index(drop=True)
     return df
 
-def save_db(df):      return github_save_csv(df, DB_PATH,  "LOSSTIME DB 업데이트")
-def load_scrap_db():  return github_load_csv(SCRAP_DB)
-def save_scrap_db(df):return github_save_csv(df, SCRAP_DB, "SCRAP DB 업데이트")
+def save_db(df):       return github_save_csv(df,DB_PATH,"LOSSTIME DB 업데이트")
+def load_scrap_db():   return github_load_csv(SCRAP_DB)
+def save_scrap_db(df): return github_save_csv(df,SCRAP_DB,"SCRAP DB 업데이트")
 
 def merge_db(existing, new_df):
     if existing.empty: return new_df
@@ -523,7 +530,8 @@ def to_excel(df):
         ts=(tdf.groupby("loss_type_name")["loss_min"]
             .agg(["sum","count"]).reset_index()
             .sort_values("sum",ascending=False)
-            .rename(columns={"loss_type_name":"유형","sum":"손실(분)","count":"건수"}))
+            .rename(columns={"loss_type_name":"유형",
+                             "sum":"손실(분)","count":"건수"}))
         ts.to_excel(w,sheet_name="손실유형별",index=False)
         df.to_excel(w,sheet_name="원본데이터",index=False)
     return buf.getvalue()
@@ -553,7 +561,6 @@ def dashboard():
     </div>
     """, unsafe_allow_html=True)
 
-    # ── 사이드바 ──
     with st.sidebar:
         st.markdown(f"👤 **{st.session_state.get('username','')}** 님")
         if st.button("🚪 로그아웃", use_container_width=True):
@@ -567,7 +574,7 @@ def dashboard():
                                   accept_multiple_files=True)
         if uploaded:
             if st.button("🚀 분석 시작 / DB 누적",
-                         type="primary", use_container_width=True):
+                         type="primary",use_container_width=True):
                 with st.spinner("파싱 중..."):
                     nl,ns=parse_files(uploaded)
                 if not nl.empty:
@@ -588,7 +595,7 @@ def dashboard():
                     st.error("파싱 데이터 없음")
 
         st.divider()
-        if st.button("💾 DB 불러오기 (GitHub)", use_container_width=True):
+        if st.button("💾 DB 불러오기 (GitHub)",use_container_width=True):
             with st.spinner("로드 중..."):
                 db=load_db(); sdb=load_scrap_db()
             if not db.empty:
@@ -613,8 +620,8 @@ def dashboard():
 
         # ★ 6월 기본값
         june=[d for d in dates if d.startswith("2026-06")]
-        def_s = june[0]  if june else dates[0]
-        def_e = june[-1] if june else dates[-1]
+        def_s=june[0]  if june else dates[0]
+        def_e=june[-1] if june else dates[-1]
 
         if len(dates)>=2:
             date_range=st.select_slider("날짜 범위",options=dates,
@@ -666,15 +673,14 @@ def dashboard():
         st.session_state["kpi_focus"]=None
 
     c1,c2,c3,c4,c5=st.columns(5)
-    kpi_items=[
+    for col,val,lbl,key in [
         (c1,f"{total_min:,}분",f"총 손실 ({total_hr}시간)","loss"),
         (c2,f"{n_lines}개","분석 라인 수","line"),
         (c3,f"{n_days}일","분석 일수","date"),
         (c4,f"{scrap_total:,}ea","스크랩 누계","scrap"),
         (c5,f"{len(scrap_df):,}건" if not scrap_df.empty else "0건",
             "스크랩 이력","scrap_hist"),
-    ]
-    for col,val,lbl,key in kpi_items:
+    ]:
         with col:
             if st.button(f"{val}\n{lbl}",key=f"kpi_{key}",
                          use_container_width=True):
@@ -724,28 +730,24 @@ def dashboard():
                     .sum().reset_index()
                     .sort_values("loss_min",ascending=False)
                     .rename(columns={"loss_type_name":"유형","loss_min":"손실(분)"}))
-                fig=px.bar(ts, x="손실(분)", y="유형",
-                           orientation="h",
-                           color="유형",
-                           color_discrete_map=TYPE_COLOR,
-                           height=520)
+                fig=px.bar(ts,x="손실(분)",y="유형",orientation="h",
+                           color="유형",color_discrete_map=TYPE_COLOR,height=520)
                 fig.update_layout(
                     showlegend=False,
                     margin=dict(l=0,r=0,t=20,b=0),
-                    yaxis=dict(categoryorder="total ascending"))
-                clicked_type=st.plotly_chart(
-                    fig,use_container_width=True,
-                    on_select="rerun",key="type_chart")
-                if clicked_type and \
-                   clicked_type.get("selection",{}).get("points"):
-                    sel=clicked_type["selection"]["points"][0]
-                    sn=sel.get("label") or sel.get("y","")
-                    if sn:
+                    yaxis=dict(categoryorder="total ascending"),
+                    xaxis=dict(rangemode="tozero"))  # ★ x축 0 이상
+                ct=st.plotly_chart(fig,use_container_width=True,
+                                   on_select="rerun",key="type_chart")
+                if ct and ct.get("selection",{}).get("points"):
+                    sn2=ct["selection"]["points"][0]
+                    sn2=sn2.get("label") or sn2.get("y","")
+                    if sn2:
                         st.markdown(f"""
                         <div class="detail-box">
-                        <b>📋 [{sn}] 상세 내역</b>
+                        <b>📋 [{sn2}] 상세 내역</b>
                         </div>""", unsafe_allow_html=True)
-                        dd=fdf[fdf["loss_type_name"]==sn][
+                        dd=fdf[fdf["loss_type_name"]==sn2][
                             ["date","shift","line","time_slot","model",
                              "loss_min","loss_detail"]
                         ].sort_values(["date","line"])
@@ -761,13 +763,13 @@ def dashboard():
                             color="process",color_discrete_map=PROC_COLOR,
                             height=520,
                             labels={"loss_min":"손실(분)","line":"라인"})
-                fig2.update_layout(margin=dict(l=0,r=0,t=20,b=0))
-                clicked_line=st.plotly_chart(
-                    fig2,use_container_width=True,
-                    on_select="rerun",key="line_chart")
-                if clicked_line and \
-                   clicked_line.get("selection",{}).get("points"):
-                    sl=clicked_line["selection"]["points"][0].get("x","")
+                fig2.update_layout(
+                    margin=dict(l=0,r=0,t=20,b=0),
+                    yaxis=dict(rangemode="tozero"))  # ★ y축 0 이상
+                cl=st.plotly_chart(fig2,use_container_width=True,
+                                   on_select="rerun",key="line_chart")
+                if cl and cl.get("selection",{}).get("points"):
+                    sl=cl["selection"]["points"][0].get("x","")
                     if sl:
                         st.markdown(f"""
                         <div class="detail-box">
@@ -784,8 +786,7 @@ def dashboard():
             ps=total_df.groupby("process")["loss_min"].sum().reset_index()
             cp,_=st.columns([1,2])
             fig3=px.pie(ps,values="loss_min",names="process",
-                        color="process",color_discrete_map=PROC_COLOR,
-                        height=320)
+                        color="process",color_discrete_map=PROC_COLOR,height=320)
             fig3.update_layout(margin=dict(l=0,r=0,t=20,b=0))
             cp.plotly_chart(fig3,use_container_width=True)
 
@@ -799,7 +800,8 @@ def dashboard():
             fig4=px.line(dt,x="date",y="loss_min",color="process",
                          color_discrete_map=PROC_COLOR,markers=True,height=380,
                          labels={"loss_min":"손실(분)","date":"날짜"})
-            fig4.update_layout(margin=dict(l=0,r=0,t=20,b=0))
+            fig4.update_layout(margin=dict(l=0,r=0,t=20,b=0),
+                               yaxis=dict(rangemode="tozero"))
             st.plotly_chart(fig4,use_container_width=True)
 
             st.subheader("DAY vs NIGHT")
@@ -810,7 +812,8 @@ def dashboard():
                         barmode="group",height=380,
                         labels={"loss_min":"손실(분)","loss_type_name":"손실유형"})
             fig5.update_layout(margin=dict(l=0,r=0,t=20,b=0),
-                               xaxis_tickangle=-30)
+                               xaxis_tickangle=-30,
+                               yaxis=dict(rangemode="tozero"))
             st.plotly_chart(fig5,use_container_width=True)
 
     # ── TAB3 ──
@@ -848,7 +851,8 @@ def dashboard():
             fs=px.bar(ss,x="time_slot",y="loss_min",color="process",
                       color_discrete_map=PROC_COLOR,barmode="stack",height=350,
                       labels={"loss_min":"손실(분)","time_slot":"시간대"})
-            fs.update_layout(margin=dict(l=0,r=0,t=20,b=0))
+            fs.update_layout(margin=dict(l=0,r=0,t=20,b=0),
+                             yaxis=dict(rangemode="tozero"))
             st.plotly_chart(fs,use_container_width=True)
 
             st.subheader("타임별 상세")
@@ -907,6 +911,7 @@ def dashboard():
                     fp.update_layout(
                         yaxis2=dict(overlaying="y",side="right",
                                     range=[0,110],ticksuffix="%"),
+                        yaxis=dict(rangemode="tozero"),
                         height=400,margin=dict(l=0,r=0,t=20,b=0),
                         xaxis_tickangle=-30)
                     cc2=st.plotly_chart(fp,use_container_width=True,
@@ -936,10 +941,10 @@ def dashboard():
                 fl=px.bar(lg,x="line",y="qty",color="process",
                           color_discrete_map=PROC_COLOR,height=350,
                           labels={"qty":"수량","line":"라인"})
-                fl.update_layout(margin=dict(l=0,r=0,t=20,b=0))
+                fl.update_layout(margin=dict(l=0,r=0,t=20,b=0),
+                                 yaxis=dict(rangemode="tozero"))
                 csl=st.plotly_chart(fl,use_container_width=True,
-                                    on_select="rerun",
-                                    key="scrap_line_chart")
+                                    on_select="rerun",key="scrap_line_chart")
                 if csl and csl.get("selection",{}).get("points"):
                     ssl=csl["selection"]["points"][0].get("x","")
                     if ssl:
@@ -957,7 +962,8 @@ def dashboard():
                             color_discrete_map=PROC_COLOR,markers=True,
                             height=320,
                             labels={"qty":"수량","work_date":"날짜"})
-                fdt.update_layout(margin=dict(l=0,r=0,t=20,b=0))
+                fdt.update_layout(margin=dict(l=0,r=0,t=20,b=0),
+                                  yaxis=dict(rangemode="tozero"))
                 st.plotly_chart(fdt,use_container_width=True)
 
                 st.subheader("🔧 개선 우선순위")
@@ -969,8 +975,8 @@ def dashboard():
 
                 def sg(row):
                     if row["수량"]>=10 or row["발생횟수"]>=5: return "🔴🔴 즉시개선"
-                    elif row["수량"]>=5 or row["발생횟수"]>=3: return "🔴 긴급"
-                    elif row["수량"]>=3 or row["발생횟수"]>=2: return "🟠 주의"
+                    elif row["수량"]>=5  or row["발생횟수"]>=3: return "🔴 긴급"
+                    elif row["수량"]>=3  or row["발생횟수"]>=2: return "🟠 주의"
                     else: return "🟡 모니터링"
 
                 imp["우선순위"]=imp.apply(sg,axis=1)
@@ -1095,7 +1101,7 @@ def dashboard():
             st.markdown("#### 📋 CSV")
             st.download_button("📥 CSV 다운로드",
                                data=fdf.to_csv(index=False,
-                                               encoding="utf-8-sig").encode("utf-8-sig"),
+                                   encoding="utf-8-sig").encode("utf-8-sig"),
                                file_name="HEVH_LOSSTIME_데이터.csv",
                                mime="text/csv",
                                use_container_width=True)
