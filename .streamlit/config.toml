@@ -4,5 +4,7 @@ backgroundColor = "#ffffff"
 secondaryBackgroundColor = "#f1f5f9"
 textColor = "#1e293b"
 font = "sans serif"
+
 [client]
-toolbarMode = "minimal"
+toolbarMode = "viewer"
+showErrorDetails = false
