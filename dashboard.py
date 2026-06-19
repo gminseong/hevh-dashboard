@@ -767,13 +767,26 @@ def dashboard():
                 cp_click=st.plotly_chart(fig3,use_container_width=True,
                                          on_select="rerun",key="proc_pie_chart")
 
-            with col_type:
-                # 클릭된 공정 또는 기본값(가장 큰 공정)
-                if cp_click and cp_click.get("selection",{}).get("points"):
-                    sel_proc=cp_click["selection"]["points"][0].get("label","")
-                else:
-                    sel_proc=ps.sort_values("loss_min",ascending=False).iloc[0]["process"] \
-                             if not ps.empty else "MI"
+           with col_type:
+    sel_proc = ""
+    if cp_click and cp_click.get("selection",{}).get("points"):
+        pt = cp_click["selection"]["points"][0]
+        # ★ 파이차트 클릭 키 전체 탐색
+        sel_proc = (pt.get("label") or
+                    pt.get("customdata") or
+                    pt.get("text") or
+                    pt.get("name") or "")
+        if isinstance(sel_proc, list):
+            sel_proc = sel_proc[0] if sel_proc else ""
+        sel_proc = str(sel_proc).strip()
+        # AI/SMT/MI 중 하나인지 검증
+        if sel_proc not in ["AI","SMT","MI"]:
+            sel_proc = ""
+
+    # 클릭 없거나 인식 실패 → 가장 큰 공정 기본값
+    if not sel_proc:
+        sel_proc = ps.sort_values("loss_min",ascending=False).iloc[0]["process"] \
+                   if not ps.empty else "MI"
 
                 if sel_proc:
                     proc_type=(total_df[total_df["process"]==sel_proc]
