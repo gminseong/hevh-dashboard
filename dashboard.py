@@ -24,11 +24,27 @@ st.set_page_config(
 
 st.markdown("""
 <style>
+/* Streamlit 상단 헤더 완전 숨김 */
+header[data-testid="stHeader"] {
+    display: none !important;
+}
+
 /* 기본 */
 .block-container {
     padding-top: 1.8rem !important;
     padding-bottom: 1rem !important;
+    margin-top: 0 !important;
 }
+
+/* ── 헤더 — 배경 없는 타이틀형 ── */
+.main-header {
+    padding: 8px 4px 14px;
+    margin-bottom: 4px;
+    border-bottom: 2px solid #e2e8f0;
+}
+... (이하 기존 CSS 동일)
+</style>
+""", unsafe_allow_html=True)
 
 /* ── 헤더 — 배경 없는 타이틀형 ── */
 .main-header {
