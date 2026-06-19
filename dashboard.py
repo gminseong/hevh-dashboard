@@ -1,9 +1,9 @@
 """
-[한솔테크닉스 HEVH] LOSSTIME + SCRAP 분석 대시보드 v4.1
-- UI 전면 개선 (차분한 디자인, 원색 제거)
-- 헤더 잘림 수정 / KPI 정리
-- 사이드바 v4.0 기준 유지 (200~220px)
-- Tab1 하단 트렌드+시간대 차트 추가
+[한솔테크닉스 HEVH] LOSSTIME + SCRAP 분석 대시보드 v4.2
+- 헤더 잘림 완전 수정
+- 색상 강조 복원 (주요 손실 빨강, 공정별 원색)
+- 사이드바 폭 확대 (240~260px)
+- Tab1 하단 트렌드+시간대 차트 유지
 - GitHub 자동 저장/로드
 실행: python -m streamlit run dashboard.py
 """
@@ -32,24 +32,30 @@ st.markdown("""
 /* 기본 */
 .block-container { padding-top: 1.2rem !important; padding-bottom: 1rem !important; }
 
-/* 헤더 */
+/* 헤더 ── 잘림 완전 수정 */
 .main-header {
     background: linear-gradient(135deg, #1e3a5f 0%, #1d4ed8 100%);
-    padding: 20px 32px;
+    padding: 16px 24px;
     border-radius: 12px;
-    margin-bottom: 20px;
+    margin-bottom: 18px;
     color: white;
+    box-sizing: border-box;
+    width: 100%;
+    overflow: visible;
 }
 .main-header h3 {
     margin: 0 0 4px 0;
-    font-size: 20px;
+    font-size: 17px;
     font-weight: 700;
-    white-space: nowrap;
+    white-space: normal;
+    word-break: keep-all;
+    line-height: 1.4;
 }
 .main-header p {
     margin: 0;
     font-size: 12px;
-    opacity: 0.75;
+    opacity: 0.80;
+    white-space: normal;
 }
 
 /* KPI 카드 */
@@ -57,12 +63,12 @@ st.markdown("""
     background: #ffffff;
     border: 1px solid #e2e8f0;
     border-radius: 10px;
-    padding: 14px 12px 10px;
+    padding: 14px 10px 10px;
     text-align: center;
     min-height: 76px;
 }
 .kpi-val {
-    font-size: 22px;
+    font-size: 20px;
     font-weight: 700;
     color: #1e293b;
     line-height: 1.3;
@@ -87,7 +93,7 @@ st.markdown("""
 /* PM 등급 */
 .pm-p1 {
     background: #fef2f2;
-    border-left: 3px solid #ef4444;
+    border-left: 4px solid #dc2626;
     padding: 8px 14px;
     border-radius: 6px;
     margin: 4px 0;
@@ -95,7 +101,7 @@ st.markdown("""
 }
 .pm-p2 {
     background: #fff7ed;
-    border-left: 3px solid #f97316;
+    border-left: 4px solid #f97316;
     padding: 8px 14px;
     border-radius: 6px;
     margin: 4px 0;
@@ -103,7 +109,7 @@ st.markdown("""
 }
 .pm-p3 {
     background: #fefce8;
-    border-left: 3px solid #eab308;
+    border-left: 4px solid #eab308;
     padding: 8px 14px;
     border-radius: 6px;
     margin: 4px 0;
@@ -113,18 +119,18 @@ st.markdown("""
 /* 섹션 구분선 */
 .section-divider {
     border: none;
-    border-top: 1px solid #f1f5f9;
+    border-top: 1px solid #e2e8f0;
     margin: 20px 0;
 }
 
-/* 사이드바 — v4.0 기준 */
+/* 사이드바 — 240~260px 확대 */
 section[data-testid="stSidebar"] {
-    min-width: 200px !important;
-    max-width: 220px !important;
+    min-width: 240px !important;
+    max-width: 260px !important;
     background: #f8fafc;
 }
 section[data-testid="stSidebar"] .block-container {
-    padding: 1rem 0.8rem;
+    padding: 1rem 0.9rem;
 }
 
 /* 버튼 */
@@ -132,13 +138,6 @@ div[data-testid="stButton"] button {
     border-radius: 7px !important;
     font-size: 13px !important;
     font-weight: 500 !important;
-}
-
-/* 작은 버튼 */
-.small-btn button {
-    padding: 2px 8px !important;
-    font-size: 12px !important;
-    min-height: 28px !important;
 }
 </style>
 """, unsafe_allow_html=True)
@@ -151,33 +150,35 @@ NIGHT_SLOTS = ["F","G","H","I","J","K"]
 DB_PATH     = "losstime_db.csv"
 SCRAP_DB    = "scrap_db.csv"
 
+# ★ 색상: 주요 손실 빨강 강조 + 공정별 원색 유지
 TYPE_COLOR = {
-    "모델교체":           "#475569",
-    "Magazine부족":       "#64748b",
-    "신규OP교육":         "#7c3aed",
-    "Printer불량":        "#0369a1",
-    "SMT대기":            "#0891b2",
-    "기타":               "#94a3b8",
-    "자재부족":           "#9333ea",
-    "RH3삽입불량":        "#b45309",
-    "Mouter불량":         "#0f766e",
-    "Axial불량":          "#be185d",
-    "Wave Solder불량":    "#1d4ed8",
-    "ICT/ATE불량":        "#15803d",
-    "AOI/S-AOI불량":      "#b45309",
-    "계획완료":           "#cbd5e1",
-    "설비고장(기타)":     "#dc2626",
-    "Coating/Reflow불량": "#047857",
-    "XGZ불량":            "#7c3aed",
-    "Jumper불량":         "#be123c",
-    "SPI불량":            "#075985",
-    "Inloader불량":       "#b0bec5",
+    "모델교체":           "#dc2626",   # 🔴 빨강 — 최대 손실
+    "Magazine부족":       "#f97316",   # 주황
+    "신규OP교육":         "#7c3aed",   # 보라
+    "Printer불량":        "#0369a1",   # 파랑
+    "SMT대기":            "#0891b2",   # 청록
+    "기타":               "#94a3b8",   # 회색
+    "자재부족":           "#9333ea",   # 진보라
+    "RH3삽입불량":        "#b45309",   # 갈색
+    "Mouter불량":         "#0f766e",   # 녹청
+    "Axial불량":          "#be185d",   # 핑크
+    "Wave Solder불량":    "#1d4ed8",   # 진파랑
+    "ICT/ATE불량":        "#15803d",   # 초록
+    "AOI/S-AOI불량":      "#d97706",   # 황금
+    "계획완료":           "#cbd5e1",   # 연회색
+    "설비고장(기타)":     "#ef4444",   # 빨강
+    "Coating/Reflow불량": "#047857",   # 진초록
+    "XGZ불량":            "#7c3aed",   # 보라
+    "Jumper불량":         "#be123c",   # 진핑크
+    "SPI불량":            "#075985",   # 진파랑
+    "Inloader불량":       "#64748b",   # 슬레이트
 }
 
+# ★ 공정별 원색 복원
 PROC_COLOR = {
-    "AI":  "#475569",
-    "SMT": "#1d4ed8",
-    "MI":  "#0f766e",
+    "AI":  "#ef4444",   # 빨강
+    "SMT": "#3b82f6",   # 파랑
+    "MI":  "#10b981",   # 초록
     "기타":"#94a3b8",
 }
 
@@ -722,7 +723,7 @@ def dashboard():
         <p>AI &nbsp;/&nbsp; SMT &nbsp;/&nbsp; PBA(MI) 공정 &nbsp;|&nbsp; 호치민 법인</p>
     </div>""", unsafe_allow_html=True)
 
-    # ── KPI ──
+    # ── KPI (4개) ──
     total_min  =round(total_df["loss_min"].sum(),1) if not total_df.empty else 0
     total_hr   =round(total_min/60,1)
     n_lines    =total_df["line"].nunique() if not total_df.empty else 0
@@ -732,7 +733,7 @@ def dashboard():
     if "kpi_focus" not in st.session_state:
         st.session_state["kpi_focus"]=None
 
-    kc1,kc2,kc3,kc4,kc5=st.columns([1,1,1,1,0.3])
+    kc1,kc2,kc3,kc4,kc5=st.columns([1,1,1,1,0.28])
     kpi_list=[
         (kc1,"⏱️","총 손실",f"{total_min:,.1f}분 ({total_hr}h)","loss"),
         (kc2,"📍","분석 라인",f"{n_lines}개","line"),
@@ -756,7 +757,7 @@ def dashboard():
         if st.button("🏠", use_container_width=True, help="초기화"):
             reset_all(); st.rerun()
 
-    # KPI 상세
+    # KPI 상세 드릴다운
     focus=st.session_state.get("kpi_focus")
     if focus=="loss" and not total_df.empty:
         with st.expander("📊 손실유형 상세",expanded=True):
@@ -792,12 +793,16 @@ def dashboard():
         "📛 스크랩","🔍 상세 조회","🔧 PM","⬇️ 다운로드"
     ])
 
-    # ── TAB1 ──
+    # ════════════════════════════════
+    # TAB 1 — 손실 분석
+    # ════════════════════════════════
     with tab1:
         if total_df.empty:
             st.warning("TOTAL 데이터 없음")
         else:
             col_l,col_r=st.columns(2)
+
+            # 손실유형별 가로 막대
             with col_l:
                 st.markdown("#### 손실유형별 누계")
                 ts=(total_df.groupby("loss_type_name")["loss_min"]
@@ -831,6 +836,7 @@ def dashboard():
                         st.dataframe(dd.reset_index(drop=True),
                                      use_container_width=True,height=280)
 
+            # 라인별 TOP 15
             with col_r:
                 st.markdown("#### 라인별 누계 TOP 15")
                 ls=(total_df.groupby(["process","line"])["loss_min"]
@@ -844,7 +850,8 @@ def dashboard():
                             labels={"loss_min":"손실(분)","line":"라인"})
                 fig2.update_layout(
                     margin=dict(l=0,r=0,t=10,b=0),
-                    yaxis=dict(rangemode="tozero"))
+                    yaxis=dict(rangemode="tozero"),
+                    legend=dict(orientation="h",y=1.05))
                 cl=st.plotly_chart(fig2,use_container_width=True,
                                    on_select="rerun",key="line_chart")
                 if cl and cl.get("selection",{}).get("points"):
@@ -924,7 +931,7 @@ def dashboard():
                     yaxis=dict(categoryorder="total ascending"))
                 st.plotly_chart(ft,use_container_width=True)
 
-            # ── 날짜별 트렌드 + 시간대별 손실 (신규 추가) ──
+            # ── 날짜별 트렌드 + 시간대별 손실 ──
             st.markdown("<hr class='section-divider'>",
                         unsafe_allow_html=True)
             col_trend,col_slot=st.columns(2)
@@ -982,7 +989,9 @@ def dashboard():
                 else:
                     st.info("시간대 데이터 없음")
 
-    # ── TAB2 ──
+    # ════════════════════════════════
+    # TAB 2 — 트렌드
+    # ════════════════════════════════
     with tab2:
         if total_df.empty:
             st.warning("TOTAL 데이터 없음")
@@ -993,8 +1002,9 @@ def dashboard():
             dt["loss_min"]=dt["loss_min"].round(1)
             fig4=px.line(dt,x="date",y="loss_min",color="process",
                          color_discrete_map=PROC_COLOR,markers=True,
-                         height=360,
-                         labels={"loss_min":"손실(분)","date":"날짜"})
+                         height=380,
+                         labels={"loss_min":"손실(분)","date":"날짜",
+                                 "process":"공정"})
             fig4.update_layout(
                 margin=dict(l=0,r=0,t=10,b=0),
                 yaxis=dict(rangemode="tozero"))
@@ -1005,17 +1015,20 @@ def dashboard():
                 .sum().reset_index())
             sc["loss_min"]=sc["loss_min"].round(1)
             fig5=px.bar(sc,x="loss_type_name",y="loss_min",color="shift",
-                        color_discrete_map={"DAY":"#64748b","NIGHT":"#1d4ed8"},
-                        barmode="group",height=360,
+                        color_discrete_map={"DAY":"#f59e0b","NIGHT":"#6366f1"},
+                        barmode="group",height=380,
                         labels={"loss_min":"손실(분)",
-                                "loss_type_name":"손실유형"})
+                                "loss_type_name":"손실유형",
+                                "shift":"구분"})
             fig5.update_layout(
                 margin=dict(l=0,r=0,t=10,b=0),
                 xaxis_tickangle=-30,
                 yaxis=dict(rangemode="tozero"))
             st.plotly_chart(fig5,use_container_width=True)
 
-    # ── TAB3 ──
+    # ════════════════════════════════
+    # TAB 3 — 타임별
+    # ════════════════════════════════
     with tab3:
         st.markdown("#### 라인 × 시간대 히트맵")
         slot_df=df[
@@ -1034,7 +1047,7 @@ def dashboard():
             pt=pivot.pivot(index="line",columns="time_slot",
                            values="loss_min").fillna(0).round(1)
             pt=pt[[c for c in slot_order if c in pt.columns]]
-            fh=px.imshow(pt,color_continuous_scale="Blues",aspect="auto",
+            fh=px.imshow(pt,color_continuous_scale="Reds",aspect="auto",
                          height=max(380,len(pt)*28),
                          labels={"x":"시간대","y":"라인","color":"손실(분)"})
             fh.update_layout(margin=dict(l=0,r=0,t=10,b=0))
@@ -1050,7 +1063,8 @@ def dashboard():
             fs=px.bar(ss,x="time_slot",y="loss_min",color="process",
                       color_discrete_map=PROC_COLOR,barmode="stack",
                       height=320,
-                      labels={"loss_min":"손실(분)","time_slot":"시간대"})
+                      labels={"loss_min":"손실(분)","time_slot":"시간대",
+                              "process":"공정"})
             fs.update_layout(
                 margin=dict(l=0,r=0,t=10,b=0),
                 yaxis=dict(rangemode="tozero"))
@@ -1065,7 +1079,9 @@ def dashboard():
             sd["loss_min"]=sd["loss_min"].round(1)
             st.dataframe(sd,use_container_width=True,height=360)
 
-    # ── TAB4 ──
+    # ════════════════════════════════
+    # TAB 4 — 스크랩
+    # ════════════════════════════════
     with tab4:
         st.markdown("#### 📛 스크랩 분석")
         if scrap_df.empty:
@@ -1114,7 +1130,7 @@ def dashboard():
                     fp=go.Figure()
                     fp.add_bar(x=cg["cause_name"],y=cg["qty"],
                                name="수량",
-                               marker_color="#475569")
+                               marker_color="#ef4444")
                     fp.add_scatter(x=cg["cause_name"],y=cg["누계%"],
                                    mode="lines+markers",name="누계%",
                                    yaxis="y2",
@@ -1155,10 +1171,12 @@ def dashboard():
                     .sort_values("qty",ascending=False).head(15))
                 fl=px.bar(lg,x="line",y="qty",color="process",
                           color_discrete_map=PROC_COLOR,height=320,
-                          labels={"qty":"수량","line":"라인"})
+                          labels={"qty":"수량","line":"라인",
+                                  "process":"공정"})
                 fl.update_layout(
                     margin=dict(l=0,r=0,t=10,b=0),
-                    yaxis=dict(rangemode="tozero"))
+                    yaxis=dict(rangemode="tozero"),
+                    legend=dict(orientation="h",y=1.05))
                 csl=st.plotly_chart(fl,use_container_width=True,
                                     on_select="rerun",
                                     key="scrap_line_chart")
@@ -1179,7 +1197,8 @@ def dashboard():
                 fdt=px.line(dg,x="work_date",y="qty",color="process",
                             color_discrete_map=PROC_COLOR,
                             markers=True,height=300,
-                            labels={"qty":"수량","work_date":"날짜"})
+                            labels={"qty":"수량","work_date":"날짜",
+                                    "process":"공정"})
                 fdt.update_layout(
                     margin=dict(l=0,r=0,t=10,b=0),
                     yaxis=dict(rangemode="tozero"))
@@ -1235,7 +1254,9 @@ def dashboard():
                 st.dataframe(sshow[dc].reset_index(drop=True),
                              use_container_width=True,height=360)
 
-    # ── TAB5 ──
+    # ════════════════════════════════
+    # TAB 5 — 상세 조회
+    # ════════════════════════════════
     with tab5:
         st.markdown("#### 상세 데이터 조회")
         srch2=st.text_input("🔍 키워드 (라인/원인/모델)")
@@ -1259,7 +1280,9 @@ def dashboard():
         else:
             st.info("검색 결과 없음")
 
-    # ── TAB6 ──
+    # ════════════════════════════════
+    # TAB 6 — PM
+    # ════════════════════════════════
     with tab6:
         st.markdown("#### 🔧 설비보전 PM 우선순위")
         if total_df.empty:
@@ -1300,7 +1323,9 @@ def dashboard():
                         {int(row['발생횟수'])}회
                     </div>""", unsafe_allow_html=True)
 
-    # ── TAB7 ──
+    # ════════════════════════════════
+    # TAB 7 — 다운로드
+    # ════════════════════════════════
     with tab7:
         st.markdown("#### ⬇️ 다운로드")
         ca2,cb2,cc2=st.columns(3)
