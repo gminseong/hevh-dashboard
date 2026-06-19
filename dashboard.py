@@ -914,11 +914,62 @@ def dashboard():
         "📛 스크랩","🔍 상세 조회","🔧 PM","⬇️ 다운로드"
     ])
 
-    # ════════ TAB1 ════════
+     # ════════ TAB1 ════════
     with tab1:
         if total_df.empty:
             st.warning("TOTAL 데이터 없음")
         else:
+            # ── 1순위: 날짜별 트렌드 + 시간대별 손실 ──
+            col_trend, col_slot = st.columns(2)
+
+            with col_trend:
+                st.markdown("#### 📈 날짜별 손실 트렌드")
+                dt=(total_df.groupby(["date","process"])["loss_min"]
+                    .sum().reset_index())
+                dt["loss_min"]=dt["loss_min"].round(1)
+                fig_t=px.line(dt,x="date",y="loss_min",color="process",
+                              color_discrete_map=PROC_COLOR,markers=True,height=320,
+                              labels={"loss_min":"손실(분)","date":"날짜","process":"공정"})
+                fig_t.update_layout(margin=dict(l=0,r=0,t=10,b=0),
+                                    yaxis=dict(rangemode="tozero"),
+                                    legend=dict(orientation="h",y=1.05))
+                st.plotly_chart(fig_t,use_container_width=True)
+
+            with col_slot:
+                st.markdown("#### 🕐 시간대별 손실")
+                slot_order=["A","B","C","D","E","F","G","H","I","J","K"]
+                slot_df2=df[
+                    (df["date"]>=date_range[0])&
+                    (df["date"]<=date_range[1])&
+                    (df["shift"].isin(shifts or ["DAY","NIGHT"]))&
+                    (df["process"].isin(procs or ["AI","SMT","MI"]))&
+                    (df["time_slot"]!="TOTAL")
+                ].copy()
+                if sel_lines:
+                    slot_df2=slot_df2[slot_df2["line"].isin(sel_lines)]
+                if not slot_df2.empty:
+                    ss=(slot_df2.groupby(["time_slot","process"])["loss_min"]
+                        .sum().reset_index())
+                    ss["loss_min"]=ss["loss_min"].round(1)
+                    ss["time_slot"]=pd.Categorical(
+                        ss["time_slot"],categories=slot_order,ordered=True)
+                    ss=ss.sort_values("time_slot")
+                    fig_s=px.bar(ss,x="time_slot",y="loss_min",color="process",
+                                 color_discrete_map=PROC_COLOR,barmode="stack",
+                                 height=320,
+                                 labels={"loss_min":"손실(분)",
+                                         "time_slot":"시간대",
+                                         "process":"공정"})
+                    fig_s.update_layout(margin=dict(l=0,r=0,t=10,b=0),
+                                        yaxis=dict(rangemode="tozero"),
+                                        legend=dict(orientation="h",y=1.05))
+                    st.plotly_chart(fig_s,use_container_width=True)
+                else:
+                    st.info("시간대 데이터 없음")
+
+            st.markdown("<hr class='section-divider'>",unsafe_allow_html=True)
+
+            # ── 2순위: 손실유형 + 라인별 ──
             col_l,col_r=st.columns(2)
             with col_l:
                 st.markdown("#### 손실유형별 누계")
@@ -956,7 +1007,8 @@ def dashboard():
                 ls["loss_min"]=ls["loss_min"].round(1)
                 fig2=px.bar(ls,x="line",y="loss_min",
                             color="process",color_discrete_map=PROC_COLOR,
-                            height=500,labels={"loss_min":"손실(분)","line":"라인"})
+                            height=500,
+                            labels={"loss_min":"손실(분)","line":"라인"})
                 fig2.update_layout(margin=dict(l=0,r=0,t=10,b=0),
                                    yaxis=dict(rangemode="tozero"),
                                    legend=dict(orientation="h",y=1.05))
@@ -977,7 +1029,7 @@ def dashboard():
 
             st.markdown("<hr class='section-divider'>",unsafe_allow_html=True)
 
-            # 공정별 비중
+            # ── 3순위: 공정별 비중 ──
             st.markdown("#### 공정별 비중")
             ps=total_df.groupby("process")["loss_min"].sum().reset_index()
             ps=ps[ps["process"].isin(["AI","SMT","MI"])]
@@ -1017,25 +1069,11 @@ def dashboard():
                 st.markdown(f"**{sel_proc} 손실유형**")
                 ft=px.bar(proc_type,x="손실(분)",y="유형",orientation="h",
                           color="유형",color_discrete_map=TYPE_COLOR,height=300)
-                ft.update_layout(showlegend=False,margin=dict(l=0,r=0,t=10,b=0),
+                ft.update_layout(showlegend=False,
+                                 margin=dict(l=0,r=0,t=10,b=0),
                                  xaxis=dict(rangemode="tozero"),
                                  yaxis=dict(categoryorder="total ascending"))
                 st.plotly_chart(ft,use_container_width=True)
-
-            # 날짜별 트렌드 + 시간대별
-            st.markdown("<hr class='section-divider'>",unsafe_allow_html=True)
-            col_trend,col_slot=st.columns(2)
-            with col_trend:
-                st.markdown("#### 날짜별 손실 트렌드")
-                dt=(total_df.groupby(["date","process"])["loss_min"].sum().reset_index())
-                dt["loss_min"]=dt["loss_min"].round(1)
-                fig_t=px.line(dt,x="date",y="loss_min",color="process",
-                              color_discrete_map=PROC_COLOR,markers=True,height=280,
-                              labels={"loss_min":"손실(분)","date":"날짜","process":"공정"})
-                fig_t.update_layout(margin=dict(l=0,r=0,t=10,b=0),
-                                    yaxis=dict(rangemode="tozero"),
-                                    legend=dict(orientation="h",y=-0.2))
-                st.plotly_chart(fig_t,use_container_width=True)
 
             with col_slot:
                 st.markdown("#### 시간대별 손실")
