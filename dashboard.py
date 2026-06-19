@@ -24,29 +24,21 @@ st.set_page_config(
 
 st.markdown("""
 <style>
-/* Streamlit 워터마크/배지 숨김 */
-#MainMenu {
-    display: none !important;
-}
-footer {
-    display: none !important;
-}
-[data-testid="stAppViewBlockContainer"] > div:last-child {
-    display: none !important;
-}
-/* Streamlit 우하단 배지 */
-div[class*="viewerBadge"] {
-    display: none !important;
-}
-iframe[title*="streamlit"] {
-    display: none !important;
-}
-.viewerBadge_container__1QSob {
-    display: none !important;
-}
-.viewerBadge_link__1S137 {
-    display: none !important;
-}
+/* Streamlit 워터마크 완전 제거 */
+#MainMenu { display: none !important; }
+footer { display: none !important; }
+header { display: none !important; }
+
+/* 우하단 배지 - 모든 방식으로 숨김 */
+div[class*="viewerBadge"] { display: none !important; }
+div[class*="badge"] { display: none !important; }
+div[class*="Badge"] { display: none !important; }
+section[class*="badge"] { display: none !important; }
+.viewerBadge_container__1QSob { display: none !important; }
+.viewerBadge_link__1S137 { display: none !important; }
+[data-testid="stToolbar"] { display: none !important; }
+[data-testid="stDecoration"] { display: none !important; }
+[data-testid="stStatusWidget"] { display: none !important; }
 /* GitHub 아이콘 숨김 */
 a[href*="github.com"] {
     display: none !important;
