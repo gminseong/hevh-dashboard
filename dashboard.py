@@ -13,6 +13,7 @@ import plotly.express as px
 import plotly.graph_objects as go
 from openpyxl import load_workbook
 from openpyxl.chartsheet import Chartsheet
+from shipment_alert import render_shipment_alert_tab 
 
 st.set_page_config(
     page_title="HEVH 대시보드",
