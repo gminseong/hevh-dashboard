@@ -1,57 +1,13 @@
 """
-[한솔테크닉스 HEVH] Shipment Cut-off 알람 모듈 v4.0
-- DB 영구 저장 방식 (LOSSTIME과 동일 패턴)
-- 각 파일 독립 업로드/갱신
-- 자동 매칭 분석
+[한솔테크닉스 HEVH] Shipment Cut-off 알람 모듈 v6.0
+- 통합 파일 업로드 (자동 인식)
+- 컬럼명 유연 매칭
+- session_state 기반 안전 저장
 """
-import io
-import os
 from datetime import datetime
 import pandas as pd
 import streamlit as st
 import plotly.express as px
-
-
-# ════════════════════════════════════════════════════════════
-# DB 파일 경로
-# ════════════════════════════════════════════════════════════
-SHIP_DB_PATH = "shipment_db.csv"
-PROD_DB_PATH = "prod_result_db.csv"
-META_DB_PATH = "shipment_meta.csv"  # 업로드 시각 기록
-
-
-# ════════════════════════════════════════════════════════════
-# DB 로드/저장
-# ════════════════════════════════════════════════════════════
-def load_ship_db():
-    if os.path.exists(SHIP_DB_PATH):
-        try:
-            return pd.read_csv(SHIP_DB_PATH)
-        except Exception:
-            return pd.DataFrame()
-    return pd.DataFrame()
-
-
-def load_prod_db():
-    if os.path.exists(PROD_DB_PATH):
-        try:
-            return pd.read_csv(PROD_DB_PATH)
-        except Exception:
-            return pd.DataFrame()
-    return pd.DataFrame()
-
-
-def load_meta():
-    if os.path.exists(META_DB_PATH):
-        try:
-            return pd.read_csv(META_DB_PATH).set_index('key')['value'].to_dict()
-        except Exception:
-            return {}
-    return {}
-
-
-def save_meta(meta):
-    pd.DataFrame(list(meta.items()), columns=['key', 'value']).to_csv(META_DB_PATH, index=False)
 
 
 # ════════════════════════════════════════════════════════════
@@ -69,6 +25,25 @@ def classify_model_type(code):
 
 
 # ════════════════════════════════════════════════════════════
+# 유연 컬럼 매칭 (대소문자, 공백 무시)
+# ════════════════════════════════════════════════════════════
+def find_column(df, candidates):
+    """후보 이름들 중 첫 매칭되는 컬럼명 반환"""
+    cols_lower = {str(c).strip().lower(): c for c in df.columns}
+    for cand in candidates:
+        key = cand.strip().lower()
+        if key in cols_lower:
+            return cols_lower[key]
+    # 부분 매칭
+    for cand in candidates:
+        key = cand.strip().lower()
+        for col_key, col_orig in cols_lower.items():
+            if key in col_key:
+                return col_orig
+    return None
+
+
+# ════════════════════════════════════════════════════════════
 # 실적 집계
 # ════════════════════════════════════════════════════════════
 def aggregate_actual(prod_df):
@@ -82,7 +57,7 @@ def aggregate_actual(prod_df):
                   .groupby('FINAL_MAT_ID')['QTY'].sum().reset_index())
 
     actual = pd.concat([pd_actual, in1_actual], ignore_index=True)
-    actual = actual.rename(columns={'FINAL_MAT_ID': 'ERP', 'QTY': '누적실적'})
+    actual = actual.rename(columns={'FINAL_MAT_ID': '_ERP_KEY', 'QTY': '누적실적'})
     return actual
 
 
@@ -90,17 +65,21 @@ def aggregate_actual(prod_df):
 # 알람 등급
 # ════════════════════════════════════════════════════════════
 def classify_alert(row, today):
-    cutoff_cols = [c for c in row.index if 'Cut off' in str(c)
+    cutoff_cols = [c for c in row.index if 'cut off' in str(c).lower()
                    and pd.notna(row[c]) and row[c] != 0]
     days_left = 999
     for c in cutoff_cols:
         try:
-            date_str = str(c).split('Cut off.')[-1].split(' ')[0]
-            d = pd.to_datetime(date_str, errors='coerce')
-            if pd.notna(d):
-                diff = (d.date() - today).days
-                if diff >= 0:
-                    days_left = min(days_left, diff)
+            col_str = str(c).lower()
+            for sep in ['cut off.', 'cut off']:
+                if sep in col_str:
+                    date_str = str(c).split(sep)[-1].strip().split(' ')[0]
+                    d = pd.to_datetime(date_str, errors='coerce')
+                    if pd.notna(d):
+                        diff = (d.date() - today).days
+                        if diff >= 0:
+                            days_left = min(days_left, diff)
+                    break
         except Exception:
             continue
 
@@ -120,41 +99,37 @@ def classify_alert(row, today):
 # ════════════════════════════════════════════════════════════
 # 머지 + 계산
 # ════════════════════════════════════════════════════════════
-def build_alert_table(ship_df, prod_df):
+def build_alert_table(ship_df, prod_df, erp_col):
     actual = aggregate_actual(prod_df)
+    
+    # 출하계획의 ERP 컬럼을 _ERP_KEY로 통일
+    ship_work = ship_df.copy()
+    ship_work['_ERP_KEY'] = ship_work[erp_col].astype(str).str.strip()
+    actual['_ERP_KEY'] = actual['_ERP_KEY'].astype(str).str.strip()
 
-    if 'ERP' not in ship_df.columns:
-        st.error("❌ 출하계획에 ERP 컬럼이 없습니다.")
-        return pd.DataFrame()
-
-    merged = ship_df.merge(actual, on='ERP', how='left')
+    merged = ship_work.merge(actual, on='_ERP_KEY', how='left')
     merged['누적실적'] = pd.to_numeric(merged['누적실적'], errors='coerce').fillna(0)
-    merged['MODEL_TYPE'] = merged['ERP'].apply(classify_model_type)
+    merged['MODEL_TYPE'] = merged['_ERP_KEY'].apply(classify_model_type)
 
-    if 'SO' in merged.columns:
-        merged['SO'] = pd.to_numeric(merged['SO'], errors='coerce').fillna(0)
+    # SO 컬럼
+    so_col = find_column(merged, ['SO', 'TTL Ship', 'TTL_Ship'])
+    if so_col:
+        merged['SO'] = pd.to_numeric(merged[so_col], errors='coerce').fillna(0)
+    else:
+        merged['SO'] = 0
 
-    base_stock_col = None
-    for c in merged.columns:
-        if 'base stock' in str(c).lower():
-            base_stock_col = c
-            break
-
-    if base_stock_col:
-        merged['기초재고'] = pd.to_numeric(merged[base_stock_col], errors='coerce').fillna(0)
+    # 기초재고
+    stock_col = find_column(merged, ['base stock', 'O/stock', 'stock'])
+    if stock_col:
+        merged['기초재고'] = pd.to_numeric(merged[stock_col], errors='coerce').fillna(0)
     else:
         merged['기초재고'] = 0.0
 
-    merged['NEW_GAP'] = (merged['기초재고']
-                         + merged['누적실적']
-                         - merged.get('SO', 0))
+    # NEW GAP
+    merged['NEW_GAP'] = merged['기초재고'] + merged['누적실적'] - merged['SO']
 
-    plan_col = None
-    for c in merged.columns:
-        if 'Plan' in str(c) or 'plan' in str(c):
-            plan_col = c
-            break
-
+    # Plan
+    plan_col = find_column(merged, ['Plan.W25', 'Plan', 'plan'])
     if plan_col:
         plan = pd.to_numeric(merged[plan_col], errors='coerce')
         rate = merged['누적실적'] / plan.where(plan != 0)
@@ -174,95 +149,146 @@ def build_alert_table(ship_df, prod_df):
 # ════════════════════════════════════════════════════════════
 def render_shipment_alert_tab():
     st.markdown("#### 🚨 Shipment Cut-off 알람")
-    st.caption("📌 PD 모델: P-ATE 완성 기준  |  3in1 모델: ASSY 완성 기준  |  💾 자동 저장 (각 파일 독립 갱신)")
+    st.caption("📌 PD 모델: P-ATE 완성 기준  |  3in1 모델: ASSY 완성 기준  |  💾 세션 저장 (각 파일 독립 갱신)")
 
-    # ───── DB 상태 확인 ─────
-    ship_db = load_ship_db()
-    prod_db = load_prod_db()
-    meta = load_meta()
+    # ───── 1. DB 상태 ─────
+    ship_db = st.session_state.get('ship_db', pd.DataFrame())
+    prod_db = st.session_state.get('prod_db', pd.DataFrame())
+    ship_updated = st.session_state.get('ship_updated', '미상')
+    prod_updated = st.session_state.get('prod_updated', '미상')
 
-    # ───── 1. DB 상태 표시 ─────
     st.markdown("##### 📊 데이터 현황")
     s1, s2 = st.columns(2)
-    
     with s1:
         if not ship_db.empty:
-            ship_time = meta.get('ship_updated', '미상')
-            st.success(f"✅ **출하계획**: {len(ship_db):,}건  |  업데이트: {ship_time}")
+            st.success(f"✅ **출하계획**: {len(ship_db):,}건  |  업데이트: {ship_updated}")
         else:
-            st.warning("⚠️ **출하계획**: 데이터 없음 — 아래에서 업로드해주세요")
-    
+            st.warning("⚠️ **출하계획**: 데이터 없음")
     with s2:
         if not prod_db.empty:
-            prod_time = meta.get('prod_updated', '미상')
-            st.success(f"✅ **생산실적**: {len(prod_db):,}건  |  업데이트: {prod_time}")
+            st.success(f"✅ **생산실적**: {len(prod_db):,}건  |  업데이트: {prod_updated}")
         else:
-            st.warning("⚠️ **생산실적**: 데이터 없음 — 아래에서 업로드해주세요")
+            st.warning("⚠️ **생산실적**: 데이터 없음")
 
     st.markdown("<hr>", unsafe_allow_html=True)
 
-    # ───── 2. 파일 업로드 (독립 갱신) ─────
-    st.markdown("##### 📤 파일 업로드 (필요한 것만 갱신)")
-    
-    up1, up2 = st.columns(2)
-    
-    with up1:
-        st.markdown("**📁 출하계획 (Shipment.xlsx)**")
-        ship_file = st.file_uploader(
-            " ", type=["xlsx"], key="ship_upload", label_visibility="collapsed"
-        )
-        if ship_file is not None:
-            if st.button("💾 출하계획 저장", type="primary", use_container_width=True, key="save_ship"):
+    # ───── 2. 파일 업로드 (통합형) ─────
+    st.markdown("##### 📤 파일 업로드")
+    st.caption("📌 .xlsx(출하계획)와 .csv(생산실적) 동시/개별 업로드 모두 가능 — 자동 인식")
+
+    uploaded_files = st.file_uploader(
+        " ",
+        type=["xlsx", "csv"],
+        accept_multiple_files=True,
+        key="ship_alert_multi",
+        label_visibility="collapsed"
+    )
+
+    if uploaded_files:
+        ship_uploaded = None
+        prod_uploaded = None
+
+        for f in uploaded_files:
+            if f.name.lower().endswith('.xlsx'):
+                ship_uploaded = f
+            elif f.name.lower().endswith('.csv'):
+                prod_uploaded = f
+
+        pc1, pc2 = st.columns(2)
+        with pc1:
+            if ship_uploaded:
+                st.success(f"📁 출하계획: **{ship_uploaded.name}** ({ship_uploaded.size/1024:.1f}KB)")
+            else:
+                st.caption("📁 출하계획(.xlsx) 미선택")
+        with pc2:
+            if prod_uploaded:
+                st.success(f"📊 생산실적: **{prod_uploaded.name}** ({prod_uploaded.size/1024:.1f}KB)")
+            else:
+                st.caption("📊 생산실적(.csv) 미선택")
+
+        if st.button("🚀 저장 및 분석", type="primary", use_container_width=True, key="ship_apply"):
+            saved = []
+            
+            if ship_uploaded:
                 try:
-                    new_ship = pd.read_excel(ship_file, sheet_name="Sheet1")
+                    new_ship = pd.read_excel(ship_uploaded, sheet_name="Sheet1")
                     new_ship.columns = [str(c).strip() for c in new_ship.columns]
-                    if 'model' in new_ship.columns:
-                        new_ship = new_ship[new_ship['model'].notna()].copy()
-                    new_ship.to_csv(SHIP_DB_PATH, index=False)
-                    meta['ship_updated'] = datetime.now().strftime('%Y-%m-%d %H:%M')
-                    save_meta(meta)
-                    st.success(f"✅ 출하계획 저장 완료 ({len(new_ship):,}건)")
-                    st.rerun()
+                    # 빈 행 제거
+                    model_col = find_column(new_ship, ['model'])
+                    if model_col:
+                        new_ship = new_ship[new_ship[model_col].notna()].copy()
+                    st.session_state['ship_db'] = new_ship
+                    st.session_state['ship_updated'] = datetime.now().strftime('%Y-%m-%d %H:%M')
+                    saved.append(f"출하계획 {len(new_ship)}건")
                 except Exception as e:
-                    st.error(f"❌ 저장 실패: {e}")
+                    st.error(f"❌ 출하계획 저장 실패: {e}")
+                    st.caption("💡 Sheet1 시트가 있는지 확인해주세요.")
 
-    with up2:
-        st.markdown("**📁 생산실적 (PROD_RESULT.csv)**")
-        prod_file = st.file_uploader(
-            "  ", type=["csv"], key="prod_upload", label_visibility="collapsed"
-        )
-        if prod_file is not None:
-            if st.button("💾 생산실적 저장", type="primary", use_container_width=True, key="save_prod"):
+            if prod_uploaded:
                 try:
-                    new_prod = pd.read_csv(prod_file)
-                    new_prod.to_csv(PROD_DB_PATH, index=False)
-                    meta['prod_updated'] = datetime.now().strftime('%Y-%m-%d %H:%M')
-                    save_meta(meta)
-                    st.success(f"✅ 생산실적 저장 완료 ({len(new_prod):,}건)")
-                    st.rerun()
+                    new_prod = pd.read_csv(prod_uploaded)
+                    st.session_state['prod_db'] = new_prod
+                    st.session_state['prod_updated'] = datetime.now().strftime('%Y-%m-%d %H:%M')
+                    saved.append(f"생산실적 {len(new_prod)}건")
                 except Exception as e:
-                    st.error(f"❌ 저장 실패: {e}")
+                    st.error(f"❌ 생산실적 저장 실패: {e}")
+
+            if saved:
+                st.success(f"✅ 저장 완료: {', '.join(saved)}")
+                st.rerun()
 
     st.markdown("<hr>", unsafe_allow_html=True)
 
-    # ───── 3. 자동 분석 (둘 다 있을 때만) ─────
+    # ───── 3. 분석 결과 ─────
     if ship_db.empty or prod_db.empty:
-        st.info("👆 출하계획과 생산실적이 모두 저장되면 자동으로 분석 결과가 표시됩니다.")
+        st.info("👆 출하계획과 생산실적이 모두 저장되면 분석 결과가 표시됩니다.")
         return
 
     st.markdown("### 🚨 분석 결과")
 
+    # ───── 4. ERP 컬럼 자동/수동 매칭 ─────
+    erp_col = find_column(ship_db, ['ERP', 'ERP Code', 'ERP_Code', '3in1Code(FG)', 'FG Code'])
+
+    if erp_col is None:
+        st.error("❌ 출하계획에서 ERP 컬럼을 자동으로 찾지 못했습니다.")
+        st.markdown("##### 🔧 ERP 컬럼 수동 선택")
+        candidate_cols = [c for c in ship_db.columns if ship_db[c].dtype == 'object']
+        if candidate_cols:
+            erp_col = st.selectbox(
+                "ERP 코드가 들어있는 컬럼을 선택하세요 (예: 0137650504CA 같은 값)",
+                candidate_cols,
+                key="erp_col_manual"
+            )
+        else:
+            st.error("선택 가능한 컬럼이 없습니다.")
+            return
+
+    if not erp_col:
+        return
+
+    # ───── 5. 디버그 정보 (접을 수 있는 영역) ─────
+    with st.expander("🔧 디버그 정보 (컬럼 매칭 결과)", expanded=False):
+        st.markdown("**출하계획 컬럼 목록:**")
+        st.code(", ".join(str(c) for c in ship_db.columns))
+        st.markdown(f"**🔑 ERP 매칭 컬럼: `{erp_col}`**")
+        st.markdown("**출하계획 미리보기 (처음 3행):**")
+        st.dataframe(ship_db.head(3), use_container_width=True)
+
+    # ───── 6. 분석 실행 ─────
     try:
-        merged = build_alert_table(ship_db, prod_db)
+        merged = build_alert_table(ship_db, prod_db, erp_col)
     except Exception as e:
         st.error(f"❌ 데이터 처리 실패: {e}")
+        import traceback
+        with st.expander("상세 에러"):
+            st.code(traceback.format_exc())
         return
 
     if merged.empty:
         st.warning("표시할 데이터가 없습니다.")
         return
 
-    # ───── KPI ─────
+    # ───── 7. KPI ─────
     k1, k2, k3, k4, k5 = st.columns(5)
     k1.metric("📦 전체", f"{len(merged):,}건")
     k2.metric("🔴 긴급", int((merged['알람'] == '🔴 긴급').sum()))
@@ -272,7 +298,7 @@ def render_shipment_alert_tab():
 
     st.markdown("<hr>", unsafe_allow_html=True)
 
-    # ───── 필터 ─────
+    # ───── 8. 필터 ─────
     f1, f2 = st.columns(2)
     alert_sel = f1.multiselect("알람 등급",
                                 ['🔴 긴급', '🟠 부족', '🟡 지연', '✅ 정상'],
@@ -285,11 +311,17 @@ def render_shipment_alert_tab():
     if type_sel:
         view = view[view['MODEL_TYPE'].isin(type_sel)]
 
-    # ───── 테이블 ─────
+    # ───── 9. 테이블 ─────
     st.markdown("##### 📋 알람 상세")
-    show_cols_pref = ['알람', 'model', 'code', 'ERP', 'MODEL_TYPE',
+    show_cols_pref = ['알람', 'model', 'code', '_ERP_KEY', 'MODEL_TYPE',
                       'SO', '기초재고', '누적실적', '달성률(%)', 'NEW_GAP', 'Note']
     show_cols = [c for c in show_cols_pref if c in view.columns]
+    
+    # _ERP_KEY를 ERP로 표시
+    view_display = view.copy()
+    if '_ERP_KEY' in view_display.columns:
+        view_display = view_display.rename(columns={'_ERP_KEY': 'ERP'})
+        show_cols = ['ERP' if c == '_ERP_KEY' else c for c in show_cols]
 
     def color_alert_row(row):
         colors = {'🔴 긴급': '#ffcccc', '🟠 부족': '#ffe0b3',
@@ -297,27 +329,27 @@ def render_shipment_alert_tab():
         bg = colors.get(row['알람'], '')
         return [f'background-color: {bg}'] * len(row)
 
-    if not view.empty:
+    if not view_display.empty:
         st.dataframe(
-            view[show_cols].style.apply(color_alert_row, axis=1),
+            view_display[show_cols].style.apply(color_alert_row, axis=1),
             use_container_width=True, height=450
         )
 
     st.markdown("<hr>", unsafe_allow_html=True)
 
-    # ───── 차트 ─────
+    # ───── 10. 차트 ─────
     st.markdown("##### 📈 분석 차트")
     ch1, ch2 = st.columns(2)
-    
+
     with ch1:
         st.markdown("**모델별 달성률 TOP 15**")
-        if not view.empty and 'model' in view.columns:
-            chart1 = view[['model', '달성률(%)']].dropna().sort_values('달성률(%)').head(15)
-            fig1 = px.bar(chart1, x='달성률(%)', y='model', orientation='h',
+        model_col = find_column(view, ['model'])
+        if not view.empty and model_col:
+            chart1 = view[[model_col, '달성률(%)']].dropna().sort_values('달성률(%)').head(15)
+            fig1 = px.bar(chart1, x='달성률(%)', y=model_col, orientation='h',
                           color='달성률(%)', color_continuous_scale='RdYlGn',
                           range_color=[0, 150], height=400)
-            fig1.add_vline(x=100, line_dash="dash", line_color="green",
-                           annotation_text="100%")
+            fig1.add_vline(x=100, line_dash="dash", line_color="green")
             fig1.update_layout(margin=dict(l=0, r=0, t=10, b=0))
             st.plotly_chart(fig1, use_container_width=True)
 
@@ -333,23 +365,17 @@ def render_shipment_alert_tab():
             fig2.update_layout(margin=dict(l=0, r=0, t=10, b=0), showlegend=False)
             st.plotly_chart(fig2, use_container_width=True)
 
-    # ───── DB 초기화 ─────
+    # ───── 11. DB 초기화 ─────
     st.markdown("<hr>", unsafe_allow_html=True)
     st.markdown("##### 🗑️ DB 관리")
-    r1, r2 = st.columns(2)
+    r1, r2, r3 = st.columns([1, 1, 3])
     with r1:
-        if st.button("🗑️ 출하계획 DB 초기화", use_container_width=True, key="reset_ship"):
-            if os.path.exists(SHIP_DB_PATH):
-                os.remove(SHIP_DB_PATH)
-            meta.pop('ship_updated', None)
-            save_meta(meta)
-            st.success("출하계획 DB 초기화 완료")
+        if st.button("🗑️ 출하계획 초기화", use_container_width=True, key="reset_ship"):
+            st.session_state.pop('ship_db', None)
+            st.session_state.pop('ship_updated', None)
             st.rerun()
     with r2:
-        if st.button("🗑️ 생산실적 DB 초기화", use_container_width=True, key="reset_prod"):
-            if os.path.exists(PROD_DB_PATH):
-                os.remove(PROD_DB_PATH)
-            meta.pop('prod_updated', None)
-            save_meta(meta)
-            st.success("생산실적 DB 초기화 완료")
+        if st.button("🗑️ 생산실적 초기화", use_container_width=True, key="reset_prod"):
+            st.session_state.pop('prod_db', None)
+            st.session_state.pop('prod_updated', None)
             st.rerun()
