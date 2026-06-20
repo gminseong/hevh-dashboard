@@ -1,355 +1,1824 @@
 """
-[한솔테크닉스 HEVH] Shipment Cut-off 알람 모듈 v4.0
-- DB 영구 저장 방식 (LOSSTIME과 동일 패턴)
-- 각 파일 독립 업로드/갱신
-- 자동 매칭 분석
+[한솔테크닉스 HEVH] LOSSTIME + SCRAP 분석 대시보드 v5.0
+실행: python -m streamlit run dashboard.py
 """
+
+import re
 import io
-import os
-from datetime import datetime
+import base64
+import requests
 import pandas as pd
 import streamlit as st
 import plotly.express as px
+import plotly.graph_objects as go
+from openpyxl import load_workbook
+from openpyxl.chartsheet import Chartsheet
 
+st.set_page_config(
+    page_title="HEVH 대시보드",
+    page_icon="🏭",
+    layout="wide",
+    initial_sidebar_state="expanded"
+)
 
-# ════════════════════════════════════════════════════════════
-# DB 파일 경로
-# ════════════════════════════════════════════════════════════
-SHIP_DB_PATH = "shipment_db.csv"
-PROD_DB_PATH = "prod_result_db.csv"
-META_DB_PATH = "shipment_meta.csv"  # 업로드 시각 기록
+st.markdown("""
+<style>
+/* 기본 */
+.block-container {
+    padding-top: 1.8rem !important;
+    padding-bottom: 1rem !important;
+}
 
+/* 헤더 */
+.main-header {
+    padding: 8px 4px 14px;
+    margin-bottom: 4px;
+    border-bottom: 2px solid #e2e8f0;
+}
+.main-header h1 {
+    margin: 0 0 4px 0;
+    font-size: 26px;
+    font-weight: 800;
+    color: #0f172a;
+    line-height: 1.2;
+    word-break: break-word;
+}
+.main-header p {
+    margin: 0;
+    font-size: 13px;
+    color: #64748b;
+}
 
-# ════════════════════════════════════════════════════════════
-# DB 로드/저장
-# ════════════════════════════════════════════════════════════
-def load_ship_db():
-    if os.path.exists(SHIP_DB_PATH):
-        try:
-            return pd.read_csv(SHIP_DB_PATH)
-        except Exception:
-            return pd.DataFrame()
-    return pd.DataFrame()
+/* 강조 배너 */
+.info-banner {
+    background: linear-gradient(135deg, #1e3a5f 0%, #1d4ed8 100%);
+    border-radius: 14px;
+    padding: 18px 24px;
+    margin: 14px 0 18px;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    box-sizing: border-box;
+    width: 100%;
+}
+.info-banner-left h4 {
+    margin: 0 0 5px 0;
+    font-size: 16px;
+    font-weight: 700;
+}
+.info-banner-left p {
+    margin: 0;
+    font-size: 12px;
+    opacity: 0.85;
+}
+.info-banner-badge {
+    background: rgba(255,255,255,0.2);
+    border: 1.5px solid rgba(255,255,255,0.5);
+    border-radius: 10px;
+    padding: 10px 20px;
+    font-size: 15px;
+    font-weight: 700;
+    white-space: nowrap;
+    flex-shrink: 0;
+    margin-left: 20px;
+}
 
+/* KPI 카드 */
+.kpi-card {
+    background: #f1f5f9;
+    border: 1px solid #e2e8f0;
+    border-radius: 10px;
+    padding: 14px 18px 10px;
+    margin-bottom: 4px;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+}
+.kpi-card-active {
+    background: #e2e8f0;
+    border: 1.5px solid #94a3b8;
+    border-radius: 10px;
+    padding: 14px 18px 10px;
+    margin-bottom: 4px;
+}
+.kpi-card-green {
+    background: #f0fdf4;
+    border: 1px solid #86efac;
+    border-radius: 10px;
+    padding: 14px 18px 10px;
+    margin-bottom: 4px;
+}
+.kpi-card-red {
+    background: #fef2f2;
+    border: 1px solid #fca5a5;
+    border-radius: 10px;
+    padding: 14px 18px 10px;
+    margin-bottom: 4px;
+}
+.kpi-val {
+    font-size: 21px;
+    font-weight: 700;
+    color: #0f172a;
+    line-height: 1.2;
+    white-space: nowrap;
+}
+.kpi-val span {
+    font-size: 13px;
+    color: #64748b;
+    font-weight: 400;
+}
+.kpi-val-green {
+    font-size: 21px;
+    font-weight: 700;
+    color: #16a34a;
+    line-height: 1.2;
+    white-space: nowrap;
+}
+.kpi-val-red {
+    font-size: 21px;
+    font-weight: 700;
+    color: #dc2626;
+    line-height: 1.2;
+    white-space: nowrap;
+}
+.kpi-lbl {
+    font-size: 12px;
+    color: #64748b;
+    margin-top: 5px;
+}
 
-def load_prod_db():
-    if os.path.exists(PROD_DB_PATH):
-        try:
-            return pd.read_csv(PROD_DB_PATH)
-        except Exception:
-            return pd.DataFrame()
-    return pd.DataFrame()
+/* 상세박스 */
+.detail-box {
+    background: #f8fafc;
+    border-left: 3px solid #3b82f6;
+    border-radius: 6px;
+    padding: 8px 14px;
+    margin: 6px 0 10px;
+    font-size: 14px;
+    color: #1e293b;
+}
 
+/* PM 등급 */
+.pm-p1 {
+    background: #fef2f2;
+    border-left: 4px solid #dc2626;
+    padding: 8px 14px;
+    border-radius: 6px;
+    margin: 4px 0;
+    font-size: 13px;
+}
+.pm-p2 {
+    background: #fff7ed;
+    border-left: 4px solid #f97316;
+    padding: 8px 14px;
+    border-radius: 6px;
+    margin: 4px 0;
+    font-size: 13px;
+}
+.pm-p3 {
+    background: #fefce8;
+    border-left: 4px solid #eab308;
+    padding: 8px 14px;
+    border-radius: 6px;
+    margin: 4px 0;
+    font-size: 13px;
+}
 
-def load_meta():
-    if os.path.exists(META_DB_PATH):
-        try:
-            return pd.read_csv(META_DB_PATH).set_index('key')['value'].to_dict()
-        except Exception:
-            return {}
-    return {}
+/* 섹션 구분선 */
+.section-divider {
+    border: none;
+    border-top: 1px solid #e2e8f0;
+    margin: 20px 0;
+}
 
+/* 사이드바 */
+section[data-testid="stSidebar"] {
+    min-width: 240px !important;
+    max-width: 260px !important;
+    background-color: #f1f5f9 !important;
+}
+section[data-testid="stSidebar"] .block-container {
+    padding: 1rem 0.9rem;
+    background-color: #f1f5f9 !important;
+}
+section[data-testid="stSidebar"] * {
+    color: #374151 !important;
+}
+section[data-testid="stSidebar"] hr {
+    border-color: #cbd5e1 !important;
+}
+section[data-testid="stSidebar"] [data-testid="stExpander"] {
+    background-color: #e8edf2 !important;
+    border: 1px solid #cbd5e1 !important;
+    border-radius: 8px !important;
+}
+section[data-testid="stSidebar"] span[data-baseweb="tag"] {
+    background-color: #475569 !important;
+    color: #ffffff !important;
+}
+section[data-testid="stSidebar"] span[data-baseweb="tag"] span {
+    color: #ffffff !important;
+}
+section[data-testid="stSidebar"] div[data-testid="stButton"] button {
+    background-color: #e2e8f0 !important;
+    color: #1e293b !important;
+    border: 1px solid #cbd5e1 !important;
+    border-radius: 7px !important;
+}
+section[data-testid="stSidebar"] div[data-testid="stButton"] button:hover {
+    background-color: #cbd5e1 !important;
+}
+section[data-testid="stSidebar"] div[data-testid="stButton"] button[kind="primary"] {
+    background-color: #475569 !important;
+    color: #ffffff !important;
+    border: none !important;
+}
+section[data-testid="stSidebar"] div[data-testid="stButton"] button[kind="primary"]:hover {
+    background-color: #334155 !important;
+}
 
-def save_meta(meta):
-    pd.DataFrame(list(meta.items()), columns=['key', 'value']).to_csv(META_DB_PATH, index=False)
+/* 사이드바 축소시 메인 확장 */
+section[data-testid="stSidebar"][aria-expanded="false"] {
+    min-width: 0px !important;
+    max-width: 0px !important;
+    overflow: hidden !important;
+}
+section[data-testid="stMain"] {
+    transition: margin-left 0.3s ease, width 0.3s ease;
+}
 
+/* 버튼 */
+div[data-testid="stButton"] button {
+    border-radius: 7px !important;
+    font-size: 13px !important;
+    font-weight: 500 !important;
+}
+</style>
+""", unsafe_allow_html=True)
 
-# ════════════════════════════════════════════════════════════
-# 모델 타입
-# ════════════════════════════════════════════════════════════
-def classify_model_type(code):
-    if pd.isna(code):
-        return "UNKNOWN"
-    code = str(code).strip()
-    if code.startswith("018"):
-        return "3IN1"
-    elif code.startswith("01"):
-        return "PD"
-    return "OTHER"
+# ─────────────────────────────────────────────
+# 상수
+# ─────────────────────────────────────────────
+DAY_SLOTS   = ["A","B","C","D","E","F"]
+NIGHT_SLOTS = ["F","G","H","I","J","K"]
+DB_PATH     = "losstime_db.csv"
+SCRAP_DB    = "scrap_db.csv"
 
+TYPE_COLOR = {
+    "모델교체":           "#dc2626",
+    "Magazine부족":       "#f97316",
+    "신규OP교육":         "#7c3aed",
+    "Printer불량":        "#0369a1",
+    "SMT대기":            "#0891b2",
+    "기타":               "#94a3b8",
+    "자재부족":           "#9333ea",
+    "RH3삽입불량":        "#b45309",
+    "Mouter불량":         "#0f766e",
+    "Axial불량":          "#be185d",
+    "Wave Solder불량":    "#1d4ed8",
+    "ICT/ATE불량":        "#15803d",
+    "AOI/S-AOI불량":      "#d97706",
+    "계획완료":           "#cbd5e1",
+    "설비고장(기타)":     "#ef4444",
+    "Coating/Reflow불량": "#047857",
+    "XGZ불량":            "#7c3aed",
+    "Jumper불량":         "#be123c",
+    "SPI불량":            "#075985",
+    "Inloader불량":       "#64748b",
+}
 
-# ════════════════════════════════════════════════════════════
-# 실적 집계
-# ════════════════════════════════════════════════════════════
-def aggregate_actual(prod_df):
-    df = prod_df.copy()
-    df['MODEL_TYPE'] = df['FINAL_MAT_ID'].apply(classify_model_type)
+PROC_COLOR = {
+    "AI":  "#ef4444",
+    "SMT": "#3b82f6",
+    "MI":  "#10b981",
+    "기타":"#94a3b8",
+}
 
-    pd_actual = (df[(df['MODEL_TYPE'] == 'PD') & (df['OPER_DESC'] == 'P-ATE')]
-                 .groupby('FINAL_MAT_ID')['QTY'].sum().reset_index())
+LOSS_TYPE_RULES = [
+    ("NEW_OP",       "신규OP교육",         ["new op","dao tao","op moi"]),
+    ("MAGAZINE",     "Magazine부족",       ["magazine","magazin","mag"]),
+    ("WAITING_SMT",  "SMT대기",            ["waiting semi","doi semi","cho semi"]),
+    ("MATERIAL",     "자재부족",           ["thieu lieu","cho lieu","doi lieu",
+                                            "thieu hang","cho hang","thieu vat tu"]),
+    ("CHANGE_MODEL", "모델교체",           ["change model","doi model","tach lot",
+                                            "cover work","doi ca","chuyen model"]),
+    ("PRINTER",      "Printer불량",        ["printer","priter","loi keo","tran keo"]),
+    ("MOUTER",       "Mouter불량",         ["moutor","mounter","stopper","bang tai"]),
+    ("INSERT_RH3",   "RH3삽입불량",        ["rh3","rh 3","rhu"]),
+    ("INSERT_XGZ",   "XGZ불량",            ["xzg","xgz"]),
+    ("INSERT_AXIAL", "Axial불량",          ["axial","radial","cam rot","rad loi"]),
+    ("INSERT_JUMP",  "Jumper불량",         ["jumper","jump "]),
+    ("COATING",      "Coating/Reflow불량", ["coating","reflow","flux","nhiet"]),
+    ("AOI_SAOI",     "AOI/S-AOI불량",      ["saoi","s-aoi","aoi"]),
+    ("WAVE",         "Wave Solder불량",    ["wave solder","wave"]),
+    ("SPI",          "SPI불량",            ["spi"]),
+    ("INLOADER",     "Inloader불량",       ["inloader"]),
+    ("ICT_ATE",      "ICT/ATE불량",        ["ict","ate","ft loi"]),
+    ("EQUIP_FAIL",   "설비고장(기타)",     ["hu","loi may","stop line","spare"]),
+    ("DONE_PLAN",    "계획완료",           ["done plan","het plan","ket thuc"]),
+    ("SAMPLE",       "샘플/테스트",        ["sample"]),
+    ("ETC",          "기타",               []),
+]
 
-    in1_actual = (df[(df['MODEL_TYPE'] == '3IN1') & (df['OPER_DESC'] == 'ASSY')]
-                  .groupby('FINAL_MAT_ID')['QTY'].sum().reset_index())
+SCRAP_CAUSE_RULES = [
+    ("BROKEN_DROP",  "낙하/파손",     ["rot","roi","be","vo","broken","drop","rong","sap"]),
+    ("BROKEN_BI",    "Burn-in파손",   ["burn in","burin","tu burin","oc","tuot"]),
+    ("SOLDER",       "납불량",        ["tran keo","solder over","han","keo"]),
+    ("CRACK",        "크랙/균열",     ["nut","crack","be mach"]),
+    ("PAD_DAMAGE",   "Pad손상",       ["troc pad","pad dong","troc"]),
+    ("EYELET",       "Eyelet불량",    ["eyelet","thieu eyelet"]),
+    ("SENSOR",       "센서불량",      ["sensor","cam bien","chinh lai sensor"]),
+    ("MAGAZINE",     "Magazine불량",  ["magazine","megazine","mag"]),
+    ("NEW_OP",       "신규OP실수",    ["op moi","thoi vu","moi","new op"]),
+    ("AUTO",         "자동판정(ATE)", ["atuo_scrap","auto_scrap"]),
+    ("ETC",          "기타",          []),
+]
 
-    actual = pd.concat([pd_actual, in1_actual], ignore_index=True)
-    actual = actual.rename(columns={'FINAL_MAT_ID': 'ERP', 'QTY': '누적실적'})
-    return actual
+OPER_MAP = {"P-AUTO":"AI","P-SMD":"SMT","P-PBA":"MI"}
 
+# ─────────────────────────────────────────────
+# GitHub
+# ─────────────────────────────────────────────
+def get_github_config():
+    try: return st.secrets["github"]["token"], st.secrets["github"]["repo"]
+    except: return None, None
 
-# ════════════════════════════════════════════════════════════
-# 알람 등급
-# ════════════════════════════════════════════════════════════
-def classify_alert(row, today):
-    cutoff_cols = [c for c in row.index if 'Cut off' in str(c)
-                   and pd.notna(row[c]) and row[c] != 0]
-    days_left = 999
-    for c in cutoff_cols:
-        try:
-            date_str = str(c).split('Cut off.')[-1].split(' ')[0]
-            d = pd.to_datetime(date_str, errors='coerce')
-            if pd.notna(d):
-                diff = (d.date() - today).days
-                if diff >= 0:
-                    days_left = min(days_left, diff)
-        except Exception:
-            continue
-
-    gap = row.get('NEW_GAP', 0)
-    rate = row.get('달성률(%)', 0)
-
-    if gap < 0 and days_left <= 1:
-        return "🔴 긴급"
-    elif gap < 0:
-        return "🟠 부족"
-    elif rate < 70 and days_left <= 2:
-        return "🟡 지연"
-    else:
-        return "✅ 정상"
-
-
-# ════════════════════════════════════════════════════════════
-# 머지 + 계산
-# ════════════════════════════════════════════════════════════
-def build_alert_table(ship_df, prod_df):
-    actual = aggregate_actual(prod_df)
-
-    if 'ERP' not in ship_df.columns:
-        st.error("❌ 출하계획에 ERP 컬럼이 없습니다.")
-        return pd.DataFrame()
-
-    merged = ship_df.merge(actual, on='ERP', how='left')
-    merged['누적실적'] = pd.to_numeric(merged['누적실적'], errors='coerce').fillna(0)
-    merged['MODEL_TYPE'] = merged['ERP'].apply(classify_model_type)
-
-    if 'SO' in merged.columns:
-        merged['SO'] = pd.to_numeric(merged['SO'], errors='coerce').fillna(0)
-
-    base_stock_col = None
-    for c in merged.columns:
-        if 'base stock' in str(c).lower():
-            base_stock_col = c
-            break
-
-    if base_stock_col:
-        merged['기초재고'] = pd.to_numeric(merged[base_stock_col], errors='coerce').fillna(0)
-    else:
-        merged['기초재고'] = 0.0
-
-    merged['NEW_GAP'] = (merged['기초재고']
-                         + merged['누적실적']
-                         - merged.get('SO', 0))
-
-    plan_col = None
-    for c in merged.columns:
-        if 'Plan' in str(c) or 'plan' in str(c):
-            plan_col = c
-            break
-
-    if plan_col:
-        plan = pd.to_numeric(merged[plan_col], errors='coerce')
-        rate = merged['누적실적'] / plan.where(plan != 0)
-        rate = pd.to_numeric(rate, errors='coerce').replace([float('inf'), -float('inf')], 0).fillna(0)
-        merged['달성률(%)'] = (rate * 100).round(1)
-    else:
-        merged['달성률(%)'] = 0.0
-
-    today = datetime.today().date()
-    merged['알람'] = merged.apply(lambda r: classify_alert(r, today), axis=1)
-
-    return merged
-
-
-# ════════════════════════════════════════════════════════════
-# 메인 렌더링
-# ════════════════════════════════════════════════════════════
-def render_shipment_alert_tab():
-    st.markdown("#### 🚨 Shipment Cut-off 알람")
-    st.caption("📌 PD 모델: P-ATE 완성 기준  |  3in1 모델: ASSY 완성 기준  |  💾 자동 저장 (각 파일 독립 갱신)")
-
-    # ───── DB 상태 확인 ─────
-    ship_db = load_ship_db()
-    prod_db = load_prod_db()
-    meta = load_meta()
-
-    # ───── 1. DB 상태 표시 ─────
-    st.markdown("##### 📊 데이터 현황")
-    s1, s2 = st.columns(2)
-    
-    with s1:
-        if not ship_db.empty:
-            ship_time = meta.get('ship_updated', '미상')
-            st.success(f"✅ **출하계획**: {len(ship_db):,}건  |  업데이트: {ship_time}")
-        else:
-            st.warning("⚠️ **출하계획**: 데이터 없음 — 아래에서 업로드해주세요")
-    
-    with s2:
-        if not prod_db.empty:
-            prod_time = meta.get('prod_updated', '미상')
-            st.success(f"✅ **생산실적**: {len(prod_db):,}건  |  업데이트: {prod_time}")
-        else:
-            st.warning("⚠️ **생산실적**: 데이터 없음 — 아래에서 업로드해주세요")
-
-    st.markdown("<hr>", unsafe_allow_html=True)
-
-    # ───── 2. 파일 업로드 (독립 갱신) ─────
-    st.markdown("##### 📤 파일 업로드 (필요한 것만 갱신)")
-    
-    up1, up2 = st.columns(2)
-    
-    with up1:
-        st.markdown("**📁 출하계획 (Shipment.xlsx)**")
-        ship_file = st.file_uploader(
-            " ", type=["xlsx"], key="ship_upload", label_visibility="collapsed"
-        )
-        if ship_file is not None:
-            if st.button("💾 출하계획 저장", type="primary", use_container_width=True, key="save_ship"):
-                try:
-                    new_ship = pd.read_excel(ship_file, sheet_name="Sheet1")
-                    new_ship.columns = [str(c).strip() for c in new_ship.columns]
-                    if 'model' in new_ship.columns:
-                        new_ship = new_ship[new_ship['model'].notna()].copy()
-                    new_ship.to_csv(SHIP_DB_PATH, index=False)
-                    meta['ship_updated'] = datetime.now().strftime('%Y-%m-%d %H:%M')
-                    save_meta(meta)
-                    st.success(f"✅ 출하계획 저장 완료 ({len(new_ship):,}건)")
-                    st.rerun()
-                except Exception as e:
-                    st.error(f"❌ 저장 실패: {e}")
-
-    with up2:
-        st.markdown("**📁 생산실적 (PROD_RESULT.csv)**")
-        prod_file = st.file_uploader(
-            "  ", type=["csv"], key="prod_upload", label_visibility="collapsed"
-        )
-        if prod_file is not None:
-            if st.button("💾 생산실적 저장", type="primary", use_container_width=True, key="save_prod"):
-                try:
-                    new_prod = pd.read_csv(prod_file)
-                    new_prod.to_csv(PROD_DB_PATH, index=False)
-                    meta['prod_updated'] = datetime.now().strftime('%Y-%m-%d %H:%M')
-                    save_meta(meta)
-                    st.success(f"✅ 생산실적 저장 완료 ({len(new_prod):,}건)")
-                    st.rerun()
-                except Exception as e:
-                    st.error(f"❌ 저장 실패: {e}")
-
-    st.markdown("<hr>", unsafe_allow_html=True)
-
-    # ───── 3. 자동 분석 (둘 다 있을 때만) ─────
-    if ship_db.empty or prod_db.empty:
-        st.info("👆 출하계획과 생산실적이 모두 저장되면 자동으로 분석 결과가 표시됩니다.")
-        return
-
-    st.markdown("### 🚨 분석 결과")
-
+def github_load_csv(filename):
+    token, repo = get_github_config()
+    if not token:
+        try: return pd.read_csv(filename, encoding="utf-8-sig")
+        except FileNotFoundError: return pd.DataFrame()
+    url = f"https://api.github.com/repos/{repo}/contents/{filename}"
+    headers = {"Authorization":f"token {token}",
+                "Accept":"application/vnd.github.v3+json"}
     try:
-        merged = build_alert_table(ship_db, prod_db)
+        r = requests.get(url, headers=headers, timeout=10)
+        if r.status_code == 200:
+            return pd.read_csv(io.StringIO(
+                base64.b64decode(r.json()["content"]).decode("utf-8")))
+        return pd.DataFrame()
+    except: return pd.DataFrame()
+
+def github_save_csv(df, filename, msg=None):
+    token, repo = get_github_config()
+    if not token:
+        df.to_csv(filename, index=False, encoding="utf-8-sig"); return True
+    url = f"https://api.github.com/repos/{repo}/contents/{filename}"
+    headers = {"Authorization":f"token {token}",
+                "Accept":"application/vnd.github.v3+json"}
+    sha = None
+    try:
+        r = requests.get(url, headers=headers, timeout=10)
+        if r.status_code == 200: sha = r.json().get("sha")
+    except: pass
+    csv_str = df.to_csv(index=False, encoding="utf-8-sig")
+    content  = base64.b64encode(csv_str.encode("utf-8-sig")).decode()
+    payload  = {"message": msg or f"DB:{filename}", "content": content}
+    if sha: payload["sha"] = sha
+    try:
+        r = requests.put(url, headers=headers, json=payload, timeout=15)
+        return r.status_code in [200, 201]
+    except: return False
+
+# ─────────────────────────────────────────────
+# 로그인
+# ─────────────────────────────────────────────
+def check_login():
+    try: return st.secrets["users"]
+    except: return {"hansol":"hevh2024"}
+
+def login_page():
+    st.markdown("""
+    <div style="text-align:center;margin-top:100px;">
+        <h2 style="color:#1e293b;">🏭 한솔테크닉스 HEVH</h2>
+        <p style="color:#64748b;">LOSSTIME + SCRAP 분석 대시보드</p>
+    </div>""", unsafe_allow_html=True)
+    _, col, _ = st.columns([1.5, 1, 1.5])
+    with col:
+        with st.form("login_form"):
+            u = st.text_input("아이디")
+            p = st.text_input("비밀번호", type="password")
+            if st.form_submit_button("로그인",
+                                     use_container_width=True,
+                                     type="primary"):
+                users = check_login()
+                if u in users and users[u] == p:
+                    st.session_state["logged_in"] = True
+                    st.session_state["username"]  = u
+                    st.rerun()
+                else:
+                    st.error("아이디 또는 비밀번호 오류")
+
+# ─────────────────────────────────────────────
+# 파싱 엔진
+# ─────────────────────────────────────────────
+def classify_loss_type(text):
+    if not text: return ("ETC","기타")
+    t = str(text).lower()
+    for code,name,kws in LOSS_TYPE_RULES:
+        for kw in kws:
+            if kw in t: return (code,name)
+    return ("ETC","기타")
+
+def classify_scrap_cause(comment):
+    if not comment: return ("AUTO","자동판정(ATE)")
+    t = str(comment).lower()
+    for code,name,kws in SCRAP_CAUSE_RULES:
+        for kw in kws:
+            if kw in t: return (code,name)
+    return ("ETC","기타")
+
+def normalize_scrap_line(raw):
+    s = str(raw or "").strip().upper()
+    s = re.sub(r'^PA\s*0*(\d+)', lambda m: f"SA{int(m.group(1)):02d}", s)
+    s = re.sub(r'^PS\s*0*(\d+)', lambda m: f"PS{int(m.group(1)):02d}", s)
+    s = re.sub(r'^PM\s*0*(\d+)', lambda m: f"MI {int(m.group(1))}", s)
+    return s
+
+def extract_slot_causes(cause_row, slots):
+    result = {s:"" for s in slots}
+    if not cause_row: return result
+    cells = list(cause_row)[2:2+len(slots)]
+    for idx,cell in enumerate(cells):
+        if idx >= len(slots): break
+        if cell is not None and str(cell).strip() not in ["","None","-"]:
+            result[slots[idx]] = " ".join(str(cell).strip().split())
+    return result
+
+def extract_model_per_slot(model_row, slots):
+    result = {s:"" for s in slots}
+    if not model_row: return result
+    cells = list(model_row)[2:2+len(slots)]
+    last  = ""
+    for idx,cell in enumerate(cells):
+        if idx >= len(slots): break
+        v  = str(cell or "").strip()
+        mm = re.search(r'(L\d{2}[A-Z0-9_\-\.]+)',v,re.I)
+        if mm: result[slots[idx]]=mm.group(1); last=mm.group(1)
+        elif v and v.lower() not in ["none","-",""]:
+            result[slots[idx]]=v; last=v
+        elif last: result[slots[idx]]=last
+    return result
+
+def parse_losstime(val):
+    if val is None: return 0.0
+    s = str(val).strip()
+    if s.startswith("(") and s.endswith(")"): return 0.0
+    m = re.search(r'(\d+\.?\d*)',s)
+    return max(0.0, float(m.group(1)) if m else 0.0)
+
+def is_line_cell(val):
+    return bool(re.match(r'^(SA\s*\d+|PA\s*\d+|PS\s*\d+|MI\s*\d+)',
+                         str(val or "").strip(),re.I))
+
+def get_label(row):
+    return str(row[1] or "").strip().upper() if len(row)>1 else ""
+
+def detect_process(fn):
+    fu = fn.upper()
+    if "AI REPORT"  in fu: return "AI"
+    if "SMD REPORT" in fu: return "SMT"
+    if "MI TIME"    in fu: return "MI"
+    if "SCRAP" in fu or "SCRAB" in fu or "스크랩" in fu: return "SCRAP"
+    return "UNKNOWN"
+
+def parse_date(text):
+    if not text: return None
+    t = re.sub(r'\b(DAY|NIGHT)\b','',str(text),flags=re.I).strip()
+    m = re.search(r'\b(\d{1,2})\.(\d{1,2})\b',t)
+    if m:
+        a,b=int(m.group(1)),int(m.group(2))
+        if 1<=a<=31 and 1<=b<=12: return f"2026-{b:02d}-{a:02d}"
+    m = re.search(r'(\d{1,2})/(\d{1,2})',t)
+    if m:
+        a,b=int(m.group(1)),int(m.group(2))
+        if 1<=a<=31 and 1<=b<=12: return f"2026-{b:02d}-{a:02d}"
+    return None
+
+def detect_shift(sn,fn):
+    return "NIGHT" if "NIGHT" in (sn+fn).upper() else "DAY"
+
+def normalize_line(raw):
+    s = str(raw).strip()
+    s = re.sub(r':.*$','',s).strip()
+    s = re.sub(r'(?i)^PA\s*0*(\d+)',lambda m:f"SA{int(m.group(1)):02d}",s)
+    s = re.sub(r'(?i)^SA\s*0*(\d+)',lambda m:f"SA{int(m.group(1)):02d}",s)
+    s = re.sub(r'(?i)^PS\s*0*(\d+)',lambda m:f"PS{int(m.group(1)):02d}",s)
+    s = re.sub(r'(?i)^MI\s*0*(\d+)',lambda m:f"MI {m.group(1)}",s)
+    return s.strip()
+
+def parse_sheet(ws, process, date_str, shift):
+    records=[]
+    rows=list(ws.iter_rows(values_only=True))
+    slots=NIGHT_SLOTS if shift=="NIGHT" else DAY_SLOTS
+    i=0
+    while i<len(rows):
+        row=rows[i]; c1=row[1] if len(row)>1 else None
+        if not is_line_cell(c1): i+=1; continue
+        line=normalize_line(str(c1))
+        model_row=loss_row=cause_row=action_row=None
+        target_row=actual_row=None
+        for j in range(i+1,min(i+16,len(rows))):
+            r=rows[j]; lbl=get_label(r)
+            if is_line_cell(r[1] if len(r)>1 else None) and j>i+1: break
+            if "MODEL"    in lbl and model_row  is None: model_row=r
+            if "LOSSTIME" in lbl and loss_row   is None: loss_row=r
+            elif lbl=="CAUSE"  and cause_row  is None: cause_row=r
+            elif lbl=="ACTION" and action_row is None: action_row=r
+            elif "TARGET" in lbl and target_row is None: target_row=r
+            elif "ACTUAL" in lbl and actual_row is None: actual_row=r
+
+        if loss_row:
+            loss_vals=[]
+            for c in range(2,2+len(slots)):
+                try:
+                    v=loss_row[c] if c<len(loss_row) else None
+                    mm=re.search(r'(\d+)\s*min',str(v or ""),re.I)
+                    loss_vals.append(float(mm.group(1)) if mm else parse_losstime(v))
+                except: loss_vals.append(0.0)
+            while len(loss_vals)<len(slots): loss_vals.append(0.0)
+            loss_vals=[max(0.0,v) for v in loss_vals]
+            total=sum(loss_vals)
+            models=extract_model_per_slot(model_row,slots)
+            slot_causes=extract_slot_causes(cause_row,slots)
+            cause_all=" | ".join(v for v in slot_causes.values() if v)
+            unique_c=set(v for v in slot_causes.values() if v)
+            complexity="복합" if len(unique_c)>1 else "단일"
+            action=" | ".join(
+                str(v) for v in (list(action_row[2:9]) if action_row else [])
+                if v and str(v).strip())
+
+            # TARGET / ACTUAL 파싱
+            if process=="MI":
+                # MI: 컬럼 순서 = MI / WAITING TEST / ATE (3개씩 반복)
+                mi_target=0.0; mi_actual=0.0
+                ate_target=0.0; ate_actual=0.0
+                for s_idx in range(len(slots)):
+                    col_mi  = 2 + s_idx*3
+                    col_ate = 2 + s_idx*3 + 2
+                    if target_row:
+                        try: mi_target  += parse_losstime(target_row[col_mi]  if col_mi  < len(target_row) else None)
+                        except: pass
+                        try: ate_target += parse_losstime(target_row[col_ate] if col_ate < len(target_row) else None)
+                        except: pass
+                    if actual_row:
+                        try: mi_actual  += parse_losstime(actual_row[col_mi]  if col_mi  < len(actual_row) else None)
+                        except: pass
+                        try: ate_actual += parse_losstime(actual_row[col_ate] if col_ate < len(actual_row) else None)
+                        except: pass
+                target_tot = round(mi_target,0)
+                actual_tot = round(mi_actual,0)
+                target_mi  = round(mi_target,0)
+                actual_mi  = round(mi_actual,0)
+                target_ate = round(ate_target,0)
+                actual_ate = round(ate_actual,0)
+            else:
+                # AI / SMT: 시간대별 단일 컬럼
+                target_tot=0.0; actual_tot=0.0
+                for s_idx in range(len(slots)):
+                    col = 2 + s_idx
+                    if target_row:
+                        try: target_tot += parse_losstime(target_row[col] if col < len(target_row) else None)
+                        except: pass
+                    if actual_row:
+                        try: actual_tot += parse_losstime(actual_row[col] if col < len(actual_row) else None)
+                        except: pass
+                target_mi=target_ate=actual_mi=actual_ate=0.0
+
+            for idx,slot in enumerate(slots):
+                lv=loss_vals[idx] if idx<len(loss_vals) else 0.0
+                if lv>0:
+                    cs=slot_causes.get(slot,"")
+                    if not cs:
+                        for s2 in slots:
+                            if slot_causes.get(s2,""): cs=slot_causes[s2]; break
+                    code,name=classify_loss_type(cs)
+                    records.append({
+                        "date":date_str,"shift":shift,"process":process,
+                        "line":line,"time_slot":slot,"model":models.get(slot,""),
+                        "loss_min":round(lv,1),"loss_type_code":code,
+                        "loss_type_name":name,"complexity":complexity,
+                        "loss_detail":cs,"action":action,
+                        "target":0,"actual":0,
+                        "target_mi":0,"actual_mi":0,
+                        "target_ate":0,"actual_ate":0})
+
+            if total>0 or (target_tot+actual_tot)>0:
+                code_t,name_t=classify_loss_type(cause_all)
+                records.append({
+                    "date":date_str,"shift":shift,"process":process,
+                    "line":line,"time_slot":"TOTAL","model":models.get(slots[0],""),
+                    "loss_min":round(total,1),"loss_type_code":code_t,
+                    "loss_type_name":name_t,"complexity":complexity,
+                    "loss_detail":cause_all,"action":action,
+                    "target":round(target_tot,0),
+                    "actual":round(actual_tot,0),
+                    "target_mi":round(target_mi,0),
+                    "actual_mi":round(actual_mi,0),
+                    "target_ate":round(target_ate,0),
+                    "actual_ate":round(actual_ate,0)})
+        i+=1
+    return records
+
+def parse_scrap_file(uploaded_file):
+    records=[]
+    try:
+        fn=uploaded_file.name.lower()
+        df=pd.read_excel(uploaded_file,
+                         engine="xlrd" if fn.endswith(".xls") else "openpyxl")
     except Exception as e:
-        st.error(f"❌ 데이터 처리 실패: {e}")
-        return
+        st.error(f"스크랩 읽기 실패: {e}"); return pd.DataFrame()
+    df.columns=[str(c).strip() for c in df.columns]
+    for r in ["Work Date","Start Line","Tran Comment"]:
+        if r not in df.columns:
+            st.warning(f"컬럼 없음: {r}"); return pd.DataFrame()
+    for _,row in df.iterrows():
+        try:
+            work_date  =str(row.get("Work Date","")).strip()[:10]
+            start_line =normalize_scrap_line(row.get("Start Line",""))
+            comment    =str(row.get("Tran Comment","")).strip()
+            model_desc =str(row.get("Model Mat Desc","")).strip()
+            oper_desc  =str(row.get("Oper Desc","")).strip()
+            result_grp =str(row.get("Result Group","")).strip()
+            result_cd  =str(row.get("Result Code","")).strip()
+            result_desc=str(row.get("Result Desc","")).strip()
+            reason_cd  =str(row.get("Reason Code","")).strip()
+            reason_desc=str(row.get("Reason Desc","")).strip()
+            qty=int(row.get("Qty",1) or 1)
+            mm=re.search(r'(L\d{2}[A-Z0-9_\-\.]+)',model_desc,re.I)
+            model=mm.group(1) if mm else model_desc
+            process=OPER_MAP.get(oper_desc,"기타")
+            cc,cn=classify_scrap_cause(comment)
+            is_auto="Y" if "ATUO_SCRAP" in comment.upper() or \
+                           "AUTO_SCRAP" in comment.upper() else "N"
+            records.append({
+                "work_date":work_date,"process":process,"line":start_line,
+                "model":model,"qty":qty,"cause_code":cc,"cause_name":cn,
+                "result_group":result_grp,"result_code":result_cd,
+                "result_desc":result_desc,"reason_code":reason_cd,
+                "reason_desc":reason_desc,"is_auto":is_auto,"comment":comment})
+        except: continue
+    return pd.DataFrame(records)
 
-    if merged.empty:
-        st.warning("표시할 데이터가 없습니다.")
-        return
+def parse_files(uploaded_files):
+    loss_records=[]; scrap_list=[]
+    prog=st.progress(0); status=st.empty()
+    for fi,uf in enumerate(uploaded_files):
+        fn=uf.name; process=detect_process(fn)
+        if process=="UNKNOWN":
+            status.warning(f"skip: {fn}")
+        elif process=="SCRAP":
+            status.info(f"scrap: {fn}")
+            sdf=parse_scrap_file(uf)
+            if not sdf.empty:
+                scrap_list.append(sdf); status.success(f"OK {len(sdf):,}")
+        else:
+            fd=parse_date(fn) or "UNKNOWN"
+            status.info(f"{fn} -> {process}/{fd}")
+            try: wb=load_workbook(uf,data_only=True)
+            except Exception as e:
+                status.error(f"열기실패: {e}")
+                prog.progress((fi+1)/len(uploaded_files)); continue
+            for sn in wb.sheetnames:
+                ws=wb[sn]
+                if isinstance(ws,Chartsheet): continue
+                shift=detect_shift(sn,fn)
+                ds=fd if fd!="UNKNOWN" else (parse_date(sn) or "UNKNOWN")
+                try: loss_records.extend(parse_sheet(ws,process,ds,shift))
+                except Exception as e: st.warning(f"파싱오류[{sn}]: {e}")
+        prog.progress((fi+1)/len(uploaded_files))
+    status.empty(); prog.empty()
+    ldf=pd.DataFrame(loss_records)
+    if not ldf.empty and "date" in ldf.columns:
+        ldf=ldf[ldf["date"]!="UNKNOWN"].reset_index(drop=True)
+    sdf=pd.concat(scrap_list,ignore_index=True) if scrap_list else pd.DataFrame()
+    return ldf,sdf
 
-    # ───── KPI ─────
-    k1, k2, k3, k4, k5 = st.columns(5)
-    k1.metric("📦 전체", f"{len(merged):,}건")
-    k2.metric("🔴 긴급", int((merged['알람'] == '🔴 긴급').sum()))
-    k3.metric("🟠 부족", int((merged['알람'] == '🟠 부족').sum()))
-    k4.metric("🟡 지연", int((merged['알람'] == '🟡 지연').sum()))
-    k5.metric("✅ 정상", int((merged['알람'] == '✅ 정상').sum()))
+# ─────────────────────────────────────────────
+# DB
+# ─────────────────────────────────────────────
+def load_db():
+    df=github_load_csv(DB_PATH)
+    if not df.empty and "date" in df.columns:
+        df=df[df["date"]!="UNKNOWN"].reset_index(drop=True)
+    # target/actual 컬럼 없으면 추가
+    for col in ["target","actual","target_mi","actual_mi","target_ate","actual_ate"]:
+        if col not in df.columns: df[col]=0
+    return df
 
-    st.markdown("<hr>", unsafe_allow_html=True)
+def save_db(df):       return github_save_csv(df,DB_PATH,"LOSSTIME DB")
+def load_scrap_db():   return github_load_csv(SCRAP_DB)
+def save_scrap_db(df): return github_save_csv(df,SCRAP_DB,"SCRAP DB")
 
-    # ───── 필터 ─────
-    f1, f2 = st.columns(2)
-    alert_sel = f1.multiselect("알람 등급",
-                                ['🔴 긴급', '🟠 부족', '🟡 지연', '✅ 정상'],
-                                key="ship_grade")
-    type_sel = f2.multiselect("모델 타입", ['PD', '3IN1'], key="ship_type")
+def merge_db(existing,new_df):
+    if existing.empty: return new_df
+    if new_df.empty:   return existing
+    combined=pd.concat([existing,new_df],ignore_index=True)
+    key=["date","shift","process","line","time_slot"]
+    combined=combined.drop_duplicates(
+        subset=[c for c in key if c in combined.columns],keep="last")
+    return combined.sort_values(
+        ["date","shift","process","line","time_slot"]).reset_index(drop=True)
 
-    view = merged.copy()
-    if alert_sel:
-        view = view[view['알람'].isin(alert_sel)]
-    if type_sel:
-        view = view[view['MODEL_TYPE'].isin(type_sel)]
+def merge_scrap_db(existing,new_df):
+    if existing.empty: return new_df
+    if new_df.empty:   return existing
+    combined=pd.concat([existing,new_df],ignore_index=True)
+    key=["work_date","line","model","comment"]
+    combined=combined.drop_duplicates(
+        subset=[c for c in key if c in combined.columns],keep="last")
+    return combined.sort_values("work_date").reset_index(drop=True)
 
-    # ───── 테이블 ─────
-    st.markdown("##### 📋 알람 상세")
-    show_cols_pref = ['알람', 'model', 'code', 'ERP', 'MODEL_TYPE',
-                      'SO', '기초재고', '누적실적', '달성률(%)', 'NEW_GAP', 'Note']
-    show_cols = [c for c in show_cols_pref if c in view.columns]
+def to_excel(df):
+    buf=io.BytesIO()
+    with pd.ExcelWriter(buf,engine="xlsxwriter") as w:
+        tdf=df[df["time_slot"]=="TOTAL"] if "time_slot" in df.columns else df
+        ls=(tdf.groupby(["process","line"])["loss_min"]
+            .sum().reset_index().sort_values("loss_min",ascending=False)
+            .rename(columns={"loss_min":"누계손실(분)"}))
+        ls["누계손실(분)"]=ls["누계손실(분)"].round(1)
+        ls["누계(시간)"]=(ls["누계손실(분)"]/60).round(1)
+        ls.insert(0,"순위",range(1,len(ls)+1))
+        ls.to_excel(w,sheet_name="라인별누계",index=False)
+        ts=(tdf.groupby("loss_type_name")["loss_min"]
+            .agg(["sum","count"]).reset_index().sort_values("sum",ascending=False)
+            .rename(columns={"loss_type_name":"유형","sum":"손실(분)","count":"건수"}))
+        ts["손실(분)"]=ts["손실(분)"].round(1)
+        ts.to_excel(w,sheet_name="손실유형별",index=False)
+        df.to_excel(w,sheet_name="원본데이터",index=False)
+    return buf.getvalue()
 
-    def color_alert_row(row):
-        colors = {'🔴 긴급': '#ffcccc', '🟠 부족': '#ffe0b3',
-                  '🟡 지연': '#fff5b3', '✅ 정상': '#d4edda'}
-        bg = colors.get(row['알람'], '')
-        return [f'background-color: {bg}'] * len(row)
+def to_excel_scrap(df):
+    buf=io.BytesIO()
+    with pd.ExcelWriter(buf,engine="xlsxwriter") as w:
+        (df.groupby("cause_name")["qty"].sum().reset_index()
+         .sort_values("qty",ascending=False)
+         .rename(columns={"cause_name":"원인","qty":"수량"})
+         .to_excel(w,sheet_name="원인별",index=False))
+        (df.groupby(["process","line"])["qty"].sum().reset_index()
+         .sort_values("qty",ascending=False)
+         .rename(columns={"qty":"수량"})
+         .to_excel(w,sheet_name="라인별",index=False))
+        df.to_excel(w,sheet_name="원본데이터",index=False)
+    return buf.getvalue()
 
-    if not view.empty:
-        st.dataframe(
-            view[show_cols].style.apply(color_alert_row, axis=1),
-            use_container_width=True, height=450
-        )
+def reset_all():
+    keys=["kpi_focus","sel_proc","type_chart","line_chart",
+          "proc_pie_chart","scrap_cause_chart","scrap_line_chart"]
+    for k in keys:
+        if k in st.session_state: del st.session_state[k]
 
-    st.markdown("<hr>", unsafe_allow_html=True)
+# ← 여기에 추가
+def get_ach_color(v):
+    if v >= 100:  return "#16a34a"
+    elif v >= 90: return "#475569"
+    elif v >= 80: return "#f97316"
+    else:         return "#dc2626"
 
-    # ───── 차트 ─────
-    st.markdown("##### 📈 분석 차트")
-    ch1, ch2 = st.columns(2)
-    
-    with ch1:
-        st.markdown("**모델별 달성률 TOP 15**")
-        if not view.empty and 'model' in view.columns:
-            chart1 = view[['model', '달성률(%)']].dropna().sort_values('달성률(%)').head(15)
-            fig1 = px.bar(chart1, x='달성률(%)', y='model', orientation='h',
-                          color='달성률(%)', color_continuous_scale='RdYlGn',
-                          range_color=[0, 150], height=400)
-            fig1.add_vline(x=100, line_dash="dash", line_color="green",
-                           annotation_text="100%")
-            fig1.update_layout(margin=dict(l=0, r=0, t=10, b=0))
-            st.plotly_chart(fig1, use_container_width=True)
+# ─────────────────────────────────────────────
+# 대시보드
+# ─────────────────────────────────────────────
+def dashboard():
 
-    with ch2:
-        st.markdown("**알람 등급별 분포**")
-        if not view.empty:
-            chart2 = view['알람'].value_counts().reset_index()
-            chart2.columns = ['알람', '건수']
-            color_map = {'🔴 긴급': '#ef4444', '🟠 부족': '#f97316',
-                         '🟡 지연': '#eab308', '✅ 정상': '#22c55e'}
-            fig2 = px.bar(chart2, x='알람', y='건수', color='알람',
-                          color_discrete_map=color_map, height=400)
-            fig2.update_layout(margin=dict(l=0, r=0, t=10, b=0), showlegend=False)
-            st.plotly_chart(fig2, use_container_width=True)
+    # 자동 DB 로드
+    if "df" not in st.session_state:
+        db=load_db()
+        if not db.empty: st.session_state["df"]=db
+    if "scrap_df" not in st.session_state:
+        sdb=load_scrap_db()
+        if not sdb.empty: st.session_state["scrap_df"]=sdb
 
-    # ───── DB 초기화 ─────
-    st.markdown("<hr>", unsafe_allow_html=True)
-    st.markdown("##### 🗑️ DB 관리")
-    r1, r2 = st.columns(2)
-    with r1:
-        if st.button("🗑️ 출하계획 DB 초기화", use_container_width=True, key="reset_ship"):
-            if os.path.exists(SHIP_DB_PATH):
-                os.remove(SHIP_DB_PATH)
-            meta.pop('ship_updated', None)
-            save_meta(meta)
-            st.success("출하계획 DB 초기화 완료")
-            st.rerun()
-    with r2:
-        if st.button("🗑️ 생산실적 DB 초기화", use_container_width=True, key="reset_prod"):
-            if os.path.exists(PROD_DB_PATH):
-                os.remove(PROD_DB_PATH)
-            meta.pop('prod_updated', None)
-            save_meta(meta)
-            st.success("생산실적 DB 초기화 완료")
-            st.rerun()
+    # 사이드바
+    with st.sidebar:
+        st.markdown(f"**👤 {st.session_state.get('username','')}**")
+        if st.button("로그아웃", use_container_width=True):
+            st.session_state["logged_in"]=False; st.rerun()
+        st.divider()
+
+        with st.expander("📂 파일 업로드", expanded=True):
+            uploaded=st.file_uploader("xlsx / xls",type=["xlsx","xls"],
+                                      accept_multiple_files=True,
+                                      label_visibility="collapsed")
+            if uploaded:
+                if st.button("🚀 분석 / 누적",type="primary",
+                             use_container_width=True):
+                    with st.spinner("처리 중..."):
+                        nl,ns=parse_files(uploaded)
+                    if not nl.empty:
+                        ex=load_db(); mg=merge_db(ex,nl)
+                        with st.spinner("저장..."): ok=save_db(mg)
+                        st.session_state["df"]=mg
+                        st.success(f"OK {len(nl):,}건")
+                    if not ns.empty:
+                        es=load_scrap_db(); ms=merge_scrap_db(es,ns)
+                        with st.spinner("저장..."): ok2=save_scrap_db(ms)
+                        st.session_state["scrap_df"]=ms
+                        st.success(f"OK SCRAP {len(ns):,}건")
+                    if nl.empty and ns.empty: st.error("파싱 실패")
+
+        if st.button("💾 DB 불러오기", use_container_width=True):
+            with st.spinner("로드 중..."):
+                db=load_db(); sdb=load_scrap_db()
+            if not db.empty:
+                st.session_state["df"]=db
+                st.success(f"OK {len(db):,}건")
+            if not sdb.empty:
+                st.session_state["scrap_df"]=sdb
+                st.success(f"OK SCRAP {len(sdb):,}건")
+            if db.empty and sdb.empty: st.warning("DB 없음")
+
+        st.divider()
+
+        df_all=st.session_state.get("df",pd.DataFrame())
+        if df_all.empty:
+            st.info("데이터를 불러오세요."); return
+
+        dates=sorted([d for d in df_all["date"].dropna().unique()
+                      if d!="UNKNOWN"])
+        if not dates: st.warning("날짜 없음"); return
+
+        june=[d for d in dates if d.startswith("2026-06")]
+        def_s=june[0]  if june else dates[0]
+        def_e=june[-1] if june else dates[-1]
+
+        st.caption("📅 날짜")
+        if len(dates)>=2:
+            date_range=st.select_slider("",options=dates,
+                                        value=(def_s,def_e),
+                                        label_visibility="collapsed")
+        else:
+            date_range=(dates[0],dates[0])
+
+        st.caption("🏭 공정")
+        procs=st.multiselect("",["AI","SMT","MI"],
+                             default=["AI","SMT","MI"],
+                             label_visibility="collapsed")
+
+        st.caption("🌙 주야간")
+        shifts=st.multiselect("",["DAY","NIGHT"],
+                              default=["DAY","NIGHT"],
+                              label_visibility="collapsed")
+
+        with st.expander("⚙️ 추가 필터"):
+            lines_all=sorted(df_all["line"].dropna().unique())
+            sel_lines=st.multiselect("라인",lines_all)
+            types_all=sorted(df_all["loss_type_name"].dropna().unique())
+            sel_types=st.multiselect("손실유형",types_all)
+            view_mode=st.radio("조회 단위",
+                               ["TOTAL(일계)","타임별(A~K)"],
+                               horizontal=True)
+
+    # 메인
+    df=st.session_state.get("df",pd.DataFrame())
+    scrap_df=st.session_state.get("scrap_df",pd.DataFrame())
+    if df.empty:
+        st.info("👈 파일 업로드 또는 DB 불러오기"); return
+
+    mask=(
+        (df["date"]>=date_range[0])&(df["date"]<=date_range[1])&
+        (df["shift"].isin(shifts or ["DAY","NIGHT"]))&
+        (df["process"].isin(procs or ["AI","SMT","MI"]))
+    )
+    if sel_lines: mask &= df["line"].isin(sel_lines)
+    if sel_types: mask &= df["loss_type_name"].isin(sel_types)
+    if view_mode=="TOTAL(일계)": mask &= (df["time_slot"]=="TOTAL")
+    else:                        mask &= (df["time_slot"]!="TOTAL")
+
+    fdf=df[mask].copy()
+    total_df=df[
+        (df["date"]>=date_range[0])&(df["date"]<=date_range[1])&
+        (df["shift"].isin(shifts or ["DAY","NIGHT"]))&
+        (df["process"].isin(procs or ["AI","SMT","MI"]))&
+        (df["time_slot"]=="TOTAL")
+    ].copy()
+    if sel_lines: total_df=total_df[total_df["line"].isin(sel_lines)]
+    if sel_types: total_df=total_df[total_df["loss_type_name"].isin(sel_types)]
+    if fdf.empty:
+        st.warning("조건에 맞는 데이터 없음"); return
+
+    # KPI 계산
+    total_min   = round(total_df["loss_min"].sum(),1) if not total_df.empty else 0
+    total_hr    = round(total_min/60,1)
+    n_lines     = total_df["line"].nunique() if not total_df.empty else 0
+    n_days      = fdf["date"].nunique()
+    scrap_total = int(scrap_df["qty"].sum()) if not scrap_df.empty else 0
+
+    # 전체 달성률 계산
+    t_sum = total_df["target"].sum()
+    a_sum = total_df["actual"].sum()
+    ach_rate = round(a_sum/t_sum*100,1) if t_sum>0 else 0
+
+    if "kpi_focus" not in st.session_state:
+        st.session_state["kpi_focus"] = None
+
+    # 헤더
+    st.markdown("""
+    <div class="main-header">
+        <h1>🏭 한솔테크닉스 HEVH</h1>
+        <p>LOSSTIME + SCRAP 분석 대시보드 | AI / SMT / PBA(MI) 공정 | 호치민 법인</p>
+    </div>""", unsafe_allow_html=True)
+
+    # 정보 배너
+    date_from = date_range[0][5:] if date_range else ""
+    date_to   = date_range[1][5:] if date_range else ""
+    proc_str  = ", ".join(procs) if procs else "전체"
+    shift_str = ", ".join(shifts) if shifts else "전체"
+
+    st.markdown(f"""
+    <div class="info-banner">
+        <div class="info-banner-left">
+            <h4>📊 분석 현황</h4>
+            <p>📅 {date_from} ~ {date_to}
+               &nbsp;|&nbsp; 🏭 {proc_str}
+               &nbsp;|&nbsp; 🌙 {shift_str}
+               &nbsp;|&nbsp; 📍 {n_lines}개 라인
+               &nbsp;|&nbsp; 📅 {n_days}일
+            </p>
+        </div>
+        <div class="info-banner-badge">
+            ⏱️ {total_min:,.0f}분 ({total_hr}h)
+        </div>
+    </div>
+    """, unsafe_allow_html=True)
+
+    # KPI 카드 (5개 - 달성률 추가)
+    kc1,kc2,kc3,kc4,kc5,kc6=st.columns([1,1,1,1,1,0.22])
+    ach_cls = "kpi-card-green" if ach_rate>=100 else "kpi-card-red" if ach_rate>0 else "kpi-card"
+    ach_val_cls = "kpi-val-green" if ach_rate>=100 else "kpi-val-red" if ach_rate>0 else "kpi-val"
+
+    kpi_data=[
+        (kc1,"⏱️",f"{total_min:,.1f}분",f"({total_hr}h)","총 손실","loss","kpi-card"),
+        (kc2,"📍",f"{n_lines}개","","분석 라인","line","kpi-card"),
+        (kc3,"📅",f"{n_days}일","","분석 일수","date","kpi-card"),
+        (kc4,"📛",f"{scrap_total:,}ea","","스크랩","scrap","kpi-card"),
+        (kc5,"🎯",f"{ach_rate}%","",f"달성률 ({int(a_sum):,}/{int(t_sum):,})","plan",ach_cls),
+    ]
+    for col,icon,val1,val2,lbl,key,cls in kpi_data:
+        with col:
+            is_active=st.session_state["kpi_focus"]==key
+            use_cls="kpi-card-active" if is_active else cls
+            vclass="kpi-val" if key!="plan" else ach_val_cls
+            st.markdown(f"""
+            <div class="{use_cls}">
+                <div class="{vclass}">
+                    {val1}&nbsp;<span>{val2}</span>
+                </div>
+                <div class="kpi-lbl">{icon} {lbl}</div>
+            </div>""", unsafe_allow_html=True)
+            if st.button("▼ 닫기" if is_active else "↗ 상세",
+                         key=f"kpi_{key}",
+                         use_container_width=True,
+                         type="secondary"):
+                st.session_state["kpi_focus"]=(None if is_active else key)
+                st.rerun()
+
+    with kc6:
+        st.markdown("<div style='height:54px'></div>",unsafe_allow_html=True)
+        if st.button("🏠",use_container_width=True,help="초기화"):
+            reset_all(); st.rerun()
+
+    # KPI 드릴다운
+    focus=st.session_state.get("kpi_focus")
+    if focus=="loss" and not total_df.empty:
+        with st.expander("📊 손실유형 상세",expanded=True):
+            ts=(total_df.groupby("loss_type_name")["loss_min"]
+                .sum().reset_index().sort_values("loss_min",ascending=False))
+            ts["loss_min"]=ts["loss_min"].round(1)
+            st.dataframe(ts.rename(
+                columns={"loss_type_name":"유형","loss_min":"손실(분)"}),
+                use_container_width=True,height=250)
+    elif focus=="line" and not total_df.empty:
+        with st.expander("📋 라인별 상세",expanded=True):
+            ls=(total_df.groupby(["process","line"])["loss_min"]
+                .sum().reset_index().sort_values("loss_min",ascending=False))
+            ls["loss_min"]=ls["loss_min"].round(1)
+            st.dataframe(ls.rename(columns={"loss_min":"손실(분)"}),
+                         use_container_width=True,height=250)
+    elif focus=="date" and not total_df.empty:
+        with st.expander("📅 날짜별 상세",expanded=True):
+            ds=(total_df.groupby(["date","process"])["loss_min"]
+                .sum().reset_index().sort_values("date"))
+            ds["loss_min"]=ds["loss_min"].round(1)
+            st.dataframe(ds.rename(columns={"loss_min":"손실(분)"}),
+                         use_container_width=True,height=250)
+    elif focus=="scrap" and not scrap_df.empty:
+        with st.expander("📛 스크랩 상세",expanded=True):
+            st.dataframe(scrap_df,use_container_width=True,height=250)
+    elif focus=="plan" and not total_df.empty:
+        with st.expander("🎯 Plan/Actual 상세",expanded=True):
+            pa=(total_df.groupby(["process","line"])[["target","actual"]].sum().reset_index())
+            pa["GAP"]=pa["actual"]-pa["target"]
+            pa["달성률"]=((pa["actual"]/pa["target"])*100).round(1).fillna(0)
+            pa=pa.sort_values("달성률",ascending=True)
+            st.dataframe(pa,use_container_width=True,height=250)
+
+    st.divider()
+
+    # 탭
+    tab1,tab2,tab3,tab4,tab5,tab6,tab7,tab8,tab9=st.tabs([
+        "📊 손실 분석","🏭 라인별","📋 Plan/Actual",
+        "📈 트렌드","🕐 타임별","📛 스크랩",
+        "🔍 상세 조회","🔧 PM","⬇️ 다운로드"
+    ])
+
+    # ════════ TAB1 - 손실 분석 ════════
+    with tab1:
+        if total_df.empty:
+            st.warning("TOTAL 데이터 없음")
+        else:
+            col_trend,col_slot=st.columns(2)
+            with col_trend:
+                st.markdown("#### 📈 날짜별 손실 트렌드")
+                dt=(total_df.groupby(["date","process"])["loss_min"].sum().reset_index())
+                dt["loss_min"]=dt["loss_min"].round(1)
+                fig_t=px.line(dt,x="date",y="loss_min",color="process",
+                              color_discrete_map=PROC_COLOR,markers=True,height=320,
+                              labels={"loss_min":"손실(분)","date":"날짜","process":"공정"})
+                fig_t.update_layout(margin=dict(l=0,r=0,t=10,b=0),
+                                    yaxis=dict(rangemode="tozero"),
+                                    legend=dict(orientation="h",y=1.05))
+                st.plotly_chart(fig_t,use_container_width=True)
+
+            with col_slot:
+                st.markdown("#### 🕐 시간대별 손실")
+                slot_order=["A","B","C","D","E","F","G","H","I","J","K"]
+                slot_df2=df[
+                    (df["date"]>=date_range[0])&(df["date"]<=date_range[1])&
+                    (df["shift"].isin(shifts or ["DAY","NIGHT"]))&
+                    (df["process"].isin(procs or ["AI","SMT","MI"]))&
+                    (df["time_slot"]!="TOTAL")].copy()
+                if sel_lines: slot_df2=slot_df2[slot_df2["line"].isin(sel_lines)]
+                if not slot_df2.empty:
+                    ss=(slot_df2.groupby(["time_slot","process"])["loss_min"].sum().reset_index())
+                    ss["loss_min"]=ss["loss_min"].round(1)
+                    ss["time_slot"]=pd.Categorical(ss["time_slot"],categories=slot_order,ordered=True)
+                    ss=ss.sort_values("time_slot")
+                    fig_s=px.bar(ss,x="time_slot",y="loss_min",color="process",
+                                 color_discrete_map=PROC_COLOR,barmode="stack",height=320,
+                                 labels={"loss_min":"손실(분)","time_slot":"시간대","process":"공정"})
+                    fig_s.update_layout(margin=dict(l=0,r=0,t=10,b=0),
+                                        yaxis=dict(rangemode="tozero"),
+                                        legend=dict(orientation="h",y=1.05))
+                    st.plotly_chart(fig_s,use_container_width=True)
+                else:
+                    st.info("시간대 데이터 없음")
+
+            st.markdown("<hr class='section-divider'>",unsafe_allow_html=True)
+
+            col_l,col_r=st.columns(2)
+            with col_l:
+                st.markdown("#### 손실유형별 누계")
+                ts=(total_df.groupby("loss_type_name")["loss_min"]
+                    .sum().reset_index().sort_values("loss_min",ascending=False)
+                    .rename(columns={"loss_type_name":"유형","loss_min":"손실(분)"}))
+                ts["손실(분)"]=ts["손실(분)"].round(1)
+                fig=px.bar(ts,x="손실(분)",y="유형",orientation="h",
+                           color="유형",color_discrete_map=TYPE_COLOR,height=500)
+                fig.update_layout(showlegend=False,margin=dict(l=0,r=0,t=10,b=0),
+                                  yaxis=dict(categoryorder="total ascending"),
+                                  xaxis=dict(rangemode="tozero"))
+                ct=st.plotly_chart(fig,use_container_width=True,
+                                   on_select="rerun",key="type_chart")
+                if ct and ct.get("selection",{}).get("points"):
+                    sn2=ct["selection"]["points"][0]
+                    sn2=sn2.get("label") or sn2.get("y","")
+                    if sn2:
+                        st.markdown(f'<div class="detail-box"><b>📋 {sn2} 상세</b></div>',
+                                    unsafe_allow_html=True)
+                        dd=fdf[fdf["loss_type_name"]==sn2][
+                            ["date","shift","line","time_slot","model",
+                             "loss_min","loss_detail"]].sort_values(["date","line"])
+                        dd["loss_min"]=dd["loss_min"].round(1)
+                        st.dataframe(dd.reset_index(drop=True),
+                                     use_container_width=True,height=280)
+
+            with col_r:
+                st.markdown("#### 라인별 누계 TOP 15")
+                ls=(total_df.groupby(["process","line"])["loss_min"]
+                    .sum().reset_index().sort_values("loss_min",ascending=False).head(15))
+                ls["loss_min"]=ls["loss_min"].round(1)
+                fig2=px.bar(ls,x="line",y="loss_min",color="process",
+                            color_discrete_map=PROC_COLOR,height=500,
+                            labels={"loss_min":"손실(분)","line":"라인"})
+                fig2.update_layout(margin=dict(l=0,r=0,t=10,b=0),
+                                   yaxis=dict(rangemode="tozero"),
+                                   legend=dict(orientation="h",y=1.05))
+                cl=st.plotly_chart(fig2,use_container_width=True,
+                                   on_select="rerun",key="line_chart")
+                if cl and cl.get("selection",{}).get("points"):
+                    sl=cl["selection"]["points"][0].get("x","")
+                    if sl:
+                        st.markdown(f'<div class="detail-box"><b>📋 {sl} 라인 상세</b></div>',
+                                    unsafe_allow_html=True)
+                        ld=fdf[fdf["line"]==sl][
+                            ["date","shift","time_slot","model",
+                             "loss_min","loss_type_name","loss_detail"]
+                        ].sort_values(["date","time_slot"])
+                        ld["loss_min"]=ld["loss_min"].round(1)
+                        st.dataframe(ld.reset_index(drop=True),
+                                     use_container_width=True,height=280)
+
+            st.markdown("<hr class='section-divider'>",unsafe_allow_html=True)
+
+            st.markdown("#### 공정별 비중")
+            ps=total_df.groupby("process")["loss_min"].sum().reset_index()
+            ps=ps[ps["process"].isin(["AI","SMT","MI"])]
+            ps["loss_min"]=ps["loss_min"].round(1)
+
+            col_pie,col_type=st.columns([1,1.2])
+            with col_pie:
+                fig3=px.pie(ps,values="loss_min",names="process",
+                            color="process",color_discrete_map=PROC_COLOR,height=300)
+                fig3.update_traces(textposition="inside",textinfo="percent+label")
+                fig3.update_layout(margin=dict(l=0,r=0,t=10,b=0),showlegend=False)
+                st.plotly_chart(fig3,use_container_width=True)
+
+                if "sel_proc" not in st.session_state:
+                    st.session_state["sel_proc"]=(
+                        ps.sort_values("loss_min",ascending=False).iloc[0]["process"]
+                        if not ps.empty else "MI")
+                b1,b2,b3=st.columns(3)
+                for bcol,proc in zip([b1,b2,b3],["AI","SMT","MI"]):
+                    with bcol:
+                        is_sel=st.session_state["sel_proc"]==proc
+                        if st.button(f"{'OK ' if is_sel else ''}{proc}",
+                                     key=f"proc_btn_{proc}",
+                                     use_container_width=True,
+                                     type="primary" if is_sel else "secondary"):
+                            st.session_state["sel_proc"]=proc; st.rerun()
+
+            with col_type:
+                sel_proc=st.session_state.get("sel_proc","MI")
+                proc_type=(total_df[total_df["process"]==sel_proc]
+                           .groupby("loss_type_name")["loss_min"].sum().reset_index()
+                           .sort_values("loss_min",ascending=True)
+                           .rename(columns={"loss_type_name":"유형","loss_min":"손실(분)"}))
+                proc_type["손실(분)"]=proc_type["손실(분)"].round(1)
+                st.markdown(f"**{sel_proc} 손실유형**")
+                ft=px.bar(proc_type,x="손실(분)",y="유형",orientation="h",
+                          color="유형",color_discrete_map=TYPE_COLOR,height=300)
+                ft.update_layout(showlegend=False,margin=dict(l=0,r=0,t=10,b=0),
+                                 xaxis=dict(rangemode="tozero"),
+                                 yaxis=dict(categoryorder="total ascending"))
+                st.plotly_chart(ft,use_container_width=True)
+
+    # ════════ TAB2 - 라인별 ════════
+    with tab2:
+        if total_df.empty:
+            st.warning("TOTAL 데이터 없음")
+        else:
+            st.markdown("#### 🏭 라인별 상세 분석")
+            proc_sel=st.radio("공정 선택",["전체","AI","SMT","MI"],
+                              horizontal=True,key="line_tab_proc")
+            line_df=total_df.copy() if proc_sel=="전체" else total_df[total_df["process"]==proc_sel].copy()
+
+            if line_df.empty:
+                st.warning("데이터 없음")
+            else:
+                st.markdown("##### 라인별 누계 손실")
+                ls2=(line_df.groupby(["process","line"])["loss_min"]
+                     .sum().reset_index().sort_values("loss_min",ascending=False))
+                ls2["loss_min"]=ls2["loss_min"].round(1)
+                fig_l=px.bar(ls2,x="line",y="loss_min",color="process",
+                             color_discrete_map=PROC_COLOR,height=380,text="loss_min",
+                             labels={"loss_min":"손실(분)","line":"라인","process":"공정"})
+                fig_l.update_traces(texttemplate="%{text:,.0f}",textposition="outside")
+                fig_l.update_layout(margin=dict(l=0,r=0,t=30,b=0),
+                                    yaxis=dict(rangemode="tozero"),
+                                    legend=dict(orientation="h",y=1.05))
+                cl2=st.plotly_chart(fig_l,use_container_width=True,
+                                    on_select="rerun",key="line_tab_chart")
+
+                sel_line=""
+                if cl2 and cl2.get("selection",{}).get("points"):
+                    sel_line=cl2["selection"]["points"][0].get("x","")
+
+                st.markdown("<hr class='section-divider'>",unsafe_allow_html=True)
+
+                all_lines=sorted(line_df["line"].dropna().unique())
+                col_sel,_=st.columns([1,3])
+                with col_sel:
+                    chosen=st.selectbox("🔍 라인 선택",all_lines,
+                                        index=all_lines.index(sel_line)
+                                              if sel_line in all_lines else 0,
+                                        key="line_tab_sel")
+
+                if chosen:
+                    ld=total_df[total_df["line"]==chosen].copy()
+                    slot_ld=df[
+                        (df["date"]>=date_range[0])&(df["date"]<=date_range[1])&
+                        (df["shift"].isin(shifts or ["DAY","NIGHT"]))&
+                        (df["line"]==chosen)&(df["time_slot"]!="TOTAL")].copy()
+
+                    total_line=round(ld["loss_min"].sum(),1)
+                    m1,m2,m3,m4=st.columns(4)
+                    for col,val,lbl in [
+                        (m1,f"{total_line:,.1f}분","누계 손실"),
+                        (m2,f"{round(total_line/60,1)}h","손실 시간"),
+                        (m3,f"{ld['date'].nunique()}일","발생 일수"),
+                        (m4,f"{ld['loss_type_name'].nunique()}종","손실 유형수"),
+                    ]:
+                        col.markdown(f"""
+                        <div class="kpi-card">
+                            <div class="kpi-val">{val}</div>
+                            <div class="kpi-lbl">{lbl}</div>
+                        </div>""",unsafe_allow_html=True)
+
+                    st.markdown("<br>",unsafe_allow_html=True)
+                    col_a,col_b=st.columns(2)
+                    with col_a:
+                        st.markdown(f"##### {chosen} - 손실유형 비중")
+                        lt=(ld.groupby("loss_type_name")["loss_min"].sum().reset_index()
+                            .sort_values("loss_min",ascending=False))
+                        lt["loss_min"]=lt["loss_min"].round(1)
+                        fp2=px.pie(lt,values="loss_min",names="loss_type_name",
+                                   color="loss_type_name",color_discrete_map=TYPE_COLOR,height=300)
+                        fp2.update_traces(textposition="inside",textinfo="percent+label")
+                        fp2.update_layout(margin=dict(l=0,r=0,t=10,b=0),showlegend=False)
+                        st.plotly_chart(fp2,use_container_width=True)
+
+                    with col_b:
+                        st.markdown(f"##### {chosen} - 날짜별 트렌드")
+                        dt2=(ld.groupby(["date","shift"])["loss_min"].sum().reset_index())
+                        dt2["loss_min"]=dt2["loss_min"].round(1)
+                        fig_dt=px.bar(dt2,x="date",y="loss_min",color="shift",
+                                      color_discrete_map={"DAY":"#f59e0b","NIGHT":"#6366f1"},
+                                      height=300,barmode="stack",
+                                      labels={"loss_min":"손실(분)","date":"날짜","shift":"구분"})
+                        fig_dt.update_layout(margin=dict(l=0,r=0,t=10,b=0),
+                                             yaxis=dict(rangemode="tozero"),
+                                             legend=dict(orientation="h",y=1.05))
+                        st.plotly_chart(fig_dt,use_container_width=True)
+
+                    if not slot_ld.empty:
+                        st.markdown(f"##### {chosen} - 시간대별 패턴")
+                        slot_order=["A","B","C","D","E","F","G","H","I","J","K"]
+                        hm=(slot_ld.groupby(["date","time_slot"])["loss_min"].sum().reset_index())
+                        pt2=hm.pivot(index="date",columns="time_slot",values="loss_min").fillna(0).round(1)
+                        pt2=pt2[[c for c in slot_order if c in pt2.columns]]
+                        fhm=px.imshow(pt2,color_continuous_scale="Reds",aspect="auto",
+                                      height=max(280,len(pt2)*30),
+                                      labels={"x":"시간대","y":"날짜","color":"손실(분)"})
+                        fhm.update_layout(margin=dict(l=0,r=0,t=10,b=0))
+                        st.plotly_chart(fhm,use_container_width=True)
+
+                    st.markdown(f"##### {chosen} - 상세 내역")
+                    show_ld=ld[["date","shift","time_slot","model",
+                                "loss_min","loss_type_name","loss_detail","action"]
+                               ].sort_values(["date","shift"])
+                    show_ld["loss_min"]=show_ld["loss_min"].round(1)
+                    st.dataframe(show_ld.reset_index(drop=True),
+                                 use_container_width=True,height=300)
+
+    # ════════ TAB3 - Plan/Actual ════════
+    with tab3:
+        st.markdown("#### 📋 Plan vs Actual 생산실적")
+
+        pa_df=total_df.copy()
+        has_pa = "target" in pa_df.columns and pa_df["target"].sum()>0
+
+        if not has_pa:
+            st.warning("Plan/Actual 데이터 없음 - DB 초기화 후 파일 재업로드 필요")
+        else:
+            # 날짜 조회 필터
+            pa_dates=sorted(pa_df["date"].dropna().unique())
+            col_f1,col_f2,col_f3=st.columns([1,1,1])
+            with col_f1:
+                proc_pa=st.radio("공정",["전체","AI","SMT","MI"],
+                                 horizontal=True,key="pa_proc")
+            with col_f2:
+                shift_pa=st.radio("주야간",["전체","DAY","NIGHT"],
+                                  horizontal=True,key="pa_shift")
+            with col_f3:
+                if len(pa_dates)>=2:
+                    date_pa=st.select_slider(
+                        "날짜 범위",options=pa_dates,
+                        value=(pa_dates[0],pa_dates[-1]),
+                        key="pa_date")
+                else:
+                    date_pa=(pa_dates[0],pa_dates[0]) if pa_dates else (None,None)
+                    st.caption(f"📅 {pa_dates[0] if pa_dates else '-'}")
+
+            # 필터 적용
+            if date_pa[0]: pa_df=pa_df[(pa_df["date"]>=date_pa[0])&(pa_df["date"]<=date_pa[1])]
+            if proc_pa!="전체":  pa_df=pa_df[pa_df["process"]==proc_pa]
+            if shift_pa!="전체": pa_df=pa_df[pa_df["shift"]==shift_pa]
+
+            if pa_df.empty:
+                st.warning("데이터 없음")
+            else:
+                # ── KPI ──
+                if proc_pa=="MI":
+                    t_mi  = pa_df["target_mi"].sum()
+                    a_mi  = pa_df["actual_mi"].sum()
+                    t_ate = pa_df["target_ate"].sum()
+                    a_ate = pa_df["actual_ate"].sum()
+                    gap_mi  = a_mi  - t_mi
+                    gap_ate = a_ate - t_ate
+                    ach_mi  = round(a_mi /t_mi *100,1) if t_mi >0 else 0
+                    ach_ate = round(a_ate/t_ate*100,1) if t_ate>0 else 0
+
+                    c1,c2,c3,c4,c5,c6=st.columns(6)
+                    for col,val,lbl,gap_val in [
+                        (c1,f"{int(t_mi):,}",  "MI TARGET",  None),
+                        (c2,f"{int(a_mi):,}",  "MI ACTUAL",  None),
+                        (c3,f"{int(gap_mi):+,}","MI GAP",    gap_mi),
+                        (c4,f"{int(t_ate):,}", "ATE TARGET", None),
+                        (c5,f"{int(a_ate):,}", "ATE ACTUAL", None),
+                        (c6,f"{int(gap_ate):+,}","ATE GAP",  gap_ate),
+                    ]:
+                        if gap_val is not None:
+                            cls ="kpi-card-green" if gap_val>=0 else "kpi-card-red"
+                            vcls="kpi-val-green"  if gap_val>=0 else "kpi-val-red"
+                        else:
+                            cls="kpi-card"; vcls="kpi-val"
+                        col.markdown(f"""
+                        <div class="{cls}">
+                            <div class="{vcls}">{val}</div>
+                            <div class="kpi-lbl">{lbl}</div>
+                        </div>""",unsafe_allow_html=True)
+
+                    # 달성률 KPI
+                    r1,r2=st.columns(2)
+                    for col,val,lbl,v in [
+                        (r1,f"{ach_mi}%", f"MI 달성률 ({int(a_mi):,}/{int(t_mi):,})",  ach_mi),
+                        (r2,f"{ach_ate}%",f"ATE 달성률 ({int(a_ate):,}/{int(t_ate):,})",ach_ate),
+                    ]:
+                        cls="kpi-card-green" if v>=100 else ("kpi-card" if v>=90 else "kpi-card-red")
+                        vcls="kpi-val-green" if v>=100 else ("kpi-val"  if v>=90 else "kpi-val-red")
+                        col.markdown(f"""
+                        <div class="{cls}">
+                            <div class="{vcls}">{val}</div>
+                            <div class="kpi-lbl">🎯 {lbl}</div>
+                        </div>""",unsafe_allow_html=True)
+
+                    st.markdown("<br>",unsafe_allow_html=True)
+
+                    # MI / ATE 라인별 달성률 차트
+                    col_mi,col_ate=st.columns(2)
+                    with col_mi:
+                        st.markdown("##### MI 라인별 달성률")
+                        mi_line=(pa_df.groupby("line")[["target_mi","actual_mi"]].sum().reset_index())
+                        mi_line=mi_line[mi_line["target_mi"]>0]
+                        mi_line["달성률"]=((mi_line["actual_mi"]/mi_line["target_mi"])*100).round(1)
+                        mi_line["GAP"]=(mi_line["actual_mi"]-mi_line["target_mi"]).astype(int)
+                        mi_line=mi_line.sort_values("달성률",ascending=True)
+                        fig_mi=go.Figure(go.Bar(
+                            x=mi_line["달성률"],y=mi_line["line"],orientation="h",
+                            marker_color=[get_ach_color(v) for v in mi_line["달성률"]],
+                            text=[f"{v:.1f}%  (GAP:{g:+,})" for v,g in
+                                  zip(mi_line["달성률"],mi_line["GAP"])],
+                            textposition="outside"))
+                        fig_mi.add_vline(x=100,line_dash="dash",line_color="#94a3b8")
+                        fig_mi.update_layout(
+                            margin=dict(l=0,r=80,t=10,b=0),
+                            xaxis=dict(range=[0,max(130,mi_line["달성률"].max()+15)]),
+                            height=max(300,len(mi_line)*40),
+                            plot_bgcolor="#f8fafc")
+                        st.plotly_chart(fig_mi,use_container_width=True)
+
+                    with col_ate:
+                        st.markdown("##### ATE 라인별 달성률")
+                        ate_line=(pa_df.groupby("line")[["target_ate","actual_ate"]].sum().reset_index())
+                        ate_line=ate_line[ate_line["target_ate"]>0]
+                        ate_line["달성률"]=((ate_line["actual_ate"]/ate_line["target_ate"])*100).round(1)
+                        ate_line["GAP"]=(ate_line["actual_ate"]-ate_line["target_ate"]).astype(int)
+                        ate_line=ate_line.sort_values("달성률",ascending=True)
+                        fig_ate=go.Figure(go.Bar(
+                            x=ate_line["달성률"],y=ate_line["line"],orientation="h",
+                            marker_color=[get_ach_color(v) for v in ate_line["달성률"]],
+                            text=[f"{v:.1f}%  (GAP:{g:+,})" for v,g in
+                                  zip(ate_line["달성률"],ate_line["GAP"])],
+                            textposition="outside"))
+                        fig_ate.add_vline(x=100,line_dash="dash",line_color="#94a3b8")
+                        fig_ate.update_layout(
+                            margin=dict(l=0,r=80,t=10,b=0),
+                            xaxis=dict(range=[0,max(130,ate_line["달성률"].max()+15)]),
+                            height=max(300,len(ate_line)*40),
+                            plot_bgcolor="#f8fafc")
+                        st.plotly_chart(fig_ate,use_container_width=True)
+
+                else:
+                    # AI / SMT / 전체
+                    t_col = "target"
+                    a_col = "actual"
+                    t_sum2=pa_df[t_col].sum()
+                    a_sum2=pa_df[a_col].sum()
+                    gap2  =a_sum2-t_sum2
+                    ach2  =round(a_sum2/t_sum2*100,1) if t_sum2>0 else 0
+
+                    c1,c2,c3,c4=st.columns(4)
+                    for col,val,lbl,gap_val in [
+                        (c1,f"{int(t_sum2):,}","TARGET",None),
+                        (c2,f"{int(a_sum2):,}","ACTUAL",None),
+                        (c3,f"{int(gap2):+,}", "GAP",   gap2),
+                        (c4,f"{ach2}%",        "달성률", ach2-100),
+                    ]:
+                        if gap_val is not None:
+                            cls ="kpi-card-green" if gap_val>=0 else "kpi-card-red"
+                            vcls="kpi-val-green"  if gap_val>=0 else "kpi-val-red"
+                        else:
+                            cls="kpi-card"; vcls="kpi-val"
+                        col.markdown(f"""
+                        <div class="{cls}">
+                            <div class="{vcls}">{val}</div>
+                            <div class="kpi-lbl">{lbl}</div>
+                        </div>""",unsafe_allow_html=True)
+
+                    st.markdown("<br>",unsafe_allow_html=True)
+                    st.markdown("##### 라인별 달성률")
+                    la=(pa_df.groupby(["process","line"])[[t_col,a_col]].sum().reset_index())
+                    la=la[la[t_col]>0]
+                    la["달성률"]=((la[a_col]/la[t_col])*100).round(1)
+                    la["GAP"]=(la[a_col]-la[t_col]).astype(int)
+                    la=la.sort_values("달성률",ascending=True)
+                    fig_la=go.Figure(go.Bar(
+                        x=la["달성률"],y=la["line"],orientation="h",
+                        marker_color=[get_ach_color(v) for v in la["달성률"]],
+                        text=[f"{v:.1f}%  (GAP:{g:+,})" for v,g in
+                              zip(la["달성률"],la["GAP"])],
+                        textposition="outside"))
+                    fig_la.add_vline(x=100,line_dash="dash",line_color="#94a3b8")
+                    fig_la.update_layout(
+                        margin=dict(l=0,r=80,t=10,b=0),
+                        xaxis=dict(range=[0,max(130,la["달성률"].max()+15)]),
+                        height=max(300,len(la)*40),
+                        plot_bgcolor="#f8fafc")
+                    st.plotly_chart(fig_la,use_container_width=True)
+
+                st.markdown("<hr class='section-divider'>",unsafe_allow_html=True)
+
+                # 날짜별 Target vs Actual 트렌드
+                st.markdown("##### 날짜별 Target vs Actual")
+                if proc_pa=="MI":
+                    dt_pa=(pa_df.groupby("date")[["target_mi","actual_mi",
+                                                   "target_ate","actual_ate"]].sum().reset_index())
+                    fig_pa=go.Figure()
+                    fig_pa.add_scatter(x=dt_pa["date"],y=dt_pa["target_mi"],
+                                       name="MI Target",
+                                       line=dict(dash="dash",color="#94a3b8"))
+                    fig_pa.add_scatter(x=dt_pa["date"],y=dt_pa["actual_mi"],
+                                       name="MI Actual",
+                                       line=dict(color="#10b981",width=2),
+                                       mode="lines+markers")
+                    fig_pa.add_scatter(x=dt_pa["date"],y=dt_pa["target_ate"],
+                                       name="ATE Target",
+                                       line=dict(dash="dot",color="#cbd5e1"))
+                    fig_pa.add_scatter(x=dt_pa["date"],y=dt_pa["actual_ate"],
+                                       name="ATE Actual",
+                                       line=dict(color="#3b82f6",width=2),
+                                       mode="lines+markers")
+                else:
+                    dt_pa=(pa_df.groupby(["date","process"])[["target","actual"]].sum().reset_index())
+                    fig_pa=go.Figure()
+                    for proc in dt_pa["process"].unique():
+                        sub=dt_pa[dt_pa["process"]==proc]
+                        c=PROC_COLOR.get(proc,"#94a3b8")
+                        fig_pa.add_scatter(x=sub["date"],y=sub["target"],
+                                           name=f"{proc} Target",
+                                           line=dict(dash="dash",color=c),
+                                           opacity=0.5)
+                        fig_pa.add_scatter(x=sub["date"],y=sub["actual"],
+                                           name=f"{proc} Actual",
+                                           line=dict(color=c,width=2),
+                                           mode="lines+markers")
+                fig_pa.update_layout(
+                    margin=dict(l=0,r=0,t=10,b=0),
+                    yaxis=dict(rangemode="tozero"),
+                    height=360,
+                    legend=dict(orientation="h",y=1.05),
+                    plot_bgcolor="#f8fafc")
+                st.plotly_chart(fig_pa,use_container_width=True)
+
+                st.markdown("<hr class='section-divider'>",unsafe_allow_html=True)
+
+                # 상세 테이블
+                st.markdown("##### 라인별 상세")
+                if proc_pa=="MI":
+                    show_pa=(pa_df.groupby(["date","shift","line"])[
+                        ["target_mi","actual_mi","target_ate","actual_ate","loss_min"]
+                    ].sum().reset_index())
+                    show_pa["MI_GAP"]  =(show_pa["actual_mi"] -show_pa["target_mi"]).astype(int)
+                    show_pa["ATE_GAP"] =(show_pa["actual_ate"]-show_pa["target_ate"]).astype(int)
+                    show_pa["MI_달성률"] =((show_pa["actual_mi"] /show_pa["target_mi"].replace(0,float("nan")))*100).round(1)
+                    show_pa["ATE_달성률"]=((show_pa["actual_ate"]/show_pa["target_ate"].replace(0,float("nan")))*100).round(1)
+                else:
+                    show_pa=(pa_df.groupby(["date","shift","process","line"])[
+                        ["target","actual","loss_min"]
+                    ].sum().reset_index())
+                    show_pa["GAP"]   =(show_pa["actual"]-show_pa["target"]).astype(int)
+                    show_pa["달성률"]=((show_pa["actual"]/show_pa["target"].replace(0,float("nan")))*100).round(1)
+                st.dataframe(show_pa.sort_values(["date","line"]).reset_index(drop=True),
+                             use_container_width=True,height=360)
+
+    # ════════ TAB4 - 트렌드 ════════
+    with tab4:
+        if total_df.empty:
+            st.warning("TOTAL 데이터 없음")
+        else:
+            st.markdown("#### 날짜별 손실 트렌드")
+            dt=(total_df.groupby(["date","process"])["loss_min"].sum().reset_index())
+            dt["loss_min"]=dt["loss_min"].round(1)
+            fig4=px.line(dt,x="date",y="loss_min",color="process",
+                         color_discrete_map=PROC_COLOR,markers=True,height=380,
+                         labels={"loss_min":"손실(분)","date":"날짜","process":"공정"})
+            fig4.update_layout(margin=dict(l=0,r=0,t=10,b=0),yaxis=dict(rangemode="tozero"))
+            st.plotly_chart(fig4,use_container_width=True)
+
+            st.markdown("#### DAY vs NIGHT")
+            sc=(total_df.groupby(["shift","loss_type_name"])["loss_min"].sum().reset_index())
+            sc["loss_min"]=sc["loss_min"].round(1)
+            fig5=px.bar(sc,x="loss_type_name",y="loss_min",color="shift",
+                        color_discrete_map={"DAY":"#f59e0b","NIGHT":"#6366f1"},
+                        barmode="group",height=380,
+                        labels={"loss_min":"손실(분)","loss_type_name":"손실유형","shift":"구분"})
+            fig5.update_layout(margin=dict(l=0,r=0,t=10,b=0),
+                               xaxis_tickangle=-30,yaxis=dict(rangemode="tozero"))
+            st.plotly_chart(fig5,use_container_width=True)
+
+    # ════════ TAB5 - 타임별 ════════
+    with tab5:
+        st.markdown("#### 라인 x 시간대 히트맵")
+        slot_df=df[
+            (df["date"]>=date_range[0])&(df["date"]<=date_range[1])&
+            (df["shift"].isin(shifts or ["DAY","NIGHT"]))&
+            (df["process"].isin(procs or ["AI","SMT","MI"]))&
+            (df["time_slot"]!="TOTAL")].copy()
+        if sel_lines: slot_df=slot_df[slot_df["line"].isin(sel_lines)]
+        if slot_df.empty:
+            st.warning("타임별 데이터 없음")
+        else:
+            slot_order=["A","B","C","D","E","F","G","H","I","J","K"]
+            pivot=(slot_df.groupby(["line","time_slot"])["loss_min"].sum().reset_index())
+            pt=pivot.pivot(index="line",columns="time_slot",values="loss_min").fillna(0).round(1)
+            pt=pt[[c for c in slot_order if c in pt.columns]]
+            fh=px.imshow(pt,color_continuous_scale="Reds",aspect="auto",
+                         height=max(380,len(pt)*28),
+                         labels={"x":"시간대","y":"라인","color":"손실(분)"})
+            fh.update_layout(margin=dict(l=0,r=0,t=10,b=0))
+            st.plotly_chart(fh,use_container_width=True)
+
+            st.markdown("#### 시간대별 합계")
+            ss=(slot_df.groupby(["time_slot","process"])["loss_min"].sum().reset_index())
+            ss["loss_min"]=ss["loss_min"].round(1)
+            ss["time_slot"]=pd.Categorical(ss["time_slot"],categories=slot_order,ordered=True)
+            ss=ss.sort_values("time_slot")
+            fs=px.bar(ss,x="time_slot",y="loss_min",color="process",
+                      color_discrete_map=PROC_COLOR,barmode="stack",height=320,
+                      labels={"loss_min":"손실(분)","time_slot":"시간대","process":"공정"})
+            fs.update_layout(margin=dict(l=0,r=0,t=10,b=0),yaxis=dict(rangemode="tozero"))
+            st.plotly_chart(fs,use_container_width=True)
+
+            st.markdown("#### 타임별 상세")
+            sd=(slot_df.groupby(["date","shift","line","time_slot",
+                                  "loss_type_name","loss_detail"])["loss_min"]
+                .sum().reset_index().sort_values(["date","line","time_slot"]))
+            sd["loss_min"]=sd["loss_min"].round(1)
+            st.dataframe(sd,use_container_width=True,height=360)
+
+    # ════════ TAB6 - 스크랩 ════════
+    with tab6:
+        st.markdown("#### 📛 스크랩 분석")
+        if scrap_df.empty:
+            st.info("스크랩 데이터 없음")
+        else:
+            sd_dates=sorted(scrap_df["work_date"].dropna().unique())
+            if len(sd_dates)>=2:
+                sr=st.select_slider("날짜",options=sd_dates,
+                                    value=(sd_dates[0],sd_dates[-1]),key="scrap_date")
+                sdf2=scrap_df[(scrap_df["work_date"]>=sr[0])&
+                              (scrap_df["work_date"]<=sr[1])].copy()
+            else:
+                sdf2=scrap_df.copy()
+
+            show_auto=st.checkbox("자동판정(ATE) 포함",value=True)
+            if not show_auto: sdf2=sdf2[sdf2["is_auto"]=="N"]
+
+            if sdf2.empty:
+                st.warning("조건에 맞는 스크랩 없음")
+            else:
+                k1,k2,k3,k4=st.columns(4)
+                for col,val,lbl in [
+                    (k1,f"{int(sdf2['qty'].sum()):,}ea","총 스크랩"),
+                    (k2,f"{len(sdf2):,}건","이력"),
+                    (k3,f"{sdf2['model'].nunique()}종","모델"),
+                    (k4,f"{sdf2['line'].nunique()}개","발생 라인"),
+                ]:
+                    col.markdown(f"""
+                    <div class="kpi-card">
+                        <div class="kpi-val">{val}</div>
+                        <div class="kpi-lbl">{lbl}</div>
+                    </div>""",unsafe_allow_html=True)
+
+                st.markdown("<hr class='section-divider'>",unsafe_allow_html=True)
+                ca,cb=st.columns(2)
+                with ca:
+                    st.markdown("#### 원인별 파레토")
+                    cg=(sdf2.groupby("cause_name")["qty"].sum().reset_index()
+                        .sort_values("qty",ascending=False))
+                    cg["누계%"]=(cg["qty"].cumsum()/cg["qty"].sum()*100).round(1)
+                    fp=go.Figure()
+                    fp.add_bar(x=cg["cause_name"],y=cg["qty"],name="수량",marker_color="#ef4444")
+                    fp.add_scatter(x=cg["cause_name"],y=cg["누계%"],
+                                   mode="lines+markers",name="누계%",yaxis="y2",
+                                   line=dict(color="#1e3a5f",width=2))
+                    fp.update_layout(
+                        yaxis2=dict(overlaying="y",side="right",range=[0,110],ticksuffix="%"),
+                        yaxis=dict(rangemode="tozero"),height=360,
+                        margin=dict(l=0,r=0,t=10,b=0),xaxis_tickangle=-30)
+                    cc2=st.plotly_chart(fp,use_container_width=True,
+                                        on_select="rerun",key="scrap_cause_chart")
+                    if cc2 and cc2.get("selection",{}).get("points"):
+                        sc2=cc2["selection"]["points"][0].get("x","")
+                        if sc2:
+                            st.markdown(f"**📋 [{sc2}] 상세**")
+                            cd=sdf2[sdf2["cause_name"]==sc2][
+                                ["work_date","process","line","model","qty","comment"]
+                            ].sort_values("work_date")
+                            st.dataframe(cd.reset_index(drop=True),
+                                         use_container_width=True,height=220)
+
+                with cb:
+                    st.markdown("#### 공정별 비중")
+                    pg=sdf2.groupby("process")["qty"].sum().reset_index()
+                    fpc=px.pie(pg,values="qty",names="process",
+                               color="process",color_discrete_map=PROC_COLOR,height=360)
+                    fpc.update_layout(margin=dict(l=0,r=0,t=10,b=0))
+                    st.plotly_chart(fpc,use_container_width=True)
+
+                st.markdown("#### 라인별 TOP 15")
+                lg=(sdf2.groupby(["process","line"])["qty"].sum().reset_index()
+                    .sort_values("qty",ascending=False).head(15))
+                fl=px.bar(lg,x="line",y="qty",color="process",
+                          color_discrete_map=PROC_COLOR,height=320,
+                          labels={"qty":"수량","line":"라인","process":"공정"})
+                fl.update_layout(margin=dict(l=0,r=0,t=10,b=0),
+                                 yaxis=dict(rangemode="tozero"),
+                                 legend=dict(orientation="h",y=1.05))
+                csl=st.plotly_chart(fl,use_container_width=True,
+                                    on_select="rerun",key="scrap_line_chart")
+                if csl and csl.get("selection",{}).get("points"):
+                    ssl=csl["selection"]["points"][0].get("x","")
+                    if ssl:
+                        st.markdown(f"**📋 [{ssl}] 라인 상세**")
+                        ld2=sdf2[sdf2["line"]==ssl][
+                            ["work_date","model","qty","cause_name","comment"]
+                        ].sort_values("work_date")
+                        st.dataframe(ld2.reset_index(drop=True),
+                                     use_container_width=True,height=220)
+
+                st.markdown("#### 날짜별 트렌드")
+                dg=sdf2.groupby(["work_date","process"])["qty"].sum().reset_index()
+                fdt=px.line(dg,x="work_date",y="qty",color="process",
+                            color_discrete_map=PROC_COLOR,markers=True,height=300,
+                            labels={"qty":"수량","work_date":"날짜","process":"공정"})
+                fdt.update_layout(margin=dict(l=0,r=0,t=10,b=0),yaxis=dict(rangemode="tozero"))
+                st.plotly_chart(fdt,use_container_width=True)
+
+                st.markdown("#### 개선 우선순위")
+                imp=(sdf2[sdf2["is_auto"]=="N"]
+                     .groupby(["process","line","cause_name"])["qty"]
+                     .agg(["sum","count"]).reset_index()
+                     .sort_values("sum",ascending=False)
+                     .rename(columns={"sum":"수량","count":"발생횟수"}))
+                def sg(row):
+                    if row["수량"]>=10 or row["발생횟수"]>=5: return "P1 즉시"
+                    elif row["수량"]>=5  or row["발생횟수"]>=3: return "P1 긴급"
+                    elif row["수량"]>=3  or row["발생횟수"]>=2: return "P2 주의"
+                    else: return "P3 모니터링"
+                imp["우선순위"]=imp.apply(sg,axis=1)
+                for _,row in imp.head(10).iterrows():
+                    g=str(row["우선순위"])
+                    cls=("pm-p1" if "즉시" in g or "긴급" in g
+                         else "pm-p2" if "주의" in g else "pm-p3")
+                    st.markdown(f"""<div class="{cls}">
+                        <b>{g}</b> | {row['process']} {row['line']} -
+                        {row['cause_name']} |
+                        <b>{int(row['수량']):,}ea</b> / {int(row['발생횟수'])}회
+                    </div>""",unsafe_allow_html=True)
+
+                st.markdown("<hr class='section-divider'>",unsafe_allow_html=True)
+                st.markdown("#### 상세 내역")
+                srch=st.text_input("🔍 키워드 (모델/라인/원인/코멘트)")
+                sshow=sdf2.copy()
+                if srch:
+                    ms2=(sshow["model"].astype(str).str.contains(srch,case=False,na=False)|
+                         sshow["line"].astype(str).str.contains(srch,case=False,na=False)|
+                         sshow["cause_name"].astype(str).str.contains(srch,case=False,na=False)|
+                         sshow["comment"].astype(str).str.contains(srch,case=False,na=False))
+                    sshow=sshow[ms2]
+                dc=["work_date","process","line","model","qty",
+                    "cause_name","is_auto","result_desc","comment"]
+                dc=[c for c in dc if c in sshow.columns]
+                st.caption(f"총 {len(sshow):,}건")
+                st.dataframe(sshow[dc].reset_index(drop=True),
+                             use_container_width=True,height=360)
+
+    # ════════ TAB7 - 상세 조회 ════════
+    with tab7:
+        st.markdown("#### 상세 데이터 조회")
+        srch2=st.text_input("🔍 키워드 (라인/원인/모델)")
+        sdf3=fdf.copy()
+        if srch2:
+            m2=(sdf3["line"].astype(str).str.contains(srch2,case=False,na=False)|
+                sdf3["loss_detail"].astype(str).str.contains(srch2,case=False,na=False)|
+                sdf3["model"].astype(str).str.contains(srch2,case=False,na=False))
+            sdf3=sdf3[m2]
+        st.caption(f"총 {len(sdf3):,}건")
+        dc2=["date","shift","process","line","time_slot",
+             "model","loss_min","loss_type_name","complexity","loss_detail"]
+        dc2=[c for c in dc2 if c in sdf3.columns]
+        if not sdf3.empty:
+            sdf3["loss_min"]=sdf3["loss_min"].round(1)
+            st.dataframe(sdf3[dc2].reset_index(drop=True),
+                         use_container_width=True,height=500)
+        else:
+            st.info("검색 결과 없음")
+
+    # ════════ TAB8 - PM ════════
+    with tab8:
+        st.markdown("#### 🔧 설비보전 PM 우선순위")
+        if total_df.empty:
+            st.warning("데이터 없음")
+        else:
+            pm_types=["Printer불량","Axial불량","RH3삽입불량","Mouter불량",
+                      "XGZ불량","설비고장(기타)","Coating/Reflow불량",
+                      "AOI/S-AOI불량","Wave Solder불량"]
+            pm=(total_df[total_df["loss_type_name"].isin(pm_types)]
+                .groupby(["process","line","loss_type_name"])["loss_min"]
+                .agg(["sum","count"]).reset_index()
+                .sort_values("sum",ascending=False)
+                .rename(columns={"sum":"누계손실(분)","count":"발생횟수"}))
+            pm["누계손실(분)"]=pm["누계손실(분)"].round(1)
+            def pmg(row):
+                if row["발생횟수"]>=5 or row["누계손실(분)"]>=500: return "P1 즉시"
+                elif row["발생횟수"]>=3 or row["누계손실(분)"]>=200: return "P1"
+                elif row["발생횟수"]>=2 or row["누계손실(분)"]>=100: return "P2"
+                else: return "P3"
+            if pm.empty:
+                st.info("설비 불량 없음")
+            else:
+                pm["PM등급"]=pm.apply(pmg,axis=1)
+                for _,row in pm.iterrows():
+                    g=str(row["PM등급"])
+                    cls=("pm-p1" if "P1" in g else "pm-p2" if "P2" in g else "pm-p3")
+                    st.markdown(f"""<div class="{cls}">
+                        <b>{g}</b> | {row['process']} {row['line']} -
+                        {row['loss_type_name']} |
+                        <b>{row['누계손실(분)']:,.1f}분</b> / {int(row['발생횟수'])}회
+                    </div>""",unsafe_allow_html=True)
+
+    # ════════ TAB9 - 다운로드 ════════
+    with tab9:
+        st.markdown("#### 다운로드")
+        ca2,cb2,cc2=st.columns(3)
+        with ca2:
+            st.download_button("📥 LOSSTIME 엑셀",data=to_excel(fdf),
+                               file_name="HEVH_LOSSTIME.xlsx",
+                               mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+                               use_container_width=True)
+        with cb2:
+            if not scrap_df.empty:
+                st.download_button("📥 SCRAP 엑셀",data=to_excel_scrap(scrap_df),
+                                   file_name="HEVH_SCRAP.xlsx",
+                                   mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+                                   use_container_width=True)
+            else: st.info("스크랩 없음")
+        with cc2:
+            st.download_button("📥 CSV",
+                               data=fdf.to_csv(index=False,encoding="utf-8-sig").encode("utf-8-sig"),
+                               file_name="HEVH_LOSSTIME.csv",mime="text/csv",
+                               use_container_width=True)
+
+        st.divider()
+        st.markdown("#### DB 현황")
+        cd1,cd2=st.columns(2)
+        with cd1:
+            dba=load_db()
+            if not dba.empty:
+                st.info(f"LOSSTIME: {len(dba):,}건 | "
+                        f"{dba['date'].nunique()}일 | "
+                        f"{dba['line'].nunique()}개 라인")
+                if st.button("🗑️ LOSSTIME 초기화"):
+                    github_save_csv(pd.DataFrame(),DB_PATH,"초기화")
+                    st.session_state.pop("df",None); st.success("완료"); st.rerun()
+        with cd2:
+            sdba=load_scrap_db()
+            if not sdba.empty:
+                st.info(f"SCRAP: {len(sdba):,}건 | "
+                        f"{int(sdba['qty'].sum())}ea | "
+                        f"{sdba['line'].nunique()}개 라인")
+                if st.button("🗑️ SCRAP 초기화"):
+                    github_save_csv(pd.DataFrame(),SCRAP_DB,"초기화")
+                    st.session_state.pop("scrap_df",None); st.success("완료"); st.rerun()
+
+# ─────────────────────────────────────────────
+# 진입점
+# ─────────────────────────────────────────────
+def main():
+    if "logged_in" not in st.session_state:
+        st.session_state["logged_in"]=False
+    if not st.session_state["logged_in"]: login_page()
+    else: dashboard()
+
+if __name__=="__main__":
+    main()
