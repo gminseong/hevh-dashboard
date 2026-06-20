@@ -382,3 +382,118 @@ def render_shipment_alert_tab():
     else:
         s1.warning("📁 출하계획: 없음")
     if not prod_db.empty:
+        s2.success(f"📊 생산실적: **{len(prod_db)}건** | {prod_t}")
+    else:
+        s2.warning("📊 생산실적: 없음")
+
+    st.markdown("##### 📤 파일 업로드")
+    files = st.file_uploader(" ", type=["xlsx","csv"], accept_multiple_files=True,
+                              key="ship_up_v21", label_visibility="collapsed")
+
+    if files:
+        if st.button("🚀 저장 및 분석", type="primary", use_container_width=True, key="apply_v21"):
+            with st.spinner("처리 중..."):
+                for f in files:
+                    fname = f.name.lower()
+                    f.seek(0)
+                    file_bytes = f.read()
+                    if fname.endswith('.xlsx'):
+                        df, p_cols = load_shipment_rev(file_bytes)
+                        if not df.empty:
+                            st.session_state['ship_db'] = df
+                            st.session_state['plan_date_cols'] = p_cols
+                            st.session_state['ship_updated'] = datetime.now().strftime('%m-%d %H:%M')
+                            st.success(f"✅ 출하계획 ({len(df)}건)")
+                    elif fname.endswith('.csv'):
+                        try:
+                            df = read_csv_cached(file_bytes)
+                            st.session_state['prod_db'] = df
+                            st.session_state['prod_updated'] = datetime.now().strftime('%m-%d %H:%M')
+                            st.success(f"✅ 생산실적 ({len(df)}건)")
+                        except Exception as e:
+                            st.error(f"❌ {f.name}: {e}")
+            st.rerun()
+
+    st.markdown("---")
+
+    if ship_db.empty or prod_db.empty:
+        st.info("출하계획(.xlsx)과 생산실적(.csv) 모두 업로드 시 분석됩니다.")
+        return
+
+    with st.spinner("분석 중..."):
+        try:
+            m = analyze(ship_db, prod_db, plan_cols)
+        except Exception as e:
+            st.error(f"❌ 분석 오류: {e}")
+            import traceback
+            st.code(traceback.format_exc())
+            return
+
+    if m.empty:
+        return
+
+    # KPI
+    st.markdown("### 🚨 분석 결과")
+    k1, k2, k3, k4, k5 = st.columns(5)
+    k1.metric("📦 전체", f"{len(m)}건")
+    k2.metric("🔴 긴급", int((m['알람']=='🔴 긴급').sum()))
+    k3.metric("🟠 부족", int((m['알람']=='🟠 부족').sum()))
+    k4.metric("🟡 악화", int((m['알람']=='🟡 악화').sum()))
+    k5.metric("✅ 정상", int((m['알람']=='✅ 정상').sum()))
+
+    # 표시 컬럼
+    show = ['알람','Cus','Cut off Cargo','HQ Request','model','code','ERP','MODEL_TYPE',
+            'PO Remain','TTL Ship','O/stock','TTL Plan','TTLstock',
+            'MES_누적실적','과거_실적합','미래_계획합','조정_TTL',
+            'BALANCE','조정_BALANCE','GAP','Note']
+    show = [c for c in show if c in m.columns]
+
+    # 긴급/부족
+    urgent = m[m['알람'].isin(['🔴 긴급','🟠 부족','🟡 악화'])].copy()
+    urgent = urgent.sort_values('조정_BALANCE')
+
+    if not urgent.empty:
+        st.markdown("---")
+        st.markdown(f"#### 🚨 즉시 조치 필요 ({len(urgent)}건)")
+        st.caption("⚠️ 조정_BALANCE = O/stock + (과거실적+미래계획) - TTL Ship | GAP = 조정 - 계획")
+        render_html_table(urgent[show], height=400)
+    else:
+        st.markdown("---")
+        st.success("✅ 긴급/부족 없음")
+
+    # 전체 상세
+    st.markdown("---")
+    st.markdown("#### 📋 전체 상세")
+    
+    f1, f2, f3 = st.columns(3)
+    a_sel = f1.multiselect("알람", ['🔴 긴급','🟠 부족','🟡 악화','✅ 정상'], key="a_v21")
+    t_sel = f2.multiselect("모델", ['PD','3IN1','OTHER'], key="t_v21")
+    cus_opt = sorted(m['Cus'].dropna().unique()) if 'Cus' in m.columns else []
+    c_sel = f3.multiselect("거래선", cus_opt, key="c_v21") if cus_opt else []
+    
+    v = m.copy()
+    if a_sel: v = v[v['알람'].isin(a_sel)]
+    if t_sel: v = v[v['MODEL_TYPE'].isin(t_sel)]
+    if c_sel: v = v[v['Cus'].isin(c_sel)]
+
+    if not v.empty:
+        render_html_table(v[show], height=550)
+        csv = v[show].to_csv(index=False).encode('utf-8-sig')
+        st.download_button("📥 CSV 다운로드", csv,
+                           f"shipment_alert_{datetime.now().strftime('%Y%m%d_%H%M')}.csv",
+                           "text/csv", key="dl_v21")
+    else:
+        st.info("선택한 필터에 해당하는 데이터가 없습니다.")
+
+    st.markdown("---")
+    r1, r2 = st.columns(2)
+    if r1.button("🗑️ 출하계획 초기화", use_container_width=True, key="rs_v21"):
+        for k in ['ship_db','ship_updated','plan_date_cols']:
+            st.session_state.pop(k, None)
+        st.cache_data.clear()
+        st.rerun()
+    if r2.button("🗑️ 생산실적 초기화", use_container_width=True, key="rp_v21"):
+        for k in ['prod_db','prod_updated']:
+            st.session_state.pop(k, None)
+        st.cache_data.clear()
+        st.rerun()
