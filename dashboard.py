@@ -1016,9 +1016,9 @@ def dashboard():
     # 탭
     tab1,tab2,tab3,tab4,tab5,tab6,tab7,tab8,tab9,tab10=st.tabs([
         "📊 손실 분석","🏭 라인별","📋 Plan/Actual",
-        "📈 트렌드","🕐 타임별","📛 스크랩",
-        "🔍 상세 조회","🔧 PM","⬇️ 다운로드"
-        "🚨 Shipment Alert","📥 다운로드"   # ← 🆕 Shipment Alert를 tab9, 다운로드를 tab10
+        "📈 트렌드","⏰ 타임별","🍅 스크랩",
+        "🔍 상세 조회","🔧 PM",
+        "🚨 Shipment Alert","📥 다운로드"
     ])
 
     # ════════ TAB1 - 손실 분석 ════════
