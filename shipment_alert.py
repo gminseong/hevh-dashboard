@@ -64,7 +64,7 @@ def load_shipment(file):
         
         header_row = None
         for i in range(min(10, len(raw))):
-            row_values = raw.iloc[i].astype(str).str.lower().tolist()
+            row_values = [str(v).lower() for v in raw.iloc[i].values if pd.notna(v)]
             row_str = ' '.join(row_values)
             # 'cus' 키워드 + ('cut off' 또는 'po remain' 또는 'model')
             if 'cus' in row_str and any(k in row_str for k in ['cut off', 'po remain', 'model', 'erp']):
