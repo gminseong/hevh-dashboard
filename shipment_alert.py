@@ -568,7 +568,10 @@ def render_shipment_alert_tab():
 
     # 긴급 (출하불가/부족/차질)
     urgent = m[m['알람'].isin(['🔴 출하불가','🟠 부족','🟡 차질'])].copy()
-    urgent = urgent.sort_values(['알람', '조정_BALANCE'])
+    if '잔여재고' in urgent.columns:
+        urgent = urgent.sort_values(['알람', '잔여재고'])
+    else:
+        urgent = urgent.sort_values('알람')
 
     if not urgent.empty:
         st.markdown("---")
