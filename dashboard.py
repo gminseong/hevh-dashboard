@@ -1776,7 +1776,7 @@ def dashboard():
 
 
     # ════════ TAB10 - 다운로드 ════════
-    with tab9:
+    with tab10:
         st.markdown("#### 다운로드")
         ca2,cb2,cc2=st.columns(3)
         with ca2:
