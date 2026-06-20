@@ -94,7 +94,7 @@ def build_alert_table(ship_df, prod_df, stock_df=None):
     actual = aggregate_actual(prod_df)
 
     merged = ship_df.merge(actual, on='3in1Code(FG)', how='left')
-    merged['누적실적'] = merged['누적실적'].fillna(0)
+    merged['누적실적'] = pd.to_numeric(merged['누적실적'], errors='coerce').fillna(0)
 
     if stock_df is not None and not stock_df.empty:
         stock_col = [c for c in stock_df.columns if 'stock' in str(c).lower()]
@@ -105,16 +105,16 @@ def build_alert_table(ship_df, prod_df, stock_df=None):
             )
             merged['기초재고'] = pd.to_numeric(merged[stock_col[0]], errors='coerce').fillna(0)
         else:
-            merged['기초재고'] = 0
+            merged['기초재고'] = 0.0
     else:
-        merged['기초재고'] = 0
+        merged['기초재고'] = 0.0
 
     merged['MODEL_TYPE'] = merged['3in1Code(FG)'].apply(classify_model_type)
 
     # 숫자 변환
     merged['TTL Ship'] = pd.to_numeric(merged['TTL Ship'], errors='coerce').fillna(0)
-    merged['누적실적'] = pd.to_numeric(merged['누적실적'], errors='coerce').fillna(0)
 
+    # NEW GAP
     merged['NEW_GAP'] = (merged['기초재고']
                          + merged['누적실적']
                          - merged['TTL Ship'])
@@ -126,11 +126,16 @@ def build_alert_table(ship_df, prod_df, stock_df=None):
             plan_col = c
             break
 
+    # 달성률 계산 (안전 모드)
     if plan_col:
-        plan = pd.to_numeric(merged[plan_col], errors='coerce').replace(0, pd.NA)
-        merged['달성률(%)'] = (merged['누적실적'] / plan * 100).round(1).fillna(0)
+        plan = pd.to_numeric(merged[plan_col], errors='coerce')
+        # 0 또는 NaN인 경우 NaN으로 → 나눗셈 결과도 NaN
+        rate = merged['누적실적'] / plan.where(plan != 0)
+        # NaN/Inf 모두 0으로 처리
+        rate = pd.to_numeric(rate, errors='coerce').replace([float('inf'), -float('inf')], 0).fillna(0)
+        merged['달성률(%)'] = (rate * 100).round(1)
     else:
-        merged['달성률(%)'] = 0
+        merged['달성률(%)'] = 0.0
 
     today = datetime.today().date()
     merged['알람'] = merged.apply(lambda r: classify_alert(r, today), axis=1)
