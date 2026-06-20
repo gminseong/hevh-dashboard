@@ -13,6 +13,7 @@ import plotly.express as px
 import plotly.graph_objects as go
 from openpyxl import load_workbook
 from openpyxl.chartsheet import Chartsheet
+from shipment_alert import render_shipment_alert_tab
 
 st.set_page_config(
     page_title="HEVH 대시보드",
@@ -1014,10 +1015,11 @@ def dashboard():
     st.divider()
 
     # 탭
-    tab1,tab2,tab3,tab4,tab5,tab6,tab7,tab8,tab9=st.tabs([
+    tab1,tab2,tab3,tab4,tab5,tab6,tab7,tab8,tab9,tab10=st.tabs([
         "📊 손실 분석","🏭 라인별","📋 Plan/Actual",
-        "📈 트렌드","🕐 타임별","📛 스크랩",
-        "🔍 상세 조회","🔧 PM","⬇️ 다운로드"
+        "📈 트렌드","⏰ 타임별","🍅 스크랩",
+        "🔍 상세 조회","🔧 PM",
+        "🚨 Shipment Alert","📥 다운로드"
     ])
 
     # ════════ TAB1 - 손실 분석 ════════
@@ -1767,7 +1769,13 @@ def dashboard():
                         <b>{row['누계손실(분)']:,.1f}분</b> / {int(row['발생횟수'])}회
                     </div>""",unsafe_allow_html=True)
 
-    # ════════ TAB9 - 다운로드 ════════
+
+    # ════════ TAB9 - Shipment Alert ════════
+    with tab9:
+        render_shipment_alert_tab()
+
+
+    # ════════ TAB10 - 다운로드 ════════
     with tab9:
         st.markdown("#### 다운로드")
         ca2,cb2,cc2=st.columns(3)
