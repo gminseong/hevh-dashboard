@@ -229,7 +229,7 @@ def load_shipment_rev(file_bytes):
 
 
 # ════════════════════════════════════════════════════════════
-# 분석 v26.0 — code 단위 통합 + Cut off FIFO
+# 분석 v27.0 — Cut off 시점별 누적 가용재고 정확 계산
 # ════════════════════════════════════════════════════════════
 def analyze(ship_db, prod_db, plan_date_cols, note_dict):
     prod_db = prod_db.copy()
@@ -241,7 +241,8 @@ def analyze(ship_db, prod_db, plan_date_cols, note_dict):
         return pd.DataFrame()
 
     today_str = today.strftime('%m/%d')
-    st.info(f"📅 기준일: **{today.strftime('%Y-%m-%d')}** | code 단위 묶음 + Cut off FIFO")
+    today_norm = today.normalize()
+    st.info(f"📅 기준일: **{today.strftime('%Y-%m-%d')}** | Cut off 시점별 누적 가용재고 계산")
 
     # MES 실적 (ERP 단위)
     prod_db['ERP'] = prod_db['FINAL_MAT_ID'].astype(str).str.strip()
@@ -281,97 +282,126 @@ def analyze(ship_db, prod_db, plan_date_cols, note_dict):
     m['현재재고'] = m['현재재고'].astype(int)
     m['이번주 계획'] = m['이번주 계획'].astype(int)
 
-    # code 없으면 ERP로 대체
+    # code 안전장치
     if 'code' not in m.columns:
         m['code'] = m['ERP']
     m['code'] = m['code'].astype(str).str.strip()
 
-    # ⭐⭐ code 단위로 묶기 (같은 code = 같은 생산)
+    # ⭐ code 단위 묶기
     code_stock = m.groupby('code')['현재재고'].max().to_dict()
     code_plan = m.groupby('code')['이번주 계획'].max().to_dict()
     code_erp_map = m.groupby('code')['ERP'].apply(lambda x: list(set(x))).to_dict()
     
-    # code별 실적 = 모든 ERP 실적 합
     code_total_actual = {}
     for code, erp_list in code_erp_map.items():
         code_total_actual[code] = sum(erp_total_actual.get(erp, 0) for erp in erp_list)
     
-    # ⭐ 같은 code → 모든 행에 동일 값 표시 (B 방식)
+    # 같은 code → 모든 행에 동일 값
     m['현재재고'] = m['code'].map(code_stock).fillna(0).astype(int)
     m['이번주 계획'] = m['code'].map(code_plan).fillna(0).astype(int)
-    m['현재실적_숫자'] = m['code'].map(code_total_actual).fillna(0).astype(int)
-    
-    # ⭐ 현재실적 표시 = "숫자 (날짜)" 
-    m['현재실적'] = m['현재실적_숫자'].apply(lambda x: f"{x:,} ({today_str})")
+    m['_현재실적'] = m['code'].map(code_total_actual).fillna(0).astype(int)
+    m['현재실적'] = m['_현재실적'].apply(lambda x: f"{x:,} ({today_str})")
 
-    # ⭐ 차이 = 실적 - 계획 (B 방식, 음수 = 부족)
-    # code별 today까지 계획 누적 vs 실적 누적
+    # ⭐⭐ code별 일자별 계획 사전 구축
     plan_date_map = {col: parse_date_from_col(col) for col in plan_date_cols}
     valid_plan_cols = {col: dt for col, dt in plan_date_map.items() if dt is not None}
-    today_norm = today.normalize()
 
-    code_gap_dict = {}
+    # {(code, date): plan_qty}
+    code_daily_plan = {}
     for code in m['code'].unique():
         first_row = m[m['code'] == code].iloc[0]
-        erp_list = code_erp_map.get(code, [])
-        
-        past_actual = 0
-        past_plan = 0
-        
         for col, dt in valid_plan_cols.items():
-            dt_norm = dt.normalize()
             plan_val = pd.to_numeric(first_row.get(col, 0), errors='coerce')
             if pd.isna(plan_val):
                 plan_val = 0
-            
-            if dt_norm <= today_norm:
-                for erp in erp_list:
-                    past_actual += daily_dict_erp.get((erp, dt_norm), 0)
-                past_plan += plan_val
-        
-        # 차이 = 실적 - 계획 (B 방식: 음수 = 부족)
-        code_gap_dict[code] = int(past_actual - past_plan)
+            code_daily_plan[(code, dt.normalize())] = int(plan_val)
+
+    # ⭐ 차이 = 오늘까지 실적 - 오늘까지 계획 (음수 = 부진)
+    code_gap_dict = {}
+    for code in m['code'].unique():
+        erp_list = code_erp_map.get(code, [])
+        # 오늘까지 누적 계획
+        plan_today = sum(
+            qty for (c, d), qty in code_daily_plan.items()
+            if c == code and d <= today_norm
+        )
+        # 오늘까지 누적 실적
+        actual_today = 0
+        for erp in erp_list:
+            for (e, d), qty in daily_dict_erp.items():
+                if e == erp and d <= today_norm:
+                    actual_today += qty
+        code_gap_dict[code] = int(actual_today - plan_today)
 
     m['차이'] = m['code'].map(code_gap_dict).fillna(0).astype(int)
 
-    # ⭐⭐ Cut off FIFO 차감 (code 단위)
+    # ⭐⭐ Cut off 시점별 가용재고 계산 헬퍼
+    def calc_available_at(code, cutoff_dt):
+        """code의 cutoff 시점까지 가용재고"""
+        stock = code_stock.get(code, 0)
+        if pd.isna(cutoff_dt):
+            # Cut off 날짜 없으면 이번주 전체 사용
+            production = max(code_plan.get(code, 0), code_total_actual.get(code, 0))
+            return stock + production
+        
+        cutoff_norm = cutoff_dt.normalize()
+        
+        # cutoff까지 누적 계획
+        plan_until = sum(
+            qty for (c, d), qty in code_daily_plan.items()
+            if c == code and d <= cutoff_norm
+        )
+        # cutoff까지 누적 실적 (code의 모든 ERP)
+        erp_list = code_erp_map.get(code, [])
+        actual_until = 0
+        for erp in erp_list:
+            for (e, d), qty in daily_dict_erp.items():
+                if e == erp and d <= cutoff_norm:
+                    actual_until += qty
+        
+        # 가용 = 재고 + max(계획, 실적)
+        return stock + max(plan_until, actual_until)
+
+    # ⭐⭐ Cut off별 PO 차감 시뮬레이션
     m['_cutoff_dt'] = pd.to_datetime(m['Cut off Cargo'], errors='coerce')
     m = m.sort_values(['code', '_cutoff_dt']).reset_index(drop=True)
     
-    m['조정_BALANCE'] = 0
+    m['Cutoff_가용'] = 0
+    m['잔여재고'] = 0
     m['부족수량'] = 0
     
-    current_code = None
-    available = 0
-    
-    for idx, row in m.iterrows():
-        code = row['code']
-        po = int(row['PO'])
+    # 같은 code 내에서 Cut off 빠른 순으로 누적 차감
+    for code in m['code'].unique():
+        code_mask = m['code'] == code
+        code_rows = m[code_mask].copy()
         
-        if code != current_code:
-            current_code = code
-            stock = int(row['현재재고'])
-            plan = int(row['이번주 계획'])
-            actual = int(row['현재실적_숫자'])
-            production = max(plan, actual)
-            available = stock + production
-        
-        if available >= po:
-            available -= po
-            m.at[idx, '조정_BALANCE'] = available
-            m.at[idx, '부족수량'] = 0
-        elif available > 0:
-            shortage = po - available
-            m.at[idx, '조정_BALANCE'] = -shortage
-            m.at[idx, '부족수량'] = shortage
-            available = 0
-        else:
-            m.at[idx, '조정_BALANCE'] = -po
-            m.at[idx, '부족수량'] = po
+        cumulative_po = 0
+        for idx, row in code_rows.iterrows():
+            cutoff_dt = row['_cutoff_dt']
+            po = int(row['PO'])
+            
+            # 이 Cut off 시점의 가용재고
+            available_at_cutoff = calc_available_at(code, cutoff_dt)
+            
+            # 이전 Cut off 행들의 PO 누적 차감
+            cumulative_po += po
+            net_available = available_at_cutoff - cumulative_po + po  # 이번 PO 차감 전 상태
+            
+            m.at[idx, 'Cutoff_가용'] = available_at_cutoff
+            
+            if net_available >= po:
+                m.at[idx, '잔여재고'] = net_available - po
+                m.at[idx, '부족수량'] = 0
+            elif net_available > 0:
+                m.at[idx, '잔여재고'] = 0
+                m.at[idx, '부족수량'] = po - net_available
+            else:
+                m.at[idx, '잔여재고'] = 0
+                m.at[idx, '부족수량'] = po
     
     m['필요 수량 변경'] = m['부족수량'].astype(int)
 
-    # 알람
+    # 알람 (4단계)
     def get_alert(row):
         shortage = row['부족수량']
         gap = row['차이']
@@ -386,14 +416,15 @@ def analyze(ship_db, prod_db, plan_date_cols, note_dict):
     m['알람'] = m.apply(get_alert, axis=1)
 
     # 정수화
-    for col in ['PO', '이번주 계획']:
+    for col in ['PO', '이번주 계획', 'Cutoff_가용', '잔여재고']:
         if col in m.columns:
             m[col] = m[col].astype(int)
 
     # 임시 컬럼 제거
-    m = m.drop(columns=['_cutoff_dt', '현재실적_숫자', '부족수량'], errors='ignore')
+    m = m.drop(columns=['_cutoff_dt', '_현재실적', '부족수량'], errors='ignore')
 
-    return m    
+    return m
+    
 # ════════════════════════════════════════════════════════════
 # HTML 테이블
 # ════════════════════════════════════════════════════════════
