@@ -229,7 +229,7 @@ def load_shipment_rev(file_bytes):
 
 
 # ════════════════════════════════════════════════════════════
-# 분석 (ERP 단위 재고 공유 + Cut off FIFO)
+# 분석 (code 단위 묶음 + Cut off FIFO)
 # ════════════════════════════════════════════════════════════
 def analyze(ship_db, prod_db, plan_date_cols, note_dict):
     prod_db = prod_db.copy()
@@ -240,9 +240,9 @@ def analyze(ship_db, prod_db, plan_date_cols, note_dict):
         st.error("❌ 생산실적 날짜 파싱 실패")
         return pd.DataFrame()
 
-    st.info(f"📅 기준일: **{today.strftime('%Y-%m-%d')}** | 같은 ERP는 재고 공유 + Cut off FIFO 차감")
+    st.info(f"📅 기준일: **{today.strftime('%Y-%m-%d')}** | code 단위 재고 공유 + Cut off FIFO")
 
-    # MES 실적
+    # MES 실적 — ERP 단위
     prod_db['ERP'] = prod_db['FINAL_MAT_ID'].astype(str).str.strip()
     prod_db['TYPE'] = prod_db['ERP'].apply(classify)
     
@@ -254,15 +254,14 @@ def analyze(ship_db, prod_db, plan_date_cols, note_dict):
     # ERP × 일자별 실적
     daily = valid.groupby(['ERP', valid['TRAN_WORK_DATE'].dt.normalize()])['QTY'].sum().reset_index()
     daily.columns = ['ERP', 'DATE', 'QTY']
-    daily_dict = {(r['ERP'], r['DATE']): r['QTY'] for _, r in daily.iterrows()}
+    daily_dict_erp = {(r['ERP'], r['DATE']): r['QTY'] for _, r in daily.iterrows()}
     
-    # ERP별 총 누적
-    total_actual = valid.groupby('ERP')['QTY'].sum().to_dict()
+    # ERP별 총 실적
+    erp_total_actual = valid.groupby('ERP')['QTY'].sum().to_dict()
 
     # Shipment Rev
     m = ship_db.copy()
     m['MODEL_TYPE'] = m['ERP'].apply(classify)
-    m['현재실적'] = m['ERP'].map(total_actual).fillna(0).astype(int)
     m['Note'] = m['ERP'].map(note_dict).fillna('')
 
     # 숫자화
@@ -270,7 +269,7 @@ def analyze(ship_db, prod_db, plan_date_cols, note_dict):
         if col in m.columns:
             m[col] = pd.to_numeric(m[col], errors='coerce').fillna(0)
 
-    # PO 백업 처리
+    # PO 백업
     if 'PO' not in m.columns and '_TTLShip' in m.columns:
         m['PO'] = m['_TTLShip']
     elif 'PO' in m.columns and '_TTLShip' in m.columns:
@@ -284,21 +283,42 @@ def analyze(ship_db, prod_db, plan_date_cols, note_dict):
         m['이번주 계획'] = 0
     m['이번주 계획'] = m['이번주 계획'].astype(int)
 
-    # ⭐ ERP 단위로 재고/계획 공유 (첫 행에만 채워진 경우 처리)
-    erp_stock = m.groupby('ERP')['현재재고'].max().to_dict()
-    erp_plan = m.groupby('ERP')['이번주 계획'].max().to_dict()
-    
-    m['_ERP재고'] = m['ERP'].map(erp_stock).fillna(0).astype(int)
-    m['_ERP계획'] = m['ERP'].map(erp_plan).fillna(0).astype(int)
+    # ⭐ code가 없으면 ERP로 대체 (안전장치)
+    if 'code' not in m.columns:
+        m['code'] = m['ERP']
+    m['code'] = m['code'].astype(str).str.strip()
 
-    # ⭐ 일자별 계획 매칭으로 생산실적 차이 계산 (ERP 단위 한 번만)
+    # ⭐⭐ code 단위로 묶기 (핵심!)
+    # 같은 code = 같은 생산 = 재고/계획/실적 공유
+    
+    # 1. code별 재고/계획 (첫 행에만 있을 수 있으므로 max 사용)
+    code_stock = m.groupby('code')['현재재고'].max().to_dict()
+    code_plan = m.groupby('code')['이번주 계획'].max().to_dict()
+    
+    # 2. code별 실적 = 해당 code에 속한 모든 ERP의 실적 합
+    code_erp_map = m.groupby('code')['ERP'].apply(lambda x: list(set(x))).to_dict()
+    
+    code_total_actual = {}
+    for code, erp_list in code_erp_map.items():
+        code_total_actual[code] = sum(erp_total_actual.get(erp, 0) for erp in erp_list)
+    
+    # 매핑
+    m['현재실적'] = m['code'].map(code_total_actual).fillna(0).astype(int)
+    m['_재고'] = m['code'].map(code_stock).fillna(0).astype(int)
+    m['_계획'] = m['code'].map(code_plan).fillna(0).astype(int)
+
+    # ⭐ 생산실적 차이 = code 단위 (과거실적 합 - 과거계획 합)
     plan_date_map = {col: parse_date_from_col(col) for col in plan_date_cols}
     valid_plan_cols = {col: dt for col, dt in plan_date_map.items() if dt is not None}
     today_norm = today.normalize()
 
-    erp_gap_dict = {}
-    for erp in m['ERP'].unique():
-        first_row = m[m['ERP'] == erp].iloc[0]
+    code_gap_dict = {}
+    for code in m['code'].unique():
+        # 해당 code의 첫 행에서 일자별 계획
+        first_row = m[m['code'] == code].iloc[0]
+        # 해당 code에 속한 ERP들
+        erp_list = code_erp_map.get(code, [])
+        
         past_actual = 0
         past_plan = 0
         
@@ -309,36 +329,36 @@ def analyze(ship_db, prod_db, plan_date_cols, note_dict):
                 plan_val = 0
             
             if dt_norm <= today_norm:
-                past_actual += daily_dict.get((erp, dt_norm), 0)
+                # 과거 실적 = 해당 code의 모든 ERP 실적 합
+                for erp in erp_list:
+                    past_actual += daily_dict_erp.get((erp, dt_norm), 0)
                 past_plan += plan_val
         
-        # 생산실적 차이 = 과거 실적 - 과거 계획 (음수=계획 대비 부진)
-        erp_gap_dict[erp] = int(past_actual - past_plan)
+        code_gap_dict[code] = int(past_actual - past_plan)
 
-    m['생산실적 차이'] = m['ERP'].map(erp_gap_dict).fillna(0).astype(int)
+    m['생산실적 차이'] = m['code'].map(code_gap_dict).fillna(0).astype(int)
 
-    # ⭐ Cut off FIFO 차감 시뮬레이션 (단순/정확)
+    # ⭐⭐ Cut off FIFO 차감 (code 단위로 공유)
     m['_cutoff_dt'] = pd.to_datetime(m['Cut off Cargo'], errors='coerce')
-    m = m.sort_values(['ERP', '_cutoff_dt']).reset_index(drop=True)
+    m = m.sort_values(['code', '_cutoff_dt']).reset_index(drop=True)
     
     m['조정_BALANCE'] = 0
     m['부족수량'] = 0
     
-    current_erp = None
+    current_code = None
     available = 0
     
     for idx, row in m.iterrows():
-        erp = row['ERP']
+        code = row['code']
         po = int(row['PO'])
         
-        # 새 ERP 시작 → 가용재고 초기화
-        if erp != current_erp:
-            current_erp = erp
-            stock = int(row['_ERP재고'])
-            plan = int(row['_ERP계획'])
+        # 새 code 시작 → 가용재고 초기화
+        if code != current_code:
+            current_code = code
+            stock = int(row['_재고'])
+            plan = int(row['_계획'])
             actual = int(row['현재실적'])
             # 가용재고 = 현재재고 + MAX(이번주 계획, 현재실적)
-            # → 계획 100% 달성 또는 실적이 그 이상이면 실적 그대로
             production = max(plan, actual)
             available = stock + production
         
@@ -356,10 +376,10 @@ def analyze(ship_db, prod_db, plan_date_cols, note_dict):
             m.at[idx, '조정_BALANCE'] = -po
             m.at[idx, '부족수량'] = po
     
-    # 필요 수량 변경 = 부족수량
+    # 필요 수량 변경
     m['필요 수량 변경'] = m['부족수량'].astype(int)
 
-    # 알람 (4단계)
+    # 알람
     def get_alert(row):
         shortage = row['부족수량']
         gap = row['생산실적 차이']
@@ -379,9 +399,10 @@ def analyze(ship_db, prod_db, plan_date_cols, note_dict):
             m[col] = m[col].astype(int)
 
     # 임시 컬럼 제거
-    m = m.drop(columns=['_cutoff_dt', '_ERP재고', '_ERP계획', '부족수량'], errors='ignore')
+    m = m.drop(columns=['_cutoff_dt', '_재고', '_계획', '부족수량'], errors='ignore')
 
     return m
+    
 # ════════════════════════════════════════════════════════════
 # HTML 테이블
 # ════════════════════════════════════════════════════════════
