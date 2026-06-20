@@ -145,19 +145,34 @@ def render_shipment_alert_tab():
         st.info("👆 출하계획(.xlsx)과 생산실적(.csv) 파일을 모두 업로드해주세요.")
         return
 
-    # ───── 데이터 로드 ─────
+    # ───── 데이터 로드 (헤더 자동 감지) ─────
+    def smart_read_excel(file, sheet):
+        """헤더 행을 자동으로 찾아서 읽기"""
+        for header_row in [0, 1, 2, 3]:
+            try:
+                df = pd.read_excel(file, sheet_name=sheet, header=header_row)
+                # '3in1Code(FG)' 또는 유사 컬럼이 있으면 OK
+                cols_str = ' '.join(str(c) for c in df.columns)
+                if '3in1Code' in cols_str or 'TTL Ship' in cols_str:
+                    return df
+            except Exception:
+                continue
+        # 못 찾으면 기본값(header=2) 시도
+        return pd.read_excel(file, sheet_name=sheet, header=2)
+    
     try:
-        ship_df = pd.read_excel(ship_file, sheet_name="Shipment Rev")
+        ship_df = smart_read_excel(ship_file, "Shipment Rev")
     except Exception:
-        ship_df = pd.read_excel(ship_file, sheet_name=0)
+        ship_df = smart_read_excel(ship_file, 0)
 
     try:
         stock_df = pd.read_excel(ship_file, sheet_name="Stock")
     except Exception:
         stock_df = pd.DataFrame()
-
-    prod_df = pd.read_csv(prod_file)
-
+    
+    # 컬럼명 공백 정리
+    ship_df.columns = [str(c).strip() for c in ship_df.columns]
+    
     # ───── 컬럼 검증 ─────
     required_ship = ['3in1Code(FG)', 'TTL Ship']
     missing = [c for c in required_ship if c not in ship_df.columns]
