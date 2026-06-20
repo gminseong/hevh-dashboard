@@ -1,7 +1,8 @@
 """
-[한솔테크닉스 HEVH] Shipment Cut-off 알람 모듈 v1.0
+[한솔테크닉스 HEVH] Shipment Cut-off 알람 모듈 v2.0
 - PD 모델: P-ATE 완성 기준
 - 3in1 모델: ASSY 완성 기준
+- 업로드 → 적용하기 버튼 방식
 """
 import io
 from datetime import datetime
@@ -14,7 +15,6 @@ import plotly.express as px
 # 모델 타입 판별 (PD vs 3in1)
 # ════════════════════════════════════════════════════════════
 def classify_model_type(code_3in1):
-    """3in1Code(FG) 앞자리로 PD/3in1 구분"""
     if pd.isna(code_3in1):
         return "UNKNOWN"
     code = str(code_3in1).strip()
@@ -29,15 +29,12 @@ def classify_model_type(code_3in1):
 # 실적 집계 (PD=P-ATE, 3in1=ASSY)
 # ════════════════════════════════════════════════════════════
 def aggregate_actual(prod_df):
-    """모델 타입별로 다른 공정 기준 집계"""
     df = prod_df.copy()
     df['MODEL_TYPE'] = df['FINAL_MAT_ID'].apply(classify_model_type)
 
-    # PD: P-ATE 완성 기준
     pd_actual = (df[(df['MODEL_TYPE'] == 'PD') & (df['OPER_DESC'] == 'P-ATE')]
                  .groupby('FINAL_MAT_ID')['QTY'].sum().reset_index())
 
-    # 3in1: ASSY 완성 기준
     in1_actual = (df[(df['MODEL_TYPE'] == '3IN1') & (df['OPER_DESC'] == 'ASSY')]
                   .groupby('FINAL_MAT_ID')['QTY'].sum().reset_index())
 
@@ -48,7 +45,7 @@ def aggregate_actual(prod_df):
 
 
 # ════════════════════════════════════════════════════════════
-# 알람 등급 분류
+# 알람 등급
 # ════════════════════════════════════════════════════════════
 def classify_alert(row, today):
     cutoff = pd.to_datetime(row.get('Cut off Cargo'), errors='coerce')
@@ -69,51 +66,72 @@ def classify_alert(row, today):
 
 
 # ════════════════════════════════════════════════════════════
-# 메인 머지 + 계산
+# 헤더 자동 감지하여 엑셀 읽기
+# ════════════════════════════════════════════════════════════
+def smart_read_excel(file, sheet_name):
+    """3in1Code(FG) 또는 TTL Ship 컬럼이 있는 행을 헤더로 자동 감지"""
+    for header_row in [0, 1, 2, 3, 4]:
+        try:
+            file.seek(0)
+            df = pd.read_excel(file, sheet_name=sheet_name, header=header_row)
+            df.columns = [str(c).strip() for c in df.columns]
+            cols_str = ' '.join(str(c) for c in df.columns)
+            if '3in1Code' in cols_str and 'TTL Ship' in cols_str:
+                return df, header_row
+        except Exception:
+            continue
+    # 못 찾으면 header=2 기본값
+    file.seek(0)
+    df = pd.read_excel(file, sheet_name=sheet_name, header=2)
+    df.columns = [str(c).strip() for c in df.columns]
+    return df, 2
+
+
+# ════════════════════════════════════════════════════════════
+# 머지 + 계산
 # ════════════════════════════════════════════════════════════
 def build_alert_table(ship_df, prod_df, stock_df=None):
-    """출하계획 + 실적 + 재고 머지 후 GAP 재계산"""
     actual = aggregate_actual(prod_df)
 
     merged = ship_df.merge(actual, on='3in1Code(FG)', how='left')
     merged['누적실적'] = merged['누적실적'].fillna(0)
 
-    # 재고 머지
     if stock_df is not None and not stock_df.empty:
-        stock_col = [c for c in stock_df.columns if 'stock' in c.lower()]
+        stock_col = [c for c in stock_df.columns if 'stock' in str(c).lower()]
         if stock_col:
             merged = merged.merge(
                 stock_df[['3in1Code(FG)', stock_col[0]]],
                 on='3in1Code(FG)', how='left'
             )
-            merged['기초재고'] = merged[stock_col[0]].fillna(0)
+            merged['기초재고'] = pd.to_numeric(merged[stock_col[0]], errors='coerce').fillna(0)
         else:
             merged['기초재고'] = 0
     else:
         merged['기초재고'] = 0
 
-    # 모델 타입
     merged['MODEL_TYPE'] = merged['3in1Code(FG)'].apply(classify_model_type)
 
-    # NEW GAP = 기초재고 + 누적실적 - TTL Ship
+    # 숫자 변환
+    merged['TTL Ship'] = pd.to_numeric(merged['TTL Ship'], errors='coerce').fillna(0)
+    merged['누적실적'] = pd.to_numeric(merged['누적실적'], errors='coerce').fillna(0)
+
     merged['NEW_GAP'] = (merged['기초재고']
                          + merged['누적실적']
                          - merged['TTL Ship'])
 
-    # 달성률 (Plan 컬럼 자동 감지)
+    # Plan 컬럼 자동 감지
     plan_col = None
     for c in merged.columns:
         if 'Plan' in str(c) or 'plan' in str(c):
             plan_col = c
             break
-    
+
     if plan_col:
         plan = pd.to_numeric(merged[plan_col], errors='coerce').replace(0, pd.NA)
         merged['달성률(%)'] = (merged['누적실적'] / plan * 100).round(1).fillna(0)
     else:
         merged['달성률(%)'] = 0
 
-    # 알람 등급
     today = datetime.today().date()
     merged['알람'] = merged.apply(lambda r: classify_alert(r, today), axis=1)
 
@@ -121,14 +139,13 @@ def build_alert_table(ship_df, prod_df, stock_df=None):
 
 
 # ════════════════════════════════════════════════════════════
-# Streamlit 탭 렌더링
+# 메인 렌더링 (업로드 → 적용하기 버튼 방식)
 # ════════════════════════════════════════════════════════════
 def render_shipment_alert_tab():
-    """tab 안에서 호출하는 메인 함수"""
     st.markdown("#### 🚨 Shipment Cut-off 알람")
     st.caption("📌 PD 모델: P-ATE 완성 기준  |  3in1 모델: ASSY 완성 기준")
 
-    # ───── 파일 업로드 ─────
+    # ───── 1. 파일 업로드 ─────
     up1, up2 = st.columns(2)
     with up1:
         ship_file = st.file_uploader(
@@ -141,57 +158,85 @@ def render_shipment_alert_tab():
             type=["csv"], key="prod_alert_upload"
         )
 
+    # ───── 2. 적용하기 버튼 ─────
+    apply_col1, apply_col2 = st.columns([1, 5])
+    with apply_col1:
+        apply_btn = st.button(
+            "🚀 적용하기",
+            type="primary",
+            use_container_width=True,
+            disabled=(ship_file is None or prod_file is None),
+            key="ship_alert_apply"
+        )
+
+    # 두 파일 모두 없으면 안내만 출력 후 종료
     if ship_file is None or prod_file is None:
-        st.info("👆 출하계획(.xlsx)과 생산실적(.csv) 파일을 모두 업로드해주세요.")
+        st.info("👆 출하계획(.xlsx)과 생산실적(.csv)을 업로드하면 [적용하기] 버튼이 활성화됩니다.")
         return
 
-    # ───── 데이터 로드 (헤더 자동 감지) ─────
-    def smart_read_excel(file, sheet):
-        """헤더 행을 자동으로 찾아서 읽기"""
-        for header_row in [0, 1, 2, 3]:
+    # 적용하기 클릭 시 세션에 저장
+    if apply_btn:
+        st.session_state['ship_alert_applied'] = True
+
+    # 아직 적용 전이면 안내만 출력 후 종료
+    if not st.session_state.get('ship_alert_applied', False):
+        st.success("✅ 파일 업로드 완료. [🚀 적용하기] 버튼을 눌러주세요.")
+        return
+
+    # ═══════════════════════════════════════════════════════
+    # 여기서부터는 적용하기를 누른 경우에만 실행
+    # ═══════════════════════════════════════════════════════
+    st.markdown("<hr>", unsafe_allow_html=True)
+
+    # ───── 3. 데이터 로드 (헤더 자동 감지) ─────
+    with st.spinner("데이터 로드 중..."):
+        try:
+            ship_df, detected_header = smart_read_excel(ship_file, "Shipment Rev")
+        except Exception:
             try:
-                df = pd.read_excel(file, sheet_name=sheet, header=header_row)
-                # '3in1Code(FG)' 또는 유사 컬럼이 있으면 OK
-                cols_str = ' '.join(str(c) for c in df.columns)
-                if '3in1Code' in cols_str or 'TTL Ship' in cols_str:
-                    return df
-            except Exception:
-                continue
-        # 못 찾으면 기본값(header=2) 시도
-        return pd.read_excel(file, sheet_name=sheet, header=2)
-    
-    try:
-        ship_df = smart_read_excel(ship_file, "Shipment Rev")
-    except Exception:
-        ship_df = smart_read_excel(ship_file, 0)
+                ship_df, detected_header = smart_read_excel(ship_file, 0)
+            except Exception as e:
+                st.error(f"❌ 출하계획 파일 로드 실패: {e}")
+                return
 
-    try:
-        stock_df = pd.read_excel(ship_file, sheet_name="Stock")
-    except Exception:
-        stock_df = pd.DataFrame()
-    
-    # 컬럼명 공백 정리
-    ship_df.columns = [str(c).strip() for c in ship_df.columns]
-    
-    # ───── 컬럼 검증 ─────
+        try:
+            ship_file.seek(0)
+            stock_df = pd.read_excel(ship_file, sheet_name="Stock")
+        except Exception:
+            stock_df = pd.DataFrame()
+
+        try:
+            prod_df = pd.read_csv(prod_file)
+        except Exception as e:
+            st.error(f"❌ 생산실적 파일 로드 실패: {e}")
+            return
+
+    # ───── 4. 컬럼 검증 ─────
     required_ship = ['3in1Code(FG)', 'TTL Ship']
-    missing = [c for c in required_ship if c not in ship_df.columns]
-    if missing:
-        st.error(f"❌ 출하계획 파일에 필수 컬럼 누락: {missing}")
-        st.info(f"보유 컬럼: {list(ship_df.columns)}")
-        return
+    missing_ship = [c for c in required_ship if c not in ship_df.columns]
 
     required_prod = ['FINAL_MAT_ID', 'OPER_DESC', 'QTY']
-    missing = [c for c in required_prod if c not in prod_df.columns]
-    if missing:
-        st.error(f"❌ 생산실적 파일에 필수 컬럼 누락: {missing}")
-        st.info(f"보유 컬럼: {list(prod_df.columns)}")
+    missing_prod = [c for c in required_prod if c not in prod_df.columns]
+
+    if missing_ship or missing_prod:
+        if missing_ship:
+            st.error(f"❌ 출하계획 누락 컬럼: {missing_ship}")
+            st.caption(f"보유 컬럼: {list(ship_df.columns)[:15]}...")
+        if missing_prod:
+            st.error(f"❌ 생산실적 누락 컬럼: {missing_prod}")
+            st.caption(f"보유 컬럼: {list(prod_df.columns)}")
+        with st.expander("🔧 디버그: Ship DF 미리보기"):
+            st.dataframe(ship_df.head())
         return
 
-    # ───── 알람 테이블 생성 ─────
-    merged = build_alert_table(ship_df, prod_df, stock_df)
+    # ───── 5. 알람 테이블 생성 ─────
+    try:
+        merged = build_alert_table(ship_df, prod_df, stock_df)
+    except Exception as e:
+        st.error(f"❌ 데이터 처리 실패: {e}")
+        return
 
-    # ───── KPI 카드 ─────
+    # ───── 6. KPI 카드 ─────
     st.markdown("##### 📊 알람 현황")
     k1, k2, k3, k4, k5 = st.columns(5)
     k1.metric("📦 전체", f"{len(merged):,}건")
@@ -202,13 +247,14 @@ def render_shipment_alert_tab():
 
     st.markdown("<hr>", unsafe_allow_html=True)
 
-    # ───── 필터 ─────
+    # ───── 7. 필터 ─────
     f1, f2, f3 = st.columns(3)
     cus_options = sorted(merged['Cus'].dropna().unique()) if 'Cus' in merged.columns else []
-    cus_sel = f1.multiselect("거래선", cus_options)
+    cus_sel = f1.multiselect("거래선", cus_options, key="ship_alert_cus")
     alert_sel = f2.multiselect("알람 등급",
-                                ['🔴 긴급', '🟠 부족', '🟡 지연', '✅ 정상'])
-    type_sel = f3.multiselect("모델 타입", ['PD', '3IN1'])
+                                ['🔴 긴급', '🟠 부족', '🟡 지연', '✅ 정상'],
+                                key="ship_alert_grade")
+    type_sel = f3.multiselect("모델 타입", ['PD', '3IN1'], key="ship_alert_type")
 
     view = merged.copy()
     if cus_sel and 'Cus' in view.columns:
@@ -218,7 +264,7 @@ def render_shipment_alert_tab():
     if type_sel:
         view = view[view['MODEL_TYPE'].isin(type_sel)]
 
-    # ───── 알람 테이블 ─────
+    # ───── 8. 알람 테이블 ─────
     st.markdown("##### 📋 알람 상세")
     show_cols_pref = ['알람', 'Cus', 'Model', 'MODEL_TYPE',
                       'Cut off Cargo', 'HQ Request',
@@ -241,7 +287,7 @@ def render_shipment_alert_tab():
 
     st.markdown("<hr>", unsafe_allow_html=True)
 
-    # ───── 차트 ─────
+    # ───── 9. 차트 ─────
     st.markdown("##### 📈 분석 차트")
     ch1, ch2 = st.columns(2)
 
@@ -254,7 +300,7 @@ def render_shipment_alert_tab():
                           color='달성률(%)', color_continuous_scale='RdYlGn',
                           range_color=[0, 150], height=350)
             fig1.add_vline(x=100, line_dash="dash", line_color="green",
-                          annotation_text="목표 100%")
+                           annotation_text="100%")
             fig1.update_layout(margin=dict(l=0, r=0, t=10, b=0))
             st.plotly_chart(fig1, use_container_width=True)
         else:
@@ -276,28 +322,10 @@ def render_shipment_alert_tab():
         else:
             st.success("✅ 부족 항목 없음")
 
+    # ───── 10. 초기화 버튼 ─────
     st.markdown("<hr>", unsafe_allow_html=True)
-
-    # ───── 다운로드 ─────
-    st.markdown("##### 📥 다운로드")
-    d1, d2 = st.columns(2)
-    today_str = datetime.today().strftime('%Y%m%d')
-
-    with d1:
-        csv = view.to_csv(index=False).encode('utf-8-sig')
-        st.download_button(
-            "📥 CSV 다운로드", csv,
-            f"shipment_alert_{today_str}.csv",
-            "text/csv",
-            use_container_width=True
-        )
-
-    with d2:
-        buffer = io.BytesIO()
-        with pd.ExcelWriter(buffer, engine='xlsxwriter') as writer:
-            view.to_excel(writer, index=False, sheet_name='Alert')
-        st.download_button(
-            "📊 Excel 다운로드", buffer.getvalue(),
-            f"shipment_alert_{today_str}.xlsx",
-            use_container_width=True
-        )
+    reset_col1, reset_col2 = st.columns([1, 5])
+    with reset_col1:
+        if st.button("🔄 초기화", use_container_width=True, key="ship_alert_reset"):
+            st.session_state['ship_alert_applied'] = False
+            st.rerun()
