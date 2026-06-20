@@ -58,82 +58,111 @@ def load_shipment(file):
 
         st.success(f"✅ 사용 시트: '{target}'")
 
-        for header_row in [0, 1, 2, 3]:
-            try:
-                file.seek(0)
-                df = pd.read_excel(file, sheet_name=target, header=header_row)
-                df.columns = [str(c).strip() for c in df.columns]
+        # 진짜 헤더 행 자동 탐지: 'Cus' 키워드가 있는 행 찾기
+        file.seek(0)
+        raw = pd.read_excel(file, sheet_name=target, header=None)
+        
+        header_row = None
+        for i in range(min(10, len(raw))):
+            row_values = raw.iloc[i].astype(str).str.lower().tolist()
+            row_str = ' '.join(row_values)
+            # 'cus' 키워드 + ('cut off' 또는 'po remain' 또는 'model')
+            if 'cus' in row_str and any(k in row_str for k in ['cut off', 'po remain', 'model', 'erp']):
+                header_row = i
+                st.caption(f"🎯 헤더 자동 탐지: {i}번째 행")
+                break
+        
+        # 못 찾았으면 0~3 순차 시도
+        if header_row is None:
+            st.warning("⚠️ 'Cus' 헤더 못 찾음. header=0부터 시도")
+            header_row = 0
 
-                # ERP 컬럼 자동 탐지
-                erp_col = None
-                for col in df.columns:
-                    sample = df[col].dropna().astype(str).head(30).tolist()
-                    if len(sample) < 3:
-                        continue
-                    erp_count = sum(1 for v in sample 
-                                    if (v.startswith('013') or v.startswith('018')) 
-                                    and len(v) >= 10)
-                    if erp_count >= 3:
-                        erp_col = col
-                        break
+        # 실제 로드
+        file.seek(0)
+        df = pd.read_excel(file, sheet_name=target, header=header_row)
+        df.columns = [str(c).strip() for c in df.columns]
+        
+        st.caption(f"📋 원본 컬럼 (앞 12개): {list(df.columns)[:12]}")
 
-                if erp_col is None:
+        # ERP 컬럼 탐지
+        erp_col = None
+        # 1순위: 이름이 'ERP' 또는 '3in1Code'
+        for col in df.columns:
+            cl = str(col).lower().replace(' ', '')
+            if cl == 'erp' or '3in1code' in cl:
+                erp_col = col
+                break
+        # 2순위: 패턴 매칭
+        if erp_col is None:
+            for col in df.columns:
+                sample = df[col].dropna().astype(str).head(30).tolist()
+                if len(sample) < 3:
                     continue
+                erp_count = sum(1 for v in sample 
+                                if (v.startswith('013') or v.startswith('018')) 
+                                and len(v) >= 10)
+                if erp_count >= 3:
+                    erp_col = col
+                    break
 
-                if erp_col != 'ERP':
-                    df = df.rename(columns={erp_col: 'ERP'})
+        if erp_col is None:
+            st.error(f"❌ ERP 컬럼을 못 찾았습니다.")
+            return pd.DataFrame()
 
-                st.caption(f"📌 header={header_row}, ERP 컬럼: '{erp_col}'")
+        if erp_col != 'ERP':
+            df = df.rename(columns={erp_col: 'ERP'})
 
-                # 컬럼명 정규화
-                rename_map = {}
-                for c in df.columns:
-                    cl = str(c).lower().strip()
-                    if cl in ('cus', 'customer'):
-                        rename_map[c] = 'Cus'
-                    elif 'cut off cargo' in cl:
-                        rename_map[c] = 'Cut off Cargo'
-                    elif cl in ('hq', 'hq request'):
-                        rename_map[c] = 'HQ Request'
-                    elif cl == 'model':
-                        rename_map[c] = 'model'
-                    elif cl == 'inch':
-                        rename_map[c] = 'Inch'
-                    elif ('bn' in cl and 'code' in cl) or cl == 'bncode':
-                        rename_map[c] = 'code'
-                    elif 'po remain' in cl:
-                        rename_map[c] = 'PO Remain'
-                    elif 'ttl ship' in cl:
-                        rename_map[c] = 'TTL Ship'
-                    elif 'ttl plan' in cl:
-                        rename_map[c] = 'TTL Plan'
-                    elif 'ttlstock' in cl or 'ttl stock' in cl:
-                        rename_map[c] = 'TTLstock'
-                    elif cl == 'balance':
-                        rename_map[c] = 'BALANCE'
-                    elif cl == 'note':
-                        rename_map[c] = 'Note'
-                df = df.rename(columns=rename_map)
+        st.caption(f"📌 ERP 컬럼: '{erp_col}'")
 
-                # 유효 행만
-                df['ERP'] = df['ERP'].astype(str).str.strip()
-                df = df[df['ERP'].str.startswith(('013', '018'))].copy()
-                df = df.reset_index(drop=True)
+        # 컬럼명 정규화
+        rename_map = {}
+        for c in df.columns:
+            cl = str(c).lower().strip()
+            if cl in ('cus', 'customer'):
+                rename_map[c] = 'Cus'
+            elif 'cut off cargo' in cl or cl == 'cut off':
+                rename_map[c] = 'Cut off Cargo'
+            elif cl in ('hq', 'hq request'):
+                rename_map[c] = 'HQ Request'
+            elif cl == 'model':
+                rename_map[c] = 'model'
+            elif cl == 'inch':
+                rename_map[c] = 'Inch'
+            elif ('bn' in cl and 'code' in cl) or cl == 'bncode':
+                rename_map[c] = 'code'
+            elif 'po remain' in cl:
+                rename_map[c] = 'PO Remain'
+            elif 'ttl ship' in cl:
+                rename_map[c] = 'TTL Ship'
+            elif 'ttl plan' in cl:
+                rename_map[c] = 'TTL Plan'
+            elif 'ttlstock' in cl or 'ttl stock' in cl:
+                rename_map[c] = 'TTLstock'
+            elif cl == 'balance':
+                rename_map[c] = 'BALANCE'
+            elif cl == 'note':
+                rename_map[c] = 'Note'
+        df = df.rename(columns=rename_map)
 
-                normalized = [c for c in ['Cus','Cut off Cargo','HQ Request','model','code',
-                                          'PO Remain','TTL Ship','TTL Plan','TTLstock','BALANCE','Note']
-                              if c in df.columns]
-                st.caption(f"📌 정규화 컬럼: {normalized}")
+        # 유효 행만
+        df['ERP'] = df['ERP'].astype(str).str.strip()
+        df = df[df['ERP'].str.startswith(('013', '018'))].copy()
+        df = df.reset_index(drop=True)
 
-                return df
-            except Exception:
-                continue
+        normalized = [c for c in ['Cus','Cut off Cargo','HQ Request','model','code',
+                                  'PO Remain','TTL Ship','TTL Plan','TTLstock','BALANCE','Note']
+                      if c in df.columns]
+        st.caption(f"📌 정규화 컬럼 ({len(normalized)}개): {normalized}")
 
-        st.error(f"❌ '{target}' 시트에서 ERP 패턴을 찾지 못했습니다.")
-        return pd.DataFrame()
+        if len(normalized) < 3:
+            st.warning(f"⚠️ 정규화된 컬럼이 너무 적습니다 ({len(normalized)}개). 분석 결과가 부정확할 수 있습니다.")
+
+        return df
 
     except Exception as e:
         st.error(f"❌ Excel 로드 실패: {e}")
+        import traceback
+        st.code(traceback.format_exc())
         return pd.DataFrame()
 
 
