@@ -1,9 +1,8 @@
 """
-[한솔테크닉스 HEVH] Shipment Cut-off 알람 v21.0
-- Shipment Rev 시트 사용
-- 일자별 계획(Plan) vs MES 실적 정밀 매칭
-- 과거(≤기준일)=실적, 미래(>기준일)=계획
-- 캐싱 + HTML 빠른 렌더링
+[한솔테크닉스 HEVH] Shipment Cut-off 알람 v23.0
+- 목적: 계획 차질 감지 + Cut off 전 추가 생산 필요량 알람
+- 핵심 컬럼: 생산실적 차이, 조정_BALANCE, 필요 수량 변경
+- 4단계 알람: 출하불가/부족/차질/정상
 """
 from datetime import datetime
 import io
@@ -38,25 +37,90 @@ def classify(x):
 
 
 def parse_date_from_col(col_name, year=2026):
-    """다양한 형태의 컬럼명에서 날짜 추출"""
+    """컬럼명에서 날짜 추출"""
     try:
         s = str(col_name).lower()
-        # plan, actual, cut off 등 prefix 모두 제거
         s = re.sub(r'(plan|actual|cut\s*off|cargo)[\.\s_&]*', '', s).strip()
-        # 숫자만 추출
         nums = re.findall(r'\d+', s)
         if len(nums) >= 2:
-            month = int(nums[0])
-            day = int(nums[1])
+            month, day = int(nums[0]), int(nums[1])
             if 1 <= month <= 12 and 1 <= day <= 31:
                 return pd.Timestamp(year, month, day)
         elif len(nums) == 1:
             day = int(nums[0])
             if 1 <= day <= 31:
-                return pd.Timestamp(year, 6, day)  # W25는 6월
+                return pd.Timestamp(year, 6, day)
         return None
     except Exception:
         return None
+
+
+def merge_two_row_header(raw, header_row):
+    """2줄 헤더 병합"""
+    main = raw.iloc[header_row].values
+    sub = raw.iloc[header_row + 1].values if header_row + 1 < len(raw) else [None] * len(main)
+    merged = []
+    for mh, sh in zip(main, sub):
+        m_str = str(mh).strip() if pd.notna(mh) else ''
+        s_str = str(sh).strip() if pd.notna(sh) else ''
+        if m_str in ('nan', 'None'): m_str = ''
+        if s_str in ('nan', 'None'): s_str = ''
+        if m_str and s_str:
+            merged.append(f"{m_str}.{s_str}")
+        elif m_str:
+            merged.append(m_str)
+        elif s_str:
+            merged.append(s_str)
+        else:
+            merged.append(f"col_{len(merged)}")
+    return merged
+
+
+# ════════════════════════════════════════════════════════════
+# Sheet1 Note 추출
+# ════════════════════════════════════════════════════════════
+def load_sheet1_notes(file_bytes):
+    try:
+        sheet_names = list_sheets(file_bytes)
+        target = None
+        for s in sheet_names:
+            if str(s).strip().lower() == 'sheet1':
+                target = s
+                break
+        if target is None:
+            return {}
+
+        raw = read_excel_raw(file_bytes, target)
+        header_row = None
+        for i in range(min(8, len(raw))):
+            row_vals = [str(v).lower().strip() for v in raw.iloc[i].values if pd.notna(v)]
+            if 'model' in row_vals and 'erp' in row_vals:
+                header_row = i
+                break
+        if header_row is None:
+            return {}
+
+        merged = merge_two_row_header(raw, header_row)
+        df = raw.iloc[header_row + 2:].copy()
+        df.columns = merged
+        df.columns = [str(c).strip() for c in df.columns]
+        df = df.reset_index(drop=True)
+
+        # Note 컬럼 찾기
+        if 'Note' not in df.columns:
+            for c in df.columns:
+                if str(c).lower().strip() == 'note':
+                    df = df.rename(columns={c: 'Note'})
+                    break
+
+        if 'ERP' not in df.columns or 'Note' not in df.columns:
+            return {}
+
+        df['ERP'] = df['ERP'].astype(str).str.strip()
+        df = df[df['ERP'].str.startswith(('013', '018'))]
+        return dict(zip(df['ERP'], df['Note'].fillna('')))
+    except Exception:
+        return {}
 
 
 # ════════════════════════════════════════════════════════════
@@ -65,7 +129,6 @@ def parse_date_from_col(col_name, year=2026):
 def load_shipment_rev(file_bytes):
     sheet_names = list_sheets(file_bytes)
 
-    # Shipment Rev 우선
     target = None
     for s in sheet_names:
         cl = str(s).strip().lower()
@@ -83,7 +146,6 @@ def load_shipment_rev(file_bytes):
     st.success(f"✅ 사용 시트: '{target}'")
     raw = read_excel_raw(file_bytes, target)
 
-    # 헤더 행 탐지
     header_row = None
     for i in range(min(8, len(raw))):
         row_vals = [str(v).lower().strip() for v in raw.iloc[i].values if pd.notna(v)]
@@ -93,26 +155,7 @@ def load_shipment_rev(file_bytes):
     if header_row is None:
         header_row = 2
 
-    # 2줄 헤더 병합
-    main = raw.iloc[header_row].values
-    sub = raw.iloc[header_row + 1].values if header_row + 1 < len(raw) else [None] * len(main)
-    
-    merged = []
-    for mh, sh in zip(main, sub):
-        m_str = str(mh).strip() if pd.notna(mh) else ''
-        s_str = str(sh).strip() if pd.notna(sh) else ''
-        if m_str in ('nan', 'None'): m_str = ''
-        if s_str in ('nan', 'None'): s_str = ''
-        
-        if m_str and s_str:
-            merged.append(f"{m_str}.{s_str}")
-        elif m_str:
-            merged.append(m_str)
-        elif s_str:
-            merged.append(s_str)
-        else:
-            merged.append(f"col_{len(merged)}")
-
+    merged = merge_two_row_header(raw, header_row)
     df = raw.iloc[header_row + 2:].copy()
     df.columns = merged
     df.columns = [str(c).strip() for c in df.columns]
@@ -139,33 +182,23 @@ def load_shipment_rev(file_bytes):
         elif '3in1code' in cl_clean or cl == 'erp':
             rename_map[c] = 'ERP'
         elif 'po remain' in cl or 'po.remain' in cl:
-            rename_map[c] = 'PO Remain'
+            rename_map[c] = 'PO'
         elif 'ttl ship' in cl or 'ttl.ship' in cl:
-            rename_map[c] = 'TTL Ship'
+            rename_map[c] = '_TTLShip'  # 임시 (PO 없을 때 백업)
         elif 'ttl plan' in cl or 'ttl.plan' in cl:
-            rename_map[c] = 'TTL Plan'
-        elif 'ttlstock' in cl_clean:
-            rename_map[c] = 'TTLstock'
-        elif cl == 'balance':
-            rename_map[c] = 'BALANCE'
-        elif cl == 'note':
-            rename_map[c] = 'Note'
+            rename_map[c] = '이번주 계획'
         elif 'o/stock' in cl or 'o.stock' in cl:
-            rename_map[c] = 'O/stock'
-        elif cl == 'gap':
-            rename_map[c] = 'GAP_excel'
+            rename_map[c] = '현재재고'
     df = df.rename(columns=rename_map)
 
-    # Plan 일자별 컬럼 자동 탐지 (TTL Plan 제외)
+    # Plan 일자별 컬럼
     plan_date_cols = []
     for c in df.columns:
         cl = str(c).lower().strip()
-        # 'Plan'으로 시작하고 숫자가 포함된 컬럼 (단, TTL Plan은 제외)
         if 'plan' in cl and any(ch.isdigit() for ch in cl):
-            if 'ttl' in cl:
+            if 'ttl' in cl or 'actual' in cl:
                 continue
-            # plan&actual은 미래 계획+실적 혼합이므로 제외 (선택적)
-            if 'actual' in cl:
+            if cl == '이번주 계획'.lower():
                 continue
             plan_date_cols.append(c)
 
@@ -184,25 +217,21 @@ def load_shipment_rev(file_bytes):
         st.error("❌ ERP 컬럼 매핑 실패")
         return pd.DataFrame(), []
 
-    # 유효 행
     df['ERP'] = df['ERP'].astype(str).str.strip()
     df = df[df['ERP'].str.startswith(('013', '018'))].copy()
     df = df.reset_index(drop=True)
 
-    # 디버그 정보
     with st.expander("🔍 컬럼 매핑 진단", expanded=False):
         st.caption(f"전체 컬럼 ({len(df.columns)}개): {list(df.columns)}")
-        st.caption(f"일자별 Plan 컬럼 ({len(plan_date_cols)}개): {plan_date_cols}")
-        parsed = {c: str(parse_date_from_col(c)) for c in plan_date_cols}
-        st.caption(f"날짜 파싱: {parsed}")
+        st.caption(f"일자별 Plan 컬럼: {plan_date_cols}")
 
     return df, plan_date_cols
 
 
 # ════════════════════════════════════════════════════════════
-# 분석 (정밀 매칭)
+# 분석
 # ════════════════════════════════════════════════════════════
-def analyze(ship_db, prod_db, plan_date_cols):
+def analyze(ship_db, prod_db, plan_date_cols, note_dict):
     prod_db = prod_db.copy()
     prod_db['TRAN_WORK_DATE'] = pd.to_datetime(prod_db['TRAN_WORK_DATE'], errors='coerce')
     today = prod_db['TRAN_WORK_DATE'].max()
@@ -211,9 +240,9 @@ def analyze(ship_db, prod_db, plan_date_cols):
         st.error("❌ 생산실적 날짜 파싱 실패")
         return pd.DataFrame()
 
-    st.info(f"📅 기준일: **{today.strftime('%Y-%m-%d')}** (MES 최신 일자) | 이 일자까지는 실적, 이후는 계획 사용")
+    st.info(f"📅 기준일: **{today.strftime('%Y-%m-%d')}** (MES 최신) | 이 일자까지=실적, 이후=계획 적용")
 
-    # MES 실적 일자별 집계
+    # MES 실적 일자별
     prod_db['ERP'] = prod_db['FINAL_MAT_ID'].astype(str).str.strip()
     prod_db['TYPE'] = prod_db['ERP'].apply(classify)
     
@@ -222,86 +251,90 @@ def analyze(ship_db, prod_db, plan_date_cols):
         ((prod_db['TYPE']=='3IN1') & (prod_db['OPER_DESC']=='ASSY'))
     ].copy()
 
-    # ERP × 날짜
     daily = valid.groupby(['ERP', valid['TRAN_WORK_DATE'].dt.normalize()])['QTY'].sum().reset_index()
     daily.columns = ['ERP', 'DATE', 'QTY']
     daily_dict = {(r['ERP'], r['DATE']): r['QTY'] for _, r in daily.iterrows()}
-    
-    # ERP별 총 누적
     total_actual = valid.groupby('ERP')['QTY'].sum().to_dict()
 
     # Shipment Rev
     m = ship_db.copy()
     m['MODEL_TYPE'] = m['ERP'].apply(classify)
-    m['MES_누적실적'] = m['ERP'].map(total_actual).fillna(0).astype(int)
+    m['현재실적'] = m['ERP'].map(total_actual).fillna(0).astype(int)
+    m['Note'] = m['ERP'].map(note_dict).fillna('')
 
-    # 핵심 컬럼 숫자화
-    for col in ['PO Remain', 'TTL Ship', 'TTL Plan', 'TTLstock', 'BALANCE', 'O/stock'] + plan_date_cols:
+    # 숫자화
+    for col in ['PO', '이번주 계획', '현재재고', '_TTLShip'] + plan_date_cols:
         if col in m.columns:
             m[col] = pd.to_numeric(m[col], errors='coerce').fillna(0)
 
-    if 'O/stock' not in m.columns:
-        m['O/stock'] = 0
-    m['O/stock'] = m['O/stock'].astype(int)
+    # PO 없으면 _TTLShip 사용
+    if 'PO' not in m.columns and '_TTLShip' in m.columns:
+        m['PO'] = m['_TTLShip']
+    elif 'PO' in m.columns and '_TTLShip' in m.columns:
+        m['PO'] = m.apply(lambda r: r['PO'] if r['PO'] > 0 else r['_TTLShip'], axis=1)
 
-    # 일자별 매칭으로 조정 TTL 계산
+    if '현재재고' not in m.columns:
+        m['현재재고'] = 0
+    m['현재재고'] = m['현재재고'].astype(int)
+
+    # 일자별 계획 매칭
     plan_date_map = {col: parse_date_from_col(col) for col in plan_date_cols}
     valid_plan_cols = {col: dt for col, dt in plan_date_map.items() if dt is not None}
-
     today_norm = today.normalize()
 
-    def calc_adjusted_ttl(row):
+    def calc_metrics(row):
         erp = row['ERP']
-        past_actual = 0  # 과거 일자의 MES 실적 합
-        future_plan = 0  # 미래 일자의 계획 합
+        past_actual = 0
+        past_plan = 0
+        future_plan = 0
         
         for col, dt in valid_plan_cols.items():
             dt_norm = dt.normalize()
+            plan_val = row.get(col, 0)
             if dt_norm <= today_norm:
-                # 과거 또는 오늘: MES 실적 사용
                 past_actual += daily_dict.get((erp, dt_norm), 0)
+                past_plan += plan_val
             else:
-                # 미래: 계획 사용
-                future_plan += row.get(col, 0)
+                future_plan += plan_val
         
-        return int(past_actual + future_plan), int(past_actual), int(future_plan)
+        # 생산실적 차이 = 과거 실적 - 과거 계획 (음수=계획 대비 부진)
+        prod_gap = past_actual - past_plan
+        # 조정 TTL = 과거 실적 + 미래 계획
+        adjusted_ttl = past_actual + future_plan
+        
+        return int(prod_gap), int(adjusted_ttl)
 
     if valid_plan_cols:
-        results = m.apply(calc_adjusted_ttl, axis=1, result_type='expand')
-        m['조정_TTL'] = results[0]
-        m['과거_실적합'] = results[1]
-        m['미래_계획합'] = results[2]
+        results = m.apply(calc_metrics, axis=1, result_type='expand')
+        m['생산실적 차이'] = results[0]
+        m['_조정TTL'] = results[1]
     else:
-        m['조정_TTL'] = m['MES_누적실적']
-        m['과거_실적합'] = m['MES_누적실적']
-        m['미래_계획합'] = 0
-        st.warning("⚠️ 일자별 Plan 컬럼이 없어 누적실적만 사용")
+        m['생산실적 차이'] = 0
+        m['_조정TTL'] = m['현재실적']
+        st.warning("⚠️ 일자별 Plan 없음. 단순 누적실적 사용")
 
-    # 조정 BALANCE
-    m['조정_BALANCE'] = m['O/stock'] + m['조정_TTL'] - m['TTL Ship'].astype(int)
+    # 조정_BALANCE = 현재재고 + 조정TTL - PO
+    m['조정_BALANCE'] = (m['현재재고'] + m['_조정TTL'] - m['PO'].astype(int)).astype(int)
     
-    # GAP = 조정 - 계획
-    if 'BALANCE' in m.columns:
-        m['GAP'] = m['조정_BALANCE'] - m['BALANCE'].astype(int)
-    else:
-        m['GAP'] = 0
+    # 필요 수량 변경 = 조정_BALANCE 0 만들기 위한 추가 생산
+    m['필요 수량 변경'] = m['조정_BALANCE'].apply(lambda x: -x if x < 0 else 0).astype(int)
 
-    # 알람
+    # 알람 (4단계)
     def get_alert(row):
         adj_bal = row['조정_BALANCE']
-        plan_bal = row.get('BALANCE', 0)
+        prod_gap = row['생산실적 차이']
         if adj_bal < -5000:
-            return "🔴 긴급"
+            return "🔴 출하불가"
         elif adj_bal < 0:
             return "🟠 부족"
-        elif plan_bal >= 0 and adj_bal < plan_bal - 1000:
-            return "🟡 악화"
+        elif prod_gap < -1000:
+            return "🟡 차질"
         else:
             return "✅ 정상"
     m['알람'] = m.apply(get_alert, axis=1)
 
-    # 정수 변환
-    for col in ['PO Remain', 'TTL Ship', 'TTL Plan', 'TTLstock', 'BALANCE']:
+    # 정수화
+    for col in ['PO', '이번주 계획']:
         if col in m.columns:
             m[col] = m[col].astype(int)
 
@@ -334,9 +367,9 @@ def render_html_table(df, height=500):
 
     def bg(alert):
         a = str(alert)
-        if '긴급' in a: return '#FEE2E2'
+        if '출하불가' in a: return '#FEE2E2'
         if '부족' in a: return '#FFEDD5'
-        if '악화' in a: return '#FEF3C7'
+        if '차질' in a: return '#FEF3C7'
         return '#FFFFFF'
 
     parts = [
@@ -344,7 +377,6 @@ def render_html_table(df, height=500):
         '<table style="width:100%;border-collapse:collapse;font-family:-apple-system,sans-serif;font-size:12px;">',
         '<thead style="position:sticky;top:0;z-index:10;"><tr style="background-color:#374151;color:white;">'
     ]
-    
     for col in df.columns:
         parts.append(f'<th style="padding:8px 6px;text-align:center;border:1px solid #4B5563;font-weight:700;white-space:nowrap;">{col}</th>')
     parts.append('</tr></thead><tbody>')
@@ -368,17 +400,18 @@ def render_html_table(df, height=500):
 # ════════════════════════════════════════════════════════════
 def render_shipment_alert_tab():
     st.markdown("#### 🚨 Shipment Cut-off 알람")
-    st.caption("📌 일자별 Plan vs MES 실적 정밀 매칭 | 과거=실적, 미래=계획")
+    st.caption("📌 계획 차질 감지 + Cut off까지 추가 생산 필요량 자동 알람")
 
     ship_db = st.session_state.get('ship_db', pd.DataFrame())
     plan_cols = st.session_state.get('plan_date_cols', [])
+    note_dict = st.session_state.get('note_dict', {})
     prod_db = st.session_state.get('prod_db', pd.DataFrame())
     ship_t = st.session_state.get('ship_updated', '-')
     prod_t = st.session_state.get('prod_updated', '-')
 
     s1, s2 = st.columns(2)
     if not ship_db.empty:
-        s1.success(f"📁 출하계획: **{len(ship_db)}건** | {ship_t}")
+        s1.success(f"📁 출하계획: **{len(ship_db)}건** | Note {len(note_dict)}건 | {ship_t}")
     else:
         s1.warning("📁 출하계획: 없음")
     if not prod_db.empty:
@@ -388,10 +421,10 @@ def render_shipment_alert_tab():
 
     st.markdown("##### 📤 파일 업로드")
     files = st.file_uploader(" ", type=["xlsx","csv"], accept_multiple_files=True,
-                              key="ship_up_v21", label_visibility="collapsed")
+                              key="ship_up_v23", label_visibility="collapsed")
 
     if files:
-        if st.button("🚀 저장 및 분석", type="primary", use_container_width=True, key="apply_v21"):
+        if st.button("🚀 저장 및 분석", type="primary", use_container_width=True, key="apply_v23"):
             with st.spinner("처리 중..."):
                 for f in files:
                     fname = f.name.lower()
@@ -399,11 +432,13 @@ def render_shipment_alert_tab():
                     file_bytes = f.read()
                     if fname.endswith('.xlsx'):
                         df, p_cols = load_shipment_rev(file_bytes)
+                        notes = load_sheet1_notes(file_bytes)
                         if not df.empty:
                             st.session_state['ship_db'] = df
                             st.session_state['plan_date_cols'] = p_cols
+                            st.session_state['note_dict'] = notes
                             st.session_state['ship_updated'] = datetime.now().strftime('%m-%d %H:%M')
-                            st.success(f"✅ 출하계획 ({len(df)}건)")
+                            st.success(f"✅ 출하계획 ({len(df)}건) + Note ({len(notes)}건)")
                     elif fname.endswith('.csv'):
                         try:
                             df = read_csv_cached(file_bytes)
@@ -422,7 +457,7 @@ def render_shipment_alert_tab():
 
     with st.spinner("분석 중..."):
         try:
-            m = analyze(ship_db, prod_db, plan_cols)
+            m = analyze(ship_db, prod_db, plan_cols, note_dict)
         except Exception as e:
             st.error(f"❌ 분석 오류: {e}")
             import traceback
@@ -436,40 +471,39 @@ def render_shipment_alert_tab():
     st.markdown("### 🚨 분석 결과")
     k1, k2, k3, k4, k5 = st.columns(5)
     k1.metric("📦 전체", f"{len(m)}건")
-    k2.metric("🔴 긴급", int((m['알람']=='🔴 긴급').sum()))
+    k2.metric("🔴 출하불가", int((m['알람']=='🔴 출하불가').sum()))
     k3.metric("🟠 부족", int((m['알람']=='🟠 부족').sum()))
-    k4.metric("🟡 악화", int((m['알람']=='🟡 악화').sum()))
+    k4.metric("🟡 차질", int((m['알람']=='🟡 차질').sum()))
     k5.metric("✅ 정상", int((m['알람']=='✅ 정상').sum()))
 
-    # 표시 컬럼
+    # 표시 컬럼 (목적 명확 버전)
     show = ['알람','Cus','Cut off Cargo','HQ Request','model','code','ERP','MODEL_TYPE',
-            'PO Remain','TTL Ship','O/stock','TTL Plan','TTLstock',
-            'MES_누적실적','과거_실적합','미래_계획합','조정_TTL',
-            'BALANCE','조정_BALANCE','GAP','Note']
+            'PO','현재재고','이번주 계획','현재실적',
+            '생산실적 차이','조정_BALANCE','필요 수량 변경','Note']
     show = [c for c in show if c in m.columns]
 
-    # 긴급/부족
-    urgent = m[m['알람'].isin(['🔴 긴급','🟠 부족','🟡 악화'])].copy()
-    urgent = urgent.sort_values('조정_BALANCE')
+    # 긴급 (출하불가/부족/차질)
+    urgent = m[m['알람'].isin(['🔴 출하불가','🟠 부족','🟡 차질'])].copy()
+    urgent = urgent.sort_values(['알람', '조정_BALANCE'])
 
     if not urgent.empty:
         st.markdown("---")
         st.markdown(f"#### 🚨 즉시 조치 필요 ({len(urgent)}건)")
-        st.caption("⚠️ 조정_BALANCE = O/stock + (과거실적+미래계획) - TTL Ship | GAP = 조정 - 계획")
+        st.caption("⚠️ 조정_BALANCE 음수 → 부족분 발생 | 필요 수량 변경 = Cut off까지 추가 생산 필요량")
         render_html_table(urgent[show], height=400)
     else:
         st.markdown("---")
-        st.success("✅ 긴급/부족 없음")
+        st.success("✅ 차질/부족 없음 - 모든 모델 정상")
 
     # 전체 상세
     st.markdown("---")
     st.markdown("#### 📋 전체 상세")
     
     f1, f2, f3 = st.columns(3)
-    a_sel = f1.multiselect("알람", ['🔴 긴급','🟠 부족','🟡 악화','✅ 정상'], key="a_v21")
-    t_sel = f2.multiselect("모델", ['PD','3IN1','OTHER'], key="t_v21")
+    a_sel = f1.multiselect("알람", ['🔴 출하불가','🟠 부족','🟡 차질','✅ 정상'], key="a_v23")
+    t_sel = f2.multiselect("모델", ['PD','3IN1','OTHER'], key="t_v23")
     cus_opt = sorted(m['Cus'].dropna().unique()) if 'Cus' in m.columns else []
-    c_sel = f3.multiselect("거래선", cus_opt, key="c_v21") if cus_opt else []
+    c_sel = f3.multiselect("거래선", cus_opt, key="c_v23") if cus_opt else []
     
     v = m.copy()
     if a_sel: v = v[v['알람'].isin(a_sel)]
@@ -481,18 +515,18 @@ def render_shipment_alert_tab():
         csv = v[show].to_csv(index=False).encode('utf-8-sig')
         st.download_button("📥 CSV 다운로드", csv,
                            f"shipment_alert_{datetime.now().strftime('%Y%m%d_%H%M')}.csv",
-                           "text/csv", key="dl_v21")
+                           "text/csv", key="dl_v23")
     else:
         st.info("선택한 필터에 해당하는 데이터가 없습니다.")
 
     st.markdown("---")
     r1, r2 = st.columns(2)
-    if r1.button("🗑️ 출하계획 초기화", use_container_width=True, key="rs_v21"):
-        for k in ['ship_db','ship_updated','plan_date_cols']:
+    if r1.button("🗑️ 출하계획 초기화", use_container_width=True, key="rs_v23"):
+        for k in ['ship_db','ship_updated','plan_date_cols','note_dict']:
             st.session_state.pop(k, None)
         st.cache_data.clear()
         st.rerun()
-    if r2.button("🗑️ 생산실적 초기화", use_container_width=True, key="rp_v21"):
+    if r2.button("🗑️ 생산실적 초기화", use_container_width=True, key="rp_v23"):
         for k in ['prod_db','prod_updated']:
             st.session_state.pop(k, None)
         st.cache_data.clear()
