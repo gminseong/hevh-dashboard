@@ -209,14 +209,45 @@ def render_shipment_alert_tab():
         if st.button("🚀 저장 및 분석", type="primary", use_container_width=True, key="ship_apply"):
             saved = []
             
-            if ship_uploaded:
+            f ship_uploaded:
                 try:
-                    new_ship = pd.read_excel(ship_uploaded, sheet_name="Sheet1")
-                    new_ship.columns = [str(c).strip() for c in new_ship.columns]
-                    # 빈 행 제거
+                    # Sheet1을 헤더 없이 raw 로드
+                    ship_uploaded.seek(0)
+                    raw = pd.read_excel(ship_uploaded, sheet_name="Sheet1", header=None)
+                    
+                    # 0행과 1행을 합쳐서 진짜 헤더 만들기
+                    # 예: 0행="Cut off", 1행="6/16" → "Cut off.6/16"
+                    new_headers = []
+                    for col_idx in range(len(raw.columns)):
+                        h0 = str(raw.iloc[0, col_idx]).strip() if pd.notna(raw.iloc[0, col_idx]) else ''
+                        h1 = str(raw.iloc[1, col_idx]).strip() if pd.notna(raw.iloc[1, col_idx]) else ''
+                        
+                        if h0 in ['nan', 'None', '']:
+                            h0 = ''
+                        if h1 in ['nan', 'None', '']:
+                            h1 = ''
+                        
+                        if h0 and h1:
+                            new_headers.append(f"{h0}.{h1}")
+                        elif h0:
+                            new_headers.append(h0)
+                        elif h1:
+                            new_headers.append(h1)
+                        else:
+                            new_headers.append(f"col_{col_idx}")
+                    
+                    # 2행부터 실제 데이터
+                    new_ship = raw.iloc[2:].copy()
+                    new_ship.columns = new_headers
+                    new_ship.reset_index(drop=True, inplace=True)
+                    
+                    # 빈 행 제거 (model 컬럼이 비어있는 행)
                     model_col = find_column(new_ship, ['model'])
                     if model_col:
                         new_ship = new_ship[new_ship[model_col].notna()].copy()
+                    
+                    # 디버그용 메시지
+                    st.info(f"📋 헤더 정리 완료. 컬럼: {', '.join(new_ship.columns[:8])}...")
                     st.session_state['ship_db'] = new_ship
                     st.session_state['ship_updated'] = datetime.now().strftime('%Y-%m-%d %H:%M')
                     saved.append(f"출하계획 {len(new_ship)}건")
