@@ -465,6 +465,286 @@ def classify_loss_type(text):
             if kw in t: return (code,name)
     return ("ETC","기타")
 
+def extract_causes_with_minutes(cause_text, total_loss):
+    """
+    원인별 (code, name, minutes) 리스트 반환
+    규칙:
+    1. 분리 가능하면 분리
+    2. 불가능시 유실 시간 큰 사유
+    3. 시간 구분 안될시 첫번째 원인
+    """
+    if not cause_text or str(cause_text).strip() in ["", "None", "-"]:
+        code, name = classify_loss_type("")
+        return [(code, name, total_loss)]
+    
+    t = str(cause_text).strip()
+    results = []
+    
+    # ── 패턴 1: "원인 (Nmin)" 형태 ──
+    # 예: "wave solder (122min/ 3 times), MI belt error (14min)"
+    pattern1 = re.findall(r'([^,\n;]+?)\s*\((\d+)\s*[Mm]in[^)]*\)', t)
+    
+    # ── 패턴 2: "원인 Nmin" 형태 (괄호 없음) ──
+    # 예: "wave solder 122min, coating error 41min"
+    pattern2 = re.findall(r'([^,\n;]+?)\s+(\d+)\s*[Mm]in\b', t)
+    
+    # ── 패턴 3: "Nmin 원인" 형태 ──
+    # 예: "122min wave solder"
+    pattern3 = re.findall(r'(\d+)\s*[Mm]in[^,\n;]*?([^,\n;]+)', t)
+    
+    patterns = pattern1 if pattern1 else (pattern2 if pattern2 else [])
+    
+    if patterns:
+        # 분리 가능한 경우 → 규칙 1
+        for desc, mins in patterns:
+            desc = desc.strip().strip(',').strip()
+            if not desc:
+                continue
+            code, name = classify_loss_type(desc)
+            results.append((code, name, int(mins)))
+        
+        if results:
+            return results
+    
+    # ── 분리 불가능한 경우 ──
+    # 콤마/세미콜론으로 분리 시도
+    parts = re.split(r'[,;\n]', t)
+    parts = [p.strip() for p in parts if p.strip()]
+    
+    if len(parts) > 1:
+        # 각 파트에서 시간 추출 시도
+        part_results = []
+        for part in parts:
+            m = re.search(r'(\d+)\s*[Mm]in', part)
+            mins = int(m.group(1)) if m else 0
+            code, name = classify_loss_type(part)
+            part_results.append((code, name, mins, part))
+        
+        # 시간 있는 파트가 있으면
+        has_time = [r for r in part_results if r[2] > 0]
+        if has_time:
+            # 규칙 2: 시간 큰 순서로
+            has_time.sort(key=lambda x: x[2], reverse=True)
+            return [(r[0], r[1], r[2]) for r in has_time]
+        else:
+            # 규칙 3: 첫번째 원인
+            first = part_results[0]
+            code, name = first[0], first[1]
+            return [(code, name, total_loss)]
+    
+    # 단일 원인
+    code, name = classify_loss_type(t)
+    return [(code, name, total_loss)]
+
+
+def parse_sheet(ws, process, date_str, shift):
+    records = []
+    rows = list(ws.iter_rows(values_only=True))
+    slots = NIGHT_SLOTS if shift == "NIGHT" else DAY_SLOTS
+    i = 0
+    while i < len(rows):
+        row = rows[i]
+        c1 = row[1] if len(row) > 1 else None
+        if not is_line_cell(c1):
+            i += 1
+            continue
+        line = normalize_line(str(c1))
+        model_row = loss_row = cause_row = action_row = None
+        target_row = actual_row = None
+
+        for j in range(i + 1, min(i + 16, len(rows))):
+            r = rows[j]
+            lbl = get_label(r)
+            if is_line_cell(r[1] if len(r) > 1 else None) and j > i + 1:
+                break
+            if "MODEL"    in lbl and model_row  is None: model_row  = r
+            if "LOSSTIME" in lbl and loss_row   is None: loss_row   = r
+            elif lbl == "CAUSE"  and cause_row  is None: cause_row  = r
+            elif lbl == "ACTION" and action_row is None: action_row = r
+            elif "TARGET" in lbl and target_row is None: target_row = r
+            elif "ACTUAL" in lbl and actual_row is None: actual_row = r
+
+        if loss_row:
+            # ── LOSSTIME 파싱 ──
+            loss_vals = []
+            for c in range(2, 2 + len(slots)):
+                try:
+                    v = loss_row[c] if c < len(loss_row) else None
+                    mm = re.search(r'(\d+)\s*min', str(v or ""), re.I)
+                    loss_vals.append(float(mm.group(1)) if mm else parse_losstime(v))
+                except:
+                    loss_vals.append(0.0)
+            while len(loss_vals) < len(slots):
+                loss_vals.append(0.0)
+            loss_vals = [max(0.0, v) for v in loss_vals]
+            total = sum(loss_vals)
+
+            models      = extract_model_per_slot(model_row, slots)
+            slot_causes = extract_slot_causes(cause_row, slots)
+            cause_all   = " | ".join(v for v in slot_causes.values() if v)
+            unique_c    = set(v for v in slot_causes.values() if v)
+            complexity  = "복합" if len(unique_c) > 1 else "단일"
+            action      = " | ".join(
+                str(v) for v in (list(action_row[2:9]) if action_row else [])
+                if v and str(v).strip()
+            )
+
+            # ── TARGET / ACTUAL 파싱 ──
+            if process == "MI":
+                mi_target = mi_actual = ate_target = ate_actual = 0.0
+                for s_idx in range(len(slots)):
+                    col_mi  = 2 + s_idx * 3
+                    col_ate = 2 + s_idx * 3 + 2
+                    if target_row:
+                        try: mi_target  += parse_losstime(target_row[col_mi]  if col_mi  < len(target_row) else None)
+                        except: pass
+                        try: ate_target += parse_losstime(target_row[col_ate] if col_ate < len(target_row) else None)
+                        except: pass
+                    if actual_row:
+                        try: mi_actual  += parse_losstime(actual_row[col_mi]  if col_mi  < len(actual_row) else None)
+                        except: pass
+                        try: ate_actual += parse_losstime(actual_row[col_ate] if col_ate < len(actual_row) else None)
+                        except: pass
+                target_tot = round(mi_target,  0)
+                actual_tot = round(mi_actual,  0)
+                target_mi  = round(mi_target,  0)
+                actual_mi  = round(mi_actual,  0)
+                target_ate = round(ate_target, 0)
+                actual_ate = round(ate_actual, 0)
+            else:
+                target_tot = actual_tot = 0.0
+                target_mi = target_ate = actual_mi = actual_ate = 0.0
+                for s_idx in range(len(slots)):
+                    col = 2 + s_idx
+                    if target_row:
+                        try: target_tot += parse_losstime(target_row[col] if col < len(target_row) else None)
+                        except: pass
+                    if actual_row:
+                        try: actual_tot += parse_losstime(actual_row[col] if col < len(actual_row) else None)
+                        except: pass
+
+            # ── time_slot별 레코드 생성 (원인별 분리) ──
+            slot_total_records = []  # TOTAL 합산용
+
+            for idx, slot in enumerate(slots):
+                lv = loss_vals[idx] if idx < len(loss_vals) else 0.0
+                if lv <= 0:
+                    continue
+
+                cs = slot_causes.get(slot, "")
+                # cause 없으면 인접 슬롯에서 보완
+                if not cs:
+                    for s2 in slots:
+                        if slot_causes.get(s2, ""):
+                            cs = slot_causes[s2]
+                            break
+
+                # 원인별 분리
+                cause_list = extract_causes_with_minutes(cs, lv)
+
+                # 분배 계산
+                total_stated = sum(m for _, _, m in cause_list if m > 0)
+
+                for code, name, mins in cause_list:
+                    if total_stated > 0 and mins > 0:
+                        # 명시된 시간 비율로 분배
+                        actual_min = round(lv * mins / total_stated, 1)
+                    elif total_stated == 0:
+                        # 시간 없으면 균등 분배
+                        actual_min = round(lv / len(cause_list), 1)
+                    else:
+                        actual_min = 0.0
+
+                    if actual_min <= 0:
+                        continue
+
+                    rec = {
+                        "date":           date_str,
+                        "shift":          shift,
+                        "process":        process,
+                        "line":           line,
+                        "time_slot":      slot,
+                        "model":          models.get(slot, ""),
+                        "loss_min":       actual_min,
+                        "loss_type_code": code,
+                        "loss_type_name": name,
+                        "complexity":     complexity,
+                        "loss_detail":    cs,
+                        "action":         action,
+                        "target":         0,
+                        "actual":         0,
+                        "target_mi":      0,
+                        "actual_mi":      0,
+                        "target_ate":     0,
+                        "actual_ate":     0,
+                    }
+                    records.append(rec)
+                    slot_total_records.append(rec)
+
+            # ── TOTAL 레코드 (time_slot별 합산) ──
+            if total > 0 or (target_tot + actual_tot) > 0:
+                # 원인별로 합산
+                from collections import defaultdict
+                type_totals = defaultdict(float)
+                type_names  = {}
+                type_detail = {}
+
+                for rec in slot_total_records:
+                    k = rec["loss_type_code"]
+                    type_totals[k] += rec["loss_min"]
+                    type_names[k]   = rec["loss_type_name"]
+                    type_detail[k]  = rec["loss_detail"]
+
+                if type_totals:
+                    # 원인별 TOTAL 레코드 생성
+                    for code, total_min in type_totals.items():
+                        records.append({
+                            "date":           date_str,
+                            "shift":          shift,
+                            "process":        process,
+                            "line":           line,
+                            "time_slot":      "TOTAL",
+                            "model":          models.get(slots[0], ""),
+                            "loss_min":       round(total_min, 1),
+                            "loss_type_code": code,
+                            "loss_type_name": type_names[code],
+                            "complexity":     complexity,
+                            "loss_detail":    type_detail[code],
+                            "action":         action,
+                            "target":         round(target_tot, 0),
+                            "actual":         round(actual_tot, 0),
+                            "target_mi":      round(target_mi,  0),
+                            "actual_mi":      round(actual_mi,  0),
+                            "target_ate":     round(target_ate, 0),
+                            "actual_ate":     round(actual_ate, 0),
+                        })
+                else:
+                    # slot 레코드 없어도 target/actual은 저장
+                    if target_tot + actual_tot > 0:
+                        code_t, name_t = classify_loss_type(cause_all)
+                        records.append({
+                            "date":           date_str,
+                            "shift":          shift,
+                            "process":        process,
+                            "line":           line,
+                            "time_slot":      "TOTAL",
+                            "model":          models.get(slots[0], ""),
+                            "loss_min":       0,
+                            "loss_type_code": code_t,
+                            "loss_type_name": name_t,
+                            "complexity":     complexity,
+                            "loss_detail":    cause_all,
+                            "action":         action,
+                            "target":         round(target_tot, 0),
+                            "actual":         round(actual_tot, 0),
+                            "target_mi":      round(target_mi,  0),
+                            "actual_mi":      round(actual_mi,  0),
+                            "target_ate":     round(target_ate, 0),
+                            "actual_ate":     round(actual_ate, 0),
+                        })
+        i += 1
+    return records
+
 def classify_scrap_cause(comment):
     if not comment: return ("AUTO","자동판정(ATE)")
     t = str(comment).lower()
