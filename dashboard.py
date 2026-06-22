@@ -909,15 +909,15 @@ def save_db(df):       return github_save_csv(df,DB_PATH,"LOSSTIME DB")
 def load_scrap_db():   return github_load_csv(SCRAP_DB)
 def save_scrap_db(df): return github_save_csv(df,SCRAP_DB,"SCRAP DB")
 
-def merge_db(existing,new_df):
+def merge_db(existing, new_df):
     if existing.empty: return new_df
     if new_df.empty:   return existing
-    combined=pd.concat([existing,new_df],ignore_index=True)
-    key=["date","shift","process","line","time_slot"]
-    combined=combined.drop_duplicates(
-        subset=[c for c in key if c in combined.columns],keep="last")
+    combined = pd.concat([existing, new_df], ignore_index=True)
+    key = ["date", "shift", "process", "line", "time_slot", "sub_idx"]
+    combined = combined.drop_duplicates(
+        subset=[c for c in key if c in combined.columns], keep="last")
     return combined.sort_values(
-        ["date","shift","process","line","time_slot"]).reset_index(drop=True)
+        ["date", "shift", "process", "line", "time_slot"]).reset_index(drop=True)
 
 def merge_scrap_db(existing,new_df):
     if existing.empty: return new_df
