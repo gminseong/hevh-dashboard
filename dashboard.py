@@ -1058,9 +1058,9 @@ def parse_sheet(ws, process, date_str, shift):
                                 _cause_list = _has
                             else:
                                 _cause_list = [(_cause_list[0][0], _cause_list[0][1], total)]
-                if not _cause_list:
-                    _c, _n = classify_loss_type(cause_all if cause_all else "")
-                    _cause_list = [(_c, _n, total)]
+                    if not _cause_list:
+                        _c, _n = classify_loss_type(cause_all if cause_all else "")
+                        _cause_list = [(_c, _n, total)]
             _total_stated = sum(m for _, _, m in _cause_list if m > 0)
             for _code, _name, _mins in _cause_list:
                 if _total_stated > 0 and _mins > 0:
