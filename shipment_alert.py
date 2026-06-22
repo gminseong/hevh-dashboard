@@ -1,7 +1,7 @@
 """
-[한솔테크닉스 HEVH] Shipment Cut-off 알람 v30.3
-- calc_cutoff_stock: daily_dict_erp 직접 순회 (일자별 계획 의존 X)
-- 디버그 expander로 code별 값 확인 가능
+[한솔테크닉스 HEVH] Shipment Cut-off 알람 v30.4
+- calc_cutoff_stock 단순화 + 진단 메시지
+- code별 디버그 expander
 - 정렬: components.html
 """
 from datetime import datetime
@@ -208,7 +208,7 @@ def load_shipment_rev(file_bytes):
 
 
 # ════════════════════════════════════════════════════════════
-# 분석 v30.3
+# 분석 v30.4
 # ════════════════════════════════════════════════════════════
 def analyze(ship_db, prod_db, plan_date_cols, note_dict):
     prod_db = prod_db.copy()
@@ -296,42 +296,33 @@ def analyze(ship_db, prod_db, plan_date_cols, note_dict):
     m['_현재기반_생산'] = m['_현재실적'] + m['_미래계획']
     m['실적차이'] = m['_현재기반_생산'] - m['예상계획']
 
-    # ⭐ calc_cutoff_stock: daily_dict_erp 직접 순회
+    # ⭐ 사전 계산: code별 cutoff별 누적 실적/계획
+    # daily_dict_erp를 code 단위로 변환
+    code_daily_actual = {}  # {(code, date): qty}
+    for code in m['code'].unique():
+        erp_list = code_erp_map.get(code, [])
+        for erp in erp_list:
+            for (e, d), qty in daily_dict_erp.items():
+                if e == erp:
+                    key = (code, d)
+                    code_daily_actual[key] = code_daily_actual.get(key, 0) + qty
+
+    # ⭐ calc_cutoff_stock (단순/명확)
     def calc_cutoff_stock(code, cutoff_dt):
         stock = code_stock.get(code, 0)
-        
         if pd.isna(cutoff_dt):
             cutoff_norm_local = pd.Timestamp(2030, 1, 1)
         else:
             cutoff_norm_local = cutoff_dt.normalize()
-        
-        erp_list = code_erp_map.get(code, [])
         production = 0
-        
-        # 과거 실적: daily_dict_erp 직접 순회
-        for (e, d), qty in daily_dict_erp.items():
-            if e not in erp_list:
-                continue
-            if d > cutoff_norm_local:
-                continue
-            production += qty
-        
+        # 과거 실적 (code 단위)
+        for (c, d), qty in code_daily_actual.items():
+            if c == code and d <= cutoff_norm_local:
+                production += qty
         # 미래 계획
         for (c, d), plan_qty in code_daily_plan.items():
-            if c != code:
-                continue
-            if d <= today_norm:
-                continue
-            if d > cutoff_norm_local:
-                continue
-            production += plan_qty
-        
-        # ⭐ 디버그 (특정 code만)
-        if code == 'BN44-01421A':
-            st.warning(f"🔍 {code} cutoff={cutoff_dt}: stock={stock}, "
-                       f"production={production}, erp_list={erp_list}, "
-                       f"daily_keys_match={[k for k in daily_dict_erp if k[0] in erp_list][:3]}")
-        
+            if c == code and today_norm < d <= cutoff_norm_local:
+                production += plan_qty
         return stock + production
 
     m['_cutoff_dt'] = pd.to_datetime(m['Cut off Cargo'], errors='coerce')
@@ -413,30 +404,21 @@ def analyze(ship_db, prod_db, plan_date_cols, note_dict):
         if col in m.columns:
             m[col] = m[col].astype(int)
 
-    # ⭐ 디버그 expander
-    with st.expander("🐛 디버그: code별 값 (펼쳐서 확인)", expanded=False):
+    # 디버그 expander
+    with st.expander("🐛 디버그: code별 값", expanded=False):
         debug_data = []
         for code in sorted(m['code'].unique()):
             erp_list = code_erp_map.get(code, [])
-            
-            # 일자별 계획
             code_plan_days = {d: q for (c, d), q in code_daily_plan.items() if c == code}
-            plan_str = ', '.join([f"{d.strftime('%m/%d')}:{q:,}" for d, q in sorted(code_plan_days.items())])
-            
-            # 일자별 실적 (해당 code의 모든 ERP)
-            actual_days = {}
-            for (e, d), q in daily_dict_erp.items():
-                if e in erp_list:
-                    actual_days[d] = actual_days.get(d, 0) + q
-            actual_str = ', '.join([f"{d.strftime('%m/%d')}:{q:,}" for d, q in sorted(actual_days.items())])
-            
+            plan_str = ', '.join([f"{d.strftime('%m/%d')}:{q:,}" for d, q in sorted(code_plan_days.items()) if q > 0])
+            code_actual_days = {d: q for (c, d), q in code_daily_actual.items() if c == code}
+            actual_str = ', '.join([f"{d.strftime('%m/%d')}:{q:,}" for d, q in sorted(code_actual_days.items())])
             debug_data.append({
                 'code': code,
-                'ERP수': len(erp_list),
-                'ERP목록': ', '.join(erp_list),
+                'ERP': ', '.join(erp_list),
                 '현재재고': code_stock.get(code, 0),
                 '예상계획': code_plan.get(code, 0),
-                '현재실적합': code_total_actual.get(code, 0),
+                '실적합': code_total_actual.get(code, 0),
                 '미래계획': code_future_plan.get(code, 0),
                 '일자별계획': plan_str if plan_str else '(없음)',
                 '일자별실적': actual_str if actual_str else '(없음)',
@@ -450,7 +432,7 @@ def analyze(ship_db, prod_db, plan_date_cols, note_dict):
 
 
 # ════════════════════════════════════════════════════════════
-# HTML 테이블 (components.html + JS 정렬)
+# HTML 테이블
 # ════════════════════════════════════════════════════════════
 def render_html_table(df, height=500, table_id="t1"):
     numeric_cols = set()
