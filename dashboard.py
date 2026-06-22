@@ -547,7 +547,7 @@ def split_loss_detail(loss_detail, total_min):
             no_time_parts.append((idx, part, code, name))
     
     remaining = max(0.0, total_min - allocated)
-    if no_time_parts:
+    if no_time_parts and remaining > 0:
         each = round(remaining / len(no_time_parts), 1)
         for i, (idx, part, code, name) in enumerate(no_time_parts):
             if i == len(no_time_parts) - 1:
