@@ -623,7 +623,7 @@ def parse_sheet(ws, process, date_str, shift):
             if cs:
                 _t = str(cs).strip()
                 # 패턴1: 원인 (Nmin)
-                _p1 = re.findall(r'([^,;\|\n\(]+)\s*\((\d+)\s*[Mm]in[^\)]*\)', _t)
+                _p1 = re.findall(r'([^,;\n]+?)\s*\((\d+)\s*[Mm]in[^)]*\)', _t)
                 if _p1:
                     for _desc, _mins in _p1:
                         _desc = _desc.strip(' ,;|()')
