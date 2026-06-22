@@ -1024,79 +1024,67 @@ def parse_sheet(ws, process, date_str, shift):
                         "target_ate":0,"actual_ate":0})
 
             if total>0 or (target_tot+actual_tot)>0:
-              try:
-                # cause_all에서 원인별 분리
-                _cause_list = []
-                if cause_all:
-                    _t = str(cause_all).strip()
-                    _p1 = re.findall(r'([^,;\n\(]+?)\s*\((\d+)\s*[Mm]in[^)]*\)', _t)
-                    if _p1:
-                        for _desc, _mins in _p1:
-                            _desc = _desc.strip(' ,;|()')
-                            if _desc and int(_mins) > 0:
-                                _c, _n = classify_loss_type(_desc)
-                                _cause_list.append((_c, _n, int(_mins)))
-                    if not _cause_list:
-                        _parts = [p.strip() for p in _t.split('|') if p.strip()
-                                  and p.strip().lower() not in [
-                                      "no problem","no proplem","3in1",
-                                      "3 in 1","none","-"]]
-                        seen = set()
-                        unique_parts = []
-                        for p in _parts:
-                            if p not in seen:
-                                seen.add(p)
-                                unique_parts.append(p)
-                        if unique_parts:
-                            for _part in unique_parts:
-                                _m = re.search(r'(\d+)\s*[Mm]in', _part)
-                                _mins = int(_m.group(1)) if _m else 0
-                                _c, _n = classify_loss_type(_part)
-                                _cause_list.append((_c, _n, _mins))
-                            _has = [r for r in _cause_list if r[2] > 0]
-                            if _has:
-                                _has.sort(key=lambda x: x[2], reverse=True)
-                                _cause_list = _has
-                            else:
-                                _cause_list = [(_cause_list[0][0], _cause_list[0][1], total)]
-                    if not _cause_list:
-                        _c, _n = classify_loss_type(cause_all if cause_all else "")
-                        _cause_list = [(_c, _n, total)]
-                _total_stated = sum(m for _, _, m in _cause_list if m > 0)
-                for _code, _name, _mins in _cause_list:
-                    if _total_stated > 0 and _mins > 0:
-                        _loss = round(total * _mins / _total_stated, 1)
-                    elif _total_stated == 0:
-                        _loss = round(total / len(_cause_list), 1)
-                    else:
-                        _loss = 0
-                    if _loss <= 0:
-                        continue
-                    records.append({
-                        "date":date_str,"shift":shift,"process":process,
-                        "line":line,"time_slot":"TOTAL","model":models.get(slots[0],""),
-                        "loss_min":_loss,
-                        "loss_type_code":_code,"loss_type_name":_name,
-                        "complexity":complexity,
-                        "loss_detail":cause_all,"action":action,
-                        "target":round(target_tot,0),
-                        "actual":round(actual_tot,0),
-                        "target_mi":round(target_mi,0),
-                        "actual_mi":round(actual_mi,0),
-                        "target_ate":round(target_ate,0),
-                        "actual_ate":round(actual_ate,0)})
-        except Exception as _e:
-        code_t,name_t=classify_loss_type(cause_all if cause_all else "")
-        records.append({
-            "date":date_str,"shift":shift,"process":process,
-            "line":line,"time_slot":"TOTAL","model":models.get(slots[0],""),
-            "loss_min":round(total,1),
-            "loss_type_code":code_t,"loss_type_name":name_t,
-            "complexity":complexity,
-            "loss_detail":cause_all,"action":action,
-            "target":round(target_tot,0),"actual":round(actual_tot,0),
-            "target_mi":round(target_mi,0),"actual_mi":round(actual_mi,0),
-            "target_ate":round(target_ate,0),"actual_ate":round(actual_ate,0)})
+            # cause_all에서 원인별 분리
+            cause_all = cause_all or ""
+            _cause_list = []
+            if cause_all:
+                _t = str(cause_all).strip()
+                _p1 = re.findall(r'([^,;\n\(]+?)\s*\((\d+)\s*[Mm]in[^)]*\)', _t)
+                if _p1:
+                    for _desc, _mins in _p1:
+                        _desc = _desc.strip(' ,;|()')
+                        if _desc and int(_mins) > 0:
+                            _c, _n = classify_loss_type(_desc)
+                            _cause_list.append((_c, _n, int(_mins)))
+                if not _cause_list:
+                    _parts = [p.strip() for p in _t.split('|') if p.strip()
+                              and p.strip().lower() not in [
+                                  "no problem","no proplem","3in1",
+                                  "3 in 1","none","-"]]
+                    seen = set()
+                    unique_parts = []
+                    for p in _parts:
+                        if p not in seen:
+                            seen.add(p)
+                            unique_parts.append(p)
+                    if unique_parts:
+                        for _part in unique_parts:
+                            _m = re.search(r'(\d+)\s*[Mm]in', _part)
+                            _mins = int(_m.group(1)) if _m else 0
+                            _c, _n = classify_loss_type(_part)
+                            _cause_list.append((_c, _n, _mins))
+                        _has = [r for r in _cause_list if r[2] > 0]
+                        if _has:
+                            _has.sort(key=lambda x: x[2], reverse=True)
+                            _cause_list = _has
+                        else:
+                            _cause_list = [(_cause_list[0][0], _cause_list[0][1], total)]
+            if not _cause_list:
+                _c, _n = classify_loss_type(cause_all)
+                _cause_list = [(_c, _n, total)]
+            _total_stated = sum(m for _, _, m in _cause_list if m > 0)
+            for _code, _name, _mins in _cause_list:
+                if _total_stated > 0 and _mins > 0:
+                    _loss = round(total * _mins / _total_stated, 1)
+                elif _total_stated == 0:
+                    _loss = round(total / len(_cause_list), 1)
+                else:
+                    _loss = 0
+                if _loss <= 0:
+                    continue
+                records.append({
+                    "date":date_str,"shift":shift,"process":process,
+                    "line":line,"time_slot":"TOTAL","model":models.get(slots[0],""),
+                    "loss_min":_loss,
+                    "loss_type_code":_code,"loss_type_name":_name,
+                    "complexity":complexity,
+                    "loss_detail":cause_all,"action":action,
+                    "target":round(target_tot,0),
+                    "actual":round(actual_tot,0),
+                    "target_mi":round(target_mi,0),
+                    "actual_mi":round(actual_mi,0),
+                    "target_ate":round(target_ate,0),
+                    "actual_ate":round(actual_ate,0)})
         i+=1
     return records
 
