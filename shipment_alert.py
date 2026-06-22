@@ -301,34 +301,34 @@ def analyze(ship_db, prod_db, plan_date_cols, note_dict):
 
     # ⭐ Cutoff 시점 재고 계산 헬퍼
     def calc_cutoff_stock(code, cutoff_dt):
-       """Cutoff 시점까지 누적 생산 + 현재재고 (작성 기준)"""
-       stock = code_stock.get(code, 0)
+        """Cutoff 시점까지 누적 생산 + 현재재고 (작성 기준)"""
+        stock = code_stock.get(code, 0)
         
-       if pd.isna(cutoff_dt):
-           # 전체 (모든 일자 합산)
-           cutoff_norm = pd.Timestamp(2030, 1, 1)
-       else:
-           cutoff_norm = cutoff_dt.normalize()
+        if pd.isna(cutoff_dt):
+            # 전체 (모든 일자 합산)
+            cutoff_norm = pd.Timestamp(2030, 1, 1)
+        else:
+            cutoff_norm = cutoff_dt.normalize()
         
         erp_list = code_erp_map.get(code, [])
         production = 0
         
         # code의 모든 일자별 계획 순회
-       for (c, d), plan_qty in code_daily_plan.items():
-           if c != code:
-               continue
-           if d > cutoff_norm:
-               continue  # cutoff 이후 제외
+        for (c, d), plan_qty in code_daily_plan.items():
+            if c != code:
+                continue
+            if d > cutoff_norm:
+                continue  # cutoff 이후 제외
             
-           if d <= today_norm:
-               # 과거/오늘: 실적 사용 (해당 일자의 ERP별 실적 합)
-               for erp in erp_list:
-                   production += daily_dict_erp.get((erp, d), 0)
-           else:
-               # 미래: 계획 사용
-               production += plan_qty
+            if d <= today_norm:
+                # 과거/오늘: 실적 사용 (해당 일자의 ERP별 실적 합)
+                for erp in erp_list:
+                    production += daily_dict_erp.get((erp, d), 0)
+            else:
+                # 미래: 계획 사용
+                production += plan_qty
         
-       return stock + production
+        return stock + production
 
     # Cut off 정렬
     m['_cutoff_dt'] = pd.to_datetime(m['Cut off Cargo'], errors='coerce')
