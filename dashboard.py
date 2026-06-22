@@ -1024,9 +1024,9 @@ def parse_sheet(ws, process, date_str, shift):
                         "target_ate":0,"actual_ate":0})
 
             if total>0 or (target_tot+actual_tot)>0:
-            # cause_all에서 원인별 분리
-            cause_all = cause_all or ""
-            _cause_list = []
+                # cause_all에서 원인별 분리
+                cause_all = cause_all or ""
+                _cause_list = []
             if cause_all:
                 _t = str(cause_all).strip()
                 _p1 = re.findall(r'([^,;\n\(]+?)\s*\((\d+)\s*[Mm]in[^)]*\)', _t)
