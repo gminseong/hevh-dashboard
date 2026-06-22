@@ -1038,7 +1038,6 @@ def parse_files(uploaded_files):
                     st.warning(f"날짜 파싱 실패: {fn} / {sn}")
                     continue
                 st.sidebar.error(f"parse_sheet 호출: {sn} / {ds}")
-                    try: loss_records.extend(parse_sheet(ws,process,ds,shift))    
                 try: loss_records.extend(parse_sheet(ws,process,ds,shift))
                 except Exception as e: st.warning(f"파싱오류[{sn}]: {e}")
         prog.progress((fi+1)/len(uploaded_files))
