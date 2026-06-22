@@ -772,11 +772,6 @@ def parse_files(uploaded_files):
                 ds=fd if fd!="UNKNOWN" else (parse_date(sn) or "UNKNOWN")
                 if ds=="UNKNOWN":
                     ds=find_date_in_sheet(ws) or "UNKNOWN"
-
-                # ↓↓↓ 디버그 추가 ↓↓↓
-                st.write(f"시트: {sn} → 날짜: {ds}")
-                # ↑↑↑ 디버그 추가 ↑↑↑
-
                 if ds=="UNKNOWN":
                     st.warning(f"날짜 파싱 실패: {fn} / {sn}")
                     continue
