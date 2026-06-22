@@ -519,28 +519,26 @@ def parse_time_from_text(text):
 
 
 def split_loss_detail(loss_detail, total_min):
+    """loss_detail을 분리하고 시간 배분"""
     if not loss_detail or str(loss_detail).strip() in ["", "None", "—", "-"]:
         return [{"detail": "", "min": total_min, "type_code": "ETC",
                  "type_name": "기타", "sub_idx": 1}]
     
     raw = str(loss_detail).strip()
     
-    # ★ 전체가 no problem 계열이면 즉시 제외
-    raw_lower = raw.lower()
-    if raw_lower in ["no problem", "no probplem", "no proplem", 
-                     "không vấn đề", "no probem"]:
+    # ★ 전체가 no problem이면 빈 리스트
+    if re.search(r'^no\s*prob', raw, re.I):
         return []
     
-    # ★ 1차: | 로 분리
+    # 1차: | 로 분리
     if "|" in raw:
         chunks = [p.strip() for p in raw.split("|") if p.strip()]
     else:
         chunks = [raw]
     
-    # ★ 2차: 각 chunk를 , 로 추가 분리 (시간 패턴 포함된 경우만)
+    # 2차: 각 chunk를 , 로 추가 분리 (시간 패턴 2개 이상)
     parts = []
     for chunk in chunks:
-        # chunk 안에 (XXmin) 패턴이 2개 이상이면 , 로 분리
         time_count = len(re.findall(r'\d+\s*min', chunk, re.I))
         if time_count >= 2:
             sub = [s.strip() for s in chunk.split(",") if s.strip()]
@@ -553,6 +551,11 @@ def split_loss_detail(loss_detail, total_min):
         return [{"detail": raw, "min": total_min, "type_code": code,
                  "type_name": name, "sub_idx": 1}]
     
+    # ★ no problem 파트 먼저 제거
+    parts = [p for p in parts if not re.search(r'no\s*prob', p, re.I)]
+    if not parts:
+        return []
+    
     results = []
     allocated = 0.0
     no_time_parts = []
@@ -562,7 +565,6 @@ def split_loss_detail(loss_detail, total_min):
         code, name = classify_loss_type(part)
         
         if extracted is not None and extracted > 0:
-            # ★ 남은 시간 초과 방지
             remain = total_min - allocated
             if remain <= 0:
                 no_time_parts.append((idx, part, code, name))
@@ -594,7 +596,19 @@ def split_loss_detail(loss_detail, total_min):
                 "sub_idx": idx + 1
             })
     
-    results.sort(key=lambda x: x["sub_idx"])
+    # ★ 문제없음 최종 제거 + 시간 재배분
+    no_prob_mins = sum(r["min"] for r in results if r["type_name"] == "문제없음")
+    results = [r for r in results if r["type_name"] != "문제없음"]
+    
+    if not results:
+        return []
+    
+    if no_prob_mins > 0:
+        extra = round(no_prob_mins / len(results), 1)
+        for r in results:
+            r["min"] = round(r["min"] + extra, 1)
+    
+    # sub_idx 재정렬
     for i, r in enumerate(results):
         r["sub_idx"] = i + 1
     
