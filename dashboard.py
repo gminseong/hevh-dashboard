@@ -543,6 +543,7 @@ def parse_sheet(ws, process, date_str, shift):
             elif "TARGET" in lbl and target_row is None: target_row = r
             elif "ACTUAL" in lbl and actual_row is None: actual_row = r
 
+        st.sidebar.error(f"loss_row: {loss_row is not None} | line: {line}")
         if loss_row:
             # ── LOSSTIME 파싱 ──
             loss_vals = []
