@@ -500,14 +500,24 @@ def split_loss_detail(loss_detail, total_min):
     
     raw = str(loss_detail).strip()
     
-    # ★ | 로 먼저 분리, 없으면 , 로 분리
+    # ★ 1차: | 로 분리
     if "|" in raw:
-        parts = [p.strip() for p in raw.split("|") if p.strip()]
+        chunks = [p.strip() for p in raw.split("|") if p.strip()]
     else:
-        # , 분리 — 단, 시간 패턴 내부의 , 는 보호
-        parts = [p.strip() for p in re.split(r',\s*(?=[A-Za-z])', raw) if p.strip()]
+        chunks = [raw]
     
-    if not parts or len(parts) == 1:
+    # ★ 2차: 각 chunk를 , 로 추가 분리 (시간 패턴 포함된 경우만)
+    parts = []
+    for chunk in chunks:
+        # chunk 안에 (XXmin) 패턴이 2개 이상이면 , 로 분리
+        time_count = len(re.findall(r'\d+\s*min', chunk, re.I))
+        if time_count >= 2:
+            sub = [s.strip() for s in chunk.split(",") if s.strip()]
+            parts.extend(sub)
+        else:
+            parts.append(chunk)
+    
+    if not parts:
         code, name = classify_loss_type(raw)
         return [{"detail": raw, "min": total_min, "type_code": code,
                  "type_name": name, "sub_idx": 1}]
@@ -516,7 +526,6 @@ def split_loss_detail(loss_detail, total_min):
     allocated = 0.0
     no_time_parts = []
     
-    # 1차: 시간 명시된 원인 처리
     for idx, part in enumerate(parts):
         extracted = parse_time_from_text(part)
         code, name = classify_loss_type(part)
