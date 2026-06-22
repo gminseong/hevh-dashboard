@@ -466,7 +466,6 @@ def classify_loss_type(text):
     return ("ETC","기타")
 
 def extract_causes_with_minutes(cause_text, total_loss):
-    st.write(f"🔍함수호출: {str(cause_text)[:50]}")  # 디버그
     if not cause_text or str(cause_text).strip() in ["", "None", "-"]:
         code, name = classify_loss_type("")
         return [(code, name, total_loss)]
@@ -474,12 +473,10 @@ def extract_causes_with_minutes(cause_text, total_loss):
     t = str(cause_text).strip()
     results = []
 
-    # 패턴 1: "원인 (Nmin...)" 형태
-    # 예: "Silicon error (10min), ICT error (61 min)"
+    # 패턴 1: "원인 (Nmin)" - 괄호 있음
     p1 = re.findall(r'([^,;\|\n\(]+)\s*\((\d+)\s*[Mm]in[^\)]*\)', t)
-    
-    # 패턴 2: "원인 Nmin" 형태 (괄호 없음)
-    # 예: "wave solder 122min"
+
+    # 패턴 2: "원인 Nmin" - 괄호 없음
     p2 = re.findall(r'([^,;\|\n]+?)\s+(\d+)\s*[Mm]in\b', t)
 
     patterns = p1 if p1 else p2
@@ -494,12 +491,12 @@ def extract_causes_with_minutes(cause_text, total_loss):
         if results:
             return results
 
-    # 패턴 3: 시간 없음 → | 또는 , 로 분리
+    # 패턴 3: 시간 없음 → |, , 로 분리
     parts = re.split(r'[,;\|]', t)
     parts = [p.strip() for p in parts if p.strip()
              and p.strip().lower() not in [
                  "no problem","no proplem","3in1","3 in 1",
-                 "none","-","no problem 3in1"]]
+                 "none","-"]]
 
     if len(parts) > 1:
         part_results = []
@@ -511,14 +508,11 @@ def extract_causes_with_minutes(cause_text, total_loss):
 
         has_time = [r for r in part_results if r[2] > 0]
         if has_time:
-            # 규칙 2: 시간 큰 순서
             has_time.sort(key=lambda x: x[2], reverse=True)
             return [(r[0], r[1], r[2]) for r in has_time]
         else:
-            # 규칙 3: 첫번째 원인
             return [(part_results[0][0], part_results[0][1], total_loss)]
 
-    # 단일 원인
     code, name = classify_loss_type(t)
     return [(code, name, total_loss)]
 
