@@ -529,21 +529,32 @@ def detect_process(fn):
 
 def parse_date(text):
     if not text: return None
-    # datetime 객체인 경우
     import datetime
     if isinstance(text, (datetime.datetime, datetime.date)):
         return text.strftime("%Y-%m-%d")
     t = re.sub(r'\b(DAY|NIGHT)\b','',str(text),flags=re.I).strip()
-    # 시간 부분 제거 (2026-06-21 00:00:00 → 2026-06-21)
-    t = re.sub(r'\s+\d{2}:\d{2}:\d{2}.*$', '', t).strip()
+    t = re.sub(r'\s+\d{2}:\d{2}:\d{2}.*$','',t).strip()
+
+    # OT04.06, OT21.06 형식 (일.월)
+    m = re.search(r'OT\s*(\d{1,2})\.(\d{1,2})',t,re.I)
+    if m:
+        day,month=int(m.group(1)),int(m.group(2))
+        if 1<=day<=31 and 1<=month<=12:
+            return f"2026-{month:02d}-{day:02d}"
+
+    # DD.MM 형식
     m = re.search(r'\b(\d{1,2})\.(\d{1,2})\b',t)
     if m:
         a,b=int(m.group(1)),int(m.group(2))
-        if 1<=a<=31 and 1<=b<=12: return f"2026-{b:02d}-{a:02d}"
+        if 1<=a<=31 and 1<=b<=12:
+            return f"2026-{b:02d}-{a:02d}"
+
+    # DD/MM 형식
     m = re.search(r'(\d{1,2})/(\d{1,2})',t)
     if m:
         a,b=int(m.group(1)),int(m.group(2))
-        if 1<=a<=31 and 1<=b<=12: return f"2026-{b:02d}-{a:02d}"
+        if 1<=a<=31 and 1<=b<=12:
+            return f"2026-{b:02d}-{a:02d}"
     return None
 
 def detect_shift(sn, fn):
