@@ -579,7 +579,7 @@ def render_shipment_alert_tab():
         else:
             st.warning("📊 생산실적: 없음")
 
-                uploaded_files = st.file_uploader(
+        uploaded_files = st.file_uploader(
             "출하계획(xlsx) + 생산실적(csv)",
             type=["xlsx", "csv"],
             accept_multiple_files=True,
