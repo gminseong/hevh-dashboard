@@ -557,6 +557,7 @@ def parse_sheet(ws, process, date_str, shift):
                 loss_vals.append(0.0)
             loss_vals = [max(0.0, v) for v in loss_vals]
             total = sum(loss_vals)
+            st.sidebar.error(f"{line} loss_vals: {loss_vals}")
 
             models      = extract_model_per_slot(model_row, slots)
             slot_causes = extract_slot_causes(cause_row, slots)
@@ -607,6 +608,7 @@ def parse_sheet(ws, process, date_str, shift):
 
             for idx, slot in enumerate(slots):
                 lv = loss_vals[idx] if idx < len(loss_vals) else 0.0
+                cs = slot_causes.get(slot, "")
                 if lv <= 0:
                     continue
 
