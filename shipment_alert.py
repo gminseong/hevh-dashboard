@@ -1,8 +1,7 @@
 """
-[한솔테크닉스 HEVH] Shipment Cut-off 알람 v30.5
-- calc_cutoff_stock 변수명 충돌 해결 (_code, _cutoff)
-- 명시적 버전 표시
-- daily_dict_erp 직접 사용 (단순/명확)
+[한솔테크닉스 HEVH] Shipment Cut-off 알람 v30.6
+- Cutoff시점재고 진단 포함
+- compute_cutoff_stock 모듈 레벨 함수
 """
 from datetime import datetime
 import io
@@ -185,8 +184,8 @@ def load_shipment_rev(file_bytes):
     if 'ERP' not in df.columns:
         for col in df.columns:
             sample = df[col].dropna().astype(str).head(30).tolist()
-            erp_count = sum(1 for v in sample 
-                            if (v.startswith('013') or v.startswith('018')) 
+            erp_count = sum(1 for v in sample
+                            if (v.startswith('013') or v.startswith('018'))
                             and len(v) >= 10)
             if erp_count >= 3:
                 df = df.rename(columns={col: 'ERP'})
@@ -208,42 +207,37 @@ def load_shipment_rev(file_bytes):
 
 
 # ════════════════════════════════════════════════════════════
-# Cutoff시점재고 계산 — 모듈 레벨 함수 (클로저 충돌 방지)
+# Cutoff시점재고 — 모듈 레벨 (클로저 충돌 완전 차단)
 # ════════════════════════════════════════════════════════════
-def compute_cutoff_stock(stock_val, cutoff_dt, erp_list, daily_dict_erp, 
-                          code_daily_plan_dict, today_norm):
-    """Cut off 시점까지의 재고 = stock + 누적 실적(과거) + 누적 계획(미래)"""
+def compute_cutoff_stock(stock_val, cutoff_dt, erp_set,
+                          daily_dict_erp, daily_plan_dict, today_norm):
     if pd.isna(cutoff_dt):
         cutoff_n = pd.Timestamp(2030, 1, 1)
     else:
-        cutoff_n = cutoff_dt.normalize()
-    
+        cutoff_n = pd.Timestamp(cutoff_dt).normalize()
+
     production = 0
-    
-    # 과거 실적: daily_dict_erp 순회
-    erp_set = set(erp_list) if erp_list else set()
     for (erp_key, d), qty in daily_dict_erp.items():
         if erp_key in erp_set and d <= cutoff_n:
             production += qty
-    
-    # 미래 계획: code_daily_plan_dict 순회
-    for d, plan_qty in code_daily_plan_dict.items():
+    for d, plan_qty in daily_plan_dict.items():
         if today_norm < d <= cutoff_n:
             production += plan_qty
-    
-    return stock_val + production
+
+    return int(stock_val + production)
 
 
 # ════════════════════════════════════════════════════════════
-# 분석 v30.5
+# 분석 v30.6
 # ════════════════════════════════════════════════════════════
 def analyze(ship_db, prod_db, plan_date_cols, note_dict):
-    st.error("🚀 **v30.5 실행 중** (이 메시지가 안 보이면 코드 미적용)")
-    
+    st.warning("🚀 **v30.6 실행 중**")
+
     prod_db = prod_db.copy()
-    prod_db['TRAN_WORK_DATE'] = pd.to_datetime(prod_db['TRAN_WORK_DATE'], errors='coerce')
+    prod_db['TRAN_WORK_DATE'] = pd.to_datetime(
+        prod_db['TRAN_WORK_DATE'], errors='coerce')
     today = prod_db['TRAN_WORK_DATE'].max()
-    
+
     if pd.isna(today):
         st.error("❌ 생산실적 날짜 파싱 실패")
         return pd.DataFrame(), ''
@@ -255,13 +249,15 @@ def analyze(ship_db, prod_db, plan_date_cols, note_dict):
     prod_db['ERP'] = prod_db['FINAL_MAT_ID'].astype(str).str.strip()
     prod_db['TYPE'] = prod_db['ERP'].apply(classify)
     valid = prod_db[
-        ((prod_db['TYPE']=='PD') & (prod_db['OPER_DESC']=='P-ATE')) |
-        ((prod_db['TYPE']=='3IN1') & (prod_db['OPER_DESC']=='ASSY'))
+        ((prod_db['TYPE'] == 'PD') & (prod_db['OPER_DESC'] == 'P-ATE')) |
+        ((prod_db['TYPE'] == '3IN1') & (prod_db['OPER_DESC'] == 'ASSY'))
     ].copy()
 
-    daily = valid.groupby(['ERP', valid['TRAN_WORK_DATE'].dt.normalize()])['QTY'].sum().reset_index()
+    daily = valid.groupby(
+        ['ERP', valid['TRAN_WORK_DATE'].dt.normalize()])['QTY'].sum().reset_index()
     daily.columns = ['ERP', 'DATE', 'QTY']
-    daily_dict_erp = {(r['ERP'], r['DATE']): r['QTY'] for _, r in daily.iterrows()}
+    daily_dict_erp = {
+        (r['ERP'], r['DATE']): r['QTY'] for _, r in daily.iterrows()}
     erp_total_actual = valid.groupby('ERP')['QTY'].sum().to_dict()
 
     m = ship_db.copy()
@@ -275,7 +271,8 @@ def analyze(ship_db, prod_db, plan_date_cols, note_dict):
     if 'PO' not in m.columns and '_TTLShip' in m.columns:
         m['PO'] = m['_TTLShip']
     elif 'PO' in m.columns and '_TTLShip' in m.columns:
-        m['PO'] = m.apply(lambda r: r['PO'] if r['PO'] > 0 else r['_TTLShip'], axis=1)
+        m['PO'] = m.apply(
+            lambda r: r['PO'] if r['PO'] > 0 else r['_TTLShip'], axis=1)
 
     if '현재재고' not in m.columns:
         m['현재재고'] = 0
@@ -289,181 +286,176 @@ def analyze(ship_db, prod_db, plan_date_cols, note_dict):
     m['code'] = m['code'].astype(str).str.strip()
 
     code_stock = m.groupby('code')['현재재고'].max().to_dict()
-    code_plan = m.groupby('code')['예상계획'].max().to_dict()
-    code_erp_map = m.groupby('code')['ERP'].apply(lambda x: list(set(x))).to_dict()
-    
-    code_total_actual = {}
-    for c_key, erp_list_val in code_erp_map.items():
-        code_total_actual[c_key] = sum(erp_total_actual.get(erp_v, 0) for erp_v in erp_list_val)
-    
+    code_plan  = m.groupby('code')['예상계획'].max().to_dict()
+    code_erp_map = m.groupby('code')['ERP'].apply(
+        lambda x: list(set(x))).to_dict()
+
+    code_total_actual = {
+        ck: sum(erp_total_actual.get(e, 0) for e in ev)
+        for ck, ev in code_erp_map.items()
+    }
+
     m['현재재고'] = m['code'].map(code_stock).fillna(0).astype(int)
     m['예상계획'] = m['code'].map(code_plan).fillna(0).astype(int)
     m['_현재실적'] = m['code'].map(code_total_actual).fillna(0).astype(int)
     m[f'현재실적({today_str})'] = m['_현재실적']
 
     plan_date_map = {col: parse_date_from_col(col) for col in plan_date_cols}
-    valid_plan_cols = {col: dt for col, dt in plan_date_map.items() if dt is not None}
+    valid_plan_cols = {
+        col: dt for col, dt in plan_date_map.items() if dt is not None}
 
-    # code별 일자별 계획 (code -> {date: qty} 형식)
-    code_daily_plan_by_code = {}
-    for c_key in m['code'].unique():
-        first_row = m[m['code'] == c_key].iloc[0]
-        daily_plan = {}
+    # code별 일자별 계획 {date: qty}
+    code_daily_plan_map = {}
+    for ck in m['code'].unique():
+        fr = m[m['code'] == ck].iloc[0]
+        dp = {}
         for col, dt in valid_plan_cols.items():
-            plan_val = pd.to_numeric(first_row.get(col, 0), errors='coerce')
-            if pd.isna(plan_val):
-                plan_val = 0
-            daily_plan[dt.normalize()] = int(plan_val)
-        code_daily_plan_by_code[c_key] = daily_plan
+            v = pd.to_numeric(fr.get(col, 0), errors='coerce')
+            dp[dt.normalize()] = int(v) if not pd.isna(v) else 0
+        code_daily_plan_map[ck] = dp
 
-    # 미래 계획
-    code_future_plan = {}
-    for c_key, daily_plan in code_daily_plan_by_code.items():
-        fp = sum(qty for d, qty in daily_plan.items() if d > today_norm)
-        code_future_plan[c_key] = int(fp)
+    code_future_plan = {
+        ck: sum(q for d, q in dp.items() if d > today_norm)
+        for ck, dp in code_daily_plan_map.items()
+    }
 
     m['_미래계획'] = m['code'].map(code_future_plan).fillna(0).astype(int)
-    m['_현재기반_생산'] = m['_현재실적'] + m['_미래계획']
-    m['실적차이'] = m['_현재기반_생산'] - m['예상계획']
+    m['실적차이'] = (m['_현재실적'] + m['_미래계획']) - m['예상계획']
 
+    # Cut off 정렬
     m['_cutoff_dt'] = pd.to_datetime(m['Cut off Cargo'], errors='coerce')
     m = m.sort_values(['code', '_cutoff_dt']).reset_index(drop=True)
 
-    # 시뮬레이션 1: 계획 100%
+    # ── 시뮬레이션 1: 계획 100% ──────────────────────────────
     m['예상제품재고_계획'] = 0
     m['_부족1'] = 0
-    
-    for c_key in m['code'].unique():
-        code_idx = m[m['code'] == c_key].index.tolist()
-        total = len(code_idx)
-        stock = code_stock.get(c_key, 0)
-        plan = code_plan.get(c_key, 0)
-        available = stock + plan
-        
-        for i, idx in enumerate(code_idx):
+
+    for ck in m['code'].unique():
+        idxs = m[m['code'] == ck].index.tolist()
+        avail = code_stock.get(ck, 0) + code_plan.get(ck, 0)
+        for i, idx in enumerate(idxs):
             po = int(m.loc[idx, 'PO'])
-            m.at[idx, '순서'] = f"{i+1}/{total}"
-            
-            if available >= po:
-                available -= po
-                m.at[idx, '예상제품재고_계획'] = available
+            m.at[idx, '순서'] = f"{i+1}/{len(idxs)}"
+            if avail >= po:
+                avail -= po
+                m.at[idx, '예상제품재고_계획'] = avail
                 m.at[idx, '_부족1'] = 0
-            elif available > 0:
-                m.at[idx, '예상제품재고_계획'] = -(po - available)
-                m.at[idx, '_부족1'] = po - available
-                available = 0
+            elif avail > 0:
+                m.at[idx, '예상제품재고_계획'] = -(po - avail)
+                m.at[idx, '_부족1'] = po - avail
+                avail = 0
             else:
                 m.at[idx, '예상제품재고_계획'] = -po
                 m.at[idx, '_부족1'] = po
 
-    # 시뮬레이션 2: 실적 반영 + Cutoff시점재고
+    # ── 시뮬레이션 2: 실적 반영 ──────────────────────────────
     m['예상제품재고_실적'] = 0
     m['Cutoff시점재고'] = 0
     m['_부족2'] = 0
-    
-    for c_key in m['code'].unique():
-        code_idx = m[m['code'] == c_key].index.tolist()
-        stock = code_stock.get(c_key, 0)
-        actual = code_total_actual.get(c_key, 0)
-        future = code_future_plan.get(c_key, 0)
-        available = stock + actual + future
-        
-        erp_list_local = code_erp_map.get(c_key, [])
-        daily_plan_local = code_daily_plan_by_code.get(c_key, {})
-        
-        for i, idx in enumerate(code_idx):
+
+    for ck in m['code'].unique():
+        idxs = m[m['code'] == ck].index.tolist()
+        stk  = code_stock.get(ck, 0)
+        avail = stk + code_total_actual.get(ck, 0) + code_future_plan.get(ck, 0)
+        erp_set_local = set(code_erp_map.get(ck, []))
+        dp_local = code_daily_plan_map.get(ck, {})
+
+        for idx in idxs:
             po = int(m.loc[idx, 'PO'])
-            cutoff_dt = m.loc[idx, '_cutoff_dt']
-            
-            # ⭐ Cutoff시점재고 — 모듈 레벨 함수 호출
-            m.at[idx, 'Cutoff시점재고'] = compute_cutoff_stock(
-                stock, cutoff_dt, erp_list_local, 
-                daily_dict_erp, daily_plan_local, today_norm
+            cdt = m.loc[idx, '_cutoff_dt']
+
+            # ⭐ Cutoff시점재고 계산
+            cs = compute_cutoff_stock(
+                stk, cdt, erp_set_local,
+                daily_dict_erp, dp_local, today_norm
             )
-            
-            if available >= po:
-                available -= po
-                m.at[idx, '예상제품재고_실적'] = available
+            m.at[idx, 'Cutoff시점재고'] = cs
+
+            if avail >= po:
+                avail -= po
+                m.at[idx, '예상제품재고_실적'] = avail
                 m.at[idx, '_부족2'] = 0
-            elif available > 0:
-                m.at[idx, '예상제품재고_실적'] = -(po - available)
-                m.at[idx, '_부족2'] = po - available
-                available = 0
+            elif avail > 0:
+                m.at[idx, '예상제품재고_실적'] = -(po - avail)
+                m.at[idx, '_부족2'] = po - avail
+                avail = 0
             else:
                 m.at[idx, '예상제품재고_실적'] = -po
                 m.at[idx, '_부족2'] = po
 
+    # ⭐ 진단: BN44-01421A
+    diag = m[m['code'] == 'BN44-01421A'][
+        ['Cus', 'Cut off Cargo', '현재재고', 'Cutoff시점재고',
+         '예상제품재고_실적', '_부족2']
+    ]
+    if not diag.empty:
+        st.error(f"🔍 BN44-01421A 진단 (m DataFrame 실제값):\n{diag.to_string()}")
+
     def get_alert(shortage, gap=0):
-        if shortage >= 5000:
-            return "🔴 출하불가"
-        elif shortage > 0:
-            return "🟠 부족"
-        elif gap < -1000:
-            return "🟡 차질"
-        else:
-            return "✅ 정상"
+        if shortage >= 5000: return "🔴 출하불가"
+        if shortage > 0:     return "🟠 부족"
+        if gap < -1000:      return "🟡 차질"
+        return "✅ 정상"
 
     m['알람_계획'] = m['_부족1'].apply(lambda x: get_alert(x))
-    m['알람_실적'] = m.apply(lambda r: get_alert(r['_부족2'], r['실적차이']), axis=1)
+    m['알람_실적'] = m.apply(
+        lambda r: get_alert(r['_부족2'], r['실적차이']), axis=1)
 
-    for col in ['PO', '예상계획', '현재재고', '실적차이', 
+    for col in ['PO', '예상계획', '현재재고', '실적차이',
                 '예상제품재고_계획', '예상제품재고_실적', 'Cutoff시점재고',
                 f'현재실적({today_str})']:
         if col in m.columns:
             m[col] = m[col].astype(int)
 
     # 디버그 expander
-    with st.expander("🐛 디버그: code별 값 (v30.5)", expanded=False):
-        debug_data = []
-        for c_key in sorted(m['code'].unique()):
-            erp_list_val = code_erp_map.get(c_key, [])
-            daily_plan_val = code_daily_plan_by_code.get(c_key, {})
-            plan_str = ', '.join([f"{d.strftime('%m/%d')}:{q:,}" 
-                                   for d, q in sorted(daily_plan_val.items()) if q > 0])
-            actual_days = {}
-            for erp_v in erp_list_val:
-                for (e, d), qty in daily_dict_erp.items():
-                    if e == erp_v:
-                        actual_days[d] = actual_days.get(d, 0) + qty
-            actual_str = ', '.join([f"{d.strftime('%m/%d')}:{q:,}" 
-                                     for d, q in sorted(actual_days.items())])
-            
-            # Cutoff시점재고 테스트 (6/20 기준)
-            test_cutoff = pd.Timestamp(2026, 6, 20)
-            test_stock = compute_cutoff_stock(
-                code_stock.get(c_key, 0), test_cutoff, erp_list_val,
-                daily_dict_erp, daily_plan_val, today_norm
+    with st.expander("🐛 디버그 v30.6", expanded=False):
+        debug_rows = []
+        for ck in sorted(m['code'].unique()):
+            erp_list_v = code_erp_map.get(ck, [])
+            dp_v = code_daily_plan_map.get(ck, {})
+            plan_s = ', '.join(
+                f"{d.strftime('%m/%d')}:{q:,}"
+                for d, q in sorted(dp_v.items()) if q > 0)
+            act_days = {}
+            for e in erp_list_v:
+                for (ek, d), q in daily_dict_erp.items():
+                    if ek == e:
+                        act_days[d] = act_days.get(d, 0) + q
+            act_s = ', '.join(
+                f"{d.strftime('%m/%d')}:{q:,}"
+                for d, q in sorted(act_days.items()))
+            test_cs = compute_cutoff_stock(
+                code_stock.get(ck, 0),
+                pd.Timestamp(2026, 6, 20),
+                set(erp_list_v),
+                daily_dict_erp, dp_v, today_norm
             )
-            
-            debug_data.append({
-                'code': c_key,
-                'ERP': ', '.join(erp_list_val),
-                '현재재고': code_stock.get(c_key, 0),
-                '실적합': code_total_actual.get(c_key, 0),
-                '미래계획': code_future_plan.get(c_key, 0),
-                '6/20Cutoff재고': test_stock,
-                '일자별실적': actual_str if actual_str else '(없음)',
+            debug_rows.append({
+                'code': ck, 'ERP': ', '.join(erp_list_v),
+                '현재재고': code_stock.get(ck, 0),
+                '실적합': code_total_actual.get(ck, 0),
+                '미래계획': code_future_plan.get(ck, 0),
+                '6/20Cutoff재고': test_cs,
+                '일자별실적': act_s or '(없음)',
             })
-        debug_df = pd.DataFrame(debug_data)
-        st.dataframe(debug_df, use_container_width=True, height=400)
+        st.dataframe(pd.DataFrame(debug_rows),
+                     use_container_width=True, height=400)
 
-    m = m.drop(columns=['_부족1','_부족2','_현재실적','_cutoff_dt','_현재기반_생산','_미래계획'], errors='ignore')
+    m = m.drop(columns=[
+        '_부족1', '_부족2', '_현재실적', '_cutoff_dt', '_미래계획'
+    ], errors='ignore')
 
     return m, today_str
 
 
 # ════════════════════════════════════════════════════════════
-# HTML 테이블
+# HTML 테이블 (정렬 지원)
 # ════════════════════════════════════════════════════════════
 def render_html_table(df, height=500, table_id="t1"):
-    numeric_cols = set()
-    for c in df.columns:
-        if df[c].dtype.kind in 'iuf':
-            numeric_cols.add(c)
+    numeric_cols = {c for c in df.columns if df[c].dtype.kind in 'iuf'}
 
     def fmt(val, is_num):
-        if pd.isna(val) or val == '':
-            return '-'
+        if pd.isna(val) or val == '': return '-'
         if is_num:
             try:
                 n = int(float(val))
@@ -476,121 +468,99 @@ def render_html_table(df, height=500, table_id="t1"):
                 pass
         return str(val)
 
-    def bg(row):
-        alerts = []
-        for col in ['알람_실적', '알람_계획', '알람']:
-            if col in row.index:
-                alerts.append(str(row.get(col, '')))
-        combined = ' '.join(alerts)
+    def row_bg(row):
+        combined = ' '.join(
+            str(row.get(c, ''))
+            for c in ['알람_실적', '알람_계획', '알람'] if c in row.index)
         if '출하불가' in combined: return '#FEE2E2'
-        if '부족' in combined: return '#FFEDD5'
-        if '차질' in combined: return '#FEF3C7'
+        if '부족'   in combined: return '#FFEDD5'
+        if '차질'   in combined: return '#FEF3C7'
         return '#FFFFFF'
 
-    parts = [f'''<!DOCTYPE html>
+    html_parts = [f'''<!DOCTYPE html>
 <html><head><meta charset="utf-8"><style>
-body {{ margin:0; padding:0; font-family:-apple-system,sans-serif; font-size:12px; }}
-#{table_id}_wrap {{ max-height:{height}px; overflow:auto; border:1px solid #E5E7EB; border-radius:6px; }}
-#{table_id} {{ border-collapse:collapse; width:100%; }}
-#{table_id} th {{ 
-    cursor:pointer; user-select:none; 
-    padding:8px 6px; text-align:center; 
-    border:1px solid #4B5563; font-weight:700; 
-    white-space:nowrap; background-color:#374151; color:white;
-    position:sticky; top:0; z-index:10;
-}}
-#{table_id} th:hover {{ background-color:#4B5563 !important; }}
-#{table_id} th.sort-asc::after {{ content:" ▲"; color:#FCD34D; }}
-#{table_id} th.sort-desc::after {{ content:" ▼"; color:#FCD34D; }}
-#{table_id} td {{ 
-    padding:6px; border-bottom:1px solid #E5E7EB; 
-    white-space:nowrap; 
-}}
+body{{margin:0;padding:0;font-family:-apple-system,sans-serif;font-size:12px;}}
+#{table_id}_wrap{{max-height:{height}px;overflow:auto;border:1px solid #E5E7EB;border-radius:6px;}}
+#{table_id}{{border-collapse:collapse;width:100%;}}
+#{table_id} th{{cursor:pointer;user-select:none;padding:8px 6px;text-align:center;
+    border:1px solid #4B5563;font-weight:700;white-space:nowrap;
+    background-color:#374151;color:white;position:sticky;top:0;z-index:10;}}
+#{table_id} th:hover{{background-color:#4B5563!important;}}
+#{table_id} th.sort-asc::after{{content:" ▲";color:#FCD34D;}}
+#{table_id} th.sort-desc::after{{content:" ▼";color:#FCD34D;}}
+#{table_id} td{{padding:6px;border-bottom:1px solid #E5E7EB;white-space:nowrap;}}
 </style></head><body>
-<div id="{table_id}_wrap">
-<table id="{table_id}">
-<thead><tr>''']
-    
+<div id="{table_id}_wrap"><table id="{table_id}"><thead><tr>''']
+
     for i, col in enumerate(df.columns):
-        is_num = col in numeric_cols
-        data_type = 'number' if is_num else 'string'
-        parts.append(f'<th data-col="{i}" data-type="{data_type}" onclick="sortTable({i},\'{data_type}\')">{col}</th>')
-    parts.append('</tr></thead><tbody>')
+        dt = 'number' if col in numeric_cols else 'string'
+        html_parts.append(
+            f'<th onclick="sT({i},\'{dt}\')">{col}</th>')
+    html_parts.append('</tr></thead><tbody>')
 
     for _, row in df.iterrows():
-        row_bg = bg(row)
-        parts.append(f'<tr style="background-color:{row_bg};">')
+        bg = row_bg(row)
+        html_parts.append(f'<tr style="background-color:{bg};">')
         for col in df.columns:
             is_num = col in numeric_cols
             val = row[col]
             cell = fmt(val, is_num)
             align = 'right' if is_num else 'center'
-            sort_val = ''
+            sv = ''
             if is_num and not pd.isna(val):
-                try:
-                    sort_val = f' data-sort="{int(float(val))}"'
-                except Exception:
-                    pass
-            parts.append(f'<td{sort_val} style="text-align:{align};">{cell}</td>')
-        parts.append('</tr>')
-    
-    parts.append('''</tbody></table></div>
+                try: sv = f' data-sort="{int(float(val))}"'
+                except Exception: pass
+            html_parts.append(
+                f'<td{sv} style="text-align:{align};">{cell}</td>')
+        html_parts.append('</tr>')
+
+    html_parts.append(f'''</tbody></table></div>
 <script>
-var sortStates = {};
-function sortTable(colIdx, type) {
-    var table = document.querySelector("table");
-    var tbody = table.querySelector("tbody");
-    var rows = Array.from(tbody.querySelectorAll("tr"));
-    var ths = table.querySelectorAll("th");
-    
-    var currentAsc = sortStates[colIdx] === 'asc';
-    var newDir = currentAsc ? 'desc' : 'asc';
-    sortStates = {};
-    sortStates[colIdx] = newDir;
-    
-    ths.forEach(function(th) { th.classList.remove('sort-asc','sort-desc'); });
-    ths[colIdx].classList.add('sort-' + newDir);
-    
-    rows.sort(function(a, b) {
-        var ca = a.cells[colIdx];
-        var cb = b.cells[colIdx];
-        var va, vb;
-        if (type === 'number') {
-            va = parseFloat(ca.getAttribute('data-sort') || ca.textContent.replace(/[,\\s]/g,'')) || 0;
-            vb = parseFloat(cb.getAttribute('data-sort') || cb.textContent.replace(/[,\\s]/g,'')) || 0;
-        } else {
-            va = ca.textContent.trim();
-            vb = cb.textContent.trim();
-        }
-        if (va < vb) return newDir === 'asc' ? -1 : 1;
-        if (va > vb) return newDir === 'asc' ? 1 : -1;
-        return 0;
-    });
-    rows.forEach(function(r) { tbody.appendChild(r); });
-}
+var ss_{table_id}={{}};
+function sT(ci,tp){{
+  var tb=document.getElementById("{table_id}");
+  var tbody=tb.querySelector("tbody");
+  var rows=Array.from(tbody.querySelectorAll("tr"));
+  var ths=tb.querySelectorAll("th");
+  var asc=ss_{table_id}[ci]==='asc';
+  var dir=asc?'desc':'asc';
+  ss_{table_id}={{}};ss_{table_id}[ci]=dir;
+  ths.forEach(function(h){{h.classList.remove('sort-asc','sort-desc');}});
+  ths[ci].classList.add('sort-'+dir);
+  rows.sort(function(a,b){{
+    var ca=a.cells[ci],cb=b.cells[ci],va,vb;
+    if(tp==='number'){{
+      va=parseFloat(ca.getAttribute('data-sort')||ca.textContent.replace(/[,\\s]/g,''))||0;
+      vb=parseFloat(cb.getAttribute('data-sort')||cb.textContent.replace(/[,\\s]/g,''))||0;
+    }}else{{va=ca.textContent.trim();vb=cb.textContent.trim();}}
+    if(va<vb)return dir==='asc'?-1:1;
+    if(va>vb)return dir==='asc'?1:-1;
+    return 0;
+  }});
+  rows.forEach(function(r){{tbody.appendChild(r);}});
+}}
 </script></body></html>''')
-    
-    html = ''.join(parts)
-    components.html(html, height=height + 50, scrolling=False)
+
+    components.html(''.join(html_parts), height=height + 50, scrolling=False)
 
 
 # ════════════════════════════════════════════════════════════
 # 메인
 # ════════════════════════════════════════════════════════════
 def render_shipment_alert_tab():
-    st.markdown("#### 🚨 Shipment Cut-off 알람 **v30.5**")
-    st.caption("📌 계획 vs 실적 비교 | 컬럼 클릭 정렬 | 모듈 레벨 함수 사용")
+    st.markdown("#### 🚨 Shipment Cut-off 알람 **v30.6**")
+    st.caption("📌 계획 vs 실적 비교 | 컬럼 클릭 정렬")
 
-    ship_db = st.session_state.get('ship_db', pd.DataFrame())
+    ship_db   = st.session_state.get('ship_db', pd.DataFrame())
     plan_cols = st.session_state.get('plan_date_cols', [])
     note_dict = st.session_state.get('note_dict', {})
-    prod_db = st.session_state.get('prod_db', pd.DataFrame())
-    ship_t = st.session_state.get('ship_updated', '-')
-    prod_t = st.session_state.get('prod_updated', '-')
+    prod_db   = st.session_state.get('prod_db', pd.DataFrame())
+    ship_t    = st.session_state.get('ship_updated', '-')
+    prod_t    = st.session_state.get('prod_updated', '-')
 
     s1, s2 = st.columns(2)
     if not ship_db.empty:
-        s1.success(f"📁 출하계획: **{len(ship_db)}건** | Note {len(note_dict)}건 | {ship_t}")
+        s1.success(f"📁 출하계획: **{len(ship_db)}건** | {ship_t}")
     else:
         s1.warning("📁 출하계획: 없음")
     if not prod_db.empty:
@@ -599,31 +569,35 @@ def render_shipment_alert_tab():
         s2.warning("📊 생산실적: 없음")
 
     st.markdown("##### 📤 파일 업로드")
-    files = st.file_uploader(" ", type=["xlsx","csv"], accept_multiple_files=True,
-                              key="ship_up_v30", label_visibility="collapsed")
+    files = st.file_uploader(
+        " ", type=["xlsx", "csv"], accept_multiple_files=True,
+        key="ship_up_v30", label_visibility="collapsed")
 
     if files:
-        if st.button("🚀 저장 및 분석", type="primary", use_container_width=True, key="apply_v30"):
+        if st.button("🚀 저장 및 분석", type="primary",
+                     use_container_width=True, key="apply_v30"):
             with st.spinner("처리 중..."):
                 for f in files:
                     fname = f.name.lower()
                     f.seek(0)
-                    file_bytes = f.read()
+                    fb = f.read()
                     if fname.endswith('.xlsx'):
-                        df, p_cols = load_shipment_rev(file_bytes)
-                        notes = load_sheet1_notes(file_bytes)
+                        df, p_cols = load_shipment_rev(fb)
+                        notes = load_sheet1_notes(fb)
                         if not df.empty:
                             st.session_state['ship_db'] = df
                             st.session_state['plan_date_cols'] = p_cols
                             st.session_state['note_dict'] = notes
-                            st.session_state['ship_updated'] = datetime.now().strftime('%m-%d %H:%M')
-                            st.success(f"✅ 출하계획 ({len(df)}건) + Note ({len(notes)}건)")
+                            st.session_state['ship_updated'] = \
+                                datetime.now().strftime('%m-%d %H:%M')
+                            st.success(f"✅ 출하계획 {len(df)}건")
                     elif fname.endswith('.csv'):
                         try:
-                            df = read_csv_cached(file_bytes)
+                            df = read_csv_cached(fb)
                             st.session_state['prod_db'] = df
-                            st.session_state['prod_updated'] = datetime.now().strftime('%m-%d %H:%M')
-                            st.success(f"✅ 생산실적 ({len(df)}건)")
+                            st.session_state['prod_updated'] = \
+                                datetime.now().strftime('%m-%d %H:%M')
+                            st.success(f"✅ 생산실적 {len(df)}건")
                         except Exception as e:
                             st.error(f"❌ {f.name}: {e}")
             st.rerun()
@@ -636,7 +610,8 @@ def render_shipment_alert_tab():
 
     with st.spinner("분석 중..."):
         try:
-            m, today_str = analyze(ship_db, prod_db, plan_cols, note_dict)
+            m, today_str = analyze(
+                ship_db, prod_db, plan_cols, note_dict)
         except Exception as e:
             st.error(f"❌ 분석 오류: {e}")
             import traceback
@@ -647,94 +622,112 @@ def render_shipment_alert_tab():
         return
 
     actual_col = f'현재실적({today_str})'
-
-    st.markdown("---")
-    st.markdown("### 🚨 즉시 조치 필요 (계획 또는 실적 기준 문제)")
-    st.caption("⚠️ 두 시뮬레이션 중 하나라도 문제 발생한 행만 표시 | 컬럼 클릭 정렬")
-    
     problem_alerts = ['🔴 출하불가', '🟠 부족', '🟡 차질']
-    urgent = m[(m['알람_계획'].isin(problem_alerts)) | (m['알람_실적'].isin(problem_alerts))].copy()
-    
+
+    # ── 통합 비교 표 ───────────────────────────────────────
+    st.markdown("---")
+    st.markdown("### 🚨 즉시 조치 필요")
+    st.caption("두 시뮬레이션 중 하나라도 문제 발생한 행 | 컬럼 클릭 정렬")
+
+    urgent = m[
+        m['알람_계획'].isin(problem_alerts) |
+        m['알람_실적'].isin(problem_alerts)
+    ].copy()
+
     if not urgent.empty:
         k1, k2, k3 = st.columns(3)
         k1.metric("문제 행", f"{len(urgent)}건")
-        k2.metric("🔴 출하불가 (실적)", int((urgent['알람_실적']=='🔴 출하불가').sum()))
-        k3.metric("🟠 부족 (실적)", int((urgent['알람_실적']=='🟠 부족').sum()))
-        
-        compare_cols = ['알람_계획','알람_실적','순서','Cut off Cargo','Cus','model','code','ERP','MODEL_TYPE',
-                        'PO','현재재고','예상계획',actual_col,'실적차이',
-                        '예상제품재고_계획','예상제품재고_실적','Cutoff시점재고','Note']
-        compare_cols = [c for c in compare_cols if c in urgent.columns]
-        render_html_table(urgent[compare_cols], height=500, table_id="compare")
+        k2.metric("🔴 출하불가 (실적)",
+                  int((urgent['알람_실적'] == '🔴 출하불가').sum()))
+        k3.metric("🟠 부족 (실적)",
+                  int((urgent['알람_실적'] == '🟠 부족').sum()))
+
+        cc = ['알람_계획', '알람_실적', '순서', 'Cut off Cargo', 'Cus',
+              'model', 'code', 'ERP', 'MODEL_TYPE', 'PO',
+              '현재재고', '예상계획', actual_col, '실적차이',
+              '예상제품재고_계획', '예상제품재고_실적', 'Cutoff시점재고', 'Note']
+        cc = [c for c in cc if c in urgent.columns]
+        render_html_table(urgent[cc], height=500, table_id="compare")
     else:
         st.success("✅ 모든 모델 정상")
 
+    # ── 필터 ───────────────────────────────────────────────
     st.markdown("---")
     st.markdown("### 🎛️ 필터")
     f1, f2, f3 = st.columns(3)
-    a_sel = f1.multiselect("알람 (실적 기준)", ['🔴 출하불가','🟠 부족','🟡 차질','✅ 정상'], key="a_v30")
-    t_sel = f2.multiselect("모델", ['PD','3IN1','OTHER'], key="t_v30")
+    a_sel = f1.multiselect(
+        "알람 (실적)", ['🔴 출하불가', '🟠 부족', '🟡 차질', '✅ 정상'],
+        key="a_v30")
+    t_sel = f2.multiselect("모델", ['PD', '3IN1', 'OTHER'], key="t_v30")
     cus_opt = sorted(m['Cus'].dropna().unique()) if 'Cus' in m.columns else []
-    c_sel = f3.multiselect("거래선", cus_opt, key="c_v30") if cus_opt else []
+    c_sel = f3.multiselect("거래선", cus_opt, key="c_v30")
 
-    def apply_filter(df, alert_col='알람_실적'):
+    def apply_filter(df, acol='알람_실적'):
         v = df.copy()
-        if a_sel: v = v[v[alert_col].isin(a_sel)]
+        if a_sel: v = v[v[acol].isin(a_sel)]
         if t_sel: v = v[v['MODEL_TYPE'].isin(t_sel)]
         if c_sel: v = v[v['Cus'].isin(c_sel)]
         return v
 
+    # ── 테이블 1 ───────────────────────────────────────────
     st.markdown("---")
     st.markdown("### 📋 1) 이번 주 Cut off 예상 (계획 100%)")
-    st.caption("예상제품재고 = 현재재고 + 예상계획 - 누적 PO")
-    
-    t1 = m.rename(columns={'알람_계획':'알람', '예상제품재고_계획':'예상제품재고'}).copy()
+    st.caption("예상제품재고 = 현재재고 + 예상계획 - 누적PO")
+
+    t1 = m.rename(columns={
+        '알람_계획': '알람', '예상제품재고_계획': '예상제품재고'}).copy()
     k1, k2, k3, k4, k5 = st.columns(5)
     k1.metric("전체", f"{len(t1)}건")
-    k2.metric("🔴 출하불가", int((t1['알람']=='🔴 출하불가').sum()))
-    k3.metric("🟠 부족", int((t1['알람']=='🟠 부족').sum()))
-    k4.metric("🟡 차질", int((t1['알람']=='🟡 차질').sum()))
-    k5.metric("✅ 정상", int((t1['알람']=='✅ 정상').sum()))
-    
-    show1 = ['알람','순서','Cut off Cargo','Cus','model','code','ERP','MODEL_TYPE',
-             'PO','현재재고','예상계획','예상제품재고','Note']
-    show1 = [c for c in show1 if c in t1.columns]
+    k2.metric("🔴 출하불가", int((t1['알람'] == '🔴 출하불가').sum()))
+    k3.metric("🟠 부족",     int((t1['알람'] == '🟠 부족').sum()))
+    k4.metric("🟡 차질",     int((t1['알람'] == '🟡 차질').sum()))
+    k5.metric("✅ 정상",     int((t1['알람'] == '✅ 정상').sum()))
+
+    s1c = ['알람', '순서', 'Cut off Cargo', 'Cus', 'model', 'code',
+           'ERP', 'MODEL_TYPE', 'PO', '현재재고', '예상계획', '예상제품재고', 'Note']
+    s1c = [c for c in s1c if c in t1.columns]
     v1 = apply_filter(t1, '알람')
     if not v1.empty:
-        render_html_table(v1[show1], height=400, table_id="t1")
+        render_html_table(v1[s1c], height=400, table_id="t1")
 
+    # ── 테이블 2 ───────────────────────────────────────────
     st.markdown("---")
     st.markdown("### 📋 2) 현재 실적 반영 시 Cut off 예상")
-    st.caption(f"예상제품재고 = 현재재고 + ({actual_col} + 미래 계획) - 누적 PO | Cutoff시점재고 = Cut off 날짜까지 재고+생산")
-    
-    t2 = m.rename(columns={'알람_실적':'알람', '예상제품재고_실적':'예상제품재고'}).copy()
+    st.caption(
+        f"예상제품재고 = 현재재고+({actual_col}+미래계획)-누적PO | "
+        "Cutoff시점재고 = Cut off일까지 재고+생산")
+
+    t2 = m.rename(columns={
+        '알람_실적': '알람', '예상제품재고_실적': '예상제품재고'}).copy()
     k1, k2, k3, k4, k5 = st.columns(5)
     k1.metric("전체", f"{len(t2)}건")
-    k2.metric("🔴 출하불가", int((t2['알람']=='🔴 출하불가').sum()))
-    k3.metric("🟠 부족", int((t2['알람']=='🟠 부족').sum()))
-    k4.metric("🟡 차질", int((t2['알람']=='🟡 차질').sum()))
-    k5.metric("✅ 정상", int((t2['알람']=='✅ 정상').sum()))
-    
-    show2 = ['알람','순서','Cut off Cargo','Cus','model','code','ERP','MODEL_TYPE',
-             'PO','현재재고','예상계획',actual_col,'실적차이','예상제품재고','Cutoff시점재고','Note']
-    show2 = [c for c in show2 if c in t2.columns]
+    k2.metric("🔴 출하불가", int((t2['알람'] == '🔴 출하불가').sum()))
+    k3.metric("🟠 부족",     int((t2['알람'] == '🟠 부족').sum()))
+    k4.metric("🟡 차질",     int((t2['알람'] == '🟡 차질').sum()))
+    k5.metric("✅ 정상",     int((t2['알람'] == '✅ 정상').sum()))
+
+    s2c = ['알람', '순서', 'Cut off Cargo', 'Cus', 'model', 'code',
+           'ERP', 'MODEL_TYPE', 'PO', '현재재고', '예상계획',
+           actual_col, '실적차이', '예상제품재고', 'Cutoff시점재고', 'Note']
+    s2c = [c for c in s2c if c in t2.columns]
     v2 = apply_filter(t2, '알람')
     if not v2.empty:
-        render_html_table(v2[show2], height=500, table_id="t2")
-        csv = v2[show2].to_csv(index=False).encode('utf-8-sig')
-        st.download_button("📥 CSV 다운로드", csv,
-                           f"shipment_alert_{datetime.now().strftime('%Y%m%d_%H%M')}.csv",
-                           "text/csv", key="dl_v30")
+        render_html_table(v2[s2c], height=500, table_id="t2")
+        csv = v2[s2c].to_csv(index=False).encode('utf-8-sig')
+        st.download_button(
+            "📥 CSV 다운로드", csv,
+            f"shipment_alert_{datetime.now().strftime('%Y%m%d_%H%M')}.csv",
+            "text/csv", key="dl_v30")
 
     st.markdown("---")
     r1, r2 = st.columns(2)
     if r1.button("🗑️ 출하계획 초기화", use_container_width=True, key="rs_v30"):
-        for k in ['ship_db','ship_updated','plan_date_cols','note_dict']:
+        for k in ['ship_db', 'ship_updated', 'plan_date_cols', 'note_dict']:
             st.session_state.pop(k, None)
         st.cache_data.clear()
         st.rerun()
     if r2.button("🗑️ 생산실적 초기화", use_container_width=True, key="rp_v30"):
-        for k in ['prod_db','prod_updated']:
+        for k in ['prod_db', 'prod_updated']:
             st.session_state.pop(k, None)
         st.cache_data.clear()
         st.rerun()
