@@ -494,19 +494,23 @@ def parse_time_from_text(text):
 
 
 def split_loss_detail(loss_detail, total_min):
-    """
-    loss_detail을 | 구분자로 분리하고
-    각각 시간 추출 + 유형 분류
-    """
     if not loss_detail or str(loss_detail).strip() in ["", "None", "—", "-"]:
         return [{"detail": "", "min": total_min, "type_code": "ETC",
                  "type_name": "기타", "sub_idx": 1}]
     
-    # | 로 분리
-    parts = [p.strip() for p in str(loss_detail).split("|") if p.strip()]
-    if not parts:
-        return [{"detail": loss_detail, "min": total_min, "type_code": "ETC",
-                 "type_name": "기타", "sub_idx": 1}]
+    raw = str(loss_detail).strip()
+    
+    # ★ | 로 먼저 분리, 없으면 , 로 분리
+    if "|" in raw:
+        parts = [p.strip() for p in raw.split("|") if p.strip()]
+    else:
+        # , 분리 — 단, 시간 패턴 내부의 , 는 보호
+        parts = [p.strip() for p in re.split(r',\s*(?=[A-Za-z])', raw) if p.strip()]
+    
+    if not parts or len(parts) == 1:
+        code, name = classify_loss_type(raw)
+        return [{"detail": raw, "min": total_min, "type_code": code,
+                 "type_name": name, "sub_idx": 1}]
     
     results = []
     allocated = 0.0
@@ -518,39 +522,31 @@ def split_loss_detail(loss_detail, total_min):
         code, name = classify_loss_type(part)
         
         if extracted is not None and extracted > 0:
-            # 명시 시간이 총 시간 초과 방지
             actual = min(extracted, total_min - allocated)
             actual = max(0.0, actual)
             results.append({
-                "detail": part,
-                "min": round(actual, 1),
-                "type_code": code,
-                "type_name": name,
+                "detail": part, "min": round(actual, 1),
+                "type_code": code, "type_name": name,
                 "sub_idx": idx + 1
             })
             allocated += actual
         else:
             no_time_parts.append((idx, part, code, name))
     
-    # 2차: 시간 없는 원인 — 나머지 균등 배분
     remaining = max(0.0, total_min - allocated)
     if no_time_parts:
         each = round(remaining / len(no_time_parts), 1)
         for i, (idx, part, code, name) in enumerate(no_time_parts):
-            # 마지막은 반올림 오차 보정
             if i == len(no_time_parts) - 1:
                 alloc = round(remaining - each * (len(no_time_parts) - 1), 1)
             else:
                 alloc = each
             results.append({
-                "detail": part,
-                "min": max(0.0, alloc),
-                "type_code": code,
-                "type_name": name,
+                "detail": part, "min": max(0.0, alloc),
+                "type_code": code, "type_name": name,
                 "sub_idx": idx + 1
             })
     
-    # sub_idx 재정렬
     results.sort(key=lambda x: x["sub_idx"])
     for i, r in enumerate(results):
         r["sub_idx"] = i + 1
