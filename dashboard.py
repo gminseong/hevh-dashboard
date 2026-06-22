@@ -620,10 +620,17 @@ def split_loss_detail(loss_detail, total_min):
                  "type_name": name, "sub_idx": 1}]
     
     # ★ no problem 파트 먼저 제거
-    parts = [p for p in part
-             if p.strip()
-             and not re.search(r'no\s*prob', p, re.I)
-             and not re.search(r'(hết\s*plan|kết\s*thúc|het\s*plan|ket\s*thuc|done\s*plan)', p, re.I)]
+    cleaned = []
+    for p in parts:
+        if not p.strip():
+            continue
+        pl = p.lower()
+        if re.search(r'no\s*prob', pl):
+            continue
+        if re.search(r'(hết\s*plan|kết\s*thúc|het\s*plan|ket\s*thuc|done\s*plan)', pl):
+            continue
+        cleaned.append(p)
+    parts = cleaned
     if not parts:
         return []
     
