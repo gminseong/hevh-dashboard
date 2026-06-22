@@ -626,6 +626,8 @@ def parse_sheet(ws, process, date_str, shift):
 
                 # 원인별 분리
                 cause_list = extract_causes_with_minutes(cs, lv)
+                st.write(f"INPUT: {cs[:80]}")
+                st.write(f"OUTPUT: {cause_list}")
 
                 # 분배 계산
                 total_stated = sum(m for _, _, m in cause_list if m > 0)
