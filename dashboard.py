@@ -494,58 +494,63 @@ def parse_time_from_text(text):
 
 
 def split_loss_detail(loss_detail, total_min):
+    """
+    loss_detail을 | 구분자로 분리하고
+    각각 시간 추출 + 유형 분류
+    """
     if not loss_detail or str(loss_detail).strip() in ["", "None", "—", "-"]:
         return [{"detail": "", "min": total_min, "type_code": "ETC",
                  "type_name": "기타", "sub_idx": 1}]
     
-    raw = str(loss_detail).strip()
-    
-    # ★ | 로 먼저 분리, 없으면 , 로 분리
-    if "|" in raw:
-        parts = [p.strip() for p in raw.split("|") if p.strip()]
-    else:
-        # , 분리 — 단, 시간 패턴 내부의 , 는 보호
-        parts = [p.strip() for p in re.split(r',\s*(?=[A-Za-z])', raw) if p.strip()]
-    
-    if not parts or len(parts) == 1:
-        code, name = classify_loss_type(raw)
-        return [{"detail": raw, "min": total_min, "type_code": code,
-                 "type_name": name, "sub_idx": 1}]
+    # | 로 분리
+    parts = [p.strip() for p in str(loss_detail).split("|") if p.strip()]
+    if not parts:
+        return [{"detail": loss_detail, "min": total_min, "type_code": "ETC",
+                 "type_name": "기타", "sub_idx": 1}]
     
     results = []
     allocated = 0.0
     no_time_parts = []
     
+    # 1차: 시간 명시된 원인 처리
     for idx, part in enumerate(parts):
         extracted = parse_time_from_text(part)
         code, name = classify_loss_type(part)
         
         if extracted is not None and extracted > 0:
+            # 명시 시간이 총 시간 초과 방지
             actual = min(extracted, total_min - allocated)
             actual = max(0.0, actual)
             results.append({
-                "detail": part, "min": round(actual, 1),
-                "type_code": code, "type_name": name,
+                "detail": part,
+                "min": round(actual, 1),
+                "type_code": code,
+                "type_name": name,
                 "sub_idx": idx + 1
             })
             allocated += actual
         else:
             no_time_parts.append((idx, part, code, name))
     
+    # 2차: 시간 없는 원인 — 나머지 균등 배분
     remaining = max(0.0, total_min - allocated)
     if no_time_parts:
         each = round(remaining / len(no_time_parts), 1)
         for i, (idx, part, code, name) in enumerate(no_time_parts):
+            # 마지막은 반올림 오차 보정
             if i == len(no_time_parts) - 1:
                 alloc = round(remaining - each * (len(no_time_parts) - 1), 1)
             else:
                 alloc = each
             results.append({
-                "detail": part, "min": max(0.0, alloc),
-                "type_code": code, "type_name": name,
+                "detail": part,
+                "min": max(0.0, alloc),
+                "type_code": code,
+                "type_name": name,
                 "sub_idx": idx + 1
             })
     
+    # sub_idx 재정렬
     results.sort(key=lambda x: x["sub_idx"])
     for i, r in enumerate(results):
         r["sub_idx"] = i + 1
@@ -767,13 +772,14 @@ def parse_sheet(ws, process, date_str, shift):
                             if slot_causes.get(s2,""): cs=slot_causes[s2]; break
                     code,name=classify_loss_type(cs)
                     records.append({
-                        "date": date_str, "shift": shift, "process": process,
-                        "line": line, "time_slot": slot, "model": models.get(slot, ""),
-                        "loss_min": round(lv, 1), "loss_type_code": code,
-                        "loss_type_name": name, "complexity": complexity,
-                        "loss_detail": cs, "sub_idx": 1, "action": action
-                     
-                    })
+                        "date":date_str,"shift":shift,"process":process,
+                        "line":line,"time_slot":slot,"model":models.get(slot,""),
+                        "loss_min":round(lv,1),"loss_type_code":code,
+                        "loss_type_name":name,"complexity":complexity,
+                        "loss_detail":cs,"action":action,
+                        "target":0,"actual":0,
+                        "target_mi":0,"actual_mi":0,
+                        "target_ate":0,"actual_ate":0})
 
             if total > 0:
                 # ★ loss_detail 분리
@@ -907,15 +913,15 @@ def save_db(df):       return github_save_csv(df,DB_PATH,"LOSSTIME DB")
 def load_scrap_db():   return github_load_csv(SCRAP_DB)
 def save_scrap_db(df): return github_save_csv(df,SCRAP_DB,"SCRAP DB")
 
-def merge_db(existing, new_df):
+def merge_db(existing,new_df):
     if existing.empty: return new_df
     if new_df.empty:   return existing
-    combined = pd.concat([existing, new_df], ignore_index=True)
-    key = ["date", "shift", "process", "line", "time_slot", "sub_idx"]
-    combined = combined.drop_duplicates(
-        subset=[c for c in key if c in combined.columns], keep="last")
+    combined=pd.concat([existing,new_df],ignore_index=True)
+    key=["date","shift","process","line","time_slot"]
+    combined=combined.drop_duplicates(
+        subset=[c for c in key if c in combined.columns],keep="last")
     return combined.sort_values(
-        ["date", "shift", "process", "line", "time_slot"]).reset_index(drop=True)
+        ["date","shift","process","line","time_slot"]).reset_index(drop=True)
 
 def merge_scrap_db(existing,new_df):
     if existing.empty: return new_df
@@ -1360,6 +1366,63 @@ def dashboard():
                                  yaxis=dict(categoryorder="total ascending"))
                 st.plotly_chart(ft,use_container_width=True)
 
+
+             # ── 날짜별 트렌드 + 시간대별 손실 ──
+            st.markdown("<hr class='section-divider'>", unsafe_allow_html=True)
+
+            col_trend, col_slot = st.columns(2)
+
+            with col_trend:
+                st.markdown("#### 날짜별 손실 트렌드")
+                dt = (total_df.groupby(["date","process"])["loss_min"]
+                      .sum().reset_index())
+                dt["loss_min"] = dt["loss_min"].round(1)
+                fig_t = px.line(dt, x="date", y="loss_min",
+                                color="process",
+                                color_discrete_map=PROC_COLOR,
+                                markers=True, height=280,
+                                labels={"loss_min":"손실(분)","date":"날짜",
+                                        "process":"공정"})
+                fig_t.update_layout(
+                    margin=dict(l=0,r=0,t=10,b=0),
+                    yaxis=dict(rangemode="tozero"),
+                    legend=dict(orientation="h",y=-0.2))
+                st.plotly_chart(fig_t, use_container_width=True)
+
+            with col_slot:
+                st.markdown("#### 시간대별 손실")
+                slot_order = ["A","B","C","D","E","F","G","H","I","J","K"]
+                slot_df2 = df[
+                    (df["date"] >= date_range[0]) &
+                    (df["date"] <= date_range[1]) &
+                    (df["shift"].isin(shifts or ["DAY","NIGHT"])) &
+                    (df["process"].isin(procs or ["AI","SMT","MI"])) &
+                    (df["time_slot"] != "TOTAL")
+                ].copy()
+                if sel_lines:
+                    slot_df2 = slot_df2[slot_df2["line"].isin(sel_lines)]
+
+                if not slot_df2.empty:
+                    ss = (slot_df2.groupby(["time_slot","process"])["loss_min"]
+                          .sum().reset_index())
+                    ss["loss_min"]  = ss["loss_min"].round(1)
+                    ss["time_slot"] = pd.Categorical(
+                        ss["time_slot"], categories=slot_order, ordered=True)
+                    ss = ss.sort_values("time_slot")
+                    fig_s = px.bar(ss, x="time_slot", y="loss_min",
+                                   color="process",
+                                   color_discrete_map=PROC_COLOR,
+                                   barmode="stack", height=280,
+                                   labels={"loss_min":"손실(분)",
+                                           "time_slot":"시간대",
+                                           "process":"공정"})
+                    fig_s.update_layout(
+                        margin=dict(l=0,r=0,t=10,b=0),
+                        yaxis=dict(rangemode="tozero"),
+                        legend=dict(orientation="h",y=-0.2))
+                    st.plotly_chart(fig_s, use_container_width=True)
+                else:
+                    st.info("시간대 데이터 없음")   
 
     # ════════ TAB2 - 라인별 ════════
     with tab2:
