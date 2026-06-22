@@ -774,7 +774,8 @@ def parse_sheet(ws, process, date_str, shift):
                         "loss_detail": cs, "sub_idx": 1, "action": action
                         "target":0,"actual":0,
                         "target_mi":0,"actual_mi":0,
-                        "target_ate":0,"actual_ate":0})
+                        "target_ate":0,"actual_ate":0
+                    })
 
             if total > 0:
                 # ★ loss_detail 분리
