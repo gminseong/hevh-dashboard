@@ -626,6 +626,7 @@ def parse_sheet(ws, process, date_str, shift):
                             break
 
                 # 원인별 분리
+                st.write(f"parse_sheet 실행중: {line} / {slot} / {cs[:30] if cs else 'empty'}")
                 cause_list = extract_causes_with_minutes(cs, lv)
                 # 디버그
                 import streamlit as st
