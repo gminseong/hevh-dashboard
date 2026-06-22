@@ -1,4 +1,27 @@
 ﻿date,shift,process,line,time_slot,model,loss_min,loss_type_code,loss_type_name,complexity,loss_detail,action,target,actual,target_mi,actual_mi,target_ate,actual_ate
+2026-05-04,DAY,MI,MI 2,A,"55""/3in1, M70H, HKC,",71.0,COATING,Coating/Reflow불량,복합,coating error,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-05-04,DAY,MI,MI 2,C,"55""/3in1, M70H",12.0,AOI_SAOI,AOI/S-AOI불량,복합,PC AOI error,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-05-04,DAY,MI,MI 2,D,"55""/3in1, M70H, HKC,",60.0,WAITING_SMT,SMT대기,복합,waiting semi SMT,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-05-04,DAY,MI,MI 2,TOTAL,"55""/3in1, M70H, HKC,",131.0,WAITING_SMT,SMT대기,복합,coating error | waiting semi SMT,,5500.0,3072.0,5500.0,3072.0,0.0,200.0
+2026-05-04,DAY,MI,MI 3,A,L75S7_HVD,10.0,WAVE,Wave Solder불량,복합,Wave soder error,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-05-04,DAY,MI,MI 3,C,"58""/3in1, U8000H",45.0,CHANGE_MODEL,모델교체,복합,3in1' Change model AOI-coating 35min ATE false error 10min,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-05-04,DAY,MI,MI 3,D,L55S7_HVD,32.0,WAITING_SMT,SMT대기,복합,waiting semi pcb,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-05-04,DAY,MI,MI 3,TOTAL,L75S7_HVD,10.0,WAVE,Wave Solder불량,복합,Wave soder error | No problem,,5446.0,3132.0,5446.0,3132.0,5446.0,2558.0
+2026-05-04,DAY,MI,MI 4,A,L65S7_HVD,6.0,COATING,Coating/Reflow불량,복합,Hipot and coating error,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-05-04,DAY,MI,MI 4,C,L55E70NA_HVD,10.0,ETC,기타,복합,waitng H/S MM,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-05-04,DAY,MI,MI 4,D,L65CA9N_HVD,8.0,ICT_ATE,ICT/ATE불량,복합,"FT error (2min), ate error (2min), waiting HS (6min).",,0.0,0.0,0.0,0.0,0.0,0.0
+2026-05-04,DAY,MI,MI 4,TOTAL,L65S7_HVD,6.0,COATING,Coating/Reflow불량,복합,Hipot and coating error | No problem,,5760.0,3554.0,5760.0,3554.0,5760.0,2912.0
+2026-05-04,DAY,MI,MI 5,A,L43E60A_HVD,94.0,WAITING_SMT,SMT대기,복합,"waiting semi PCB (60min), set up coating (13min), ate running 1 floor (18min), ft error (3min).",,0.0,0.0,0.0,0.0,0.0,0.0
+2026-05-04,DAY,MI,MI 5,C,L65CA9N_HVD,15.0,AOI_SAOI,AOI/S-AOI불량,복합,AOI error program 5min PCB nothing MES 200 10min,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-05-04,DAY,MI,MI 5,D,L55F70NA_HHS,30.0,CHANGE_MODEL,모델교체,복합,Change model,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-05-04,DAY,MI,MI 5,TOTAL,L55F70NA_HHS,0.0,COATING,Coating/Reflow불량,단일,UV lamps do not dry the coating | UV lamps do not dry the coating,,3600.0,1988.0,3600.0,1988.0,3600.0,1704.0
+2026-05-04,DAY,MI,MI 6,A,L55E70A_HVD,17.0,COATING,Coating/Reflow불량,복합,Hipot and coating error,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-05-04,DAY,MI,MI 6,C,L65S8_HVD,26.0,ICT_ATE,ICT/ATE불량,복합,ICT error,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-05-04,DAY,MI,MI 6,D,L55E70A_HVD,9.0,ICT_ATE,ICT/ATE불량,복합,"ICT error (6min), Ate error (3min).",,0.0,0.0,0.0,0.0,0.0,0.0
+2026-05-04,DAY,MI,MI 6,TOTAL,L55E70A_HVD,26.0,COATING,Coating/Reflow불량,복합,"Hipot and coating error | ICT error (6min), Ate error (3min).",,3400.0,2020.0,3400.0,2020.0,3400.0,1422.0
+2026-05-04,DAY,MI,MI 7,A,L83CA9N_FHS,156.0,WAVE,Wave Solder불량,복합,"wave solder (122min/ 3 times), MI belt error (14min)",,0.0,0.0,0.0,0.0,0.0,0.0
+2026-05-04,DAY,MI,MI 7,D,L83CA9N_HVD,48.0,COATING,Coating/Reflow불량,복합,"Flux error (7min), Coating error (41min)",,0.0,0.0,0.0,0.0,0.0,0.0
+2026-05-04,DAY,MI,MI 7,TOTAL,L83CA9N_FHS,204.0,COATING,Coating/Reflow불량,복합,"wave solder (122min/ 3 times), MI belt error (14min) | Flux error (7min), Coating error (41min)",,1860.0,916.0,1860.0,916.0,1860.0,562.0
 2026-05-25,DAY,MI,MI 2,C,"55""/3in1, M70H",3.0,ETC,기타,단일,,,0.0,0.0,0.0,0.0,0.0,0.0
 2026-05-25,DAY,MI,MI 2,F,"55""/3in1, M70H",3.0,ETC,기타,단일,,,0.0,0.0,0.0,0.0,0.0,0.0
 2026-05-25,DAY,MI,MI 2,TOTAL,"55""/3in1, M70H",6.0,ETC,기타,단일,,,5360.0,1900.0,5360.0,1900.0,0.0,0.0
