@@ -297,7 +297,7 @@ def analyze(ship_db, prod_db, plan_date_cols, note_dict):
     m['실적차이'] = m['_현재기반_생산'] - m['예상계획']
 
     # ⭐ calc_cutoff_stock: daily_dict_erp 직접 순회
-    def calc_cutoff_stock(code, cutoff_dt):
+ def calc_cutoff_stock(code, cutoff_dt):
         stock = code_stock.get(code, 0)
         
         if pd.isna(cutoff_dt):
@@ -308,7 +308,7 @@ def analyze(ship_db, prod_db, plan_date_cols, note_dict):
         erp_list = code_erp_map.get(code, [])
         production = 0
         
-        # 과거 실적: daily_dict_erp 직접 순회 (일자별 계획 의존 X)
+        # 과거 실적: daily_dict_erp 직접 순회
         for (e, d), qty in daily_dict_erp.items():
             if e not in erp_list:
                 continue
@@ -316,7 +316,7 @@ def analyze(ship_db, prod_db, plan_date_cols, note_dict):
                 continue
             production += qty
         
-        # 미래 계획: 오늘 이후 ~ cutoff 까지
+        # 미래 계획
         for (c, d), plan_qty in code_daily_plan.items():
             if c != code:
                 continue
@@ -325,6 +325,12 @@ def analyze(ship_db, prod_db, plan_date_cols, note_dict):
             if d > cutoff_norm_local:
                 continue
             production += plan_qty
+        
+        # ⭐ 디버그 (특정 code만)
+        if code == 'BN44-01421A':
+            st.warning(f"🔍 {code} cutoff={cutoff_dt}: stock={stock}, "
+                       f"production={production}, erp_list={erp_list}, "
+                       f"daily_keys_match={[k for k in daily_dict_erp if k[0] in erp_list][:3]}")
         
         return stock + production
 
