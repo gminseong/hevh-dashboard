@@ -758,18 +758,17 @@ def parse_files(uploaded_files):
                 ws=wb[sn]
                 if isinstance(ws,Chartsheet): continue
                 shift=detect_shift(sn,fn)
+                ds=fd if fd!="UNKNOWN" else (parse_date(sn) or "UNKNOWN")
+                if ds=="UNKNOWN":
+                    ds=find_date_in_sheet(ws) or "UNKNOWN"
 
-                # 날짜 우선순위: 파일명 → 시트명 → 시트 내부 헤더
-                ds = fd
-                if ds == "UNKNOWN":
-                    ds = parse_date(sn) or "UNKNOWN"
-                if ds == "UNKNOWN":
-                    ds = find_date_in_sheet(ws) or "UNKNOWN"
+                # ↓↓↓ 디버그 추가 ↓↓↓
+                st.write(f"시트: {sn} → 날짜: {ds}")
+                # ↑↑↑ 디버그 추가 ↑↑↑
 
-                if ds == "UNKNOWN":
+                if ds=="UNKNOWN":
                     st.warning(f"날짜 파싱 실패: {fn} / {sn}")
                     continue
-
                 try: loss_records.extend(parse_sheet(ws,process,ds,shift))
                 except Exception as e: st.warning(f"파싱오류[{sn}]: {e}")
         prog.progress((fi+1)/len(uploaded_files))
