@@ -350,7 +350,7 @@ def analyze(ship_db, plan_date_cols, note_dict, prod_db=None):
         avail = float(code_stock.get(ck,0) + code_plan.get(ck,0))
         for i,idx in enumerate(idxs):
             po = float(mdf.loc[idx,'PO'])
-            mdf.loc[idx,'순서'] = f"{i+1}/{len(idxs)}"
+            mdf.loc[idx,'순서'] = f"({i+1}/{len(idxs)})"
             if avail >= po:
                 avail -= po
                 mdf.loc[idx,'예상제품재고_계획'] = avail
