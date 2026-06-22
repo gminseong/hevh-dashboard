@@ -1085,18 +1085,18 @@ def parse_sheet(ws, process, date_str, shift):
                         "actual_mi":round(actual_mi,0),
                         "target_ate":round(target_ate,0),
                         "actual_ate":round(actual_ate,0)})
-            except Exception as _e:
-            code_t,name_t=classify_loss_type(cause_all if cause_all else "")
-            records.append({
-                "date":date_str,"shift":shift,"process":process,
-                "line":line,"time_slot":"TOTAL","model":models.get(slots[0],""),
-                "loss_min":round(total,1),
-                "loss_type_code":code_t,"loss_type_name":name_t,
-                "complexity":complexity,
-                "loss_detail":cause_all,"action":action,
-                "target":round(target_tot,0),"actual":round(actual_tot,0),
-                "target_mi":round(target_mi,0),"actual_mi":round(actual_mi,0),
-                "target_ate":round(target_ate,0),"actual_ate":round(actual_ate,0)})
+        except Exception as _e:
+        code_t,name_t=classify_loss_type(cause_all if cause_all else "")
+        records.append({
+            "date":date_str,"shift":shift,"process":process,
+            "line":line,"time_slot":"TOTAL","model":models.get(slots[0],""),
+            "loss_min":round(total,1),
+            "loss_type_code":code_t,"loss_type_name":name_t,
+            "complexity":complexity,
+            "loss_detail":cause_all,"action":action,
+            "target":round(target_tot,0),"actual":round(actual_tot,0),
+            "target_mi":round(target_mi,0),"actual_mi":round(actual_mi,0),
+            "target_ate":round(target_ate,0),"actual_ate":round(actual_ate,0)})
         i+=1
     return records
 
