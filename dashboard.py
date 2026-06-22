@@ -580,7 +580,9 @@ def split_loss_detail(loss_detail, total_min):
                  "type_name": name, "sub_idx": 1}]
     
     # ★ no problem 파트 먼저 제거
-    parts = [p for p in parts if not re.search(r'no\s*prob', p, re.I)]
+    parts = [p for p in parts
+             if not re.search(r'no\s*prob', p, re.I)
+             and not re.search(r'(hết\s*plan|kết\s*thúc|het\s*plan|ket\s*thuc|done\s*plan)', p, re.I)]
     if not parts:
         return []
     
@@ -625,9 +627,10 @@ def split_loss_detail(loss_detail, total_min):
             })
     
     # ★ 문제없음 최종 제거 + 시간 재배분
-    no_prob_mins = sum(r["min"] for r in results if r["type_name"] == "문제없음")
-    results = [r for r in results if r["type_name"] != "문제없음"]
-    
+    exclude = {"문제없음", "계획완료"}
+    no_prob_mins = sum(r["min"] for r in results if r["type_name"] in exclude)
+    results = [r for r in results if r["type_name"] not in exclude]    
+  
     if not results:
         return []
     
