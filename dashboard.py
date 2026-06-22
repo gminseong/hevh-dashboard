@@ -466,6 +466,7 @@ def classify_loss_type(text):
     return ("ETC","기타")
 
 def extract_causes_with_minutes(cause_text, total_loss):
+    st.write(f"🔍함수호출: {str(cause_text)[:50]}")  # 디버그
     if not cause_text or str(cause_text).strip() in ["", "None", "-"]:
         code, name = classify_loss_type("")
         return [(code, name, total_loss)]
@@ -626,8 +627,12 @@ def parse_sheet(ws, process, date_str, shift):
 
                 # 원인별 분리
                 cause_list = extract_causes_with_minutes(cs, lv)
-                st.write(f"INPUT: {cs[:80]}")
-                st.write(f"OUTPUT: {cause_list}")
+                # 디버그
+                import streamlit as st
+                if cs and len(cause_list) == 1:
+                    st.write(f"미분리: [{cs[:60]}] → {cause_list[0][1]}")
+                elif cs and len(cause_list) > 1:
+                    st.write(f"✅분리: [{cs[:60]}] → {[(n,m) for _,n,m in cause_list]}")
 
                 # 분배 계산
                 total_stated = sum(m for _, _, m in cause_list if m > 0)
