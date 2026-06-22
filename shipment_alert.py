@@ -537,18 +537,12 @@ def render_shipment_alert_tab():
     # ── GitHub DB 자동 로드 ───────────────────────────────
     if 'ship_db' not in st.session_state or st.session_state.get('ship_db', pd.DataFrame()).empty:
         with st.spinner("📂 출하계획 DB 로드 중..."):
-            df = _gh_load_xlsx("data/shipment.xlsx")
+            df = _gh_load_csv("data/shipment_db.csv")
             if not df.empty:
-                file_bytes = io.BytesIO()
-                df.to_excel(file_bytes, index=False)
-                file_bytes = file_bytes.getvalue()
-                loaded_df, p_cols = load_shipment_rev(file_bytes)
-                notes = load_sheet1_notes(file_bytes)
-                if not loaded_df.empty:
-                    st.session_state['ship_db']        = loaded_df
-                    st.session_state['plan_date_cols'] = p_cols
-                    st.session_state['note_dict']      = notes
-                    st.session_state['ship_updated']   = '📂 DB 로드'
+                st.session_state['ship_db']        = df
+                st.session_state['plan_date_cols'] = st.session_state.get('plan_date_cols', [])
+                st.session_state['note_dict']      = st.session_state.get('note_dict', {})
+                st.session_state['ship_updated']   = '📂 DB 로드'
 
     if 'prod_db' not in st.session_state or st.session_state.get('prod_db', pd.DataFrame()).empty:
         with st.spinner("📂 생산실적 DB 로드 중..."):
@@ -597,7 +591,7 @@ def render_shipment_alert_tab():
                         st.session_state['plan_date_cols'] = p_cols
                         st.session_state['note_dict']      = notes
                         st.session_state['ship_updated']   = datetime.now().strftime('%m-%d %H:%M')
-                        ok = _gh_save_xlsx(fb, "data/shipment.xlsx")
+                        ok = _gh_save_csv(df, "data/shipment_db.csv")
                         st.success(f"✅ 출하계획 {len(df)}건 {'💾 저장' if ok else '⚠️ 저장실패'}")
                 elif f.name.lower().endswith('.csv'):
                     df = read_csv_cached(fb)
