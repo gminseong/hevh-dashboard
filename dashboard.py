@@ -194,7 +194,7 @@ st.markdown("""
 /* 사이드바 */
 section[data-testid="stSidebar"] {
     min-width: 240px !important;
-    max-width: 260px !important;
+    max-width: 300px !important;
     background-color: #f1f5f9 !important;
 }
 section[data-testid="stSidebar"] .block-container {
@@ -465,6 +465,98 @@ def classify_loss_type(text):
             if kw in t: return (code,name)
     return ("ETC","기타")
 
+def parse_time_from_text(text):
+    """텍스트에서 시간(분) 추출"""
+    t = str(text).strip()
+    
+    # 패턴1: (6MIN) / 6min / 6 min
+    m = re.search(r'(\d+)\s*min', t, re.I)
+    if m: return float(m.group(1))
+    
+    # 패턴2: (6분) / 6분
+    m = re.search(r'(\d+)\s*분', t)
+    if m: return float(m.group(1))
+    
+    # 패턴3: 30' (분 표기)
+    m = re.search(r"(\d+)\s*'", t)
+    if m: return float(m.group(1))
+    
+    # 패턴4: 10:30-12:00 (시간 범위)
+    m = re.search(r'(\d{1,2}):(\d{2})\s*[-~]\s*(\d{1,2}):(\d{2})', t)
+    if m:
+        start = int(m.group(1)) * 60 + int(m.group(2))
+        end   = int(m.group(3)) * 60 + int(m.group(4))
+        if end < start: end += 24 * 60  # 자정 넘김
+        diff = end - start
+        if 0 < diff < 720: return float(diff)
+    
+    return None  # 시간 정보 없음
+
+
+def split_loss_detail(loss_detail, total_min):
+    """
+    loss_detail을 | 구분자로 분리하고
+    각각 시간 추출 + 유형 분류
+    """
+    if not loss_detail or str(loss_detail).strip() in ["", "None", "—", "-"]:
+        return [{"detail": "", "min": total_min, "type_code": "ETC",
+                 "type_name": "기타", "sub_idx": 1}]
+    
+    # | 로 분리
+    parts = [p.strip() for p in str(loss_detail).split("|") if p.strip()]
+    if not parts:
+        return [{"detail": loss_detail, "min": total_min, "type_code": "ETC",
+                 "type_name": "기타", "sub_idx": 1}]
+    
+    results = []
+    allocated = 0.0
+    no_time_parts = []
+    
+    # 1차: 시간 명시된 원인 처리
+    for idx, part in enumerate(parts):
+        extracted = parse_time_from_text(part)
+        code, name = classify_loss_type(part)
+        
+        if extracted is not None and extracted > 0:
+            # 명시 시간이 총 시간 초과 방지
+            actual = min(extracted, total_min - allocated)
+            actual = max(0.0, actual)
+            results.append({
+                "detail": part,
+                "min": round(actual, 1),
+                "type_code": code,
+                "type_name": name,
+                "sub_idx": idx + 1
+            })
+            allocated += actual
+        else:
+            no_time_parts.append((idx, part, code, name))
+    
+    # 2차: 시간 없는 원인 — 나머지 균등 배분
+    remaining = max(0.0, total_min - allocated)
+    if no_time_parts:
+        each = round(remaining / len(no_time_parts), 1)
+        for i, (idx, part, code, name) in enumerate(no_time_parts):
+            # 마지막은 반올림 오차 보정
+            if i == len(no_time_parts) - 1:
+                alloc = round(remaining - each * (len(no_time_parts) - 1), 1)
+            else:
+                alloc = each
+            results.append({
+                "detail": part,
+                "min": max(0.0, alloc),
+                "type_code": code,
+                "type_name": name,
+                "sub_idx": idx + 1
+            })
+    
+    # sub_idx 재정렬
+    results.sort(key=lambda x: x["sub_idx"])
+    for i, r in enumerate(results):
+        r["sub_idx"] = i + 1
+    
+    return results
+
 def classify_scrap_cause(comment):
     if not comment: return ("AUTO","자동판정(ATE)")
     t = str(comment).lower()
@@ -689,20 +781,40 @@ def parse_sheet(ws, process, date_str, shift):
                         "target_mi":0,"actual_mi":0,
                         "target_ate":0,"actual_ate":0})
 
-            if total>0 or (target_tot+actual_tot)>0:
-                code_t,name_t=classify_loss_type(cause_all)
-                records.append({
-                    "date":date_str,"shift":shift,"process":process,
-                    "line":line,"time_slot":"TOTAL","model":models.get(slots[0],""),
-                    "loss_min":round(total,1),"loss_type_code":code_t,
-                    "loss_type_name":name_t,"complexity":complexity,
-                    "loss_detail":cause_all,"action":action,
-                    "target":round(target_tot,0),
-                    "actual":round(actual_tot,0),
-                    "target_mi":round(target_mi,0),
-                    "actual_mi":round(actual_mi,0),
-                    "target_ate":round(target_ate,0),
-                    "actual_ate":round(actual_ate,0)})
+            if total > 0:
+                # ★ loss_detail 분리
+                sub_details = split_loss_detail(cause_all, total)
+                
+                if len(sub_details) == 1:
+                    # 단일 원인
+                    sd = sub_details[0]
+                    records.append({
+                        "date": date_str, "shift": shift, "process": process,
+                        "line": line, "time_slot": "TOTAL",
+                        "model": models.get(slots[0], ""),
+                        "loss_min": round(total, 1),
+                        "loss_type_code": sd["type_code"],
+                        "loss_type_name": sd["type_name"],
+                        "complexity": "단일",
+                        "loss_detail": sd["detail"],
+                        "sub_idx": 1,
+                        "action": action
+                    })
+                else:
+                    # 복합 원인 — 분리된 각 행
+                    for sd in sub_details:
+                        records.append({
+                            "date": date_str, "shift": shift, "process": process,
+                            "line": line, "time_slot": "TOTAL",
+                            "model": models.get(slots[0], ""),
+                            "loss_min": sd["min"],
+                            "loss_type_code": sd["type_code"],
+                            "loss_type_name": sd["type_name"],
+                            "complexity": "복합",
+                            "loss_detail": sd["detail"],
+                            "sub_idx": sd["sub_idx"],
+                            "action": action
+                        })
         i+=1
     return records
 
@@ -1253,6 +1365,64 @@ def dashboard():
                                  xaxis=dict(rangemode="tozero"),
                                  yaxis=dict(categoryorder="total ascending"))
                 st.plotly_chart(ft,use_container_width=True)
+
+
+             # ── 날짜별 트렌드 + 시간대별 손실 ──
+            st.markdown("<hr class='section-divider'>", unsafe_allow_html=True)
+
+            col_trend, col_slot = st.columns(2)
+
+            with col_trend:
+                st.markdown("#### 날짜별 손실 트렌드")
+                dt = (total_df.groupby(["date","process"])["loss_min"]
+                      .sum().reset_index())
+                dt["loss_min"] = dt["loss_min"].round(1)
+                fig_t = px.line(dt, x="date", y="loss_min",
+                                color="process",
+                                color_discrete_map=PROC_COLOR,
+                                markers=True, height=280,
+                                labels={"loss_min":"손실(분)","date":"날짜",
+                                        "process":"공정"})
+                fig_t.update_layout(
+                    margin=dict(l=0,r=0,t=10,b=0),
+                    yaxis=dict(rangemode="tozero"),
+                    legend=dict(orientation="h",y=-0.2))
+                st.plotly_chart(fig_t, use_container_width=True)
+
+            with col_slot:
+                st.markdown("#### 시간대별 손실")
+                slot_order = ["A","B","C","D","E","F","G","H","I","J","K"]
+                slot_df2 = df[
+                    (df["date"] >= date_range[0]) &
+                    (df["date"] <= date_range[1]) &
+                    (df["shift"].isin(shifts or ["DAY","NIGHT"])) &
+                    (df["process"].isin(procs or ["AI","SMT","MI"])) &
+                    (df["time_slot"] != "TOTAL")
+                ].copy()
+                if sel_lines:
+                    slot_df2 = slot_df2[slot_df2["line"].isin(sel_lines)]
+
+                if not slot_df2.empty:
+                    ss = (slot_df2.groupby(["time_slot","process"])["loss_min"]
+                          .sum().reset_index())
+                    ss["loss_min"]  = ss["loss_min"].round(1)
+                    ss["time_slot"] = pd.Categorical(
+                        ss["time_slot"], categories=slot_order, ordered=True)
+                    ss = ss.sort_values("time_slot")
+                    fig_s = px.bar(ss, x="time_slot", y="loss_min",
+                                   color="process",
+                                   color_discrete_map=PROC_COLOR,
+                                   barmode="stack", height=280,
+                                   labels={"loss_min":"손실(분)",
+                                           "time_slot":"시간대",
+                                           "process":"공정"})
+                    fig_s.update_layout(
+                        margin=dict(l=0,r=0,t=10,b=0),
+                        yaxis=dict(rangemode="tozero"),
+                        legend=dict(orientation="h",y=-0.2))
+                    st.plotly_chart(fig_s, use_container_width=True)
+                else:
+                    st.info("시간대 데이터 없음")   
 
     # ════════ TAB2 - 라인별 ════════
     with tab2:
