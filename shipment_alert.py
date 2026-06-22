@@ -59,6 +59,23 @@ def _gh_save_csv(df, filename):
         return r.status_code in [200, 201]
     except: return False
 
+def _gh_delete(filename):
+    token, repo = _gh_config()
+    if not token: return False
+    url = f"https://api.github.com/repos/{repo}/contents/{filename}"
+    headers = {"Authorization": f"token {token}",
+               "Accept": "application/vnd.github.v3+json"}
+    try:
+        r = requests.get(url, headers=headers, timeout=10)
+        if r.status_code == 200:
+            sha = r.json().get("sha")
+            requests.delete(url, headers=headers,
+                json={"message": f"DELETE:{filename}", "sha": sha},
+                timeout=10)
+            return True
+    except: pass
+    return False
+
 
 # ════════════════════════════════════════════════════════════
 # 캐시
@@ -683,11 +700,14 @@ def render_shipment_alert_tab():
                      use_container_width=True, key="rs_v30"):
             for k in ['ship_db','ship_updated','plan_date_cols','note_dict']:
                 st.session_state.pop(k, None)
+            _gh_delete("data/shipment_db.csv")
+            _gh_delete("data/note_db.csv")    
             st.cache_data.clear(); st.rerun()
         if st.button("🗑️ 생산실적 초기화",
                      use_container_width=True, key="rp_v30"):
             for k in ['prod_db','prod_updated']:
                 st.session_state.pop(k, None)
+            _gh_delete("data/production.csv")    
             st.cache_data.clear(); st.rerun()
 
     # ── 분석 ─────────────────────────────────────────────
