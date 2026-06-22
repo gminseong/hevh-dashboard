@@ -772,7 +772,7 @@ def parse_sheet(ws, process, date_str, shift):
                         "line": line, "time_slot": slot, "model": models.get(slot, ""),
                         "loss_min": round(lv, 1), "loss_type_code": code,
                         "loss_type_name": name, "complexity": complexity,
-                        "loss_detail": cs, "sub_idx": 1, "action": action
+                        "loss_detail": cs, "sub_idx": 1, "action": action,
                         "target":0,"actual":0,
                         "target_mi":0,"actual_mi":0,
                         "target_ate":0,"actual_ate":0})
