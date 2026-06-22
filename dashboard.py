@@ -473,13 +473,12 @@ def extract_causes_with_minutes(cause_text, total_loss):
     t = str(cause_text).strip()
     results = []
 
-    # 패턴 1: "원인 (Nmin)" - 괄호 있음
     p1 = re.findall(r'([^,;\|\n\(]+)\s*\((\d+)\s*[Mm]in[^\)]*\)', t)
-
-    # 패턴 2: "원인 Nmin" - 괄호 없음
     p2 = re.findall(r'([^,;\|\n]+?)\s+(\d+)\s*[Mm]in\b', t)
-
     patterns = p1 if p1 else p2
+
+    # ← 디버그 추가
+    st.sidebar.warning(f"p1={len(p1)} p2={len(p2)} | {t[:40]}")
 
     if patterns:
         for desc, mins in patterns:
