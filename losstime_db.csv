@@ -1,1 +1,1040 @@
-﻿
+﻿date,shift,process,line,time_slot,model,loss_min,loss_type_code,loss_type_name,complexity,loss_detail,action,target,actual,target_mi,actual_mi,target_ate,actual_ate
+2026-06-21,DAY,AI,SA01,A,L65S7,23.0,CHANGE_MODEL,모델교체,복합,"Change model đầu ca , máy rh3-rad cắm rớt nhiều , không ổn định","vừa chạy vừa xử lý | Stop line xử lý ,bốc hàng chờ thả",0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-21,DAY,AI,SA01,C,L65S7,29.0,ETC,기타,복합,Rad kẹt xich 13:30 -15:00 eye 2.0 lỗi 15:45-16:00,"vừa chạy vừa xử lý | Stop line xử lý ,bốc hàng chờ thả",0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-21,DAY,AI,SA01,D,L65S7,53.0,CHANGE_MODEL,모델교체,복합,"Change model đầu ca , máy rh3-rad cắm rớt nhiều , không ổn định","vừa chạy vừa xử lý | Stop line xử lý ,bốc hàng chờ thả",0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-21,DAY,AI,SA01,E,L65S7,19.0,INSERT_XGZ,XGZ불량,복합,Rad - XZG cắm rớt : 17:40-18:00,"vừa chạy vừa xử lý | Stop line xử lý ,bốc hàng chờ thả",0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-21,DAY,AI,SA01,F,L65S7,70.0,INSERT_XGZ,XGZ불량,복합,XZG lỗi 18:00-18:47 Rad lỗi cutter 19:15-19:45,"vừa chạy vừa xử lý | Stop line xử lý ,bốc hàng chờ thả",0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-21,DAY,AI,SA01,TOTAL,L65S7,194.0,CHANGE_MODEL,모델교체,복합,"Change model đầu ca , máy rh3-rad cắm rớt nhiều , không ổn định | Rad kẹt xich 13:30 -15:00 eye 2.0 lỗi 15:45-16:00 | Rad - XZG cắm rớt : 17:40-18:00 | XZG lỗi 18:00-18:47 Rad lỗi cutter 19:15-19:45","vừa chạy vừa xử lý | Stop line xử lý ,bốc hàng chờ thả",2030.0,1376.0,0.0,0.0,0.0,0.0
+2026-06-21,DAY,AI,SA02,A,L75S7-FVD,7.0,INSERT_RH3,RH3삽입불량,복합,"RH3 không cắt giấy , cắm rớt nhiều","thiếu nhân lực xử lý , op xử lý lâu . | Stop line xử lý .",0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-21,DAY,AI,SA02,C,L75S7-HVD,26.0,INSERT_RH3,RH3삽입불량,복합,"RH3 không cắt giấy , cắm rớt nhiều","thiếu nhân lực xử lý , op xử lý lâu . | Stop line xử lý .",0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-21,DAY,AI,SA02,D,L75S7-HVD,48.0,INSERT_JUMP,Jumper불량,복합,Jumper lỗi 14:00-14:30,"thiếu nhân lực xử lý , op xử lý lâu . | Stop line xử lý .",0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-21,DAY,AI,SA02,E,L75S7-HVD,23.0,INSERT_RH3,RH3삽입불량,복합,"RH3 không cắt giấy , cắm rớt nhiều","thiếu nhân lực xử lý , op xử lý lâu . | Stop line xử lý .",0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-21,DAY,AI,SA02,F,L75S7-HVD,49.0,INSERT_RH3,RH3삽입불량,복합,xzg không cắt liệu 18:15 -18:45 . Rh3 kẹt liệu cắm rớt .,"thiếu nhân lực xử lý , op xử lý lâu . | Stop line xử lý .",0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-21,DAY,AI,SA02,TOTAL,L75S7-FVD,153.0,INSERT_RH3,RH3삽입불량,복합,"RH3 không cắt giấy , cắm rớt nhiều | Jumper lỗi 14:00-14:30 | xzg không cắt liệu 18:15 -18:45 . Rh3 kẹt liệu cắm rớt .","thiếu nhân lực xử lý , op xử lý lâu . | Stop line xử lý .",1467.0,1030.0,0.0,0.0,0.0,0.0
+2026-06-21,DAY,AI,SA03,A,L55CA9N,25.0,MAGAZINE,Magazine부족,복합,không đủ maga sắt SX,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-21,DAY,AI,SA03,F,L55E70A,32.0,MAGAZINE,Magazine부족,복합,không đủ maga sắt SX,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-21,DAY,AI,SA03,TOTAL,L55CA9N,57.0,MAGAZINE,Magazine부족,복합,không đủ maga sắt SX | Change model,,1180.0,1100.0,0.0,0.0,0.0,0.0
+2026-06-21,DAY,AI,SA04,A,L55S7,15.0,CHANGE_MODEL,모델교체,복합,Change model 55=>65HVD,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-21,DAY,AI,SA04,D,L65S7,30.0,INSERT_JUMP,Jumper불량,복합,Jumper lỗi 15:30-16:30,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-21,DAY,AI,SA04,E,L65S7,30.0,CHANGE_MODEL,모델교체,복합,Change model 55=>65HVD,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-21,DAY,AI,SA04,F,L65S7,43.0,CHANGE_MODEL,모델교체,복합,Change model 55=>65HVD,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-21,DAY,AI,SA04,TOTAL,L55S7,118.0,CHANGE_MODEL,모델교체,복합,Change model 55=>65HVD | Jumper lỗi 15:30-16:30,,1830.0,1420.0,0.0,0.0,0.0,0.0
+2026-06-21,DAY,AI,SA05,A,L83CA9N,100.0,MAGAZINE,Magazine부족,단일,không đủ maga sắt SX,đóng box,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-21,DAY,AI,SA05,B,L83CA9N,7.0,MAGAZINE,Magazine부족,단일,không đủ maga sắt SX,đóng box,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-21,DAY,AI,SA05,C,L83CA9N,8.0,MAGAZINE,Magazine부족,단일,không đủ maga sắt SX,đóng box,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-21,DAY,AI,SA05,F,L83CA9N,6.0,MAGAZINE,Magazine부족,단일,không đủ maga sắt SX,đóng box,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-21,DAY,AI,SA05,TOTAL,L83CA9N,121.0,MAGAZINE,Magazine부족,단일,không đủ maga sắt SX,đóng box,650.0,529.0,0.0,0.0,0.0,0.0
+2026-06-21,DAY,AI,SA07,B,L53E70A,45.0,INSERT_AXIAL,Axial불량,복합,Axial lỗi 9:30-10:30,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-21,DAY,AI,SA07,C,L53E70A,47.0,ETC,기타,복합,không đủ nhân lực vận hành,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-21,DAY,AI,SA07,D,L53E70A,7.0,INSERT_RH3,RH3삽입불량,복합,Rh3 cắm rớt,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-21,DAY,AI,SA07,TOTAL,L53E70A,99.0,INSERT_RH3,RH3삽입불량,복합,Axial lỗi 9:30-10:30 | không đủ nhân lực vận hành | Rh3 cắm rớt,,1377.0,1210.0,0.0,0.0,0.0,0.0
+2026-06-21,DAY,AI,SA08,A,L55E70A,13.0,ICT_ATE,ICT/ATE불량,단일,Update new code,Line thả hàng cover 65E70,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-21,DAY,AI,SA08,TOTAL,L55E70A,13.0,ICT_ATE,ICT/ATE불량,단일,Update new code,Line thả hàng cover 65E70,280.0,250.0,0.0,0.0,0.0,0.0
+2026-06-21,DAY,AI,SA10,A,L55F70NA,64.0,MAGAZINE,Magazine부족,복합,không đủ maga sắt SX,đóng box | vừa chạy vừa xử lý .,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-21,DAY,AI,SA10,E,L55F70NA,23.0,INSERT_RH3,RH3삽입불량,복합,Rh3 lỗi giả,đóng box | vừa chạy vừa xử lý .,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-21,DAY,AI,SA10,TOTAL,L55F70NA,87.0,MAGAZINE,Magazine부족,복합,không đủ maga sắt SX | Rh3 lỗi giả,đóng box | vừa chạy vừa xử lý .,1300.0,1096.0,0.0,0.0,0.0,0.0
+2026-06-21,NIGHT,AI,SA01,F,L65S7,17.0,ETC,기타,복합,Rad cắm rớt lk,kỹ thuật vừa chạy vừa xử lý | kỹ thuật vừa chạy vừa xử lý,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-21,NIGHT,AI,SA01,I,L65S7,39.0,INSERT_JUMP,Jumper불량,복합,Jump lỗi,kỹ thuật vừa chạy vừa xử lý | kỹ thuật vừa chạy vừa xử lý,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-21,NIGHT,AI,SA01,TOTAL,L65S7,56.0,INSERT_JUMP,Jumper불량,복합,Rad cắm rớt lk | Jump lỗi | done plan,kỹ thuật vừa chạy vừa xử lý | kỹ thuật vừa chạy vừa xử lý,2100.0,1799.0,0.0,0.0,0.0,0.0
+2026-06-21,NIGHT,AI,SA02,F,L75S7,20.0,ETC,기타,복합,Đứt Jump,kỹ thuật vừa chạy vừa xử lý | kỹ thuật stop line xử lý,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-21,NIGHT,AI,SA02,H,L75S7,42.0,ETC,기타,복합,Máy JV 131 lỗi từ 1:15 -2:00,kỹ thuật vừa chạy vừa xử lý | kỹ thuật stop line xử lý,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-21,NIGHT,AI,SA02,TOTAL,L75S7,62.0,INSERT_JUMP,Jumper불량,복합,Đứt Jump | Máy JV 131 lỗi từ 1:15 -2:00,kỹ thuật vừa chạy vừa xử lý | kỹ thuật stop line xử lý,1700.0,1517.0,0.0,0.0,0.0,0.0
+2026-06-21,NIGHT,AI,SA03,F,L55E70A,19.0,ETC,기타,복합,Vaccum lỗi,kỹ thuật vừa chạy vừa xử lý,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-21,NIGHT,AI,SA03,TOTAL,L55E70A,19.0,CHANGE_MODEL,모델교체,복합,Vaccum lỗi | done plan | Change model,kỹ thuật vừa chạy vừa xử lý,1275.0,1322.0,0.0,0.0,0.0,0.0
+2026-06-21,NIGHT,AI,SA04,F,L65S7,49.0,ETC,기타,복합,Rad lỗi insert,kỹ thuật vừa chạy vừa xử lý | kỹ thuật vừa chạy vừa xử lý,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-21,NIGHT,AI,SA04,I,L65S7,11.0,ETC,기타,복합,Máy Rad lỗi cắm rớt lk,kỹ thuật vừa chạy vừa xử lý | kỹ thuật vừa chạy vừa xử lý,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-21,NIGHT,AI,SA04,J,L65S7,28.0,ETC,기타,복합,Rad lỗi insert,kỹ thuật vừa chạy vừa xử lý | kỹ thuật vừa chạy vừa xử lý,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-21,NIGHT,AI,SA04,TOTAL,L65S7,88.0,ETC,기타,복합,Rad lỗi insert | Máy Rad lỗi cắm rớt lk,kỹ thuật vừa chạy vừa xử lý | kỹ thuật vừa chạy vừa xử lý,2100.0,1763.0,0.0,0.0,0.0,0.0
+2026-06-21,NIGHT,AI,SA05,G,L83CA9N,2.0,ETC,기타,복합,code liệu 271800591CAF không cùng kích cỡ với feeder nên không chạy được,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-21,NIGHT,AI,SA05,I,L83CA9N,29.0,ETC,기타,복합,code liệu 271800591CAF không cùng kích cỡ với feeder nên không chạy được,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-21,NIGHT,AI,SA05,J,L83CA9N,72.0,ETC,기타,복합,code liệu 271800591CAF không cùng kích cỡ với feeder nên không chạy được,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-21,NIGHT,AI,SA05,TOTAL,L83CA9N,103.0,CHANGE_MODEL,모델교체,복합,code liệu 271800591CAF không cùng kích cỡ với feeder nên không chạy được | Change model,,660.0,415.0,0.0,0.0,0.0,0.0
+2026-06-21,NIGHT,AI,SA07,H,L55E70A,8.0,ETC,기타,단일,,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-21,NIGHT,AI,SA07,TOTAL,L55E70A,8.0,ETC,기타,단일,,,1500.0,1723.0,0.0,0.0,0.0,0.0
+2026-06-21,NIGHT,AI,SA10,TOTAL,L55F70NA,0.0,ETC,기타,단일,,,1445.0,1421.0,0.0,0.0,0.0,0.0
+2026-06-21,DAY,SMT,PS01,B,L55C9N_HVD,20.0,PRINTER,Printer불량,복합,Máy printer bị đơ,kỹ thuật điểu chỉnh | kỹ thuật điểu chỉnh,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-21,DAY,SMT,PS01,D,L55C9N_HVD,30.0,PRINTER,Printer불량,복합,Printer lổi nghẹt keo,kỹ thuật điểu chỉnh | kỹ thuật điểu chỉnh,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-21,DAY,SMT,PS01,TOTAL,L55C9N_HVD,50.0,CHANGE_MODEL,모델교체,복합,Máy printer bị đơ | Printer lổi nghẹt keo | Change model L75E70NA từ 17:30 | Change model L75E70NA từ 17:30,kỹ thuật điểu chỉnh | kỹ thuật điểu chỉnh,1375.0,873.0,0.0,0.0,0.0,0.0
+2026-06-21,DAY,SMT,PS02,A,L65S7_HVD,60.0,CHANGE_MODEL,모델교체,복합,Change model L65S7_HVD LÚC 7:45-8:40,kỹ thuật điểu chỉnh | kỹ thuật điểu chỉnh,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-21,DAY,SMT,PS02,C,L65S7_HVD,28.0,ETC,기타,복합,lỗi văng linh kiện,kỹ thuật điểu chỉnh | kỹ thuật điểu chỉnh,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-21,DAY,SMT,PS02,D,L65S7_HVD,53.0,ETC,기타,복합,lỗi văng linh kiện,kỹ thuật điểu chỉnh | kỹ thuật điểu chỉnh,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-21,DAY,SMT,PS02,E,L65S7_HVD,30.0,ETC,기타,복합,op mới,kỹ thuật điểu chỉnh | kỹ thuật điểu chỉnh,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-21,DAY,SMT,PS02,TOTAL,L65S7_HVD,171.0,CHANGE_MODEL,모델교체,복합,Change model L65S7_HVD LÚC 7:45-8:40 | lỗi văng linh kiện | lỗi văng linh kiện | op mới | kết thúc plan,kỹ thuật điểu chỉnh | kỹ thuật điểu chỉnh,2750.0,2030.0,0.0,0.0,0.0,0.0
+2026-06-21,DAY,SMT,PS03,A,L55F70NA_HHS,16.0,MOUTER,Mouter불량,복합,mounter #2 lỗi feeder,kỹ thuật điểu chỉnh | kỹ thuật điểu chỉnh | kỹ thuật điểu chỉnh,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-21,DAY,SMT,PS03,B,L55F70NA_HHS,10.0,ETC,기타,복합,lỗi pickup,kỹ thuật điểu chỉnh | kỹ thuật điểu chỉnh | kỹ thuật điểu chỉnh,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-21,DAY,SMT,PS03,C,L55F70NA_HHS,35.0,ETC,기타,복합,OP mới,kỹ thuật điểu chỉnh | kỹ thuật điểu chỉnh | kỹ thuật điểu chỉnh,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-21,DAY,SMT,PS03,D,L55F70NA_HHS,10.0,ETC,기타,복합,OP mới,kỹ thuật điểu chỉnh | kỹ thuật điểu chỉnh | kỹ thuật điểu chỉnh,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-21,DAY,SMT,PS03,E,L55F70NA_HHS,45.0,ETC,기타,복합,lỗi feeder & thay feeder,kỹ thuật điểu chỉnh | kỹ thuật điểu chỉnh | kỹ thuật điểu chỉnh,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-21,DAY,SMT,PS03,F,L55F70NA_HHS,30.0,ETC,기타,복합,OP mới,kỹ thuật điểu chỉnh | kỹ thuật điểu chỉnh | kỹ thuật điểu chỉnh,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-21,DAY,SMT,PS03,TOTAL,L55F70NA_HHS,146.0,MOUTER,Mouter불량,복합,mounter #2 lỗi feeder | lỗi pickup | OP mới | OP mới | lỗi feeder & thay feeder | OP mới,kỹ thuật điểu chỉnh | kỹ thuật điểu chỉnh | kỹ thuật điểu chỉnh,1375.0,1080.0,0.0,0.0,0.0,0.0
+2026-06-21,DAY,SMT,PS04,A,L55CA9N,59.0,PRINTER,Printer불량,복합,"MOUNTER 3 KẸT BOARD , MÁY PRINTER NGHẸT KEO",kỹ thuật điểu chỉnh,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-21,DAY,SMT,PS04,C,L65S7_HVD,65.0,ETC,기타,복합,SẢN XUẤT LÚC 12:30,kỹ thuật điểu chỉnh,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-21,DAY,SMT,PS04,D,L65S7_HVD,60.0,SPI,SPI불량,복합,lỗi máy SPI bị đơ,kỹ thuật điểu chỉnh,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-21,DAY,SMT,PS04,E,L65S7_HVD,10.0,ETC,기타,복합,lỗi pickup,kỹ thuật điểu chỉnh,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-21,DAY,SMT,PS04,F,L65S7_HVD,30.0,ETC,기타,복합,lỗi pickup,kỹ thuật điểu chỉnh,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-21,DAY,SMT,PS04,TOTAL,L55CA9N,224.0,CHANGE_MODEL,모델교체,복합,"MOUNTER 3 KẸT BOARD , MÁY PRINTER NGHẸT KEO | change model L65S7:HVD LÚC 9:30 | SẢN XUẤT LÚC 12:30 | lỗi máy SPI bị đơ | lỗi pickup | lỗi pickup",kỹ thuật điểu chỉnh,2530.0,1336.0,0.0,0.0,0.0,0.0
+2026-06-21,DAY,SMT,PS05,A,L55S7_HVD,10.0,ETC,기타,복합,op mới,kỹ thuật điểu chỉnh | kỹ thuật điểu chỉnh,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-21,DAY,SMT,PS05,B,L55S7_HVD,32.0,MOUTER,Mouter불량,복합,Máy mounter #2 lỗi pickup liên tục,kỹ thuật điểu chỉnh | kỹ thuật điểu chỉnh,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-21,DAY,SMT,PS05,C,L55S7_HVD,44.0,ETC,기타,복합,lỗi scan sót công đoạn AI,kỹ thuật điểu chỉnh | kỹ thuật điểu chỉnh,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-21,DAY,SMT,PS05,D,L55S7_HVD,40.0,ETC,기타,복합,lổi cắm lệch linh kiện,kỹ thuật điểu chỉnh | kỹ thuật điểu chỉnh,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-21,DAY,SMT,PS05,E,L55S7_HVD,30.0,ETC,기타,복합,kết thúc plan,kỹ thuật điểu chỉnh | kỹ thuật điểu chỉnh,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-21,DAY,SMT,PS05,TOTAL,L55S7_HVD,156.0,CHANGE_MODEL,모델교체,복합,op mới | Máy mounter #2 lỗi pickup liên tục | lỗi scan sót công đoạn AI | lổi cắm lệch linh kiện | kết thúc plan | Change model L65S7_FVD LÚC 17:30,kỹ thuật điểu chỉnh | kỹ thuật điểu chỉnh,2750.0,1600.0,0.0,0.0,0.0,0.0
+2026-06-21,DAY,SMT,PS08,D,L43E60A_HVD,40.0,MOUTER,Mouter불량,복합,Máy mounter #2 lỗi feeder & thay feeder,kỹ thuật điểu chỉnh,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-21,DAY,SMT,PS08,TOTAL,L43E60A_HVD,40.0,MOUTER,Mouter불량,복합,Máy mounter #2 lỗi feeder & thay feeder | kết thúc plan,kỹ thuật điểu chỉnh,1375.0,1399.0,0.0,0.0,0.0,0.0
+2026-06-21,DAY,SMT,PS11,A,L83CA9N_HVD,41.0,PRINTER,Printer불량,복합,"Máy printer nghẹt keo , mounter #3 lỗi feeder",kỹ thuật điểu chỉnh | kỹ thuật điểu chỉnh | kỹ thuật điểu chỉnh | kỹ thuật điểu chỉnh,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-21,DAY,SMT,PS11,B,L83CA9N_HVD,56.0,PRINTER,Printer불량,복합,"OP MỚI , máy printer kẹt board",kỹ thuật điểu chỉnh | kỹ thuật điểu chỉnh | kỹ thuật điểu chỉnh | kỹ thuật điểu chỉnh,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-21,DAY,SMT,PS11,C,L83CA9N_HVD,70.0,PRINTER,Printer불량,복합,Lỗi máy printer,kỹ thuật điểu chỉnh | kỹ thuật điểu chỉnh | kỹ thuật điểu chỉnh | kỹ thuật điểu chỉnh,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-21,DAY,SMT,PS11,D,L83CA9N_HVD,50.0,PRINTER,Printer불량,복합,Lỗi máy printer .Line không đáp ứng được UPH,kỹ thuật điểu chỉnh | kỹ thuật điểu chỉnh | kỹ thuật điểu chỉnh | kỹ thuật điểu chỉnh,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-21,DAY,SMT,PS11,E,L83CA9N_HVD,45.0,PRINTER,Printer불량,복합,Máy printer thiếu keo .Line không đáp ứng đươc UPH,kỹ thuật điểu chỉnh | kỹ thuật điểu chỉnh | kỹ thuật điểu chỉnh | kỹ thuật điểu chỉnh,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-21,DAY,SMT,PS11,F,L83CA9N_HVD,60.0,ETC,기타,복합,Line không đáp ứng đươc UPH,kỹ thuật điểu chỉnh | kỹ thuật điểu chỉnh | kỹ thuật điểu chỉnh | kỹ thuật điểu chỉnh,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-21,DAY,SMT,PS11,TOTAL,L83CA9N_HVD,322.0,PRINTER,Printer불량,복합,"Máy printer nghẹt keo , mounter #3 lỗi feeder | OP MỚI , máy printer kẹt board | Lỗi máy printer | Lỗi máy printer .Line không đáp ứng được UPH | Máy printer thiếu keo .Line không đáp ứng đươc UPH | Line không đáp ứng đươc UPH",kỹ thuật điểu chỉnh | kỹ thuật điểu chỉnh | kỹ thuật điểu chỉnh | kỹ thuật điểu chỉnh,1250.0,662.0,0.0,0.0,0.0,0.0
+2026-06-21,NIGHT,SMT,PS01,F,L75E70NA-HVD,55.0,CHANGE_MODEL,모델교체,복합,"change model, sản xuất lúc 20:30, line chạy chưa ổn định, lỗi feeder nhiều",,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-21,NIGHT,SMT,PS01,G,L75E70NA-HVD,3.0,CHANGE_MODEL,모델교체,복합,"change model, sản xuất lúc 20:30, line chạy chưa ổn định, lỗi feeder nhiều",,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-21,NIGHT,SMT,PS01,H,L75E70NA-HVD,97.0,CHANGE_MODEL,모델교체,복합,Change model L55CA9N lúc 00:30,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-21,NIGHT,SMT,PS01,I,L55CA9N-HVD,95.0,ETC,기타,복합,sản xuất lúc 03:40,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-21,NIGHT,SMT,PS01,J,L55CA9N-HVD,7.0,CHANGE_MODEL,모델교체,복합,"change model, sản xuất lúc 20:30, line chạy chưa ổn định, lỗi feeder nhiều",,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-21,NIGHT,SMT,PS01,K,L55CA9N-HVD,28.0,CHANGE_MODEL,모델교체,복합,"change model, sản xuất lúc 20:30, line chạy chưa ổn định, lỗi feeder nhiều",,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-21,NIGHT,SMT,PS01,TOTAL,L75E70NA-HVD,285.0,CHANGE_MODEL,모델교체,복합,"change model, sản xuất lúc 20:30, line chạy chưa ổn định, lỗi feeder nhiều | Change model L55CA9N lúc 00:30 | sản xuất lúc 03:40",,1282.0,756.0,0.0,0.0,0.0,0.0
+2026-06-21,NIGHT,SMT,PS02,F,L65S7-HVD,20.0,SPI,SPI불량,복합,lỗi SPI vừa chạy vừa pass,kỹ thuật đang set spec,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-21,NIGHT,SMT,PS02,G,L65S7-HVD,13.0,ETC,기타,복합,Lỗi bàn nâng từ 23:48-00:00,kỹ thuật đang set spec,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-21,NIGHT,SMT,PS02,I,L65S7-HVD,7.0,SPI,SPI불량,복합,lỗi SPI vừa chạy vừa pass,kỹ thuật đang set spec,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-21,NIGHT,SMT,PS02,TOTAL,L65S7-HVD,40.0,SPI,SPI불량,복합,lỗi SPI vừa chạy vừa pass | Lỗi bàn nâng từ 23:48-00:00,kỹ thuật đang set spec,2126.0,2250.0,0.0,0.0,0.0,0.0
+2026-06-21,NIGHT,SMT,PS03,F,L55F70NA-HHS,47.0,ETC,기타,단일,"OP mới, line không đáp ứng được UPH",,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-21,NIGHT,SMT,PS03,G,L55F70NA-HHS,33.0,ETC,기타,단일,"OP mới, line không đáp ứng được UPH",,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-21,NIGHT,SMT,PS03,H,L55F70NA-HHS,44.0,ETC,기타,단일,"OP mới, line không đáp ứng được UPH",,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-21,NIGHT,SMT,PS03,I,L55F70NA-HHS,31.0,ETC,기타,단일,"OP mới, line không đáp ứng được UPH",,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-21,NIGHT,SMT,PS03,J,L55F70NA-HHS,51.0,ETC,기타,단일,"OP mới, line không đáp ứng được UPH",,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-21,NIGHT,SMT,PS03,K,L55F70NA-HHS,58.0,ETC,기타,단일,"OP mới, line không đáp ứng được UPH",,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-21,NIGHT,SMT,PS03,TOTAL,L55F70NA-HHS,264.0,ETC,기타,단일,"OP mới, line không đáp ứng được UPH | OP mới, line không đáp ứng được UPH | OP mới, line không đáp ứng được UPH | OP mới, line không đáp ứng được UPH | OP mới, line không đáp ứng được UPH | OP mới, line không đáp ứng được UPH",,1564.0,956.0,0.0,0.0,0.0,0.0
+2026-06-21,NIGHT,SMT,PS04,F,L65S7-HVD,11.0,ETC,기타,복합,Lỗi AI chân dài,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-21,NIGHT,SMT,PS04,G,L65S7-HVD,12.0,ETC,기타,복합,OP mới,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-21,NIGHT,SMT,PS04,I,L65S7-HVD,101.0,CHANGE_MODEL,모델교체,복합,change model L75S7 từ 02:20,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-21,NIGHT,SMT,PS04,J,L75S7-HVD,12.0,ETC,기타,복합,Lỗi AI chân dài,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-21,NIGHT,SMT,PS04,TOTAL,L65S7-HVD,136.0,CHANGE_MODEL,모델교체,복합,Lỗi AI chân dài | OP mới | change model L75S7 từ 02:20,,2246.0,1773.0,0.0,0.0,0.0,0.0
+2026-06-21,NIGHT,SMT,PS05,F,L75S7-FVD,120.0,CHANGE_MODEL,모델교체,복합,change model L75S7-FVD(3in1) từ 20:00,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-21,NIGHT,SMT,PS05,G,L75S7-FVD,45.0,ETC,기타,복합,sản xuất lúc 22:40,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-21,NIGHT,SMT,PS05,H,L75S7-FVD,113.0,CHANGE_MODEL,모델교체,복합,change model L75S7 từ 00:08,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-21,NIGHT,SMT,PS05,I,L75S7-HVD,54.0,ETC,기타,복합,sản xuất lúc 02:50,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-21,NIGHT,SMT,PS05,TOTAL,L75S7-FVD,332.0,CHANGE_MODEL,모델교체,복합,change model L75S7-FVD(3in1) từ 20:00 | sản xuất lúc 22:40 | change model L75S7 từ 00:08 | sản xuất lúc 02:50,,1786.0,979.0,0.0,0.0,0.0,0.0
+2026-06-21,NIGHT,SMT,PS08,F,L55E70A-HVD,120.0,CHANGE_MODEL,모델교체,복합,Change model L55E70A từ 20:00,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-21,NIGHT,SMT,PS08,G,L55E70A-HVD,94.0,EQUIP_FAIL,설비고장(기타),복합,"model chạy lần đầu , kỸ thuật setup đến 23:30",,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-21,NIGHT,SMT,PS08,H,L55E70A-HVD,24.0,ETC,기타,복합,"OP mới, line chạy chưa ổn định",,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-21,NIGHT,SMT,PS08,I,L55E70A-HVD,15.0,ETC,기타,복합,OP mới,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-21,NIGHT,SMT,PS08,K,L55E70A-HVD,70.0,ETC,기타,복합,OP mới,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-21,NIGHT,SMT,PS08,TOTAL,L55E70A-HVD,323.0,CHANGE_MODEL,모델교체,복합,"Change model L55E70A từ 20:00 | model chạy lần đầu , kỸ thuật setup đến 23:30 | OP mới, line chạy chưa ổn định | OP mới | OP mới",,1340.0,730.0,0.0,0.0,0.0,0.0
+2026-06-21,NIGHT,SMT,PS11,F,L83CA9N-HVD,81.0,PRINTER,Printer불량,복합,Lỗi priter thiếu keo chỉnh từ 20:00-20:30. line không đáp ứng được UPH,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-21,NIGHT,SMT,PS11,G,L83CA9N-HVD,76.0,ETC,기타,복합,Line không đáp ứng được UPH,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-21,NIGHT,SMT,PS11,H,L83CA9N-HVD,91.0,ETC,기타,복합,"Line không đáp ứng được UPH, lỗi lệch linh kiện, vừa chạy vừa chỉnh từ 00:00-…",,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-21,NIGHT,SMT,PS11,I,L83CA9N-HVD,70.0,ETC,기타,복합,"Line không đáp ứng được UPH, lỗi lệch linh kiện, vừa chạy vừa chỉnh từ 00:00-…",,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-21,NIGHT,SMT,PS11,J,L83CA9N-HVD,45.0,ETC,기타,복합,"Line không đáp ứng được UPH, lỗi lệch linh kiện, vừa chạy vừa chỉnh từ 00:00-…",,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-21,NIGHT,SMT,PS11,K,L83CA9N-HVD,48.0,ETC,기타,복합,Line không đáp ứng được UPH,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-21,NIGHT,SMT,PS11,TOTAL,L83CA9N-HVD,411.0,PRINTER,Printer불량,복합,"Lỗi priter thiếu keo chỉnh từ 20:00-20:30. line không đáp ứng được UPH | Line không đáp ứng được UPH | Line không đáp ứng được UPH, lỗi lệch linh kiện, vừa chạy vừa chỉnh từ 00:00-… | Line không đáp ứng được UPH, lỗi lệch linh kiện, vừa chạy vừa chỉnh từ 00:00-… | Line không đáp ứng được UPH, lỗi lệch linh kiện, vừa chạy vừa chỉnh từ 00:00-… | Line không đáp ứng được UPH",,1340.0,546.0,0.0,0.0,0.0,0.0
+2026-05-25,DAY,MI,MI 2,C,"55""/3in1, M70H",3.0,ETC,기타,단일,,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-05-25,DAY,MI,MI 2,F,"55""/3in1, M70H",3.0,ETC,기타,단일,,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-05-25,DAY,MI,MI 2,TOTAL,"55""/3in1, M70H",6.0,ETC,기타,단일,,,5360.0,1900.0,5360.0,1900.0,0.0,0.0
+2026-05-25,DAY,MI,MI 3,C,L75S7A_HVD,11.0,ICT_ATE,ICT/ATE불량,복합,ICT error,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-05-25,DAY,MI,MI 3,TOTAL,L75S7A_HVD,11.0,ICT_ATE,ICT/ATE불량,복합,No proplem | ICT error | No proplem | No proplem,,5400.0,1820.0,5400.0,1820.0,2980.0,1640.0
+2026-05-25,DAY,MI,MI 4,C,L55E70A_HVD,60.0,CHANGE_MODEL,모델교체,복합,change model,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-05-25,DAY,MI,MI 4,TOTAL,L55E70A_HVD,60.0,CHANGE_MODEL,모델교체,복합,"wating jig dusratone (20ea) , change model | change model | No proplem | No proplem",,3380.0,780.0,3380.0,780.0,3044.0,500.0
+2026-05-25,DAY,MI,MI 5,F,L65CA9N_HVD,8.0,CHANGE_MODEL,모델교체,복합,Change model 32JDM,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-05-25,DAY,MI,MI 5,TOTAL,L65S7A_HVD,8.0,CHANGE_MODEL,모델교체,복합,"wating PCB, chage model | No proplem | Change model 32JDM",,4100.0,800.0,4100.0,800.0,4100.0,360.0
+2026-05-25,DAY,MI,MI 6,C,L65S8_HVD,28.0,ICT_ATE,ICT/ATE불량,복합,ICT error waiting PCB ATE,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-05-25,DAY,MI,MI 6,TOTAL,L65S8_HVD,28.0,ICT_ATE,ICT/ATE불량,복합,No proplem | ICT error waiting PCB ATE | No proplem | No proplem,,5760.0,1840.0,5760.0,1840.0,5760.0,1380.0
+2026-06-03,DAY,MI,MI 2,C,"55""/3in1, M70H",12.0,AOI_SAOI,AOI/S-AOI불량,복합,PC AOI error,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-03,DAY,MI,MI 2,TOTAL,"55""/3in1, M70H",12.0,AOI_SAOI,AOI/S-AOI불량,복합,No proplem | PC AOI error | 3in1,,5400.0,3962.0,5400.0,3962.0,586.0,334.0
+2026-06-03,DAY,MI,MI 3,C,"58""/3in1, U8000H",45.0,CHANGE_MODEL,모델교체,복합,3in1' Change model AOI-coating 35min ATE false error 10min,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-03,DAY,MI,MI 3,TOTAL,"58""/3in1, U8000H",45.0,CHANGE_MODEL,모델교체,복합,no problem | 3in1' Change model AOI-coating 35min ATE false error 10min | no problem | 3in1,,3587.0,3588.0,3587.0,3588.0,2074.0,1580.0
+2026-06-03,DAY,MI,MI 4,C,L55E70NA_HVD,10.0,ETC,기타,복합,waitng H/S MM,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-03,DAY,MI,MI 4,TOTAL,L55E70NA_HVD,10.0,ETC,기타,복합,no problem | waitng H/S MM | no problem | no problem,,2794.0,2794.0,2794.0,2794.0,2558.0,2920.0
+2026-06-03,DAY,MI,MI 5,C,L65CA9N_HVD,15.0,AOI_SAOI,AOI/S-AOI불량,복합,AOI error program 5min PCB nothing MES 200 10min,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-03,DAY,MI,MI 5,TOTAL,L65CA9N_HVD,15.0,AOI_SAOI,AOI/S-AOI불량,복합,no problem | AOI error program 5min PCB nothing MES 200 10min | no problem,,3000.0,3000.0,3000.0,3000.0,3000.0,2082.0
+2026-06-03,DAY,MI,MI 6,C,L65S8_HVD,26.0,ICT_ATE,ICT/ATE불량,복합,ICT error,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-03,DAY,MI,MI 6,TOTAL,L65S8_HVD,26.0,ICT_ATE,ICT/ATE불량,복합,No proplem | ICT error | no problem | ICT flase error,,5760.0,5760.0,5760.0,5760.0,5760.0,4512.0
+2026-06-03,DAY,MI,MI 7,A,L48CA9N_HVD,60.0,WAVE,Wave Solder불량,복합,Wave solder turn of power,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-03,DAY,MI,MI 7,TOTAL,L48CA9N_HVD,60.0,WAVE,Wave Solder불량,복합,Wave solder turn of power | Wave solder turn of power | Waiting PCB | Waiting PCB,,1601.0,622.0,1601.0,622.0,1573.0,802.0
+2026-06-04,DAY,MI,MI 2,A,"55""/3in1, M70H-BN44-0142E",26.0,COATING,Coating/Reflow불량,복합,"( Flux machine stop, air pipe leaking",,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-04,DAY,MI,MI 2,D,"55""/3in1, M70H",10.0,ETC,기타,복합,FT error,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-04,DAY,MI,MI 2,TOTAL,"55""/3in1, M70H-BN44-0142E",36.0,COATING,Coating/Reflow불량,복합,"( Flux machine stop, air pipe leaking | FT error",,5760.0,4560.0,5760.0,4560.0,5760.0,1080.0
+2026-06-04,DAY,MI,MI 3,A,L65S7A_HVD-BN44-01421B,49.0,CHANGE_MODEL,모델교체,복합,"change model, Flux machine error",,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-04,DAY,MI,MI 3,TOTAL,L65S7A_HVD-BN44-01421B,49.0,CHANGE_MODEL,모델교체,복합,"change model, Flux machine error | No probem",,5000.0,4050.0,5000.0,4050.0,5446.0,4360.0
+2026-06-04,DAY,MI,MI 4,A,L65S7_HVD,63.0,CHANGE_MODEL,모델교체,복합,"Waiting PCB form SMT, change model L65S7-->65S8 clear stock",,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-04,DAY,MI,MI 4,D,L65S7_HVD,70.0,ICT_ATE,ICT/ATE불량,복합,"clear stock from 08:40 to 10:15,ATE running again 09:15",,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-04,DAY,MI,MI 4,TOTAL,L65S7_HVD,133.0,CHANGE_MODEL,모델교체,복합,"Waiting PCB form SMT, change model L65S7-->65S8 clear stock | clear stock from 08:40 to 10:15,ATE running again 09:15",,1407.0,2164.0,1407.0,2164.0,1910.0,3120.0
+2026-06-04,DAY,MI,MI 5,A,sample 85FE8N,60.0,CHANGE_MODEL,모델교체,복합,"Change model, sameple",,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-04,DAY,MI,MI 5,TOTAL,sample 85FE8N,60.0,CHANGE_MODEL,모델교체,복합,"Change model, sameple | Change model 75S7A at 10:35, waiting PCB from SMT, model sameple",,3298.0,2694.0,3298.0,2694.0,3298.0,1574.0
+2026-06-04,DAY,MI,MI 6,A,L65S8_HVD,6.0,ICT_ATE,ICT/ATE불량,복합,"Hipot error, ICT error,",,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-04,DAY,MI,MI 6,D,L65S8_HVD,18.0,COATING,Coating/Reflow불량,복합,"coating stop, wave solder not enough spare part.",,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-04,DAY,MI,MI 6,TOTAL,L65S8_HVD,24.0,COATING,Coating/Reflow불량,복합,"Hipot error, ICT error, | coating stop, wave solder not enough spare part.",,5600.0,5214.0,5600.0,5214.0,5600.0,3202.0
+2026-06-04,DAY,MI,MI 7,A,L48CA9N_HVD,60.0,CHANGE_MODEL,모델교체,복합,change model L48CN9N,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-04,DAY,MI,MI 7,D,L65E70_HVD,116.0,COATING,Coating/Reflow불량,복합,"Stop flux machine error, set up model L65E70,coating not yet",,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-04,DAY,MI,MI 7,TOTAL,L48CA9N_HVD,176.0,CHANGE_MODEL,모델교체,복합,"change model L48CN9N | Stop flux machine error, set up model L65E70,coating not yet",,3041.0,3366.0,3041.0,3366.0,2201.0,1524.0
+2026-06-05,DAY,MI,MI 2,A,L55S7HVD,10.0,WAITING_SMT,SMT대기,복합,Stop waiting SEMI PCB SMT,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-05,DAY,MI,MI 2,D,L55S7HVD,26.0,ETC,기타,복합,Stop waiting PCB from MST,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-05,DAY,MI,MI 2,TOTAL,L55S7HVD,36.0,WAITING_SMT,SMT대기,복합,Stop waiting SEMI PCB SMT | Stop waiting PCB from MST,,1750.0,5250.0,1750.0,5250.0,1217.0,3044.0
+2026-06-05,DAY,MI,MI 3,A,L65S7A_HVD,5.0,ETC,기타,복합,FT error,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-05,DAY,MI,MI 3,TOTAL,L65S7A_HVD,5.0,ETC,기타,복합,FT error | no problem,,5620.0,5620.0,5620.0,5620.0,5619.0,5838.0
+2026-06-05,DAY,MI,MI 4,A,L43E60A,60.0,CHANGE_MODEL,모델교체,복합,Change Model 43E60A - HVD from 08:43 to now,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-05,DAY,MI,MI 4,D,L65S7_HVD,5.0,COATING,Coating/Reflow불량,복합,coating stop,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-05,DAY,MI,MI 4,TOTAL,L43E60A,65.0,CHANGE_MODEL,모델교체,복합,Change Model 43E60A - HVD from 08:43 to now | coating stop,,2400.0,2400.0,2400.0,2400.0,2401.0,2786.0
+2026-06-05,DAY,MI,MI 5,A,L85B70A,30.0,CHANGE_MODEL,모델교체,복합,Change Model sample L80E70NA,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-05,DAY,MI,MI 5,D,75S7A,50.0,CHANGE_MODEL,모델교체,복합,"ATE 2 floor error, change model 55S7",,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-05,DAY,MI,MI 5,TOTAL,L85B70A,80.0,CHANGE_MODEL,모델교체,복합,"Change Model sample L80E70NA | ATE 2 floor error, change model 55S7",,2799.0,2800.0,2799.0,2800.0,2799.0,3096.0
+2026-06-05,DAY,MI,MI 6,A,L65S7A_HVD,70.0,ETC,기타,복합,Stop beacause don't has HS,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-05,DAY,MI,MI 6,TOTAL,L65S7A_HVD,70.0,COATING,Coating/Reflow불량,복합,Stop beacause don't has HS | waiting PE set up coating from 09:33,,200.0,204.0,200.0,204.0,200.0,532.0
+2026-06-05,DAY,MI,MI 7,A,L65A70E,12.0,COATING,Coating/Reflow불량,복합,"Flux stop 4 minutes AOI error, Hipot error",,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-05,DAY,MI,MI 7,D,L65E70_HVD,6.0,ETC,기타,복합,FT and coatin error,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-05,DAY,MI,MI 7,TOTAL,L65A70E,18.0,COATING,Coating/Reflow불량,복합,"Flux stop 4 minutes AOI error, Hipot error | FT and coatin error",,1712.0,3128.0,1712.0,3128.0,1712.0,3442.0
+2026-06-06,DAY,MI,MI 2,D,L55S7_HVD,8.0,COATING,Coating/Reflow불량,복합,COATING ERROR,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-06,DAY,MI,MI 2,TOTAL,L55S7_HVD,8.0,COATING,Coating/Reflow불량,복합,no problem | COATING ERROR,,5600.0,5600.0,5600.0,5600.0,2813.0,5548.0
+2026-06-06,DAY,MI,MI 3,A,L65S7_HVD,60.0,ETC,기타,복합,"out of stock, waiting from line",,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-06,DAY,MI,MI 3,TOTAL,L65S7_HVD,60.0,ETC,기타,복합,"out of stock, waiting from line | NO PROBLEM",,5286.0,5144.0,5286.0,5144.0,5505.0,4818.0
+2026-06-06,DAY,MI,MI 4,A,L65E70A_HVD,30.0,CHANGE_MODEL,모델교체,복합,change model L65CA9N test AOI => ATE,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-06,DAY,MI,MI 4,D,L65E70A_HVD,5.0,ICT_ATE,ICT/ATE불량,복합,HIPOT & ICT ERROR,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-06,DAY,MI,MI 4,TOTAL,L65E70A_HVD,35.0,CHANGE_MODEL,모델교체,복합,change model L65CA9N test AOI => ATE | HIPOT & ICT ERROR,,3426.0,2884.0,3426.0,2884.0,3100.0,3042.0
+2026-06-06,DAY,MI,MI 5,A,L55F70NA_HHS,40.0,WAVE,Wave Solder불량,복합,"Wave solder, ICT & FT error",,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-06,DAY,MI,MI 5,D,L55F70NA_HHS,55.0,COATING,Coating/Reflow불량,복합,"ICT, COATING ERROR, ATE RUN 1 FLOOR, ICT RUN 1 STATION",,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-06,DAY,MI,MI 5,TOTAL,L55F70NA_HHS,95.0,COATING,Coating/Reflow불량,복합,"Wave solder, ICT & FT error | ICT, COATING ERROR, ATE RUN 1 FLOOR, ICT RUN 1 STATION",,1858.0,1096.0,1858.0,1096.0,1858.0,604.0
+2026-06-06,DAY,MI,MI 6,A,L65FE8N,78.0,COATING,Coating/Reflow불량,복합,"ICT => coating, PE repair machine",,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-06,DAY,MI,MI 6,D,L65FE8N,71.0,ICT_ATE,ICT/ATE불량,복합,"ATE STOP, BURN IN STOP",,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-06,DAY,MI,MI 6,TOTAL,L65FE8N,149.0,COATING,Coating/Reflow불량,복합,"ICT => coating, PE repair machine | ATE STOP, BURN IN STOP",,2000.0,1484.0,2000.0,1484.0,2000.0,190.0
+2026-06-06,DAY,MI,MI 7,A,L48CA9N_HVD,13.0,CHANGE_MODEL,모델교체,복합,change model from ICT to Coating,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-06,DAY,MI,MI 7,D,L48CA9N_HVD,2.0,ICT_ATE,ICT/ATE불량,복합,STOP ATE,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-06,DAY,MI,MI 7,TOTAL,L48CA9N_HVD,15.0,CHANGE_MODEL,모델교체,복합,change model from ICT to Coating | STOP ATE,,1070.0,2000.0,1070.0,2000.0,1070.0,1400.0
+2026-06-07,DAY,MI,MI 3,TOTAL,L65S7_HVD,0.0,ETC,기타,단일,,,2614.0,0.0,2614.0,0.0,4595.0,0.0
+2026-06-07,DAY,MI,MI 4,D,L65E70A_HVD,6.0,ETC,기타,복합,Hipot error,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-07,DAY,MI,MI 4,TOTAL,L65E70A_HVD,6.0,ETC,기타,복합,NO PROBLEM | Hipot error,,4201.0,4200.0,4201.0,4200.0,3847.0,4120.0
+2026-06-07,DAY,MI,MI 5,TOTAL,L55F70NA_HHS,0.0,ETC,기타,단일,,,232.0,0.0,232.0,0.0,232.0,0.0
+2026-06-07,DAY,MI,MI 6,A,L85E70NA_HVD,15.0,WAVE,Wave Solder불량,단일,"ICT ERROR, WAVE SOLDER ERROR",,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-07,DAY,MI,MI 6,D,L85E70NA_HVD,13.0,WAVE,Wave Solder불량,단일,"ICT ERROR, WAVE SOLDER ERROR",,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-07,DAY,MI,MI 6,TOTAL,L85E70NA_HVD,28.0,WAVE,Wave Solder불량,단일,"ICT ERROR, WAVE SOLDER ERROR | ICT ERROR, WAVE SOLDER ERROR",,2200.0,2200.0,2200.0,2200.0,2200.0,2500.0
+2026-06-07,DAY,MI,MI 7,TOTAL,L83CA9N_HVD,0.0,WAITING_SMT,SMT대기,단일,Stop waiting SEMI PCB SMT | Stop waiting SEMI PCB SMT,,107.0,200.0,107.0,200.0,107.0,0.0
+2026-06-08,DAY,MI,MI 2,A,"55""/3in1, M70H",16.0,AOI_SAOI,AOI/S-AOI불량,복합,"AOI error , ATE error , 3in1",,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-08,DAY,MI,MI 2,TOTAL,"55""/3in1, M70H",16.0,AOI_SAOI,AOI/S-AOI불량,복합,"AOI error , ATE error , 3in1 | No problem, 3in1",,5740.0,5740.0,5740.0,5740.0,2870.0,0.0
+2026-06-08,DAY,MI,MI 3,A,L75S7N_HVD,30.0,ICT_ATE,ICT/ATE불량,복합,"ATE hanv'n stock ,waiting PCB",,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-08,DAY,MI,MI 3,TOTAL,L75S7N_HVD,30.0,ICT_ATE,ICT/ATE불량,복합,"ATE hanv'n stock ,waiting PCB | No problem",,5760.0,5760.0,5760.0,5760.0,5690.0,5752.0
+2026-06-08,DAY,MI,MI 4,TOTAL,L65E70A_HVD,0.0,ETC,기타,단일,No problem | No problem,,4200.0,4200.0,4200.0,4200.0,4264.0,4200.0
+2026-06-08,DAY,MI,MI 5,A,L65S7A_HVD,30.0,CHANGE_MODEL,모델교체,복합,"Change model ,Wave solder error",,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-08,DAY,MI,MI 5,D,L65S7A_HVD,95.0,ICT_ATE,ICT/ATE불량,복합,ATE run 1 floor,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-08,DAY,MI,MI 5,TOTAL,L65S7A_HVD,125.0,CHANGE_MODEL,모델교체,복합,"Change model ,Wave solder error | ATE run 1 floor",,4012.0,4904.0,4012.0,4904.0,4012.0,2656.0
+2026-06-08,DAY,MI,MI 6,A,L85E70NA_HVD,110.0,CHANGE_MODEL,모델교체,복합,Change model because ICT no JIG,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-08,DAY,MI,MI 6,D,L85E70NA_HVD,95.0,ICT_ATE,ICT/ATE불량,복합,Waiting material WIP,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-08,DAY,MI,MI 6,TOTAL,L85E70NA_HVD,205.0,CHANGE_MODEL,모델교체,복합,Change model because ICT no JIG | Waiting material WIP,,1400.0,1186.0,1400.0,1186.0,1400.0,366.0
+2026-06-08,DAY,MI,MI 7,A,L55CA9N_HVD,120.0,CHANGE_MODEL,모델교체,복합,"Havev'n PCB L48CA9N, change model",,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-08,DAY,MI,MI 7,D,L55CA9N_HVD,95.0,ICT_ATE,ICT/ATE불량,복합,Waiting material WIP,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-08,DAY,MI,MI 7,TOTAL,L55CA9N_HVD,215.0,CHANGE_MODEL,모델교체,복합,"Havev'n PCB L48CA9N, change model | Waiting material WIP",,2000.0,480.0,2000.0,480.0,2000.0,0.0
+2026-06-09,DAY,MI,MI 2,D,"55""/3in1, M70H",5.0,ICT_ATE,ICT/ATE불량,복합,"STOP, CLEANING ICT MACHINE",,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-09,DAY,MI,MI 2,TOTAL,"55""/3in1, M70H",5.0,ICT_ATE,ICT/ATE불량,복합,"NO PROBLEM, 3IN 1 | STOP, CLEANING ICT MACHINE",,5740.0,5740.0,5740.0,5740.0,2870.0,0.0
+2026-06-09,DAY,MI,MI 3,A,L75S7N_HVD,12.0,AOI_SAOI,AOI/S-AOI불량,복합,AOI ERROR,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-09,DAY,MI,MI 3,D,L75S7N_HVD,87.0,WAVE,Wave Solder불량,복합,"WAVE SOLDER, PART RESERVE SMT",,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-09,DAY,MI,MI 3,TOTAL,L75S7N_HVD,99.0,AOI_SAOI,AOI/S-AOI불량,복합,"AOI ERROR | WAVE SOLDER, PART RESERVE SMT",,4900.0,4900.0,4900.0,4900.0,5260.0,4226.0
+2026-06-09,DAY,MI,MI 4,A,L55E70A_HVD,60.0,CHANGE_MODEL,모델교체,복합,"CHANGE MODEL ICT => COATING, ATE CHANGE MODEO",,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-09,DAY,MI,MI 4,TOTAL,L55E70A_HVD,60.0,CHANGE_MODEL,모델교체,복합,"CHANGE MODEL ICT => COATING, ATE CHANGE MODEO | No problem",,3460.0,3460.0,3460.0,3460.0,3650.0,3400.0
+2026-06-09,DAY,MI,MI 5,A,L65S7_HVD,5.0,ETC,기타,복합,FT SCAN ERROR,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-09,DAY,MI,MI 5,D,L65S7_HVD,95.0,ETC,기타,복합,IN PACKING ERROR,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-09,DAY,MI,MI 5,TOTAL,L65S7_HVD,100.0,ETC,기타,복합,FT SCAN ERROR | IN PACKING ERROR,,4638.0,5792.0,4638.0,5792.0,4638.0,5290.0
+2026-06-09,DAY,MI,MI 6,A,L65FE8N,14.0,CHANGE_MODEL,모델교체,복합,"OUT OF STOCK, CHANGE MODEL. COATING ERROR",,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-09,DAY,MI,MI 6,TOTAL,L65FE8N,14.0,CHANGE_MODEL,모델교체,복합,"OUT OF STOCK, CHANGE MODEL. COATING ERROR | STOP LINE, WAITING PCB FROM SMT",,2144.0,1714.0,2144.0,1714.0,2144.0,1286.0
+2026-06-09,DAY,MI,MI 7,A,L48CA9N_HVD,67.0,CHANGE_MODEL,모델교체,복합,"OUT STOCK, CHANGE MODEL, WAVE SOLDER ERROR",,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-09,DAY,MI,MI 7,D,L48CA9N_HVD,12.0,COATING,Coating/Reflow불량,복합,"COATING STOP, VISION ERROR",,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-09,DAY,MI,MI 7,TOTAL,L48CA9N_HVD,79.0,CHANGE_MODEL,모델교체,복합,"OUT STOCK, CHANGE MODEL, WAVE SOLDER ERROR | COATING STOP, VISION ERROR",,3200.0,3102.0,3200.0,3102.0,3200.0,2740.0
+2026-06-10,DAY,MI,MI 2,TOTAL,"55""/3in1, M70H",0.0,ETC,기타,복합,"NO PROBLEM, 3 IN 1 | NO PROBLEM , 3IN 1",,5520.0,5520.0,5520.0,5520.0,2760.0,394.0
+2026-06-10,DAY,MI,MI 3,A,L75S7N_HVD,5.0,AOI_SAOI,AOI/S-AOI불량,복합,AOI BELT ERROR,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-10,DAY,MI,MI 3,D,L75S7N_HVD,5.0,ICT_ATE,ICT/ATE불량,복합,"ICT NO TEST, FT ERROR",,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-10,DAY,MI,MI 3,TOTAL,L75S7N_HVD,10.0,AOI_SAOI,AOI/S-AOI불량,복합,"AOI BELT ERROR | ICT NO TEST, FT ERROR",,5320.0,5320.0,5320.0,5320.0,5470.0,4694.0
+2026-06-10,DAY,MI,MI 4,A,L55E70A_HVD,27.0,CHANGE_MODEL,모델교체,복합,CHANGE MODEL ICT COATING => ATE,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-10,DAY,MI,MI 4,D,L65S7_HVD,6.0,ETC,기타,복합,HIPOT ERROR,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-10,DAY,MI,MI 4,TOTAL,L55E70A_HVD,33.0,CHANGE_MODEL,모델교체,복합,CHANGE MODEL ICT COATING => ATE | HIPOT ERROR,,3662.0,3512.0,3662.0,3512.0,3817.0,3040.0
+2026-06-10,DAY,MI,MI 5,A,L65S7_HVD,150.0,EQUIP_FAIL,설비고장(기타),복합,"STOP LINE, HAVEN'T PACKING BOX",,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-10,DAY,MI,MI 5,TOTAL,L65S7_HVD,150.0,EQUIP_FAIL,설비고장(기타),복합,"STOP LINE, HAVEN'T PACKING BOX | NO PROBLEM",,4960.0,4960.0,4960.0,4960.0,4960.0,5008.0
+2026-06-10,DAY,MI,MI 6,A,"65""/PD, P6519",23.0,ETC,기타,복합,"WAITING HEATSINK, MESS FT ERROR",,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-10,DAY,MI,MI 6,D,L85E70NA_HVD,45.0,CHANGE_MODEL,모델교체,복합,CHANGE MODEL,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-10,DAY,MI,MI 6,TOTAL,"65""/PD, P6519",68.0,CHANGE_MODEL,모델교체,복합,"WAITING HEATSINK, MESS FT ERROR | CHANGE MODEL",,2600.0,2586.0,2600.0,2586.0,2600.0,2528.0
+2026-06-10,DAY,MI,MI 7,A,L48CA9N_HVD,23.0,WAVE,Wave Solder불량,복합,"WAVE SOLDER, PACKING ERROR, ICT RUNNING 1 FLOOR",,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-10,DAY,MI,MI 7,D,L48CA9N_HVD,25.0,WAVE,Wave Solder불량,복합,"WAVE SOLDER, ATE ERROR",,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-10,DAY,MI,MI 7,TOTAL,L48CA9N_HVD,48.0,WAVE,Wave Solder불량,복합,"WAVE SOLDER, PACKING ERROR, ICT RUNNING 1 FLOOR | WAVE SOLDER, ATE ERROR",,3400.0,3088.0,3400.0,3088.0,3400.0,2906.0
+2026-06-11,DAY,MI,MI 2,A,"55""/3in1, M70H",120.0,ETC,기타,복합,BOTH OF WORKING AND SORTING,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-11,DAY,MI,MI 2,D,"55""/3in1, M70H",77.0,COATING,Coating/Reflow불량,복합,COATING RUN 1 FLOOR,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-11,DAY,MI,MI 2,TOTAL,"55""/3in1, M70H",197.0,COATING,Coating/Reflow불량,복합,BOTH OF WORKING AND SORTING | COATING RUN 1 FLOOR,,5468.0,3296.0,5468.0,3296.0,2734.0,2036.0
+2026-06-11,DAY,MI,MI 3,A,L75S7A,32.0,CHANGE_MODEL,모델교체,복합,"CHANGE MODEL 75HVD 22A --> 75HVD 22B, CLEAR STOCK, SMT NO SCAN.",,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-11,DAY,MI,MI 3,D,L65S7A,40.0,CHANGE_MODEL,모델교체,복합,CHANGE MODEL 75HVD --> 65 HVD,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-11,DAY,MI,MI 3,TOTAL,L75S7A,72.0,CHANGE_MODEL,모델교체,복합,"CHANGE MODEL 75HVD 22A --> 75HVD 22B, CLEAR STOCK, SMT NO SCAN. | CHANGE MODEL 75HVD --> 65 HVD",,5400.0,3092.0,5400.0,3092.0,5510.0,2772.0
+2026-06-11,DAY,MI,MI 4,A,L65CA9N,17.0,CHANGE_MODEL,모델교체,복합,"CHANGE MODEL ICT => COATING, MISSING 100, 200 STEP",,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-11,DAY,MI,MI 4,D,L65CA9N,10.0,WAVE,Wave Solder불량,복합,WAVE SOLDER ERROR,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-11,DAY,MI,MI 4,TOTAL,L65CA9N,27.0,CHANGE_MODEL,모델교체,복합,"CHANGE MODEL ICT => COATING, MISSING 100, 200 STEP | WAVE SOLDER ERROR",,2620.0,1790.0,2620.0,1790.0,2953.0,1482.0
+2026-06-11,DAY,MI,MI 5,A,L65S7,60.0,ETC,기타,복합,"NOZZLE ERROR, REPLACE NOZZLE",,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-11,DAY,MI,MI 5,D,L65S7,32.0,ICT_ATE,ICT/ATE불량,복합,"ATE POWER OFF, NO START/ END",,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-11,DAY,MI,MI 5,TOTAL,L65S7,92.0,ICT_ATE,ICT/ATE불량,복합,"NOZZLE ERROR, REPLACE NOZZLE | ATE POWER OFF, NO START/ END",,5760.0,4562.0,5760.0,4562.0,5760.0,3888.0
+2026-06-11,DAY,MI,MI 6,A,L85E70NA,19.0,WAVE,Wave Solder불량,복합,"ICT ERROR, WAVE SOLDER",,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-11,DAY,MI,MI 6,D,L85E70NA,19.0,WAVE,Wave Solder불량,복합,"NO START/ END, WAITING HS FROM WARE HOUSE,WAVE SOLDER ERROR",,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-11,DAY,MI,MI 6,TOTAL,L85E70NA,38.0,WAVE,Wave Solder불량,복합,"ICT ERROR, WAVE SOLDER | NO START/ END, WAITING HS FROM WARE HOUSE,WAVE SOLDER ERROR",,2600.0,2332.0,2600.0,2332.0,2600.0,1998.0
+2026-06-11,DAY,MI,MI 7,A,L55CA9N,62.0,WAVE,Wave Solder불량,복합,"SET UP ICT, WAVE SOLDER ERROR, FT ERROR, SET UP ATE",,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-11,DAY,MI,MI 7,D,L55CA9N,103.0,WAVE,Wave Solder불량,복합,"ATE RUN 1 FLOOR, WAVE SOLDER, FT ERROR",,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-11,DAY,MI,MI 7,TOTAL,L55CA9N,165.0,WAVE,Wave Solder불량,복합,"SET UP ICT, WAVE SOLDER ERROR, FT ERROR, SET UP ATE | ATE RUN 1 FLOOR, WAVE SOLDER, FT ERROR",,3600.0,2374.0,3600.0,2374.0,3600.0,1660.0
+2026-06-12,DAY,MI,MI 2,A,L55S7_HVD,10.0,CHANGE_MODEL,모델교체,복합,"FT ERROR (6MIN), CHANGE MODEL L55S7 --> L55S7W AOI NO SCAN (4MIN)",,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-12,DAY,MI,MI 2,D,L55S7_HVD,55.0,CHANGE_MODEL,모델교체,복합,"stop line waiting pcb from SMD (15min) , change model 55S7W--> 55S& HVD",,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-12,DAY,MI,MI 2,TOTAL,L55S7_HVD,65.0,CHANGE_MODEL,모델교체,복합,"FT ERROR (6MIN), CHANGE MODEL L55S7 --> L55S7W AOI NO SCAN (4MIN) | stop line waiting pcb from SMD (15min) , change model 55S7W--> 55S& HVD",,5594.0,5594.0,5594.0,5594.0,2797.0,5284.0
+2026-06-12,DAY,MI,MI 3,A,L65S7A_HVD,110.0,ETC,기타,복합,CLEAR STOCK MODEL 75HVD 21A,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-12,DAY,MI,MI 3,D,L65S7A_HVD,61.0,CHANGE_MODEL,모델교체,복합,"change model 65hvd 21B ICT --> coating (35min), set up ATE 65hvd 12B (26min)",,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-12,DAY,MI,MI 3,TOTAL,L65S7A_HVD,171.0,CHANGE_MODEL,모델교체,복합,"CLEAR STOCK MODEL 75HVD 21A | change model 65hvd 21B ICT --> coating (35min), set up ATE 65hvd 12B (26min)",,5440.0,5440.0,5440.0,5440.0,5530.0,5426.0
+2026-06-12,DAY,MI,MI 4,A,L65CA9N_HVD,13.0,ETC,기타,복합,WAITING PCB FROM SMD,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-12,DAY,MI,MI 4,D,L65CA9N_HVD,26.0,EQUIP_FAIL,설비고장(기타),복합,stop line waiting pcb from smt,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-12,DAY,MI,MI 4,TOTAL,L65CA9N_HVD,39.0,EQUIP_FAIL,설비고장(기타),복합,WAITING PCB FROM SMD | stop line waiting pcb from smt,,2760.0,2760.0,2760.0,2760.0,3069.0,2430.0
+2026-06-12,DAY,MI,MI 5,A,L50E60A_HVD,120.0,COATING,Coating/Reflow불량,복합,"FLUX ERROR (10MIN), RUNNING SAMPLE 50E60A (90MIN) , WAVE SOLDER ERROR (15MIN)",,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-12,DAY,MI,MI 5,D,L65S7_MPS,77.0,CHANGE_MODEL,모델교체,복합,"Change model (35min), check component (10min), wating ME confirm WI (10min), No END 200 (22min)",,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-12,DAY,MI,MI 5,TOTAL,L50E60A_HVD,197.0,CHANGE_MODEL,모델교체,복합,"FLUX ERROR (10MIN), RUNNING SAMPLE 50E60A (90MIN) , WAVE SOLDER ERROR (15MIN) | Change model (35min), check component (10min), wating ME confirm WI (10min), No END 200 (22min)",,3876.0,1350.0,3876.0,1350.0,3876.0,552.0
+2026-06-12,DAY,MI,MI 6,TOTAL,,0.0,ETC,기타,단일,CLEAR STOCK MODEL L65E70A | CLEAR STOCK MODEL L65E70A,,1200.0,1200.0,1200.0,1200.0,1200.0,432.0
+2026-06-12,DAY,MI,MI 7,A,L65E70A_HVD,15.0,ETC,기타,복합,CLEAR STOCK L55CA9N,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-12,DAY,MI,MI 7,TOTAL,L65E70A_HVD,15.0,ETC,기타,복합,CLEAR STOCK L55CA9N | no probplem,,3600.0,3600.0,3600.0,3600.0,3600.0,3964.0
+2026-06-13,DAY,MI,MI 2,A,L55S7_HVD,18.0,ETC,기타,복합,"stop waiting pcb (15min), FT no scan (3min)",,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-13,DAY,MI,MI 2,D,L55S7_HVD,42.0,ICT_ATE,ICT/ATE불량,복합,"waiting pcb (20min), ft error (2min), ATE error (20min)",,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-13,DAY,MI,MI 2,TOTAL,L55S7_HVD,60.0,ICT_ATE,ICT/ATE불량,복합,"stop waiting pcb (15min), FT no scan (3min) | waiting pcb (20min), ft error (2min), ATE error (20min)",,5720.0,5720.0,5720.0,5720.0,2860.0,5852.0
+2026-06-13,DAY,MI,MI 3,A,L65S7A_HVD,18.0,WAVE,Wave Solder불량,복합,"FT no scan (10min), ICT (5min), wave solder (3min)",,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-13,DAY,MI,MI 3,D,L65S7A_HVD,12.0,AOI_SAOI,AOI/S-AOI불량,복합,ICT & AOI error,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-13,DAY,MI,MI 3,TOTAL,L65S7A_HVD,30.0,AOI_SAOI,AOI/S-AOI불량,복합,"FT no scan (10min), ICT (5min), wave solder (3min) | ICT & AOI error",,5720.0,5720.0,5720.0,5720.0,5670.0,5782.0
+2026-06-13,DAY,MI,MI 4,A,L65CA9N_HVD,40.0,ICT_ATE,ICT/ATE불량,복합,"waiting HS from MM/ wip (5min), waiting pcb (30min), ICT stop(5min)",,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-13,DAY,MI,MI 4,D,L65CA9N_HVD,42.0,ICT_ATE,ICT/ATE불량,복합,"ATE run 1 floor (36min), FT error (6min)",,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-13,DAY,MI,MI 4,TOTAL,L65CA9N_HVD,82.0,ICT_ATE,ICT/ATE불량,복합,"waiting HS from MM/ wip (5min), waiting pcb (30min), ICT stop(5min) | ATE run 1 floor (36min), FT error (6min)",,2780.0,2780.0,2780.0,2780.0,3086.0,2780.0
+2026-06-13,DAY,MI,MI 5,A,L65S7A_HVD,40.0,COATING,Coating/Reflow불량,복합,"wave solder error (30min), flux error (10min)",,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-13,DAY,MI,MI 5,TOTAL,L65S7A_HVD,40.0,COATING,Coating/Reflow불량,복합,"wave solder error (30min), flux error (10min) | FLUX STOP FROM 10H55",,4600.0,3428.0,4600.0,3428.0,4600.0,3546.0
+2026-06-13,DAY,MI,MI 6,A,L75E70NA_HVD,16.0,WAITING_SMT,SMT대기,단일,stop waiting semi pcb,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-13,DAY,MI,MI 6,D,L65FE8N_HHS,20.0,WAITING_SMT,SMT대기,단일,stop waiting semi pcb,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-13,DAY,MI,MI 6,TOTAL,L75E70NA_HVD,36.0,WAITING_SMT,SMT대기,단일,stop waiting semi pcb,,2200.0,2198.0,2200.0,2198.0,2200.0,1054.0
+2026-06-13,DAY,MI,MI 7,A,L65E70A_HVD,71.0,ICT_ATE,ICT/ATE불량,복합,"Silicon error (10min), ICT error (61 min)",,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-13,DAY,MI,MI 7,D,L65E70A_HVD,4.0,ETC,기타,복합,HIPOT ERROR,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-13,DAY,MI,MI 7,TOTAL,L65E70A_HVD,75.0,ICT_ATE,ICT/ATE불량,복합,"Silicon error (10min), ICT error (61 min) | HIPOT ERROR",,3164.0,2740.0,3164.0,2740.0,3164.0,3416.0
+2026-06-14,DAY,MI,MI 2,A,L65S7_HVD,132.0,WAITING_SMT,SMT대기,복합,"waiting semi PCB (35min), coating error (30min), change cod 65 21A--> 6521b (30min), silicon coating (27min).",,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-14,DAY,MI,MI 2,D,L65S7A_HVD,23.0,CHANGE_MODEL,모델교체,복합,"silicon coating error (7min), flux error (11min), change model ICT --> coating (5min)",,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-14,DAY,MI,MI 2,TOTAL,L65S7_HVD,155.0,WAITING_SMT,SMT대기,복합,"waiting semi PCB (35min), coating error (30min), change cod 65 21A--> 6521b (30min), silicon coating (27min). | silicon coating error (7min), flux error (11min), change model ICT --> coating (5min)",,5200.0,4254.0,5200.0,4254.0,2600.0,3814.0
+2026-06-14,DAY,MI,MI 3,A,L65S7A_HVD,35.0,ICT_ATE,ICT/ATE불량,복합,"ATE run 1 floor (30min), FT error (5min)",,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-14,DAY,MI,MI 3,TOTAL,L65S7A_HVD,35.0,ICT_ATE,ICT/ATE불량,복합,"ATE run 1 floor (30min), FT error (5min) | don't have Jig for ATE (production 3 line)",,5760.0,5560.0,5760.0,5560.0,5690.0,5660.0
+2026-06-14,DAY,MI,MI 4,A,L65CA9N_HVD,10.0,WAITING_SMT,SMT대기,복합,waiting semi pcb SMT,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-14,DAY,MI,MI 4,D,L65CA9N_HVD,10.0,ETC,기타,복합,hipot error,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-14,DAY,MI,MI 4,TOTAL,L65CA9N_HVD,20.0,WAITING_SMT,SMT대기,복합,waiting semi pcb SMT | hipot error,,2760.0,2730.0,2760.0,2730.0,3069.0,2776.0
+2026-06-14,DAY,MI,MI 5,A,L65S7A_HVD,25.0,WAVE,Wave Solder불량,복합,wave solder error (25min),,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-14,DAY,MI,MI 5,D,L65S7A_HVD,172.0,WAVE,Wave Solder불량,복합,"Ate set up (106min), ate run 1 floor (80min), wave solder error (6min)",,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-14,DAY,MI,MI 5,TOTAL,L65S7A_HVD,197.0,WAVE,Wave Solder불량,복합,"wave solder error (25min) | Ate set up (106min), ate run 1 floor (80min), wave solder error (6min)",,4494.0,4220.0,4494.0,4220.0,4494.0,3926.0
+2026-06-14,DAY,MI,MI 6,A,L55F70NA_HHS,126.0,WAVE,Wave Solder불량,복합,"set up model (120min), wave solder (6min).",,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-14,DAY,MI,MI 6,D,L55F70NA_HHS,68.0,WAVE,Wave Solder불량,복합,"wave solder error, set up ATE (60min)",,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-14,DAY,MI,MI 6,TOTAL,L55F70NA_HHS,194.0,WAVE,Wave Solder불량,복합,"set up model (120min), wave solder (6min). | wave solder error, set up ATE (60min)",,2000.0,2000.0,2000.0,2000.0,2000.0,2228.0
+2026-06-14,DAY,MI,MI 7,A,L55CA9N_HVD,50.0,WAITING_SMT,SMT대기,복합,"ICT error (50min), waiting semi pcb smt (10min)",,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-14,DAY,MI,MI 7,D,L55CA9N_HVD,90.0,WAITING_SMT,SMT대기,복합,waiting semi PCB smt,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-14,DAY,MI,MI 7,TOTAL,L55CA9N_HVD,140.0,WAITING_SMT,SMT대기,복합,"ICT error (50min), waiting semi pcb smt (10min) | waiting semi PCB smt",,340.0,494.0,340.0,494.0,340.0,658.0
+2026-06-15,DAY,MI,MI 2,A,"55""/3in1, M70H,",67.0,ICT_ATE,ICT/ATE불량,복합,ATE running 1 floor from 8h15 (3IN1),,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-15,DAY,MI,MI 2,D,"55""/3in1, M70H,",56.0,WAITING_SMT,SMT대기,복합,Waiting semi SMT (3IN1),,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-15,DAY,MI,MI 2,TOTAL,"55""/3in1, M70H,",123.0,WAITING_SMT,SMT대기,복합,ATE running 1 floor from 8h15 (3IN1) | Waiting semi SMT (3IN1),,5760.0,5760.0,5760.0,5760.0,0.0,0.0
+2026-06-15,DAY,MI,MI 3,TOTAL,"65""/3IN1, U8000F, SESK",0.0,ETC,기타,단일,No problem | No problem,,5720.0,5320.0,5720.0,5320.0,5670.0,5120.0
+2026-06-15,DAY,MI,MI 4,A,L75S7A_HVD,40.0,ETC,기타,복합,FT error,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-15,DAY,MI,MI 4,D,L75S7A_HVD,43.0,WAITING_SMT,SMT대기,복합,Waiting semi SMT/ Coating error,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-15,DAY,MI,MI 4,TOTAL,L75S7A_HVD,83.0,WAITING_SMT,SMT대기,복합,FT error | Waiting semi SMT/ Coating error,,5060.0,5060.0,5060.0,5060.0,5061.0,4366.0
+2026-06-15,DAY,MI,MI 5,A,L75S7A_HVD,25.0,COATING,Coating/Reflow불량,복합,FLUX ERROR (3IN1),,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-15,DAY,MI,MI 5,D,L75S7A_HVD,47.0,WAITING_SMT,SMT대기,복합,"Waiting semi SMT, change model (3IN1)",,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-15,DAY,MI,MI 5,TOTAL,L75S7A_HVD,72.0,WAITING_SMT,SMT대기,복합,"FLUX ERROR (3IN1) | Waiting semi SMT, change model (3IN1)",,3759.0,3760.0,3759.0,3760.0,960.0,1218.0
+2026-06-15,DAY,MI,MI 6,A,L65S8N_HVD,119.0,COATING,Coating/Reflow불량,복합,"Wave solder pinhole (70min), ICT error (5min), Hipot error (37 min/ 2 times), coating error (27min),",,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-15,DAY,MI,MI 6,TOTAL,L65S8N_HVD,119.0,COATING,Coating/Reflow불량,복합,"Wave solder pinhole (70min), ICT error (5min), Hipot error (37 min/ 2 times), coating error (27min), | No problem",,5492.0,5388.0,5492.0,5388.0,5492.0,4270.0
+2026-06-15,DAY,MI,MI 7,A,L65E70A_HVD,112.0,COATING,Coating/Reflow불량,복합,"waiting box packing (90min), AOI vision don't connect (5min), coating eror (7min).",,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-15,DAY,MI,MI 7,D,L65E70A_HVD,44.0,ICT_ATE,ICT/ATE불량,복합,Waiting box packing ATE running 1 floor from,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-15,DAY,MI,MI 7,TOTAL,L65E70A_HVD,156.0,COATING,Coating/Reflow불량,복합,"waiting box packing (90min), AOI vision don't connect (5min), coating eror (7min). | Waiting box packing ATE running 1 floor from",,4000.0,3726.0,4000.0,3726.0,4000.0,3484.0
+2026-06-16,DAY,MI,MI 2,A,"55""/3in1, M70H",96.0,WAITING_SMT,SMT대기,복합,"ATE running 1 floor (90min), waiting semi pcb (6min), 3in1",,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-16,DAY,MI,MI 2,D,"55""/3in1, M70H",13.0,WAITING_SMT,SMT대기,복합,waiting semi PCB,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-16,DAY,MI,MI 2,TOTAL,"55""/3in1, M70H",109.0,WAITING_SMT,SMT대기,복합,"ATE running 1 floor (90min), waiting semi pcb (6min), 3in1 | waiting semi PCB",,5720.0,5720.0,5720.0,5720.0,0.0,0.0
+2026-06-16,DAY,MI,MI 3,A,L75S7A_HVD,40.0,CHANGE_MODEL,모델교체,복합,"change model (30min), waiting QC confirm (10min).",,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-16,DAY,MI,MI 3,TOTAL,L75S7A_HVD,40.0,CHANGE_MODEL,모델교체,복합,"change model (30min), waiting QC confirm (10min). | No problem",,5366.0,4834.0,5366.0,4834.0,5366.0,5910.0
+2026-06-16,DAY,MI,MI 4,A,L65CA9N,2.0,ETC,기타,복합,silicon stop,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-16,DAY,MI,MI 4,TOTAL,L65CA9N,2.0,ETC,기타,복합,silicon stop | No problem,,2800.0,2800.0,2800.0,2800.0,2800.0,3110.0
+2026-06-16,DAY,MI,MI 5,A,L55F70NA,75.0,CHANGE_MODEL,모델교체,복합,"change model (50min), silicon coating (25min/ 2 times)",,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-16,DAY,MI,MI 5,D,L55F70NA,60.0,CHANGE_MODEL,모델교체,복합,"change model ict --> coating (30min), change model ate (30min)",,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-16,DAY,MI,MI 5,TOTAL,L55F70NA,135.0,CHANGE_MODEL,모델교체,복합,"change model (50min), silicon coating (25min/ 2 times) | change model ict --> coating (30min), change model ate (30min)",,2999.0,3300.0,2999.0,3300.0,2999.0,3000.0
+2026-06-16,DAY,MI,MI 6,A,L65FE8N_HHS,5.0,ETC,기타,복합,No box packing,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-16,DAY,MI,MI 6,D,L65FE8N_HHS,30.0,CHANGE_MODEL,모델교체,복합,change model (30min),,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-16,DAY,MI,MI 6,TOTAL,L65FE8N_HHS,35.0,CHANGE_MODEL,모델교체,복합,No box packing | change model (30min),,1957.0,1956.0,1957.0,1956.0,2483.0,2366.0
+2026-06-16,DAY,MI,MI 7,A,L65E70A_HVD,22.0,ICT_ATE,ICT/ATE불량,복합,"Mising step (7min), Burn in off (10min), ICT error (5min)",,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-16,DAY,MI,MI 7,D,L65E70A_HVD,10.0,INLOADER,Inloader불량,복합,Inloader error,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-16,DAY,MI,MI 7,TOTAL,L65E70A_HVD,32.0,INLOADER,Inloader불량,복합,"Mising step (7min), Burn in off (10min), ICT error (5min) | Inloader error",,3620.0,3620.0,3620.0,3620.0,3620.0,3880.0
+2026-06-17,DAY,MI,MI 2,A,"55""/3in1, M70H, HKC",63.0,WAITING_SMT,SMT대기,복합,"waiting semi SMT (33min), Ate running 1 floor 30 min",,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-17,DAY,MI,MI 2,TOTAL,"55""/3in1, M70H, HKC",63.0,WAITING_SMT,SMT대기,복합,"waiting semi SMT (33min), Ate running 1 floor 30 min | no problem",,5760.0,5760.0,5760.0,5760.0,0.0,0.0
+2026-06-17,DAY,MI,MI 3,A,"75""/3IN1, U8000F, VIETNAM",30.0,WAITING_SMT,SMT대기,복합,Waiting semi SMT 3in1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-17,DAY,MI,MI 3,D,L75S7A_HVD,30.0,CHANGE_MODEL,모델교체,복합,Change model,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-17,DAY,MI,MI 3,TOTAL,"75""/3IN1, U8000F, VIETNAM",60.0,WAITING_SMT,SMT대기,복합,Waiting semi SMT 3in1 | Change model,,3824.0,3160.0,3824.0,3160.0,3042.0,2432.0
+2026-06-17,DAY,MI,MI 4,A,L65CA9N_HVD,90.0,ETC,기타,복합,waiting pcb from 8h to now,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-17,DAY,MI,MI 4,TOTAL,L65CA9N_HVD,90.0,ETC,기타,복합,waiting pcb from 8h to now | no problem,,2381.0,2380.0,2381.0,2380.0,2381.0,2756.0
+2026-06-17,DAY,MI,MI 5,A,L65S7_HVD,92.0,ICT_ATE,ICT/ATE불량,복합,"waiting pcb fro 8h07 to now (67min0, ate run 1 floor (25min)",,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-17,DAY,MI,MI 5,D,L65S7_HVD,47.0,ICT_ATE,ICT/ATE불량,복합,"Waiting pcb (13min), Ate running 1 floor (47min)",,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-17,DAY,MI,MI 5,TOTAL,L65S7_HVD,139.0,ICT_ATE,ICT/ATE불량,복합,"waiting pcb fro 8h07 to now (67min0, ate run 1 floor (25min) | Waiting pcb (13min), Ate running 1 floor (47min)",,3320.0,3478.0,3320.0,3478.0,3522.0,5242.0
+2026-06-17,DAY,MI,MI 6,A,L85E70NA_HVD,70.0,ETC,기타,복합,wating semi pcb (70min/ 2 times),,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-17,DAY,MI,MI 6,D,L85E70NA_HVD,43.0,WAITING_SMT,SMT대기,복합,waiting semi pcb (43min/ 2 times),,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-17,DAY,MI,MI 6,TOTAL,L85E70NA_HVD,113.0,WAITING_SMT,SMT대기,복합,wating semi pcb (70min/ 2 times) | waiting semi pcb (43min/ 2 times),,1399.0,1290.0,1399.0,1290.0,1512.0,1926.0
+2026-06-17,DAY,MI,MI 7,A,L55CA9N_HVD,24.0,WAITING_SMT,SMT대기,복합,WAITING SEMI SMT,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-17,DAY,MI,MI 7,D,L55CA9N_HVD,56.0,WAITING_SMT,SMT대기,복합,WAITING SEMI PCB,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-17,DAY,MI,MI 7,TOTAL,L55CA9N_HVD,80.0,WAITING_SMT,SMT대기,복합,WAITING SEMI SMT | WAITING SEMI PCB,,2319.0,1676.0,2319.0,1676.0,2319.0,1972.0
+2026-06-18,DAY,MI,MI 2,A,"55""/3in1, M70H, HKC",16.0,AOI_SAOI,AOI/S-AOI불량,복합,"Wave solder error (11min), Aoi error (4min)",,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-18,DAY,MI,MI 2,TOTAL,"55""/3in1, M70H, HKC",16.0,AOI_SAOI,AOI/S-AOI불량,복합,"Wave solder error (11min), Aoi error (4min) | No problem",,5760.0,5760.0,5760.0,5760.0,0.0,0.0
+2026-06-18,DAY,MI,MI 3,TOTAL,L75S7_HVD,0.0,ETC,기타,복합,FT error (4min) | No problem,,5720.0,5720.0,5720.0,5720.0,5720.0,4714.0
+2026-06-18,DAY,MI,MI 4,A,L65CA9N_HVD,8.0,ICT_ATE,ICT/ATE불량,복합,"Ate running 1 floor (4min), waiting HS (4min)",,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-18,DAY,MI,MI 4,D,L65CA9N_HVD,6.0,ICT_ATE,ICT/ATE불량,복합,ICT error (6min),,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-18,DAY,MI,MI 4,TOTAL,L65CA9N_HVD,14.0,ICT_ATE,ICT/ATE불량,복합,"Ate running 1 floor (4min), waiting HS (4min) | ICT error (6min)",,2760.0,2760.0,2760.0,2760.0,2760.0,2770.0
+2026-06-18,DAY,MI,MI 5,A,L65S7_HVD,32.0,WAITING_SMT,SMT대기,복합,Waiting semi SMT (32min),,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-18,DAY,MI,MI 5,D,L65S7_HVD,25.0,WAITING_SMT,SMT대기,복합,Waiting semi SMT (25min),,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-18,DAY,MI,MI 5,TOTAL,L65S7_HVD,57.0,WAITING_SMT,SMT대기,복합,Waiting semi SMT (32min) | Waiting semi SMT (25min),,5361.0,5360.0,5361.0,5360.0,5361.0,5370.0
+2026-06-18,DAY,MI,MI 6,TOTAL,L55E70A_HVD,0.0,ETC,기타,단일,No problem | No problem,,1910.0,1866.0,1910.0,1866.0,1910.0,2562.0
+2026-06-18,DAY,MI,MI 7,A,L55CA9N_HVD,2.0,WAITING_SMT,SMT대기,복합,waiting semi pcb,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-18,DAY,MI,MI 7,D,L55CA9N_HVD,27.0,COATING,Coating/Reflow불량,복합,"coating error (22min), waiting pcb (5min)",,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-18,DAY,MI,MI 7,TOTAL,L55CA9N_HVD,29.0,WAITING_SMT,SMT대기,복합,"waiting semi pcb | coating error (22min), waiting pcb (5min)",,2940.0,2940.0,2940.0,2940.0,2940.0,3026.0
+2026-06-19,DAY,MI,MI 2,TOTAL,"55""/3in1, M70H, HKC",0.0,ETC,기타,단일,No problem | No problem,,5760.0,5760.0,5760.0,5760.0,2880.0,0.0
+2026-06-19,DAY,MI,MI 3,A,L75S7A_HVD,15.0,ETC,기타,복합,FT error,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-19,DAY,MI,MI 3,TOTAL,L75S7A_HVD,15.0,ETC,기타,복합,FT error | No problem,,5306.0,5264.0,5306.0,5264.0,5306.0,5108.0
+2026-06-19,DAY,MI,MI 4,A,L65CA9N_HVD,5.0,ETC,기타,복합,FT error,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-19,DAY,MI,MI 4,TOTAL,L65CA9N_HVD,5.0,ETC,기타,복합,FT error | No problem,,2760.0,2760.0,2760.0,2760.0,2760.0,2778.0
+2026-06-19,DAY,MI,MI 5,A,L65E70A_HVD,15.0,COATING,Coating/Reflow불량,복합,Coating error (15min),,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-19,DAY,MI,MI 5,D,L65E70A_HVD,30.0,CHANGE_MODEL,모델교체,복합,change model L65s7 --> L65E70A,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-19,DAY,MI,MI 5,TOTAL,L65E70A_HVD,45.0,CHANGE_MODEL,모델교체,복합,Coating error (15min) | change model L65s7 --> L65E70A,,3542.0,3542.0,3542.0,3542.0,3542.0,3326.0
+2026-06-19,DAY,MI,MI 6,A,L75E70NA_HVD,8.0,WAVE,Wave Solder불량,복합,wave solder error,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-19,DAY,MI,MI 6,D,L75E70NA_HVD,20.0,COATING,Coating/Reflow불량,복합,Coating error,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-19,DAY,MI,MI 6,TOTAL,L75E70NA_HVD,28.0,COATING,Coating/Reflow불량,복합,wave solder error | Coating error,,2000.0,2000.0,2000.0,2000.0,2000.0,2170.0
+2026-06-19,DAY,MI,MI 7,A,L55CA9N_HVD,34.0,WAITING_SMT,SMT대기,복합,"waiting semi pcb (27min, coating, aoi, wave solder error.",,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-19,DAY,MI,MI 7,D,L55CA9N_HVD,43.0,COATING,Coating/Reflow불량,복합,"waiting pcb (40min), coating error (3min)",,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-19,DAY,MI,MI 7,TOTAL,L55CA9N_HVD,77.0,WAITING_SMT,SMT대기,복합,"waiting semi pcb (27min, coating, aoi, wave solder error. | waiting pcb (40min), coating error (3min)",,2940.0,2602.0,2940.0,2602.0,2940.0,2418.0
+2026-06-20,DAY,MI,MI 2,TOTAL,L55S7_HVD,0.0,ETC,기타,단일,No problem,,5720.0,5720.0,5720.0,5720.0,5720.0,5720.0
+2026-06-20,DAY,MI,MI 3,A,L75S7_HVD,30.0,CHANGE_MODEL,모델교체,복합,Change model,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-20,DAY,MI,MI 3,D,L55S7_HVD,32.0,WAITING_SMT,SMT대기,복합,waiting semi pcb,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-20,DAY,MI,MI 3,TOTAL,L75S7_HVD,62.0,WAITING_SMT,SMT대기,복합,Change model | waiting semi pcb,,5400.0,5400.0,5400.0,5400.0,5400.0,5190.0
+2026-06-20,DAY,MI,MI 4,A,L65CA9N_HVD,10.0,ETC,기타,복합,Waiting box packing,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-20,DAY,MI,MI 4,D,L65CA9N_HVD,2.0,AOI_SAOI,AOI/S-AOI불량,복합,AOI error,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-20,DAY,MI,MI 4,TOTAL,L65CA9N_HVD,12.0,AOI_SAOI,AOI/S-AOI불량,복합,Waiting box packing | AOI error,,2960.0,2960.0,2960.0,2960.0,2960.0,2960.0
+2026-06-20,DAY,MI,MI 5,A,L43E60A_HVD,94.0,WAITING_SMT,SMT대기,복합,"waiting semi PCB (60min), set up coating (13min), ate running 1 floor (18min), ft error (3min).",,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-20,DAY,MI,MI 5,D,L43E60A_HVD,21.0,WAITING_SMT,SMT대기,복합,waiting semi pcb,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-20,DAY,MI,MI 5,TOTAL,L43E60A_HVD,115.0,WAITING_SMT,SMT대기,복합,"waiting semi PCB (60min), set up coating (13min), ate running 1 floor (18min), ft error (3min). | waiting semi pcb",,4860.0,3760.0,4860.0,3760.0,4860.0,2808.0
+2026-06-20,DAY,MI,MI 6,A,L75E70NA_HVD,90.0,WAITING_SMT,SMT대기,단일,waiting semi PCB,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-20,DAY,MI,MI 6,D,L75E70NA_HVD,95.0,WAITING_SMT,SMT대기,단일,waiting semi PCB,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-20,DAY,MI,MI 6,TOTAL,L75E70NA_HVD,185.0,WAITING_SMT,SMT대기,단일,waiting semi PCB | waiting semi PCB,,1672.0,2246.0,1672.0,2246.0,1672.0,1056.0
+2026-06-20,DAY,MI,MI 7,A,L55CA9N_HVD,40.0,WAITING_SMT,SMT대기,단일,waiting semi PCB,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-20,DAY,MI,MI 7,TOTAL,L55CA9N_HVD,40.0,WAITING_SMT,SMT대기,단일,waiting semi PCB,,3000.0,3000.0,3000.0,3000.0,3000.0,2858.0
+2026-06-20,DAY,AI,SA01,A,L55S7,18.0,INSERT_JUMP,Jumper불량,복합,Jumper lỗi insert,vừa chạy vừa xử lý | stop line xử lý | Vừa chạy vừa repair,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-20,DAY,AI,SA01,B,L55S7,39.0,INSERT_RH3,RH3삽입불량,복합,Rh3 lỗi 10:50-11:45,vừa chạy vừa xử lý | stop line xử lý | Vừa chạy vừa repair,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-20,DAY,AI,SA01,D,L55S7,16.0,ETC,기타,복합,rad lỗi FD3 - chưa xử lý được,vừa chạy vừa xử lý | stop line xử lý | Vừa chạy vừa repair,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-20,DAY,AI,SA01,E,L55S7,14.0,INSERT_JUMP,Jumper불량,복합,Jumper lỗi insert,vừa chạy vừa xử lý | stop line xử lý | Vừa chạy vừa repair,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-20,DAY,AI,SA01,F,L55S7,38.0,INSERT_JUMP,Jumper불량,복합,- Rad sửa fd 3 : 19:00-19:15 - Jumper canh 2 head : 19:20-19:35,vừa chạy vừa xử lý | stop line xử lý | Vừa chạy vừa repair,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-20,DAY,AI,SA01,TOTAL,L55S7,125.0,INSERT_RH3,RH3삽입불량,복합,Jumper lỗi insert | Rh3 lỗi 10:50-11:45 | rad lỗi FD3 - chưa xử lý được | - Rad sửa fd 3 : 19:00-19:15 - Jumper canh 2 head : 19:20-19:35,vừa chạy vừa xử lý | stop line xử lý | Vừa chạy vừa repair,2240.0,1804.0,0.0,0.0,0.0,0.0
+2026-06-20,DAY,AI,SA02,A,L55S7,21.0,INSERT_XGZ,XGZ불량,복합,Xzg kẹt liệu,hỗ trợ và đào tạo thêm cho op,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-20,DAY,AI,SA02,B,L55S7,9.0,INSERT_XGZ,XGZ불량,복합,Xzg kẹt liệu,hỗ trợ và đào tạo thêm cho op,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-20,DAY,AI,SA02,D,L55S7,18.0,INSERT_RH3,RH3삽입불량,복합,"Rh3 kẹt giấy , cắt không đứt nhiều lần. Eye sp lỗi convyor 16:10-16:30",hỗ trợ và đào tạo thêm cho op,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-20,DAY,AI,SA02,E,L55S7,10.0,INSERT_XGZ,XGZ불량,복합,Xzg kẹt liệu,hỗ trợ và đào tạo thêm cho op,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-20,DAY,AI,SA02,F,L55S7,21.0,INSERT_JUMP,Jumper불량,복합,"Jumper cắm lỗi , op xử lý chậm .",hỗ trợ và đào tạo thêm cho op,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-20,DAY,AI,SA02,TOTAL,L55S7,79.0,INSERT_RH3,RH3삽입불량,복합,"Xzg kẹt liệu | Rh3 kẹt giấy , cắt không đứt nhiều lần. Eye sp lỗi convyor 16:10-16:30 | Jumper cắm lỗi , op xử lý chậm .",hỗ trợ và đào tạo thêm cho op,2240.0,1981.0,0.0,0.0,0.0,0.0
+2026-06-20,DAY,AI,SA03,A,L55CA9N,27.0,NEW_OP,신규OP교육,단일,New op,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-20,DAY,AI,SA03,B,L55CA9N,4.0,NEW_OP,신규OP교육,단일,New op,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-20,DAY,AI,SA03,F,L55CA9N,7.0,NEW_OP,신규OP교육,단일,New op,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-20,DAY,AI,SA03,TOTAL,L55CA9N,38.0,NEW_OP,신규OP교육,단일,New op,,1300.0,1247.0,0.0,0.0,0.0,0.0
+2026-06-20,DAY,AI,SA04,B,L55S7,39.0,ETC,기타,복합,Rad kẹt liệu 10:15 -10-45,line bốc hàng chờ thả | line bốc hàng thả phụ line 1-2,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-20,DAY,AI,SA04,F,L55S7,57.0,INSERT_JUMP,Jumper불량,복합,Jumper stop sửa head 2,line bốc hàng chờ thả | line bốc hàng thả phụ line 1-2,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-20,DAY,AI,SA04,TOTAL,L55S7,96.0,INSERT_JUMP,Jumper불량,복합,Rad kẹt liệu 10:15 -10-45 | Jumper stop sửa head 2,line bốc hàng chờ thả | line bốc hàng thả phụ line 1-2,2040.0,1746.0,0.0,0.0,0.0,0.0
+2026-06-20,DAY,AI,SA05,A,L83CA9N,30.0,CHANGE_MODEL,모델교체,복합,Change model đầu ca 7:30 -9:00 bốc hàng ở máy RG scan sau .,vừa chạy vừa xử lý .,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-20,DAY,AI,SA05,B,L83CA9N,20.0,ETC,기타,복합,conveyor kẹt rail nhiều,vừa chạy vừa xử lý .,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-20,DAY,AI,SA05,TOTAL,L83CA9N,50.0,CHANGE_MODEL,모델교체,복합,Change model đầu ca 7:30 -9:00 bốc hàng ở máy RG scan sau . | conveyor kẹt rail nhiều,vừa chạy vừa xử lý .,590.0,584.0,0.0,0.0,0.0,0.0
+2026-06-20,DAY,AI,SA07,A,L43E60,61.0,INSERT_RH3,RH3삽입불량,복합,"RH3 cắm rớt nhiều , op mới chưa xử lý được .",cover sa7 chờ scan,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-20,DAY,AI,SA07,B,L43E60,4.0,INSERT_RH3,RH3삽입불량,복합,"RH3 cắm rớt nhiều , op mới chưa xử lý được .",cover sa7 chờ scan,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-20,DAY,AI,SA07,D,L43E60,20.0,INSERT_RH3,RH3삽입불량,복합,"RH3 cắm rớt nhiều , op mới chưa xử lý được .",cover sa7 chờ scan,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-20,DAY,AI,SA07,E,L43E60,51.0,INSERT_RH3,RH3삽입불량,복합,RH3 Ng tranfer 17:20-18:10,cover sa7 chờ scan,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-20,DAY,AI,SA07,TOTAL,L43E60,136.0,INSERT_RH3,RH3삽입불량,복합,"RH3 cắm rớt nhiều , op mới chưa xử lý được . | RH3 Ng tranfer 17:20-18:10",cover sa7 chờ scan,1517.0,1260.0,0.0,0.0,0.0,0.0
+2026-06-20,DAY,AI,SA08,A,L55E70A,13.0,ICT_ATE,ICT/ATE불량,단일,Update new code,Line thả hàng cover 65E70,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-20,DAY,AI,SA08,TOTAL,L55E70A,13.0,ICT_ATE,ICT/ATE불량,단일,Update new code,Line thả hàng cover 65E70,280.0,250.0,0.0,0.0,0.0,0.0
+2026-06-20,DAY,AI,SA10,C,L55F70NA,3.0,CHANGE_MODEL,모델교체,복합,CHANGE MODEL,line bốc hàng chờ thả .,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-20,DAY,AI,SA10,D,L55F70NA,17.0,INSERT_RH3,RH3삽입불량,복합,RH3 cắm rớt lk,line bốc hàng chờ thả .,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-20,DAY,AI,SA10,E,L55F70NA,13.0,ETC,기타,복합,kẹt dao cutter,line bốc hàng chờ thả .,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-20,DAY,AI,SA10,F,L55F70NA,3.0,CHANGE_MODEL,모델교체,복합,CHANGE MODEL,line bốc hàng chờ thả .,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-20,DAY,AI,SA10,TOTAL,L65CA9N,36.0,CHANGE_MODEL,모델교체,복합,CHANGE MODEL | RH3 cắm rớt lk | kẹt dao cutter,line bốc hàng chờ thả .,1180.0,1095.0,0.0,0.0,0.0,0.0
+2026-06-20,NIGHT,AI,SA01,F,L55S7,27.0,INSERT_JUMP,Jumper불량,복합,Unloader Jump lỗi k hoạt động,"Bốc hàng, chờ kỹ thuật xử lý | Kỹ thuật vừa chạy vừa xử lý",0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-20,NIGHT,AI,SA01,I,L55S7,19.0,ETC,기타,복합,Rad lỗi cắm rớt lk,"Bốc hàng, chờ kỹ thuật xử lý | Kỹ thuật vừa chạy vừa xử lý",0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-20,NIGHT,AI,SA01,TOTAL,L55S7,46.0,INSERT_JUMP,Jumper불량,복합,Unloader Jump lỗi k hoạt động | Rad lỗi cắm rớt lk,"Bốc hàng, chờ kỹ thuật xử lý | Kỹ thuật vừa chạy vừa xử lý",2100.0,2100.0,0.0,0.0,0.0,0.0
+2026-06-20,NIGHT,AI,SA02,G,L55S7,24.0,INSERT_RH3,RH3삽입불량,복합,Máy Rh3 lỗi insert,kỹ thuật vừa chạy vừa xử lý | Kỹ thuật vừa chạy vừa xử lý,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-20,NIGHT,AI,SA02,I,L55S7,59.0,INSERT_RH3,RH3삽입불량,복합,Máy Rh3 lỗi insert Jump lỗi ngắn chân,kỹ thuật vừa chạy vừa xử lý | Kỹ thuật vừa chạy vừa xử lý,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-20,NIGHT,AI,SA02,TOTAL,L55S7,83.0,INSERT_RH3,RH3삽입불량,복합,Máy Rh3 lỗi insert | Máy Rh3 lỗi insert Jump lỗi ngắn chân,kỹ thuật vừa chạy vừa xử lý | Kỹ thuật vừa chạy vừa xử lý,2100.0,2068.0,0.0,0.0,0.0,0.0
+2026-06-20,NIGHT,AI,SA03,TOTAL,L55CA9N,0.0,ETC,기타,단일,,,1200.0,1409.0,0.0,0.0,0.0,0.0
+2026-06-20,NIGHT,AI,SA04,F,L55S7,52.0,INSERT_JUMP,Jumper불량,단일,Jump head 2 lỗi insert,Kỹ thuật stop line xử lý ,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-20,NIGHT,AI,SA04,TOTAL,L55S7,52.0,INSERT_JUMP,Jumper불량,단일,Jump head 2 lỗi insert,Kỹ thuật stop line xử lý ,2100.0,2020.0,0.0,0.0,0.0,0.0
+2026-06-20,NIGHT,AI,SA05,F,L83CA9N,17.0,INSERT_RH3,RH3삽입불량,복합,Máy Rh3 lỗi,Kỹ thuật vừa chạy vừa xử lý,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-20,NIGHT,AI,SA05,G,L83CA9N,32.0,INSERT_RH3,RH3삽입불량,복합,Máy Rh3 lỗi,Kỹ thuật vừa chạy vừa xử lý,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-20,NIGHT,AI,SA05,H,L83CA9N,31.0,MAGAZINE,Magazine부족,복합,Không đủ magazin sắt để sản xuất Máy RG131 lỗi,Kỹ thuật vừa chạy vừa xử lý,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-20,NIGHT,AI,SA05,I,L83CA9N,25.0,MAGAZINE,Magazine부족,복합,Không đủ magazin sắt để sản xuất,Kỹ thuật vừa chạy vừa xử lý,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-20,NIGHT,AI,SA05,J,L83CA9N,7.0,MAGAZINE,Magazine부족,복합,Không đủ magazin sắt để sản xuất,Kỹ thuật vừa chạy vừa xử lý,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-20,NIGHT,AI,SA05,K,L83CA9N,69.0,MAGAZINE,Magazine부족,복합,Không đủ magazin sắt để sản xuất,Kỹ thuật vừa chạy vừa xử lý,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-20,NIGHT,AI,SA05,TOTAL,L83CA9N,181.0,MAGAZINE,Magazine부족,복합,Máy Rh3 lỗi | Không đủ magazin sắt để sản xuất Máy RG131 lỗi | Không đủ magazin sắt để sản xuất | Không đủ magazin sắt để sản xuất | Không đủ magazin sắt để sản xuất,Kỹ thuật vừa chạy vừa xử lý,1379.0,749.0,0.0,0.0,0.0,0.0
+2026-06-20,NIGHT,AI,SA07,TOTAL,L43E60A,0.0,ETC,기타,단일,,,1275.0,1708.0,0.0,0.0,0.0,0.0
+2026-06-20,NIGHT,AI,SA10,F,L55F70NA,1.0,MAGAZINE,Magazine부족,단일,Không đủ magazin sắt để sản xuất,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-20,NIGHT,AI,SA10,H,L55F70NA,3.0,MAGAZINE,Magazine부족,단일,Không đủ magazin sắt để sản xuất,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-20,NIGHT,AI,SA10,I,L55F70NA,14.0,MAGAZINE,Magazine부족,단일,Không đủ magazin sắt để sản xuất,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-20,NIGHT,AI,SA10,K,L55F70NA,10.0,MAGAZINE,Magazine부족,단일,Không đủ magazin sắt để sản xuất,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-20,NIGHT,AI,SA10,TOTAL,L55F70NA,28.0,MAGAZINE,Magazine부족,단일,Không đủ magazin sắt để sản xuất | Không đủ magazin sắt để sản xuất | Không đủ magazin sắt để sản xuất,,1445.0,1400.0,0.0,0.0,0.0,0.0
+2026-05-04,NIGHT,MI,MI 1,TOTAL,"A (150 min)
+7H30-9H20",0.0,ETC,기타,단일,,,1620.0,456.0,1620.0,456.0,630.0,0.0
+2026-05-04,NIGHT,MI,MI 2,TOTAL,"A (150 min)
+7H30-9H20",0.0,ETC,기타,단일,,,1620.0,0.0,1620.0,0.0,630.0,0.0
+2026-05-04,NIGHT,MI,MI 3,TOTAL,"A (150 min)
+7H30-9H20",0.0,ETC,기타,단일,,,1620.0,0.0,1620.0,0.0,630.0,0.0
+2026-05-04,NIGHT,MI,MI 4,TOTAL,"A (150 min)
+7H30-9H20",0.0,ETC,기타,단일,,,1620.0,0.0,1620.0,0.0,630.0,0.0
+2026-05-04,NIGHT,MI,MI 1,TOTAL,"A (150 min)
+7H30-9H20",0.0,ETC,기타,단일,,,1485.0,0.0,1485.0,0.0,3982.0,0.0
+2026-05-04,NIGHT,MI,MI 2,TOTAL,"A (150 min)
+7H30-9H20",0.0,ETC,기타,단일,,,1485.0,0.0,1485.0,0.0,3982.0,0.0
+2026-05-04,NIGHT,MI,MI 3,TOTAL,"A (150 min)
+7H30-9H20",0.0,ETC,기타,단일,,,1485.0,0.0,1485.0,0.0,3982.0,0.0
+2026-05-04,NIGHT,MI,MI 4,TOTAL,"A (150 min)
+7H30-9H20",0.0,ETC,기타,단일,,,1485.0,0.0,1485.0,0.0,3982.0,0.0
+2026-06-01,NIGHT,MI,MI 2,TOTAL,L55E70A,0.0,CHANGE_MODEL,모델교체,복합,No problem | Change model (79min) Coating error (17min) | No problem | No problem,,3800.0,3800.0,3800.0,3800.0,3200.0,4088.0
+2026-06-01,NIGHT,MI,MI 3,TOTAL,L75S7A_HVD,0.0,COATING,Coating/Reflow불량,복합,Waiting PCB (16min | Coating error (30min) | Wave solder (18min) | Continuous lead shortage error,,4976.0,4976.0,4976.0,4976.0,4640.0,4506.0
+2026-06-01,NIGHT,MI,MI 4,TOTAL,L55S7_HVD,0.0,ETC,기타,복합,No problem | 3in1 | 3in1 | No problem | 3in1 | 3in1,,5360.0,5360.0,5360.0,5360.0,5360.0,4222.0
+2026-06-01,NIGHT,MI,MI 5,TOTAL,L65S7A,0.0,CHANGE_MODEL,모델교체,복합,Change model (15min) | Change model (45min) | Coating error (8min),,2524.0,2762.0,2524.0,2762.0,2524.0,2544.0
+2026-06-01,NIGHT,MI,MI 6,TOTAL,L65S8_HVD,0.0,COATING,Coating/Reflow불량,복합,No problem | Coating error (22min) | No problem,,5360.0,5360.0,5360.0,5360.0,5360.0,4556.0
+2026-06-02,NIGHT,MI,MI 2,H,L55S7_HVD,3.0,ETC,기타,단일,,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-02,NIGHT,MI,MI 2,TOTAL,L55S7_HVD,3.0,ETC,기타,단일,,,5360.0,5360.0,5360.0,5360.0,5360.0,5054.0
+2026-06-02,NIGHT,MI,MI 3,H,L75S7A_HVD,7.0,ETC,기타,단일,,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-02,NIGHT,MI,MI 3,K,L75S7A_HVD,6.0,ETC,기타,단일,,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-02,NIGHT,MI,MI 3,TOTAL,L75S7A_HVD,13.0,ETC,기타,단일,,,5360.0,5360.0,5360.0,5360.0,5360.0,5002.0
+2026-06-02,NIGHT,MI,MI 4,F,L55E70A_HVD,13.0,ETC,기타,단일,,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-02,NIGHT,MI,MI 4,TOTAL,L55E70A_HVD,13.0,ETC,기타,단일,,,3360.0,3360.0,3360.0,3360.0,3360.0,3758.0
+2026-06-02,NIGHT,MI,MI 5,F,L65S7A_HVD,38.0,ETC,기타,단일,,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-02,NIGHT,MI,MI 5,TOTAL,L65S7A_HVD,38.0,ETC,기타,단일,,,2500.0,2500.0,2500.0,2500.0,2500.0,2524.0
+2026-06-02,NIGHT,MI,MI 6,H,L65S8_HVD,25.0,ETC,기타,단일,,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-02,NIGHT,MI,MI 6,K,L65S8_HVD,41.0,ETC,기타,단일,,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-02,NIGHT,MI,MI 6,TOTAL,L65S8_HVD,66.0,ETC,기타,단일,,,5360.0,4680.0,5360.0,4680.0,5360.0,3730.0
+2026-06-02,NIGHT,MI,MI 7,K,L65E70A_HVD,70.0,ETC,기타,단일,,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-02,NIGHT,MI,MI 7,TOTAL,L65E70A_HVD,70.0,ETC,기타,단일,,,1000.0,1000.0,1000.0,1000.0,1000.0,1000.0
+2026-06-03,NIGHT,MI,MI 2,F,L55S7_HVD,20.0,ETC,기타,복합,Waiting PCB,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-03,NIGHT,MI,MI 2,TOTAL,L55S7_HVD,20.0,ETC,기타,복합,Waiting PCB | 3in1 | No problem | 3in1,,5400.0,5570.0,5400.0,5570.0,5400.0,4250.0
+2026-06-03,NIGHT,MI,MI 3,TOTAL,L65S7A_HVD,0.0,ETC,기타,단일,No problem | No problem | No problem | No problem | No problem,,5400.0,4230.0,5400.0,4230.0,5400.0,5200.0
+2026-06-03,NIGHT,MI,MI 4,F,L65E70A_HVD,13.0,ETC,기타,복합,Waiting PCB,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-03,NIGHT,MI,MI 4,TOTAL,L65E70A_HVD,13.0,ETC,기타,복합,Waiting PCB | No problem | No problem | No problem,,3360.0,3360.0,3360.0,3360.0,3360.0,3370.0
+2026-06-03,NIGHT,MI,MI 5,TOTAL,L65CA9N_HVD,0.0,ETC,기타,단일,,,2660.0,2660.0,2660.0,2660.0,2660.0,2702.0
+2026-06-03,NIGHT,MI,MI 6,F,L65S8_HVD,70.0,ETC,기타,복합,Waiting PCB,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-03,NIGHT,MI,MI 6,H,L65S8_HVD,5.0,ICT_ATE,ICT/ATE불량,복합,ICT error,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-03,NIGHT,MI,MI 6,TOTAL,L65S8_HVD,75.0,ICT_ATE,ICT/ATE불량,복합,Waiting PCB | ICT error | No problem,,5360.0,5080.0,5360.0,5080.0,5360.0,4962.0
+2026-06-03,NIGHT,MI,MI 7,TOTAL,L48CA9N_HVD,0.0,ETC,기타,단일,Waiting PCB | Waiting PCB,,1400.0,2320.0,1400.0,2320.0,1400.0,1614.0
+2026-06-04,NIGHT,MI,MI 2,F,L55S7_HVD,112.0,WAITING_SMT,SMT대기,복합,waiting semi smt,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-04,NIGHT,MI,MI 2,I,L55S7_HVD,40.0,WAITING_SMT,SMT대기,복합,waiting semi smt,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-04,NIGHT,MI,MI 2,TOTAL,L55S7_HVD,152.0,WAITING_SMT,SMT대기,복합,waiting semi smt | waiting semi smt | 3IN1,,4560.0,3200.0,4560.0,3200.0,4560.0,890.0
+2026-06-04,NIGHT,MI,MI 3,TOTAL,L65S7A_HVD,0.0,ETC,기타,복합,No problem | out of stock | No problem | No problem | No problem,,5400.0,5400.0,5400.0,5400.0,5400.0,5400.0
+2026-06-04,NIGHT,MI,MI 4,K,L65S8_HVD,14.0,ICT_ATE,ICT/ATE불량,복합,ATE error,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-04,NIGHT,MI,MI 4,TOTAL,L55E70NA_HVD,14.0,WAITING_SMT,SMT대기,복합,waiting semi smt | waiting semi smt | ATE error,,568.0,544.0,568.0,544.0,568.0,2746.0
+2026-06-04,NIGHT,MI,MI 5,G,L75S7A_HVD,60.0,CHANGE_MODEL,모델교체,복합,ATE change model,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-04,NIGHT,MI,MI 5,H,L75S7A_HVD,50.0,ICT_ATE,ICT/ATE불량,복합,ATE run 1 floor,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-04,NIGHT,MI,MI 5,K,L75S7A_HVD,18.0,ETC,기타,복합,Silicon error,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-04,NIGHT,MI,MI 5,TOTAL,L75S7A_HVD,128.0,CHANGE_MODEL,모델교체,복합,No problem | ATE change model | ATE run 1 floor | No problem | Silicon error,,4808.0,4320.0,4808.0,4320.0,4808.0,4820.0
+2026-06-04,NIGHT,MI,MI 6,K,L65S8_HVD,5.0,ICT_ATE,ICT/ATE불량,복합,ATE error,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-04,NIGHT,MI,MI 6,TOTAL,L65S8_HVD,5.0,WAITING_SMT,SMT대기,복합,waiting semi smt | waiting semi smt | ATE error,,2000.0,2000.0,2000.0,2000.0,2000.0,3566.0
+2026-06-04,NIGHT,MI,MI 7,F,L65E70A_HVD,15.0,WAITING_SMT,SMT대기,복합,waiting semi smt,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-04,NIGHT,MI,MI 7,H,L65E70A_HVD,28.0,COATING,Coating/Reflow불량,복합,Coating error,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-04,NIGHT,MI,MI 7,K,L65E70A_HVD,15.0,ETC,기타,복합,FT error,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-04,NIGHT,MI,MI 7,TOTAL,L65E70A_HVD,58.0,WAITING_SMT,SMT대기,복합,waiting semi smt | Coating error | No problem | FT error,,3000.0,3000.0,3000.0,3000.0,3000.0,3502.0
+2026-06-06,NIGHT,MI,MI 2,TOTAL,L55S7_HVD,0.0,ETC,기타,단일,No problem | No problem | No problem | No problem | No problem | No problem,,5400.0,5400.0,5400.0,5400.0,5400.0,5600.0
+2026-06-06,NIGHT,MI,MI 3,TOTAL,L65S7_HVD,0.0,ETC,기타,단일,No problem,,5360.0,0.0,5360.0,0.0,5360.0,0.0
+2026-06-06,NIGHT,MI,MI 4,TOTAL,L65E70A_HVD,0.0,ETC,기타,단일,No problem | No problem | No problem | No problem,,4000.0,4000.0,4000.0,4000.0,4000.0,4176.0
+2026-06-06,NIGHT,MI,MI 5,F,L65FE8N_HHS,10.0,WAVE,Wave Solder불량,복합,Wave solder,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-06,NIGHT,MI,MI 5,H,L65FE8N_HHS,120.0,SAMPLE,샘플/테스트,복합,Test sample L55F70NA,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-06,NIGHT,MI,MI 5,K,L65FE8N_HHS,110.0,SAMPLE,샘플/테스트,복합,Test sample L55F70NA,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-06,NIGHT,MI,MI 5,TOTAL,L65FE8N_HHS,240.0,WAVE,Wave Solder불량,복합,Wave solder | Test sample L55F70NA | Test sample L55F70NA,,2972.0,2972.0,2972.0,2972.0,2972.0,1486.0
+2026-06-06,NIGHT,MI,MI 6,TOTAL,L65S8_HVD,0.0,ETC,기타,단일,,,2000.0,0.0,2000.0,0.0,2000.0,0.0
+2026-06-06,NIGHT,MI,MI 6,F,L85E70NA_HVD,15.0,WAITING_SMT,SMT대기,복합,Waiting semi SMT Waiting Jig Durastone,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-06,NIGHT,MI,MI 6,H,L85E70NA_HVD,11.0,ETC,기타,복합,FT error,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-06,NIGHT,MI,MI 6,I,L85E70NA_HVD,32.0,WAITING_SMT,SMT대기,복합,Waiting semi SMT Waiting Jig Durastone,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-06,NIGHT,MI,MI 6,K,L85E70NA_HVD,10.0,ICT_ATE,ICT/ATE불량,복합,ATE error,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-06,NIGHT,MI,MI 6,TOTAL,L85E70NA_HVD,68.0,WAITING_SMT,SMT대기,복합,Waiting semi SMT Waiting Jig Durastone | FT error | Waiting semi SMT Waiting Jig Durastone | ATE error,,2000.0,2000.0,2000.0,2000.0,2000.0,2664.0
+2026-06-07,NIGHT,MI,MI 2,TOTAL,L55S7_HVD,0.0,ETC,기타,단일,No problem | No problem | No problem | No problem | No problem | No problem,,5400.0,5400.0,5400.0,5400.0,5400.0,5600.0
+2026-06-07,NIGHT,MI,MI 3,TOTAL,L65S7_HVD,0.0,ETC,기타,단일,No problem,,5360.0,0.0,5360.0,0.0,5360.0,0.0
+2026-06-07,NIGHT,MI,MI 4,TOTAL,L65E70A_HVD,0.0,ETC,기타,단일,No problem | No problem | No problem | No problem | No problem | No problem,,2000.0,2000.0,2000.0,2000.0,2000.0,3030.0
+2026-06-07,NIGHT,MI,MI 5,F,L65FE8N_HHS,10.0,WAVE,Wave Solder불량,복합,Wave solder,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-07,NIGHT,MI,MI 5,H,L65FE8N_HHS,120.0,SAMPLE,샘플/테스트,복합,Test sample L55F70NA,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-07,NIGHT,MI,MI 5,K,L65FE8N_HHS,110.0,SAMPLE,샘플/테스트,복합,Test sample L55F70NA,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-07,NIGHT,MI,MI 5,TOTAL,L65FE8N_HHS,240.0,WAVE,Wave Solder불량,복합,Wave solder | Test sample L55F70NA | Test sample L55F70NA,,2972.0,2972.0,2972.0,2972.0,2972.0,1486.0
+2026-06-07,NIGHT,MI,MI 6,TOTAL,L65S8_HVD,0.0,ETC,기타,단일,,,2000.0,0.0,2000.0,0.0,2000.0,0.0
+2026-06-07,NIGHT,MI,MI 6,TOTAL,L85E70NA_HVD,0.0,ETC,기타,단일,No problem | No problem | No problem | No problem | No problem | No problem,,2000.0,2000.0,2000.0,2000.0,2000.0,2000.0
+2026-06-10,NIGHT,MI,MI 2,F,L55S7_HVD,27.0,WAITING_SMT,SMT대기,복합,Waiting semi SMT,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-10,NIGHT,MI,MI 2,TOTAL,L55S7_HVD,27.0,WAITING_SMT,SMT대기,복합,Waiting semi SMT | 3IN1 | Waiting semi SMT | 3IN1,,5200.0,4508.0,5200.0,4508.0,5200.0,3190.0
+2026-06-10,NIGHT,MI,MI 3,F,L75S7N_HVD,24.0,WAITING_SMT,SMT대기,복합,Waiting semi SMT,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-10,NIGHT,MI,MI 3,TOTAL,L75S7N_HVD,24.0,WAITING_SMT,SMT대기,복합,Waiting semi SMT | No problem | No problem | No problem,,5238.0,4608.0,5238.0,4608.0,5238.0,5388.0
+2026-06-10,NIGHT,MI,MI 4,H,L55E70A_HVD,23.0,CHANGE_MODEL,모델교체,복합,Change model,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-10,NIGHT,MI,MI 4,K,L55E70A_HVD,35.0,CHANGE_MODEL,모델교체,복합,Change model,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-10,NIGHT,MI,MI 4,TOTAL,L55E70A_HVD,58.0,CHANGE_MODEL,모델교체,복합,No problem | Change model | No problem | Change model,,4000.0,3304.0,4000.0,3304.0,4000.0,3388.0
+2026-06-10,NIGHT,MI,MI 5,F,L65S7_HVD,11.0,WAITING_SMT,SMT대기,복합,Waiting semi SMT,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-10,NIGHT,MI,MI 5,I,L65S7_HVD,11.0,WAITING_SMT,SMT대기,복합,Waiting semi SMT,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-10,NIGHT,MI,MI 5,TOTAL,L65S7_HVD,22.0,WAITING_SMT,SMT대기,복합,Waiting semi SMT | Waiting semi SMT | No problem | No problem,,5400.0,5400.0,5400.0,5400.0,5400.0,5496.0
+2026-06-10,NIGHT,MI,MI 6,H,L85E70NA_HVD,18.0,ICT_ATE,ICT/ATE불량,복합,ICT error,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-10,NIGHT,MI,MI 6,TOTAL,L85E70NA_HVD,18.0,ICT_ATE,ICT/ATE불량,복합,No problem | ICT error | No problem | No problem | No problem,,2400.0,2400.0,2400.0,2400.0,2400.0,2796.0
+2026-06-10,NIGHT,MI,MI 7,F,L55CA9N_HVD,30.0,CHANGE_MODEL,모델교체,복합,Change model,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-10,NIGHT,MI,MI 7,H,L55CA9N_HVD,25.0,ICT_ATE,ICT/ATE불량,복합,ICT error,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-10,NIGHT,MI,MI 7,K,L55CA9N_HVD,68.0,ICT_ATE,ICT/ATE불량,복합,ICT error,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-10,NIGHT,MI,MI 7,TOTAL,L55CA9N_HVD,123.0,CHANGE_MODEL,모델교체,복합,Change model | ICT error | No problem | ICT error,,3400.0,2840.0,3400.0,2840.0,3400.0,2456.0
+2026-06-12,NIGHT,MI,MI 2,K,L55S7_HVD,25.0,COATING,Coating/Reflow불량,복합,Coating error,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-12,NIGHT,MI,MI 2,TOTAL,L55S7_HVD,25.0,COATING,Coating/Reflow불량,복합,No problem | No problem | No problem | No problem | No problem | Coating error,,5400.0,5400.0,5400.0,5400.0,5400.0,6082.0
+2026-06-12,NIGHT,MI,MI 3,TOTAL,L65S7A_HVD,0.0,ETC,기타,단일,No problem | No problem | No problem | No problem | No problem | No problem,,5400.0,5400.0,5400.0,5400.0,5400.0,5586.0
+2026-06-12,NIGHT,MI,MI 4,H,L65CA9N_HVD,17.0,AOI_SAOI,AOI/S-AOI불량,복합,AOI error,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-12,NIGHT,MI,MI 4,K,L65CA9N_HVD,9.0,ETC,기타,복합,FT error,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-12,NIGHT,MI,MI 4,TOTAL,L65CA9N_HVD,26.0,AOI_SAOI,AOI/S-AOI불량,복합,No problem | AOI error | No problem | No problem | FT error,,2600.0,2600.0,2600.0,2600.0,2600.0,2610.0
+2026-06-12,NIGHT,MI,MI 5,H,L55S7_HVD,30.0,CHANGE_MODEL,모델교체,복합,change model,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-12,NIGHT,MI,MI 5,TOTAL,L55S7_HVD,30.0,CHANGE_MODEL,모델교체,복합,No problem | change model | No problem | No problem | No problem,,2600.0,3100.0,2600.0,3100.0,2600.0,2800.0
+2026-06-12,NIGHT,MI,MI 6,H,L65FE8N_HHS,8.0,ETC,기타,복합,Waiting box packing,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-12,NIGHT,MI,MI 6,K,L65FE8N_HHS,30.0,COATING,Coating/Reflow불량,복합,Coating error,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-12,NIGHT,MI,MI 6,TOTAL,L65FE8N_HHS,38.0,COATING,Coating/Reflow불량,복합,No problem | No problem | Waiting box packing | Coating error,,2800.0,2360.0,2800.0,2360.0,2800.0,2930.0
+2026-06-12,NIGHT,MI,MI 7,TOTAL,L65E70A_HVD,0.0,ETC,기타,단일,No problem | No problem | No problem | No problem | No problem | No problem,,3400.0,3400.0,3400.0,3400.0,3400.0,3698.0
+2026-06-13,NIGHT,MI,MI 2,TOTAL,L55S7_HVD,0.0,ETC,기타,단일,No problem | No problem | No problem | No problem | No problem | No problem,,5400.0,5400.0,5400.0,5400.0,5400.0,5400.0
+2026-06-13,NIGHT,MI,MI 3,TOTAL,L65S7A_HVD,0.0,ETC,기타,단일,No problem | No problem | No problem | No problem | No problem | No problem,,5400.0,5400.0,5400.0,5400.0,5400.0,5706.0
+2026-06-13,NIGHT,MI,MI 4,TOTAL,L65CA9N_HVD,0.0,ETC,기타,단일,No problem | No problem | No problem | No problem | No problem | No problem,,2580.0,2580.0,2580.0,2580.0,2580.0,2814.0
+2026-06-13,NIGHT,MI,MI 5,F,L55F70NA,30.0,CHANGE_MODEL,모델교체,복합,Change model,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-13,NIGHT,MI,MI 5,H,L55F70NA,90.0,CHANGE_MODEL,모델교체,복합,Change model,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-13,NIGHT,MI,MI 5,K,L55F70NA,9.0,COATING,Coating/Reflow불량,복합,Coating error,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-13,NIGHT,MI,MI 5,TOTAL,L55F70NA,129.0,CHANGE_MODEL,모델교체,복합,Change model | Change model | Coating error,,3400.0,3100.0,3400.0,3100.0,3400.0,2484.0
+2026-06-13,NIGHT,MI,MI 6,TOTAL,L65FE8N_HHS,0.0,ETC,기타,단일,No problem,,2800.0,0.0,2800.0,0.0,2800.0,0.0
+2026-06-13,NIGHT,MI,MI 7,F,L83CA9N_HVD,120.0,WAITING_SMT,SMT대기,복합,Waiting semi SMT,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-13,NIGHT,MI,MI 7,I,L83CA9N_HVD,110.0,WAITING_SMT,SMT대기,복합,Waiting semi SMT,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-13,NIGHT,MI,MI 7,TOTAL,L83CA9N_HVD,230.0,WAITING_SMT,SMT대기,복합,Waiting semi SMT | No problem | Waiting semi SMT,,2580.0,316.0,2580.0,316.0,2580.0,970.0
+2026-06-15,NIGHT,MI,MI 2,F,"55""/3in1, M70H",20.0,WAITING_SMT,SMT대기,복합,"Waiting semi PCB SMT , change model",,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-15,NIGHT,MI,MI 2,TOTAL,"55""/3in1, M70H",20.0,WAITING_SMT,SMT대기,복합,"Waiting semi PCB SMT , change model | ATE running 1 floor",,5360.0,5360.0,5360.0,5360.0,5360.0,1738.0
+2026-06-15,NIGHT,MI,MI 3,F,L65S7_HVD,100.0,WAITING_SMT,SMT대기,복합,Waiting semi PCB STM,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-15,NIGHT,MI,MI 3,I,L65S7_HVD,45.0,WAITING_SMT,SMT대기,복합,Waiting semi PCB SMT clear REV,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-15,NIGHT,MI,MI 3,TOTAL,L65S7_HVD,145.0,WAITING_SMT,SMT대기,복합,Waiting semi PCB STM | Waiting semi PCB SMT clear REV,,5400.0,4438.0,5400.0,4438.0,5400.0,4366.0
+2026-06-15,NIGHT,MI,MI 4,F,L65CA9N_HVD,60.0,CHANGE_MODEL,모델교체,복합,Change model,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-15,NIGHT,MI,MI 4,I,L65CA9N_HVD,15.0,COATING,Coating/Reflow불량,복합,"Hipot/Coating error,",,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-15,NIGHT,MI,MI 4,TOTAL,L65CA9N_HVD,75.0,CHANGE_MODEL,모델교체,복합,"Change model | Hipot/Coating error,",,2600.0,2470.0,2600.0,2470.0,2600.0,1960.0
+2026-06-15,NIGHT,MI,MI 5,F,"65""/3IN1, U8000F",95.0,WAITING_SMT,SMT대기,복합,"Waiting semi PCB SMT change model ,3in1",,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-15,NIGHT,MI,MI 5,I,L75S7A_HVD,100.0,WAITING_SMT,SMT대기,복합,"Waiting semi PCB SMT ,change model ATE error",,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-15,NIGHT,MI,MI 5,TOTAL,"65""/3IN1, U8000F",195.0,WAITING_SMT,SMT대기,복합,"Waiting semi PCB SMT change model ,3in1 | Waiting semi PCB SMT ,change model ATE error",,5000.0,4512.0,5000.0,4512.0,5000.0,3618.0
+2026-06-15,NIGHT,MI,MI 6,F,L65FE8N_HHS,90.0,WAITING_SMT,SMT대기,복합,"Waiting semi PCB SMT, change model",,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-15,NIGHT,MI,MI 6,I,L65FE8N_HHS,125.0,CHANGE_MODEL,모델교체,복합,"ATE change model , ICT error",,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-15,NIGHT,MI,MI 6,TOTAL,L65FE8N_HHS,215.0,WAITING_SMT,SMT대기,복합,"Waiting semi PCB SMT, change model | ATE change model , ICT error",,3400.0,2654.0,3400.0,2654.0,3400.0,2150.0
+2026-06-15,NIGHT,MI,MI 7,I,L65E70A_HVD,10.0,WAVE,Wave Solder불량,복합,wave error,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-15,NIGHT,MI,MI 7,TOTAL,L65E70A_HVD,10.0,WAVE,Wave Solder불량,복합,ICT flase error | wave error,,3800.0,3842.0,3800.0,3842.0,3800.0,3908.0
+2026-06-16,NIGHT,MI,MI 2,F,"55""/3in1, M70H",20.0,WAITING_SMT,SMT대기,복합,"ATE running 1 floor, waiting semi PCB SMT",,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-16,NIGHT,MI,MI 2,TOTAL,"55""/3in1, M70H",20.0,WAITING_SMT,SMT대기,복합,"ATE running 1 floor, waiting semi PCB SMT | ATE running 1 floor",,5400.0,5400.0,5400.0,5400.0,5400.0,3574.0
+2026-06-16,NIGHT,MI,MI 3,F,L75S7A_HVD-70,85.0,WAITING_SMT,SMT대기,복합,"waiting semi PCB, change model , waiting material , ICT - FT change code",,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-16,NIGHT,MI,MI 3,I,L75S7N_HVD,37.0,WAVE,Wave Solder불량,복합,"ATE error, ICT error , wave solder error",,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-16,NIGHT,MI,MI 3,TOTAL,L75S7A_HVD-70,122.0,WAITING_SMT,SMT대기,복합,"waiting semi PCB, change model , waiting material , ICT - FT change code | ATE error, ICT error , wave solder error",,5100.0,4788.0,5100.0,4788.0,5100.0,3902.0
+2026-06-16,NIGHT,MI,MI 4,F,L65CA9N_HVD,15.0,ETC,기타,복합,FT error,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-16,NIGHT,MI,MI 4,I,L65CA9N_HVD,14.0,ICT_ATE,ICT/ATE불량,복합,"FT error , ICT flase error",,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-16,NIGHT,MI,MI 4,TOTAL,L65CA9N_HVD,29.0,ICT_ATE,ICT/ATE불량,복합,"FT error | FT error , ICT flase error",,2600.0,2500.0,2600.0,2500.0,2600.0,2702.0
+2026-06-16,NIGHT,MI,MI 5,F,L55F70NA_HHS,155.0,WAITING_SMT,SMT대기,복합,"waiting semi PCB SMT ,ATE running 1 floor, ATE error",,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-16,NIGHT,MI,MI 5,I,L65S7_HVD,120.0,ICT_ATE,ICT/ATE불량,복합,"ATE running 1 floor, ATE error",,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-16,NIGHT,MI,MI 5,TOTAL,L55F70NA_HHS,275.0,WAITING_SMT,SMT대기,복합,"waiting semi PCB SMT ,ATE running 1 floor, ATE error | ATE running 1 floor, ATE error",,5020.0,5020.0,5020.0,5020.0,5020.0,3192.0
+2026-06-16,NIGHT,MI,MI 6,F,L85E70NA_HVD,106.0,WAITING_SMT,SMT대기,복합,waiting semi PCB SMT .ATE error,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-16,NIGHT,MI,MI 6,I,L85E70NA_HVD,110.0,WAITING_SMT,SMT대기,복합,waiting semi PCB SMT,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-16,NIGHT,MI,MI 6,TOTAL,L85E70NA_HVD,216.0,WAITING_SMT,SMT대기,복합,waiting semi PCB SMT .ATE error | waiting semi PCB SMT,,2260.0,1698.0,2260.0,1698.0,2260.0,1542.0
+2026-06-16,NIGHT,MI,MI 7,F,L55CA9N_HVD,69.0,CHANGE_MODEL,모델교체,복합,"Coating- ATE change model , AOI flase eror tech debug",,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-16,NIGHT,MI,MI 7,I,L55CA9N_HVD,41.0,WAVE,Wave Solder불량,복합,"FT no MES ,wave solder error , ICT flase error",,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-16,NIGHT,MI,MI 7,TOTAL,L55CA9N_HVD,110.0,CHANGE_MODEL,모델교체,복합,"Coating- ATE change model , AOI flase eror tech debug | FT no MES ,wave solder error , ICT flase error",,3200.0,2460.0,3200.0,2460.0,3200.0,2192.0
+2026-06-17,NIGHT,MI,MI 2,TOTAL,"55""/3in1, M70H",0.0,ETC,기타,단일,3in1 | 3in1,,5240.0,5240.0,5240.0,5240.0,5240.0,3200.0
+2026-06-17,NIGHT,MI,MI 3,F,L75S7_HVD,5.0,WAVE,Wave Solder불량,복합,"wave soder error , ATE waiting PCB because change code",,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-17,NIGHT,MI,MI 3,I,L75S7_HVD,18.0,COATING,Coating/Reflow불량,복합,"ICT flase error,coating ,AOI error",,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-17,NIGHT,MI,MI 3,TOTAL,L75S7_HVD,23.0,COATING,Coating/Reflow불량,복합,"wave soder error , ATE waiting PCB because change code | ICT flase error,coating ,AOI error",,5400.0,5400.0,5400.0,5400.0,5400.0,5344.0
+2026-06-17,NIGHT,MI,MI 4,F,L65E70A_HVD,8.0,ICT_ATE,ICT/ATE불량,복합,ICT flase error,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-17,NIGHT,MI,MI 4,TOTAL,L65E70A_HVD,8.0,ICT_ATE,ICT/ATE불량,복합,ICT flase error | No problem,,3200.0,3200.0,3200.0,3200.0,3200.0,3184.0
+2026-06-17,NIGHT,MI,MI 5,F,L65S7_HVD,7.0,COATING,Coating/Reflow불량,복합,FLUX error,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-17,NIGHT,MI,MI 5,I,L65S7_HVD,29.0,COATING,Coating/Reflow불량,복합,"manual inser conveyor error , FLUX error",,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-17,NIGHT,MI,MI 5,TOTAL,L65S7_HVD,36.0,COATING,Coating/Reflow불량,복합,"FLUX error | manual inser conveyor error , FLUX error",,5400.0,5400.0,5400.0,5400.0,5400.0,5428.0
+2026-06-17,NIGHT,MI,MI 6,I,L55E70A_HVD,105.0,CHANGE_MODEL,모델교체,복합,"ATE Change model 60min,ATE running 1 floor 35min, FT error",,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-17,NIGHT,MI,MI 6,TOTAL,L85E70NA_HVD,105.0,WAITING_SMT,SMT대기,복합,"waiting semi PCB SMT , change model | ATE Change model 60min,ATE running 1 floor 35min, FT error",,3542.0,3320.0,3542.0,3320.0,3542.0,2640.0
+2026-06-17,NIGHT,MI,MI 7,F,L55CA9N_HVD,14.0,ICT_ATE,ICT/ATE불량,복합,"ICT /FT error , FT no MES",,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-17,NIGHT,MI,MI 7,I,L55CA9N_HVD,8.0,WAVE,Wave Solder불량,복합,"ATE error ,wave solder error",,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-17,NIGHT,MI,MI 7,TOTAL,L55CA9N_HVD,22.0,WAVE,Wave Solder불량,복합,"ICT /FT error , FT no MES | ATE error ,wave solder error",,2280.0,2280.0,2280.0,2280.0,2280.0,2336.0
+2026-06-18,NIGHT,MI,MI 2,F,"55""/3in1, M70H",15.0,ICT_ATE,ICT/ATE불량,복합,NG buffer Ict error,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-18,NIGHT,MI,MI 2,TOTAL,"55""/3in1, M70H",15.0,ICT_ATE,ICT/ATE불량,복합,NG buffer Ict error | 3in1,,5400.0,5400.0,5400.0,5400.0,5400.0,1030.0
+2026-06-18,NIGHT,MI,MI 3,F,L75S7_HVD,25.0,AOI_SAOI,AOI/S-AOI불량,복합,"Wave solder error ,AOI error",,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-18,NIGHT,MI,MI 3,I,L75S7_HVD,110.0,AOI_SAOI,AOI/S-AOI불량,복합,AOI Fipping machine error,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-18,NIGHT,MI,MI 3,TOTAL,L75S7_HVD,135.0,AOI_SAOI,AOI/S-AOI불량,복합,"Wave solder error ,AOI error | AOI Fipping machine error",,5400.0,5400.0,5400.0,5400.0,5400.0,6088.0
+2026-06-18,NIGHT,MI,MI 4,I,L65E70A_HVD,6.0,AOI_SAOI,AOI/S-AOI불량,복합,AOI machine error,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-18,NIGHT,MI,MI 4,TOTAL,L65E70A_HVD,6.0,AOI_SAOI,AOI/S-AOI불량,복합,No problem | AOI machine error,,2600.0,2600.0,2600.0,2600.0,2600.0,2628.0
+2026-06-18,NIGHT,MI,MI 5,F,L65S7_HVD,10.0,WAITING_SMT,SMT대기,복합,Waiting semi PCB SMT,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-18,NIGHT,MI,MI 5,TOTAL,L65S7_HVD,10.0,WAITING_SMT,SMT대기,복합,Waiting semi PCB SMT | No problem,,5400.0,5400.0,5400.0,5400.0,5400.0,5414.0
+2026-06-18,NIGHT,MI,MI 7,F,L55CA9N_HVD,31.0,ICT_ATE,ICT/ATE불량,복합,ATE Jammed board,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-18,NIGHT,MI,MI 7,I,L55CA9N_HVD,5.0,WAVE,Wave Solder불량,복합,waver solder,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-18,NIGHT,MI,MI 7,TOTAL,L55CA9N_HVD,36.0,WAVE,Wave Solder불량,복합,ATE Jammed board | waver solder,,2699.0,2700.0,2699.0,2700.0,2699.0,2664.0
+2026-06-19,NIGHT,MI,MI 2,TOTAL,"55""/3in1, M70H",0.0,ETC,기타,단일,3in1 | 3in1,,4000.0,5348.0,4000.0,5348.0,4000.0,1394.0
+2026-06-19,NIGHT,MI,MI 3,F,L75S7_HVD,20.0,CHANGE_MODEL,모델교체,복합,separatinon lot change model,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-19,NIGHT,MI,MI 3,I,L75S7_HVD,10.0,WAVE,Wave Solder불량,복합,Wave solder error,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-19,NIGHT,MI,MI 3,TOTAL,L75S7_HVD,30.0,CHANGE_MODEL,모델교체,복합,separatinon lot change model | Wave solder error,,5400.0,5400.0,5400.0,5400.0,5400.0,5416.0
+2026-06-19,NIGHT,MI,MI 4,I,L65E70A_HVD,13.0,ICT_ATE,ICT/ATE불량,복합,ATE running 1 floor,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-19,NIGHT,MI,MI 4,TOTAL,L65E70A_HVD,13.0,ICT_ATE,ICT/ATE불량,복합,No problem | ATE running 1 floor,,2600.0,2080.0,2600.0,2080.0,2600.0,2060.0
+2026-06-19,NIGHT,MI,MI 5,F,L65S7_HVD,11.0,ETC,기타,복합,FT error,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-19,NIGHT,MI,MI 5,I,L65S7_HVD,20.0,ICT_ATE,ICT/ATE불량,복합,"JIG ATE error ,ATE running 1 floor",,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-19,NIGHT,MI,MI 5,TOTAL,L65S7_HVD,31.0,ICT_ATE,ICT/ATE불량,복합,"FT error | JIG ATE error ,ATE running 1 floor",,5400.0,5400.0,5400.0,5400.0,5400.0,5412.0
+2026-06-19,NIGHT,MI,MI 6,F,L75E70NA_HVD,25.0,WAVE,Wave Solder불량,복합,"Wating PCB , wave solder error",,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-19,NIGHT,MI,MI 6,I,L75E70NA_HVD,23.0,WAVE,Wave Solder불량,복합,"ATE running 1 floor , wave solder , ICT error",,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-19,NIGHT,MI,MI 6,TOTAL,L75E70NA_HVD,48.0,WAVE,Wave Solder불량,복합,"Wating PCB , wave solder error | ATE running 1 floor , wave solder , ICT error",,2000.0,2280.0,2000.0,2280.0,2000.0,2274.0
+2026-06-19,NIGHT,MI,MI 7,F,L55CA9N_HVD,35.0,ETC,기타,복합,Wating semi PCB SMT,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-19,NIGHT,MI,MI 7,I,L55CA9N_HVD,80.0,ICT_ATE,ICT/ATE불량,복합,"Wating semi PCB SMT 55min , ICT error25min",,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-19,NIGHT,MI,MI 7,TOTAL,L55CA9N_HVD,115.0,ICT_ATE,ICT/ATE불량,복합,"Wating semi PCB SMT | Wating semi PCB SMT 55min , ICT error25min",,2700.0,2700.0,2700.0,2700.0,2700.0,2814.0
+2026-06-20,NIGHT,MI,MI 2,F,L55S7_HVD,10.0,ETC,기타,복합,FT error,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-20,NIGHT,MI,MI 2,TOTAL,L55S7_HVD,10.0,ETC,기타,복합,FT error | No problem,,5400.0,5400.0,5400.0,5400.0,5400.0,5340.0
+2026-06-20,NIGHT,MI,MI 3,F,L55S7_HVD,15.0,ETC,기타,복합,FT error,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-20,NIGHT,MI,MI 3,TOTAL,L55S7_HVD,15.0,ETC,기타,복합,FT error | No problem,,5400.0,5400.0,5400.0,5400.0,5400.0,5376.0
+2026-06-20,NIGHT,MI,MI 4,F,L65CA9N_HVD,10.0,COATING,Coating/Reflow불량,복합,Coating error,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-20,NIGHT,MI,MI 4,TOTAL,L65CA9N_HVD,10.0,COATING,Coating/Reflow불량,복합,Coating error | No problem,,2800.0,2800.0,2800.0,2800.0,2800.0,2900.0
+2026-06-20,NIGHT,MI,MI 5,F,L43E60A_HVD,49.0,ICT_ATE,ICT/ATE불량,복합,"ATE running 1 floor,Hipot errot",,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-20,NIGHT,MI,MI 5,I,L43E60A_HVD,20.0,ETC,기타,복합,"Hipot error,",,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-20,NIGHT,MI,MI 5,TOTAL,L43E60A_HVD,69.0,ICT_ATE,ICT/ATE불량,복합,"ATE running 1 floor,Hipot errot | Hipot error,",,3780.0,3402.0,3780.0,3402.0,3780.0,3868.0
+2026-06-20,NIGHT,MI,MI 7,F,L55CA9N_HVD,15.0,WAITING_SMT,SMT대기,단일,Waiting semi PCB SMT,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-20,NIGHT,MI,MI 7,I,L55CA9N_HVD,80.0,WAITING_SMT,SMT대기,단일,Waiting semi PCB SMT,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-20,NIGHT,MI,MI 7,TOTAL,L55CA9N_HVD,95.0,WAITING_SMT,SMT대기,단일,Waiting semi PCB SMT | Waiting semi PCB SMT,,2800.0,1878.0,2800.0,1878.0,2800.0,1740.0
+2026-06-20,DAY,SMT,PS01,TOTAL,L65CA9N_HVD,0.0,ETC,기타,단일,KẾT THÚC PLAN,,1375.0,1440.0,0.0,0.0,0.0,0.0
+2026-06-20,DAY,SMT,PS02,A,L55S7_HVD,37.0,MOUTER,Mouter불량,복합,mounter #3 lỗi bàn nâng,kỹ thuật điều chỉnh,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-20,DAY,SMT,PS02,TOTAL,L55S7_HVD,37.0,MOUTER,Mouter불량,복합,mounter #3 lỗi bàn nâng | KẾT THÚC PLAN,kỹ thuật điều chỉnh,2750.0,2640.0,0.0,0.0,0.0,0.0
+2026-06-20,DAY,SMT,PS03,B,L85E70NA_HVD,70.0,ETC,기타,복합,Lỗi văng linh kiện Mouter trao máy Scan không đc,kỹ thuật điều chỉnh ,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-20,DAY,SMT,PS03,C,L85E70NA_HVD,25.0,ETC,기타,복합,scan sót công đoạn AI,kỹ thuật điều chỉnh ,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-20,DAY,SMT,PS03,E,L55F70NA-HVD,22.0,CHANGE_MODEL,모델교체,복합,Change model L55S7 _HVD,kỹ thuật điều chỉnh ,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-20,DAY,SMT,PS03,TOTAL,L85E70NA_HVD,117.0,CHANGE_MODEL,모델교체,복합,Change model 8:10-9:30 | Lỗi văng linh kiện Mouter trao máy Scan không đc | scan sót công đoạn AI | kết thúc model L85E70NA TỪ lúc 14:50 | Change model L55S7 _HVD | Lổi cắm lệch linh kiện,kỹ thuật điều chỉnh ,1375.0,638.0,0.0,0.0,0.0,0.0
+2026-06-20,DAY,SMT,PS04,A,L55CA9N_HVD,17.0,ETC,기타,복합,lỗi cắm lệch linh kiện,kỹ thuật điều chỉnh | kỹ thuật điều chỉnh  | kỹ thuật điều chỉnh  | kỹ thuật điều chỉnh  | kỹ thuật điều chỉnh ,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-20,DAY,SMT,PS04,B,L55CA9N_HVD,40.0,PRINTER,Printer불량,복합,Printer lỗi nghẹt keo Mouter cắm lệch linh kiện,kỹ thuật điều chỉnh | kỹ thuật điều chỉnh  | kỹ thuật điều chỉnh  | kỹ thuật điều chỉnh  | kỹ thuật điều chỉnh ,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-20,DAY,SMT,PS04,C,L55CA9N_HVD,5.0,ETC,기타,복합,lỗi cắm lệch linh kiện,kỹ thuật điều chỉnh | kỹ thuật điều chỉnh  | kỹ thuật điều chỉnh  | kỹ thuật điều chỉnh  | kỹ thuật điều chỉnh ,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-20,DAY,SMT,PS04,D,L55CA9N_HVD,15.0,ETC,기타,복합,lỗi cắm văng linh kiện,kỹ thuật điều chỉnh | kỹ thuật điều chỉnh  | kỹ thuật điều chỉnh  | kỹ thuật điều chỉnh  | kỹ thuật điều chỉnh ,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-20,DAY,SMT,PS04,E,L55CA9N_HVD,14.0,PRINTER,Printer불량,복합,Printer lỗi cao keo,kỹ thuật điều chỉnh | kỹ thuật điều chỉnh  | kỹ thuật điều chỉnh  | kỹ thuật điều chỉnh  | kỹ thuật điều chỉnh ,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-20,DAY,SMT,PS04,TOTAL,L55CA9N_HVD,91.0,PRINTER,Printer불량,복합,lỗi cắm lệch linh kiện | Printer lỗi nghẹt keo Mouter cắm lệch linh kiện | lỗi cắm văng linh kiện | Printer lỗi cao keo | Lổi cắm lệch linh kiện,kỹ thuật điều chỉnh | kỹ thuật điều chỉnh  | kỹ thuật điều chỉnh  | kỹ thuật điều chỉnh  | kỹ thuật điều chỉnh ,1375.0,1110.0,0.0,0.0,0.0,0.0
+2026-06-20,DAY,SMT,PS05,B,L55S7_HVD,35.0,PRINTER,Printer불량,복합,Printer nghet keo Mouter 1 kẹt board,kỹ thuật điều chỉnh  | kỹ thuật điều chỉnh ,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-20,DAY,SMT,PS05,C,L55S7_HVD,40.0,PRINTER,Printer불량,복합,LỖI printer thiếu keo,kỹ thuật điều chỉnh  | kỹ thuật điều chỉnh ,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-20,DAY,SMT,PS05,D,L55S7_HVD,37.0,ETC,기타,복합,OP mới vận hành xử lý lỗi chậm,kỹ thuật điều chỉnh  | kỹ thuật điều chỉnh ,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-20,DAY,SMT,PS05,E,L55S7_HVD,35.0,ETC,기타,복합,OP mới vận hành xử lý lỗi chậm,kỹ thuật điều chỉnh  | kỹ thuật điều chỉnh ,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-20,DAY,SMT,PS05,TOTAL,L55S7_HVD,147.0,PRINTER,Printer불량,복합,Chang model 8:10-9:30 | Printer nghet keo Mouter 1 kẹt board | LỖI printer thiếu keo | OP mới vận hành xử lý lỗi chậm | OP mới vận hành xử lý lỗi chậm,kỹ thuật điều chỉnh  | kỹ thuật điều chỉnh ,2750.0,1764.0,0.0,0.0,0.0,0.0
+2026-06-20,DAY,SMT,PS08,A,L43E60A,13.0,ETC,기타,단일,lỗi cắm lệch linh kiện,kỹ thuật điều chỉnh,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-20,DAY,SMT,PS08,TOTAL,L43E60A,13.0,ETC,기타,단일,lỗi cắm lệch linh kiện,kỹ thuật điều chỉnh,1375.0,1460.0,0.0,0.0,0.0,0.0
+2026-06-20,DAY,SMT,PS11,A,L55S7_HVD,33.0,PRINTER,Printer불량,복합,"máy printer nghẹt keo , lỗi pickup",kỹ thuật điều chỉnh | kỹ thuật điều chỉnh | kỹ thuật điều chỉnh | kỹ thuật điều chỉnh | kỹ thuật điều chỉnh,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-20,DAY,SMT,PS11,B,L55S7_HVD,10.0,ETC,기타,복합,lỗi pick up,kỹ thuật điều chỉnh | kỹ thuật điều chỉnh | kỹ thuật điều chỉnh | kỹ thuật điều chỉnh | kỹ thuật điều chỉnh,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-20,DAY,SMT,PS11,C,L55S7_HVD,65.0,PRINTER,Printer불량,복합,"Máy printer thiếu keo , lỗi feeder mounter #3, Vender chỉnh Mount 3 Pick&Mount cycle time tăng.",kỹ thuật điều chỉnh | kỹ thuật điều chỉnh | kỹ thuật điều chỉnh | kỹ thuật điều chỉnh | kỹ thuật điều chỉnh,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-20,DAY,SMT,PS11,D,L55S7_HVD,39.0,ETC,기타,복합,Vender chỉnh Mount 3 Pick&Mount cycle time tăng.,kỹ thuật điều chỉnh | kỹ thuật điều chỉnh | kỹ thuật điều chỉnh | kỹ thuật điều chỉnh | kỹ thuật điều chỉnh,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-20,DAY,SMT,PS11,E,L55S7_HVD,40.0,PRINTER,Printer불량,복합,"máy printer nghẹt keo , lỗi pickup",kỹ thuật điều chỉnh | kỹ thuật điều chỉnh | kỹ thuật điều chỉnh | kỹ thuật điều chỉnh | kỹ thuật điều chỉnh,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-20,DAY,SMT,PS11,TOTAL,L55S7_HVD,187.0,PRINTER,Printer불량,복합,"máy printer nghẹt keo , lỗi pickup | lỗi pick up | Máy printer thiếu keo , lỗi feeder mounter #3, Vender chỉnh Mount 3 Pick&Mount cycle time tăng. | Vender chỉnh Mount 3 Pick&Mount cycle time tăng. | máy printer nghẹt keo , lỗi pickup | Máy mount#3 lổi pickup",kỹ thuật điều chỉnh | kỹ thuật điều chỉnh | kỹ thuật điều chỉnh | kỹ thuật điều chỉnh | kỹ thuật điều chỉnh,2750.0,1943.0,0.0,0.0,0.0,0.0
+2026-06-20,NIGHT,SMT,PS01,H,L65CA9N-HVD,91.0,CHANGE_MODEL,모델교체,복합,"change model từ 01:00 ,chạy hàng đã start end 30 phút,kết thúc model lúc 01:00",,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-20,NIGHT,SMT,PS01,I,L55CA9N-HVD,26.0,AOI_SAOI,AOI/S-AOI불량,복합,"chạy lần đầu trên line,đợi kĩ thuật làm chương trình SAOI",,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-20,NIGHT,SMT,PS01,J,L55CA9N-HVD,17.5,CHANGE_MODEL,모델교체,복합,"change model từ 01:00 ,chạy hàng đã start end 30 phút,kết thúc model lúc 01:00",,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-20,NIGHT,SMT,PS01,K,L55CA9N-HVD,12.0,CHANGE_MODEL,모델교체,복합,"change model từ 01:00 ,chạy hàng đã start end 30 phút,kết thúc model lúc 01:00",,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-20,NIGHT,SMT,PS01,TOTAL,L65CA9N-HVD,146.5,CHANGE_MODEL,모델교체,복합,"change model từ 01:00 ,chạy hàng đã start end 30 phút,kết thúc model lúc 01:00 | chạy lần đầu trên line,đợi kĩ thuật làm chương trình SAOI",,1340.0,1055.0,0.0,0.0,0.0,0.0
+2026-06-20,NIGHT,SMT,PS02,K,L55S7-HVD,8.0,ETC,기타,단일,,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-20,NIGHT,SMT,PS02,TOTAL,L55S7-HVD,8.0,ETC,기타,단일,,,2400.0,2400.0,0.0,0.0,0.0,0.0
+2026-06-20,NIGHT,SMT,PS03,F,L55F70NA-HHS,58.0,ETC,기타,단일,Line không đáp ứng được UPH,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-20,NIGHT,SMT,PS03,G,L55F70NA-HHS,24.0,ETC,기타,단일,Line không đáp ứng được UPH,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-20,NIGHT,SMT,PS03,H,L55F70NA-HHS,36.0,ETC,기타,단일,Line không đáp ứng được UPH,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-20,NIGHT,SMT,PS03,I,L55F70NA-HHS,11.0,ETC,기타,단일,Line không đáp ứng được UPH,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-20,NIGHT,SMT,PS03,J,L55F70NA-HHS,39.0,ETC,기타,단일,Line không đáp ứng được UPH,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-20,NIGHT,SMT,PS03,K,L55F70NA-HHS,26.0,ETC,기타,단일,Line không đáp ứng được UPH,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-20,NIGHT,SMT,PS03,TOTAL,L55F70NA-HHS,194.0,ETC,기타,단일,Line không đáp ứng được UPH | Line không đáp ứng được UPH | Line không đáp ứng được UPH | Line không đáp ứng được UPH | Line không đáp ứng được UPH | Line không đáp ứng được UPH,,1564.0,1113.0,0.0,0.0,0.0,0.0
+2026-06-20,NIGHT,SMT,PS04,F,L55CA9N-HVD,21.0,ETC,기타,복합,Line không đáp ứng được UPH,đang điều tra nguyên nhân ,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-20,NIGHT,SMT,PS04,G,L55CA9N-HVD,52.0,ETC,기타,복합,"Line không đáp ứng được UPH, Lỗi scan start boar trùng label số lượng nhiều",đang điều tra nguyên nhân ,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-20,NIGHT,SMT,PS04,H,L55CA9N-HVD,29.0,ETC,기타,복합,Line không đáp ứng được UPH,đang điều tra nguyên nhân ,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-20,NIGHT,SMT,PS04,I,L55CA9N-HVD,15.0,ETC,기타,복합,Line không đáp ứng được UPH,đang điều tra nguyên nhân ,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-20,NIGHT,SMT,PS04,J,L55CA9N-HVD,65.0,ETC,기타,복합,Line không đáp ứng được UPH,đang điều tra nguyên nhân ,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-20,NIGHT,SMT,PS04,K,L55CA9N-HVD,45.0,ETC,기타,복합,"Line không đáp ứng được UPH, issue sai linh kiện từ 06:00-07:00",đang điều tra nguyên nhân ,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-20,NIGHT,SMT,PS04,TOTAL,L55CA9N-HVD,227.0,ETC,기타,복합,"Line không đáp ứng được UPH | Line không đáp ứng được UPH, Lỗi scan start boar trùng label số lượng nhiều | Line không đáp ứng được UPH | Line không đáp ứng được UPH | Line không đáp ứng được UPH | Line không đáp ứng được UPH, issue sai linh kiện từ 06:00-07:00",đang điều tra nguyên nhân ,1320.0,870.0,0.0,0.0,0.0,0.0
+2026-06-20,NIGHT,SMT,PS05,F,L55S7-HVD,4.0,ETC,기타,단일,,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-20,NIGHT,SMT,PS05,J,L55S7-HVD,7.0,ETC,기타,단일,,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-20,NIGHT,SMT,PS05,TOTAL,L55S7-HVD,11.0,ETC,기타,단일,,,2400.0,2324.0,0.0,0.0,0.0,0.0
+2026-06-20,NIGHT,SMT,PS08,F,L43E60A-HVD,16.0,ETC,기타,복합,lỗi keo,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-20,NIGHT,SMT,PS08,G,L43E60A-HVD,23.0,ETC,기타,복합,OP mới,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-20,NIGHT,SMT,PS08,TOTAL,L43E60A-HVD,39.0,ETC,기타,복합,lỗi keo | OP mới,,1540.0,1540.0,0.0,0.0,0.0,0.0
+2026-06-20,NIGHT,SMT,PS11,F,L55S7-HVD,74.0,CHANGE_MODEL,모델교체,복합,change model L65S7 từ 20:50,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-20,NIGHT,SMT,PS11,G,L65S7-HVD,63.0,ETC,기타,복합,sản xuất lúc 23:00,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-20,NIGHT,SMT,PS11,H,L65S7-HVD,34.0,CHANGE_MODEL,모델교체,복합,change model L83CA9N từ 01:30,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-20,NIGHT,SMT,PS11,I,L83CA9N-HVD,120.0,ETC,기타,복합,không có dao quét keo thích hợp với size pcb,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-20,NIGHT,SMT,PS11,J,L83CA9N-HVD,120.0,ETC,기타,복합,lỗi pickup linh kiện,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-20,NIGHT,SMT,PS11,K,L83CA9N-HVD,88.0,ETC,기타,복합,sản xuất lúc 07:10,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-20,NIGHT,SMT,PS11,TOTAL,L55S7-HVD,499.0,CHANGE_MODEL,모델교체,복합,change model L65S7 từ 20:50 | sản xuất lúc 23:00 | change model L83CA9N từ 01:30 | không có dao quét keo thích hợp với size pcb | lỗi pickup linh kiện | sản xuất lúc 07:10,,1885.0,677.0,0.0,0.0,0.0,0.0
+2026-05-25,DAY,MI,MI 2,C,"55""/3in1, M70H",3.0,ETC,기타,단일,,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-05-25,DAY,MI,MI 2,F,"55""/3in1, M70H",3.0,ETC,기타,단일,,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-05-25,DAY,MI,MI 2,TOTAL,"55""/3in1, M70H",6.0,ETC,기타,단일,,,5360.0,1900.0,5360.0,1900.0,0.0,0.0
+2026-05-25,DAY,MI,MI 3,C,L75S7A_HVD,11.0,ICT_ATE,ICT/ATE불량,복합,ICT error,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-05-25,DAY,MI,MI 3,TOTAL,L75S7A_HVD,11.0,ICT_ATE,ICT/ATE불량,복합,No proplem | ICT error | No proplem | No proplem,,5400.0,1820.0,5400.0,1820.0,2980.0,1640.0
+2026-05-25,DAY,MI,MI 4,C,L55E70A_HVD,60.0,CHANGE_MODEL,모델교체,복합,change model,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-05-25,DAY,MI,MI 4,TOTAL,L55E70A_HVD,60.0,CHANGE_MODEL,모델교체,복합,"wating jig dusratone (20ea) , change model | change model | No proplem | No proplem",,3380.0,780.0,3380.0,780.0,3044.0,500.0
+2026-05-25,DAY,MI,MI 5,F,L65CA9N_HVD,8.0,CHANGE_MODEL,모델교체,복합,Change model 32JDM,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-05-25,DAY,MI,MI 5,TOTAL,L65S7A_HVD,8.0,CHANGE_MODEL,모델교체,복합,"wating PCB, chage model | No proplem | Change model 32JDM",,4100.0,800.0,4100.0,800.0,4100.0,360.0
+2026-05-25,DAY,MI,MI 6,C,L65S8_HVD,28.0,ICT_ATE,ICT/ATE불량,복합,ICT error waiting PCB ATE,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-05-25,DAY,MI,MI 6,TOTAL,L65S8_HVD,28.0,ICT_ATE,ICT/ATE불량,복합,No proplem | ICT error waiting PCB ATE | No proplem | No proplem,,5760.0,1840.0,5760.0,1840.0,5760.0,1380.0
+2026-06-03,DAY,MI,MI 2,C,"55""/3in1, M70H",12.0,AOI_SAOI,AOI/S-AOI불량,복합,PC AOI error,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-03,DAY,MI,MI 2,TOTAL,"55""/3in1, M70H",12.0,AOI_SAOI,AOI/S-AOI불량,복합,No proplem | PC AOI error | 3in1,,5400.0,3962.0,5400.0,3962.0,586.0,334.0
+2026-06-03,DAY,MI,MI 3,C,"58""/3in1, U8000H",45.0,CHANGE_MODEL,모델교체,복합,3in1' Change model AOI-coating 35min ATE false error 10min,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-03,DAY,MI,MI 3,TOTAL,"58""/3in1, U8000H",45.0,CHANGE_MODEL,모델교체,복합,no problem | 3in1' Change model AOI-coating 35min ATE false error 10min | no problem | 3in1,,3587.0,3588.0,3587.0,3588.0,2074.0,1580.0
+2026-06-03,DAY,MI,MI 4,C,L55E70NA_HVD,10.0,ETC,기타,복합,waitng H/S MM,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-03,DAY,MI,MI 4,TOTAL,L55E70NA_HVD,10.0,ETC,기타,복합,no problem | waitng H/S MM | no problem | no problem,,2794.0,2794.0,2794.0,2794.0,2558.0,2920.0
+2026-06-03,DAY,MI,MI 5,C,L65CA9N_HVD,15.0,AOI_SAOI,AOI/S-AOI불량,복합,AOI error program 5min PCB nothing MES 200 10min,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-03,DAY,MI,MI 5,TOTAL,L65CA9N_HVD,15.0,AOI_SAOI,AOI/S-AOI불량,복합,no problem | AOI error program 5min PCB nothing MES 200 10min | no problem,,3000.0,3000.0,3000.0,3000.0,3000.0,2082.0
+2026-06-03,DAY,MI,MI 6,C,L65S8_HVD,26.0,ICT_ATE,ICT/ATE불량,복합,ICT error,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-03,DAY,MI,MI 6,TOTAL,L65S8_HVD,26.0,ICT_ATE,ICT/ATE불량,복합,No proplem | ICT error | no problem | ICT flase error,,5760.0,5760.0,5760.0,5760.0,5760.0,4512.0
+2026-06-03,DAY,MI,MI 7,A,L48CA9N_HVD,60.0,WAVE,Wave Solder불량,복합,Wave solder turn of power,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-03,DAY,MI,MI 7,TOTAL,L48CA9N_HVD,60.0,WAVE,Wave Solder불량,복합,Wave solder turn of power | Wave solder turn of power | Waiting PCB | Waiting PCB,,1601.0,622.0,1601.0,622.0,1573.0,802.0
+2026-06-04,DAY,MI,MI 2,A,"55""/3in1, M70H-BN44-0142E",26.0,COATING,Coating/Reflow불량,복합,"( Flux machine stop, air pipe leaking",,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-04,DAY,MI,MI 2,D,"55""/3in1, M70H",10.0,ETC,기타,복합,FT error,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-04,DAY,MI,MI 2,TOTAL,"55""/3in1, M70H-BN44-0142E",36.0,COATING,Coating/Reflow불량,복합,"( Flux machine stop, air pipe leaking | FT error",,5760.0,4560.0,5760.0,4560.0,5760.0,1080.0
+2026-06-04,DAY,MI,MI 3,A,L65S7A_HVD-BN44-01421B,49.0,CHANGE_MODEL,모델교체,복합,"change model, Flux machine error",,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-04,DAY,MI,MI 3,TOTAL,L65S7A_HVD-BN44-01421B,49.0,CHANGE_MODEL,모델교체,복합,"change model, Flux machine error | No probem",,5000.0,4050.0,5000.0,4050.0,5446.0,4360.0
+2026-06-04,DAY,MI,MI 4,A,L65S7_HVD,63.0,CHANGE_MODEL,모델교체,복합,"Waiting PCB form SMT, change model L65S7-->65S8 clear stock",,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-04,DAY,MI,MI 4,D,L65S7_HVD,70.0,ICT_ATE,ICT/ATE불량,복합,"clear stock from 08:40 to 10:15,ATE running again 09:15",,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-04,DAY,MI,MI 4,TOTAL,L65S7_HVD,133.0,CHANGE_MODEL,모델교체,복합,"Waiting PCB form SMT, change model L65S7-->65S8 clear stock | clear stock from 08:40 to 10:15,ATE running again 09:15",,1407.0,2164.0,1407.0,2164.0,1910.0,3120.0
+2026-06-04,DAY,MI,MI 5,A,sample 85FE8N,60.0,CHANGE_MODEL,모델교체,복합,"Change model, sameple",,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-04,DAY,MI,MI 5,TOTAL,sample 85FE8N,60.0,CHANGE_MODEL,모델교체,복합,"Change model, sameple | Change model 75S7A at 10:35, waiting PCB from SMT, model sameple",,3298.0,2694.0,3298.0,2694.0,3298.0,1574.0
+2026-06-04,DAY,MI,MI 6,A,L65S8_HVD,6.0,ICT_ATE,ICT/ATE불량,복합,"Hipot error, ICT error,",,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-04,DAY,MI,MI 6,D,L65S8_HVD,18.0,COATING,Coating/Reflow불량,복합,"coating stop, wave solder not enough spare part.",,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-04,DAY,MI,MI 6,TOTAL,L65S8_HVD,24.0,COATING,Coating/Reflow불량,복합,"Hipot error, ICT error, | coating stop, wave solder not enough spare part.",,5600.0,5214.0,5600.0,5214.0,5600.0,3202.0
+2026-06-04,DAY,MI,MI 7,A,L48CA9N_HVD,60.0,CHANGE_MODEL,모델교체,복합,change model L48CN9N,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-04,DAY,MI,MI 7,D,L65E70_HVD,116.0,COATING,Coating/Reflow불량,복합,"Stop flux machine error, set up model L65E70,coating not yet",,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-04,DAY,MI,MI 7,TOTAL,L48CA9N_HVD,176.0,CHANGE_MODEL,모델교체,복합,"change model L48CN9N | Stop flux machine error, set up model L65E70,coating not yet",,3041.0,3366.0,3041.0,3366.0,2201.0,1524.0
+2026-06-05,DAY,MI,MI 2,A,L55S7HVD,10.0,WAITING_SMT,SMT대기,복합,Stop waiting SEMI PCB SMT,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-05,DAY,MI,MI 2,D,L55S7HVD,26.0,ETC,기타,복합,Stop waiting PCB from MST,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-05,DAY,MI,MI 2,TOTAL,L55S7HVD,36.0,WAITING_SMT,SMT대기,복합,Stop waiting SEMI PCB SMT | Stop waiting PCB from MST,,1750.0,5250.0,1750.0,5250.0,1217.0,3044.0
+2026-06-05,DAY,MI,MI 3,A,L65S7A_HVD,5.0,ETC,기타,복합,FT error,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-05,DAY,MI,MI 3,TOTAL,L65S7A_HVD,5.0,ETC,기타,복합,FT error | no problem,,5620.0,5620.0,5620.0,5620.0,5619.0,5838.0
+2026-06-05,DAY,MI,MI 4,A,L43E60A,60.0,CHANGE_MODEL,모델교체,복합,Change Model 43E60A - HVD from 08:43 to now,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-05,DAY,MI,MI 4,D,L65S7_HVD,5.0,COATING,Coating/Reflow불량,복합,coating stop,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-05,DAY,MI,MI 4,TOTAL,L43E60A,65.0,CHANGE_MODEL,모델교체,복합,Change Model 43E60A - HVD from 08:43 to now | coating stop,,2400.0,2400.0,2400.0,2400.0,2401.0,2786.0
+2026-06-05,DAY,MI,MI 5,A,L85B70A,30.0,CHANGE_MODEL,모델교체,복합,Change Model sample L80E70NA,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-05,DAY,MI,MI 5,D,75S7A,50.0,CHANGE_MODEL,모델교체,복합,"ATE 2 floor error, change model 55S7",,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-05,DAY,MI,MI 5,TOTAL,L85B70A,80.0,CHANGE_MODEL,모델교체,복합,"Change Model sample L80E70NA | ATE 2 floor error, change model 55S7",,2799.0,2800.0,2799.0,2800.0,2799.0,3096.0
+2026-06-05,DAY,MI,MI 6,A,L65S7A_HVD,70.0,ETC,기타,복합,Stop beacause don't has HS,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-05,DAY,MI,MI 6,TOTAL,L65S7A_HVD,70.0,COATING,Coating/Reflow불량,복합,Stop beacause don't has HS | waiting PE set up coating from 09:33,,200.0,204.0,200.0,204.0,200.0,532.0
+2026-06-05,DAY,MI,MI 7,A,L65A70E,12.0,COATING,Coating/Reflow불량,복합,"Flux stop 4 minutes AOI error, Hipot error",,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-05,DAY,MI,MI 7,D,L65E70_HVD,6.0,ETC,기타,복합,FT and coatin error,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-05,DAY,MI,MI 7,TOTAL,L65A70E,18.0,COATING,Coating/Reflow불량,복합,"Flux stop 4 minutes AOI error, Hipot error | FT and coatin error",,1712.0,3128.0,1712.0,3128.0,1712.0,3442.0
+2026-06-06,DAY,MI,MI 2,D,L55S7_HVD,8.0,COATING,Coating/Reflow불량,복합,COATING ERROR,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-06,DAY,MI,MI 2,TOTAL,L55S7_HVD,8.0,COATING,Coating/Reflow불량,복합,no problem | COATING ERROR,,5600.0,5600.0,5600.0,5600.0,2813.0,5548.0
+2026-06-06,DAY,MI,MI 3,A,L65S7_HVD,60.0,ETC,기타,복합,"out of stock, waiting from line",,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-06,DAY,MI,MI 3,TOTAL,L65S7_HVD,60.0,ETC,기타,복합,"out of stock, waiting from line | NO PROBLEM",,5286.0,5144.0,5286.0,5144.0,5505.0,4818.0
+2026-06-06,DAY,MI,MI 4,A,L65E70A_HVD,30.0,CHANGE_MODEL,모델교체,복합,change model L65CA9N test AOI => ATE,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-06,DAY,MI,MI 4,D,L65E70A_HVD,5.0,ICT_ATE,ICT/ATE불량,복합,HIPOT & ICT ERROR,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-06,DAY,MI,MI 4,TOTAL,L65E70A_HVD,35.0,CHANGE_MODEL,모델교체,복합,change model L65CA9N test AOI => ATE | HIPOT & ICT ERROR,,3426.0,2884.0,3426.0,2884.0,3100.0,3042.0
+2026-06-06,DAY,MI,MI 5,A,L55F70NA_HHS,40.0,WAVE,Wave Solder불량,복합,"Wave solder, ICT & FT error",,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-06,DAY,MI,MI 5,D,L55F70NA_HHS,55.0,COATING,Coating/Reflow불량,복합,"ICT, COATING ERROR, ATE RUN 1 FLOOR, ICT RUN 1 STATION",,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-06,DAY,MI,MI 5,TOTAL,L55F70NA_HHS,95.0,COATING,Coating/Reflow불량,복합,"Wave solder, ICT & FT error | ICT, COATING ERROR, ATE RUN 1 FLOOR, ICT RUN 1 STATION",,1858.0,1096.0,1858.0,1096.0,1858.0,604.0
+2026-06-06,DAY,MI,MI 6,A,L65FE8N,78.0,COATING,Coating/Reflow불량,복합,"ICT => coating, PE repair machine",,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-06,DAY,MI,MI 6,D,L65FE8N,71.0,ICT_ATE,ICT/ATE불량,복합,"ATE STOP, BURN IN STOP",,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-06,DAY,MI,MI 6,TOTAL,L65FE8N,149.0,COATING,Coating/Reflow불량,복합,"ICT => coating, PE repair machine | ATE STOP, BURN IN STOP",,2000.0,1484.0,2000.0,1484.0,2000.0,190.0
+2026-06-06,DAY,MI,MI 7,A,L48CA9N_HVD,13.0,CHANGE_MODEL,모델교체,복합,change model from ICT to Coating,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-06,DAY,MI,MI 7,D,L48CA9N_HVD,2.0,ICT_ATE,ICT/ATE불량,복합,STOP ATE,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-06,DAY,MI,MI 7,TOTAL,L48CA9N_HVD,15.0,CHANGE_MODEL,모델교체,복합,change model from ICT to Coating | STOP ATE,,1070.0,2000.0,1070.0,2000.0,1070.0,1400.0
+2026-06-07,DAY,MI,MI 3,TOTAL,L65S7_HVD,0.0,ETC,기타,단일,,,2614.0,0.0,2614.0,0.0,4595.0,0.0
+2026-06-07,DAY,MI,MI 4,D,L65E70A_HVD,6.0,ETC,기타,복합,Hipot error,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-07,DAY,MI,MI 4,TOTAL,L65E70A_HVD,6.0,ETC,기타,복합,NO PROBLEM | Hipot error,,4201.0,4200.0,4201.0,4200.0,3847.0,4120.0
+2026-06-07,DAY,MI,MI 5,TOTAL,L55F70NA_HHS,0.0,ETC,기타,단일,,,232.0,0.0,232.0,0.0,232.0,0.0
+2026-06-07,DAY,MI,MI 6,A,L85E70NA_HVD,15.0,WAVE,Wave Solder불량,단일,"ICT ERROR, WAVE SOLDER ERROR",,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-07,DAY,MI,MI 6,D,L85E70NA_HVD,13.0,WAVE,Wave Solder불량,단일,"ICT ERROR, WAVE SOLDER ERROR",,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-07,DAY,MI,MI 6,TOTAL,L85E70NA_HVD,28.0,WAVE,Wave Solder불량,단일,"ICT ERROR, WAVE SOLDER ERROR | ICT ERROR, WAVE SOLDER ERROR",,2200.0,2200.0,2200.0,2200.0,2200.0,2500.0
+2026-06-07,DAY,MI,MI 7,TOTAL,L83CA9N_HVD,0.0,WAITING_SMT,SMT대기,단일,Stop waiting SEMI PCB SMT | Stop waiting SEMI PCB SMT,,107.0,200.0,107.0,200.0,107.0,0.0
+2026-06-08,DAY,MI,MI 2,A,"55""/3in1, M70H",16.0,AOI_SAOI,AOI/S-AOI불량,복합,"AOI error , ATE error , 3in1",,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-08,DAY,MI,MI 2,TOTAL,"55""/3in1, M70H",16.0,AOI_SAOI,AOI/S-AOI불량,복합,"AOI error , ATE error , 3in1 | No problem, 3in1",,5740.0,5740.0,5740.0,5740.0,2870.0,0.0
+2026-06-08,DAY,MI,MI 3,A,L75S7N_HVD,30.0,ICT_ATE,ICT/ATE불량,복합,"ATE hanv'n stock ,waiting PCB",,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-08,DAY,MI,MI 3,TOTAL,L75S7N_HVD,30.0,ICT_ATE,ICT/ATE불량,복합,"ATE hanv'n stock ,waiting PCB | No problem",,5760.0,5760.0,5760.0,5760.0,5690.0,5752.0
+2026-06-08,DAY,MI,MI 4,TOTAL,L65E70A_HVD,0.0,ETC,기타,단일,No problem | No problem,,4200.0,4200.0,4200.0,4200.0,4264.0,4200.0
+2026-06-08,DAY,MI,MI 5,A,L65S7A_HVD,30.0,CHANGE_MODEL,모델교체,복합,"Change model ,Wave solder error",,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-08,DAY,MI,MI 5,D,L65S7A_HVD,95.0,ICT_ATE,ICT/ATE불량,복합,ATE run 1 floor,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-08,DAY,MI,MI 5,TOTAL,L65S7A_HVD,125.0,CHANGE_MODEL,모델교체,복합,"Change model ,Wave solder error | ATE run 1 floor",,4012.0,4904.0,4012.0,4904.0,4012.0,2656.0
+2026-06-08,DAY,MI,MI 6,A,L85E70NA_HVD,110.0,CHANGE_MODEL,모델교체,복합,Change model because ICT no JIG,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-08,DAY,MI,MI 6,D,L85E70NA_HVD,95.0,ICT_ATE,ICT/ATE불량,복합,Waiting material WIP,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-08,DAY,MI,MI 6,TOTAL,L85E70NA_HVD,205.0,CHANGE_MODEL,모델교체,복합,Change model because ICT no JIG | Waiting material WIP,,1400.0,1186.0,1400.0,1186.0,1400.0,366.0
+2026-06-08,DAY,MI,MI 7,A,L55CA9N_HVD,120.0,CHANGE_MODEL,모델교체,복합,"Havev'n PCB L48CA9N, change model",,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-08,DAY,MI,MI 7,D,L55CA9N_HVD,95.0,ICT_ATE,ICT/ATE불량,복합,Waiting material WIP,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-08,DAY,MI,MI 7,TOTAL,L55CA9N_HVD,215.0,CHANGE_MODEL,모델교체,복합,"Havev'n PCB L48CA9N, change model | Waiting material WIP",,2000.0,480.0,2000.0,480.0,2000.0,0.0
+2026-06-09,DAY,MI,MI 2,D,"55""/3in1, M70H",5.0,ICT_ATE,ICT/ATE불량,복합,"STOP, CLEANING ICT MACHINE",,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-09,DAY,MI,MI 2,TOTAL,"55""/3in1, M70H",5.0,ICT_ATE,ICT/ATE불량,복합,"NO PROBLEM, 3IN 1 | STOP, CLEANING ICT MACHINE",,5740.0,5740.0,5740.0,5740.0,2870.0,0.0
+2026-06-09,DAY,MI,MI 3,A,L75S7N_HVD,12.0,AOI_SAOI,AOI/S-AOI불량,복합,AOI ERROR,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-09,DAY,MI,MI 3,D,L75S7N_HVD,87.0,WAVE,Wave Solder불량,복합,"WAVE SOLDER, PART RESERVE SMT",,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-09,DAY,MI,MI 3,TOTAL,L75S7N_HVD,99.0,AOI_SAOI,AOI/S-AOI불량,복합,"AOI ERROR | WAVE SOLDER, PART RESERVE SMT",,4900.0,4900.0,4900.0,4900.0,5260.0,4226.0
+2026-06-09,DAY,MI,MI 4,A,L55E70A_HVD,60.0,CHANGE_MODEL,모델교체,복합,"CHANGE MODEL ICT => COATING, ATE CHANGE MODEO",,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-09,DAY,MI,MI 4,TOTAL,L55E70A_HVD,60.0,CHANGE_MODEL,모델교체,복합,"CHANGE MODEL ICT => COATING, ATE CHANGE MODEO | No problem",,3460.0,3460.0,3460.0,3460.0,3650.0,3400.0
+2026-06-09,DAY,MI,MI 5,A,L65S7_HVD,5.0,ETC,기타,복합,FT SCAN ERROR,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-09,DAY,MI,MI 5,D,L65S7_HVD,95.0,ETC,기타,복합,IN PACKING ERROR,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-09,DAY,MI,MI 5,TOTAL,L65S7_HVD,100.0,ETC,기타,복합,FT SCAN ERROR | IN PACKING ERROR,,4638.0,5792.0,4638.0,5792.0,4638.0,5290.0
+2026-06-09,DAY,MI,MI 6,A,L65FE8N,14.0,CHANGE_MODEL,모델교체,복합,"OUT OF STOCK, CHANGE MODEL. COATING ERROR",,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-09,DAY,MI,MI 6,TOTAL,L65FE8N,14.0,CHANGE_MODEL,모델교체,복합,"OUT OF STOCK, CHANGE MODEL. COATING ERROR | STOP LINE, WAITING PCB FROM SMT",,2144.0,1714.0,2144.0,1714.0,2144.0,1286.0
+2026-06-09,DAY,MI,MI 7,A,L48CA9N_HVD,67.0,CHANGE_MODEL,모델교체,복합,"OUT STOCK, CHANGE MODEL, WAVE SOLDER ERROR",,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-09,DAY,MI,MI 7,D,L48CA9N_HVD,12.0,COATING,Coating/Reflow불량,복합,"COATING STOP, VISION ERROR",,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-09,DAY,MI,MI 7,TOTAL,L48CA9N_HVD,79.0,CHANGE_MODEL,모델교체,복합,"OUT STOCK, CHANGE MODEL, WAVE SOLDER ERROR | COATING STOP, VISION ERROR",,3200.0,3102.0,3200.0,3102.0,3200.0,2740.0
+2026-06-10,DAY,MI,MI 2,TOTAL,"55""/3in1, M70H",0.0,ETC,기타,복합,"NO PROBLEM, 3 IN 1 | NO PROBLEM , 3IN 1",,5520.0,5520.0,5520.0,5520.0,2760.0,394.0
+2026-06-10,DAY,MI,MI 3,A,L75S7N_HVD,5.0,AOI_SAOI,AOI/S-AOI불량,복합,AOI BELT ERROR,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-10,DAY,MI,MI 3,D,L75S7N_HVD,5.0,ICT_ATE,ICT/ATE불량,복합,"ICT NO TEST, FT ERROR",,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-10,DAY,MI,MI 3,TOTAL,L75S7N_HVD,10.0,AOI_SAOI,AOI/S-AOI불량,복합,"AOI BELT ERROR | ICT NO TEST, FT ERROR",,5320.0,5320.0,5320.0,5320.0,5470.0,4694.0
+2026-06-10,DAY,MI,MI 4,A,L55E70A_HVD,27.0,CHANGE_MODEL,모델교체,복합,CHANGE MODEL ICT COATING => ATE,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-10,DAY,MI,MI 4,D,L65S7_HVD,6.0,ETC,기타,복합,HIPOT ERROR,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-10,DAY,MI,MI 4,TOTAL,L55E70A_HVD,33.0,CHANGE_MODEL,모델교체,복합,CHANGE MODEL ICT COATING => ATE | HIPOT ERROR,,3662.0,3512.0,3662.0,3512.0,3817.0,3040.0
+2026-06-10,DAY,MI,MI 5,A,L65S7_HVD,150.0,EQUIP_FAIL,설비고장(기타),복합,"STOP LINE, HAVEN'T PACKING BOX",,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-10,DAY,MI,MI 5,TOTAL,L65S7_HVD,150.0,EQUIP_FAIL,설비고장(기타),복합,"STOP LINE, HAVEN'T PACKING BOX | NO PROBLEM",,4960.0,4960.0,4960.0,4960.0,4960.0,5008.0
+2026-06-10,DAY,MI,MI 6,A,"65""/PD, P6519",23.0,ETC,기타,복합,"WAITING HEATSINK, MESS FT ERROR",,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-10,DAY,MI,MI 6,D,L85E70NA_HVD,45.0,CHANGE_MODEL,모델교체,복합,CHANGE MODEL,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-10,DAY,MI,MI 6,TOTAL,"65""/PD, P6519",68.0,CHANGE_MODEL,모델교체,복합,"WAITING HEATSINK, MESS FT ERROR | CHANGE MODEL",,2600.0,2586.0,2600.0,2586.0,2600.0,2528.0
+2026-06-10,DAY,MI,MI 7,A,L48CA9N_HVD,23.0,WAVE,Wave Solder불량,복합,"WAVE SOLDER, PACKING ERROR, ICT RUNNING 1 FLOOR",,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-10,DAY,MI,MI 7,D,L48CA9N_HVD,25.0,WAVE,Wave Solder불량,복합,"WAVE SOLDER, ATE ERROR",,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-10,DAY,MI,MI 7,TOTAL,L48CA9N_HVD,48.0,WAVE,Wave Solder불량,복합,"WAVE SOLDER, PACKING ERROR, ICT RUNNING 1 FLOOR | WAVE SOLDER, ATE ERROR",,3400.0,3088.0,3400.0,3088.0,3400.0,2906.0
+2026-06-11,DAY,MI,MI 2,A,"55""/3in1, M70H",120.0,ETC,기타,복합,BOTH OF WORKING AND SORTING,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-11,DAY,MI,MI 2,D,"55""/3in1, M70H",77.0,COATING,Coating/Reflow불량,복합,COATING RUN 1 FLOOR,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-11,DAY,MI,MI 2,TOTAL,"55""/3in1, M70H",197.0,COATING,Coating/Reflow불량,복합,BOTH OF WORKING AND SORTING | COATING RUN 1 FLOOR,,5468.0,3296.0,5468.0,3296.0,2734.0,2036.0
+2026-06-11,DAY,MI,MI 3,A,L75S7A,32.0,CHANGE_MODEL,모델교체,복합,"CHANGE MODEL 75HVD 22A --> 75HVD 22B, CLEAR STOCK, SMT NO SCAN.",,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-11,DAY,MI,MI 3,D,L65S7A,40.0,CHANGE_MODEL,모델교체,복합,CHANGE MODEL 75HVD --> 65 HVD,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-11,DAY,MI,MI 3,TOTAL,L75S7A,72.0,CHANGE_MODEL,모델교체,복합,"CHANGE MODEL 75HVD 22A --> 75HVD 22B, CLEAR STOCK, SMT NO SCAN. | CHANGE MODEL 75HVD --> 65 HVD",,5400.0,3092.0,5400.0,3092.0,5510.0,2772.0
+2026-06-11,DAY,MI,MI 4,A,L65CA9N,17.0,CHANGE_MODEL,모델교체,복합,"CHANGE MODEL ICT => COATING, MISSING 100, 200 STEP",,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-11,DAY,MI,MI 4,D,L65CA9N,10.0,WAVE,Wave Solder불량,복합,WAVE SOLDER ERROR,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-11,DAY,MI,MI 4,TOTAL,L65CA9N,27.0,CHANGE_MODEL,모델교체,복합,"CHANGE MODEL ICT => COATING, MISSING 100, 200 STEP | WAVE SOLDER ERROR",,2620.0,1790.0,2620.0,1790.0,2953.0,1482.0
+2026-06-11,DAY,MI,MI 5,A,L65S7,60.0,ETC,기타,복합,"NOZZLE ERROR, REPLACE NOZZLE",,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-11,DAY,MI,MI 5,D,L65S7,32.0,ICT_ATE,ICT/ATE불량,복합,"ATE POWER OFF, NO START/ END",,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-11,DAY,MI,MI 5,TOTAL,L65S7,92.0,ICT_ATE,ICT/ATE불량,복합,"NOZZLE ERROR, REPLACE NOZZLE | ATE POWER OFF, NO START/ END",,5760.0,4562.0,5760.0,4562.0,5760.0,3888.0
+2026-06-11,DAY,MI,MI 6,A,L85E70NA,19.0,WAVE,Wave Solder불량,복합,"ICT ERROR, WAVE SOLDER",,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-11,DAY,MI,MI 6,D,L85E70NA,19.0,WAVE,Wave Solder불량,복합,"NO START/ END, WAITING HS FROM WARE HOUSE,WAVE SOLDER ERROR",,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-11,DAY,MI,MI 6,TOTAL,L85E70NA,38.0,WAVE,Wave Solder불량,복합,"ICT ERROR, WAVE SOLDER | NO START/ END, WAITING HS FROM WARE HOUSE,WAVE SOLDER ERROR",,2600.0,2332.0,2600.0,2332.0,2600.0,1998.0
+2026-06-11,DAY,MI,MI 7,A,L55CA9N,62.0,WAVE,Wave Solder불량,복합,"SET UP ICT, WAVE SOLDER ERROR, FT ERROR, SET UP ATE",,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-11,DAY,MI,MI 7,D,L55CA9N,103.0,WAVE,Wave Solder불량,복합,"ATE RUN 1 FLOOR, WAVE SOLDER, FT ERROR",,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-11,DAY,MI,MI 7,TOTAL,L55CA9N,165.0,WAVE,Wave Solder불량,복합,"SET UP ICT, WAVE SOLDER ERROR, FT ERROR, SET UP ATE | ATE RUN 1 FLOOR, WAVE SOLDER, FT ERROR",,3600.0,2374.0,3600.0,2374.0,3600.0,1660.0
+2026-06-12,DAY,MI,MI 2,A,L55S7_HVD,10.0,CHANGE_MODEL,모델교체,복합,"FT ERROR (6MIN), CHANGE MODEL L55S7 --> L55S7W AOI NO SCAN (4MIN)",,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-12,DAY,MI,MI 2,D,L55S7_HVD,55.0,CHANGE_MODEL,모델교체,복합,"stop line waiting pcb from SMD (15min) , change model 55S7W--> 55S& HVD",,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-12,DAY,MI,MI 2,TOTAL,L55S7_HVD,65.0,CHANGE_MODEL,모델교체,복합,"FT ERROR (6MIN), CHANGE MODEL L55S7 --> L55S7W AOI NO SCAN (4MIN) | stop line waiting pcb from SMD (15min) , change model 55S7W--> 55S& HVD",,5594.0,5594.0,5594.0,5594.0,2797.0,5284.0
+2026-06-12,DAY,MI,MI 3,A,L65S7A_HVD,110.0,ETC,기타,복합,CLEAR STOCK MODEL 75HVD 21A,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-12,DAY,MI,MI 3,D,L65S7A_HVD,61.0,CHANGE_MODEL,모델교체,복합,"change model 65hvd 21B ICT --> coating (35min), set up ATE 65hvd 12B (26min)",,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-12,DAY,MI,MI 3,TOTAL,L65S7A_HVD,171.0,CHANGE_MODEL,모델교체,복합,"CLEAR STOCK MODEL 75HVD 21A | change model 65hvd 21B ICT --> coating (35min), set up ATE 65hvd 12B (26min)",,5440.0,5440.0,5440.0,5440.0,5530.0,5426.0
+2026-06-12,DAY,MI,MI 4,A,L65CA9N_HVD,13.0,ETC,기타,복합,WAITING PCB FROM SMD,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-12,DAY,MI,MI 4,D,L65CA9N_HVD,26.0,EQUIP_FAIL,설비고장(기타),복합,stop line waiting pcb from smt,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-12,DAY,MI,MI 4,TOTAL,L65CA9N_HVD,39.0,EQUIP_FAIL,설비고장(기타),복합,WAITING PCB FROM SMD | stop line waiting pcb from smt,,2760.0,2760.0,2760.0,2760.0,3069.0,2430.0
+2026-06-12,DAY,MI,MI 5,A,L50E60A_HVD,120.0,COATING,Coating/Reflow불량,복합,"FLUX ERROR (10MIN), RUNNING SAMPLE 50E60A (90MIN) , WAVE SOLDER ERROR (15MIN)",,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-12,DAY,MI,MI 5,D,L65S7_MPS,77.0,CHANGE_MODEL,모델교체,복합,"Change model (35min), check component (10min), wating ME confirm WI (10min), No END 200 (22min)",,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-12,DAY,MI,MI 5,TOTAL,L50E60A_HVD,197.0,CHANGE_MODEL,모델교체,복합,"FLUX ERROR (10MIN), RUNNING SAMPLE 50E60A (90MIN) , WAVE SOLDER ERROR (15MIN) | Change model (35min), check component (10min), wating ME confirm WI (10min), No END 200 (22min)",,3876.0,1350.0,3876.0,1350.0,3876.0,552.0
+2026-06-12,DAY,MI,MI 6,TOTAL,,0.0,ETC,기타,단일,CLEAR STOCK MODEL L65E70A | CLEAR STOCK MODEL L65E70A,,1200.0,1200.0,1200.0,1200.0,1200.0,432.0
+2026-06-12,DAY,MI,MI 7,A,L65E70A_HVD,15.0,ETC,기타,복합,CLEAR STOCK L55CA9N,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-12,DAY,MI,MI 7,TOTAL,L65E70A_HVD,15.0,ETC,기타,복합,CLEAR STOCK L55CA9N | no probplem,,3600.0,3600.0,3600.0,3600.0,3600.0,3964.0
+2026-06-13,DAY,MI,MI 2,A,L55S7_HVD,18.0,ETC,기타,복합,"stop waiting pcb (15min), FT no scan (3min)",,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-13,DAY,MI,MI 2,D,L55S7_HVD,42.0,ICT_ATE,ICT/ATE불량,복합,"waiting pcb (20min), ft error (2min), ATE error (20min)",,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-13,DAY,MI,MI 2,TOTAL,L55S7_HVD,60.0,ICT_ATE,ICT/ATE불량,복합,"stop waiting pcb (15min), FT no scan (3min) | waiting pcb (20min), ft error (2min), ATE error (20min)",,5720.0,5720.0,5720.0,5720.0,2860.0,5852.0
+2026-06-13,DAY,MI,MI 3,A,L65S7A_HVD,18.0,WAVE,Wave Solder불량,복합,"FT no scan (10min), ICT (5min), wave solder (3min)",,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-13,DAY,MI,MI 3,D,L65S7A_HVD,12.0,AOI_SAOI,AOI/S-AOI불량,복합,ICT & AOI error,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-13,DAY,MI,MI 3,TOTAL,L65S7A_HVD,30.0,AOI_SAOI,AOI/S-AOI불량,복합,"FT no scan (10min), ICT (5min), wave solder (3min) | ICT & AOI error",,5720.0,5720.0,5720.0,5720.0,5670.0,5782.0
+2026-06-13,DAY,MI,MI 4,A,L65CA9N_HVD,40.0,ICT_ATE,ICT/ATE불량,복합,"waiting HS from MM/ wip (5min), waiting pcb (30min), ICT stop(5min)",,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-13,DAY,MI,MI 4,D,L65CA9N_HVD,42.0,ICT_ATE,ICT/ATE불량,복합,"ATE run 1 floor (36min), FT error (6min)",,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-13,DAY,MI,MI 4,TOTAL,L65CA9N_HVD,82.0,ICT_ATE,ICT/ATE불량,복합,"waiting HS from MM/ wip (5min), waiting pcb (30min), ICT stop(5min) | ATE run 1 floor (36min), FT error (6min)",,2780.0,2780.0,2780.0,2780.0,3086.0,2780.0
+2026-06-13,DAY,MI,MI 5,A,L65S7A_HVD,40.0,COATING,Coating/Reflow불량,복합,"wave solder error (30min), flux error (10min)",,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-13,DAY,MI,MI 5,TOTAL,L65S7A_HVD,40.0,COATING,Coating/Reflow불량,복합,"wave solder error (30min), flux error (10min) | FLUX STOP FROM 10H55",,4600.0,3428.0,4600.0,3428.0,4600.0,3546.0
+2026-06-13,DAY,MI,MI 6,A,L75E70NA_HVD,16.0,WAITING_SMT,SMT대기,단일,stop waiting semi pcb,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-13,DAY,MI,MI 6,D,L65FE8N_HHS,20.0,WAITING_SMT,SMT대기,단일,stop waiting semi pcb,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-13,DAY,MI,MI 6,TOTAL,L75E70NA_HVD,36.0,WAITING_SMT,SMT대기,단일,stop waiting semi pcb,,2200.0,2198.0,2200.0,2198.0,2200.0,1054.0
+2026-06-13,DAY,MI,MI 7,A,L65E70A_HVD,71.0,ICT_ATE,ICT/ATE불량,복합,"Silicon error (10min), ICT error (61 min)",,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-13,DAY,MI,MI 7,D,L65E70A_HVD,4.0,ETC,기타,복합,HIPOT ERROR,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-13,DAY,MI,MI 7,TOTAL,L65E70A_HVD,75.0,ICT_ATE,ICT/ATE불량,복합,"Silicon error (10min), ICT error (61 min) | HIPOT ERROR",,3164.0,2740.0,3164.0,2740.0,3164.0,3416.0
+2026-06-14,DAY,MI,MI 2,A,L65S7_HVD,132.0,WAITING_SMT,SMT대기,복합,"waiting semi PCB (35min), coating error (30min), change cod 65 21A--> 6521b (30min), silicon coating (27min).",,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-14,DAY,MI,MI 2,D,L65S7A_HVD,23.0,CHANGE_MODEL,모델교체,복합,"silicon coating error (7min), flux error (11min), change model ICT --> coating (5min)",,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-14,DAY,MI,MI 2,TOTAL,L65S7_HVD,155.0,WAITING_SMT,SMT대기,복합,"waiting semi PCB (35min), coating error (30min), change cod 65 21A--> 6521b (30min), silicon coating (27min). | silicon coating error (7min), flux error (11min), change model ICT --> coating (5min)",,5200.0,4254.0,5200.0,4254.0,2600.0,3814.0
+2026-06-14,DAY,MI,MI 3,A,L65S7A_HVD,35.0,ICT_ATE,ICT/ATE불량,복합,"ATE run 1 floor (30min), FT error (5min)",,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-14,DAY,MI,MI 3,TOTAL,L65S7A_HVD,35.0,ICT_ATE,ICT/ATE불량,복합,"ATE run 1 floor (30min), FT error (5min) | don't have Jig for ATE (production 3 line)",,5760.0,5560.0,5760.0,5560.0,5690.0,5660.0
+2026-06-14,DAY,MI,MI 4,A,L65CA9N_HVD,10.0,WAITING_SMT,SMT대기,복합,waiting semi pcb SMT,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-14,DAY,MI,MI 4,D,L65CA9N_HVD,10.0,ETC,기타,복합,hipot error,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-14,DAY,MI,MI 4,TOTAL,L65CA9N_HVD,20.0,WAITING_SMT,SMT대기,복합,waiting semi pcb SMT | hipot error,,2760.0,2730.0,2760.0,2730.0,3069.0,2776.0
+2026-06-14,DAY,MI,MI 5,A,L65S7A_HVD,25.0,WAVE,Wave Solder불량,복합,wave solder error (25min),,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-14,DAY,MI,MI 5,D,L65S7A_HVD,172.0,WAVE,Wave Solder불량,복합,"Ate set up (106min), ate run 1 floor (80min), wave solder error (6min)",,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-14,DAY,MI,MI 5,TOTAL,L65S7A_HVD,197.0,WAVE,Wave Solder불량,복합,"wave solder error (25min) | Ate set up (106min), ate run 1 floor (80min), wave solder error (6min)",,4494.0,4220.0,4494.0,4220.0,4494.0,3926.0
+2026-06-14,DAY,MI,MI 6,A,L55F70NA_HHS,126.0,WAVE,Wave Solder불량,복합,"set up model (120min), wave solder (6min).",,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-14,DAY,MI,MI 6,D,L55F70NA_HHS,68.0,WAVE,Wave Solder불량,복합,"wave solder error, set up ATE (60min)",,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-14,DAY,MI,MI 6,TOTAL,L55F70NA_HHS,194.0,WAVE,Wave Solder불량,복합,"set up model (120min), wave solder (6min). | wave solder error, set up ATE (60min)",,2000.0,2000.0,2000.0,2000.0,2000.0,2228.0
+2026-06-14,DAY,MI,MI 7,A,L55CA9N_HVD,50.0,WAITING_SMT,SMT대기,복합,"ICT error (50min), waiting semi pcb smt (10min)",,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-14,DAY,MI,MI 7,D,L55CA9N_HVD,90.0,WAITING_SMT,SMT대기,복합,waiting semi PCB smt,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-14,DAY,MI,MI 7,TOTAL,L55CA9N_HVD,140.0,WAITING_SMT,SMT대기,복합,"ICT error (50min), waiting semi pcb smt (10min) | waiting semi PCB smt",,340.0,494.0,340.0,494.0,340.0,658.0
+2026-06-15,DAY,MI,MI 2,A,"55""/3in1, M70H,",67.0,ICT_ATE,ICT/ATE불량,복합,ATE running 1 floor from 8h15 (3IN1),,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-15,DAY,MI,MI 2,D,"55""/3in1, M70H,",56.0,WAITING_SMT,SMT대기,복합,Waiting semi SMT (3IN1),,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-15,DAY,MI,MI 2,TOTAL,"55""/3in1, M70H,",123.0,WAITING_SMT,SMT대기,복합,ATE running 1 floor from 8h15 (3IN1) | Waiting semi SMT (3IN1),,5760.0,5760.0,5760.0,5760.0,0.0,0.0
+2026-06-15,DAY,MI,MI 3,TOTAL,"65""/3IN1, U8000F, SESK",0.0,ETC,기타,단일,No problem | No problem,,5720.0,5320.0,5720.0,5320.0,5670.0,5120.0
+2026-06-15,DAY,MI,MI 4,A,L75S7A_HVD,40.0,ETC,기타,복합,FT error,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-15,DAY,MI,MI 4,D,L75S7A_HVD,43.0,WAITING_SMT,SMT대기,복합,Waiting semi SMT/ Coating error,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-15,DAY,MI,MI 4,TOTAL,L75S7A_HVD,83.0,WAITING_SMT,SMT대기,복합,FT error | Waiting semi SMT/ Coating error,,5060.0,5060.0,5060.0,5060.0,5061.0,4366.0
+2026-06-15,DAY,MI,MI 5,A,L75S7A_HVD,25.0,COATING,Coating/Reflow불량,복합,FLUX ERROR (3IN1),,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-15,DAY,MI,MI 5,D,L75S7A_HVD,47.0,WAITING_SMT,SMT대기,복합,"Waiting semi SMT, change model (3IN1)",,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-15,DAY,MI,MI 5,TOTAL,L75S7A_HVD,72.0,WAITING_SMT,SMT대기,복합,"FLUX ERROR (3IN1) | Waiting semi SMT, change model (3IN1)",,3759.0,3760.0,3759.0,3760.0,960.0,1218.0
+2026-06-15,DAY,MI,MI 6,A,L65S8N_HVD,119.0,COATING,Coating/Reflow불량,복합,"Wave solder pinhole (70min), ICT error (5min), Hipot error (37 min/ 2 times), coating error (27min),",,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-15,DAY,MI,MI 6,TOTAL,L65S8N_HVD,119.0,COATING,Coating/Reflow불량,복합,"Wave solder pinhole (70min), ICT error (5min), Hipot error (37 min/ 2 times), coating error (27min), | No problem",,5492.0,5388.0,5492.0,5388.0,5492.0,4270.0
+2026-06-15,DAY,MI,MI 7,A,L65E70A_HVD,112.0,COATING,Coating/Reflow불량,복합,"waiting box packing (90min), AOI vision don't connect (5min), coating eror (7min).",,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-15,DAY,MI,MI 7,D,L65E70A_HVD,44.0,ICT_ATE,ICT/ATE불량,복합,Waiting box packing ATE running 1 floor from,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-15,DAY,MI,MI 7,TOTAL,L65E70A_HVD,156.0,COATING,Coating/Reflow불량,복합,"waiting box packing (90min), AOI vision don't connect (5min), coating eror (7min). | Waiting box packing ATE running 1 floor from",,4000.0,3726.0,4000.0,3726.0,4000.0,3484.0
+2026-06-16,DAY,MI,MI 2,A,"55""/3in1, M70H",96.0,WAITING_SMT,SMT대기,복합,"ATE running 1 floor (90min), waiting semi pcb (6min), 3in1",,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-16,DAY,MI,MI 2,D,"55""/3in1, M70H",13.0,WAITING_SMT,SMT대기,복합,waiting semi PCB,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-16,DAY,MI,MI 2,TOTAL,"55""/3in1, M70H",109.0,WAITING_SMT,SMT대기,복합,"ATE running 1 floor (90min), waiting semi pcb (6min), 3in1 | waiting semi PCB",,5720.0,5720.0,5720.0,5720.0,0.0,0.0
+2026-06-16,DAY,MI,MI 3,A,L75S7A_HVD,40.0,CHANGE_MODEL,모델교체,복합,"change model (30min), waiting QC confirm (10min).",,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-16,DAY,MI,MI 3,TOTAL,L75S7A_HVD,40.0,CHANGE_MODEL,모델교체,복합,"change model (30min), waiting QC confirm (10min). | No problem",,5366.0,4834.0,5366.0,4834.0,5366.0,5910.0
+2026-06-16,DAY,MI,MI 4,A,L65CA9N,2.0,ETC,기타,복합,silicon stop,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-16,DAY,MI,MI 4,TOTAL,L65CA9N,2.0,ETC,기타,복합,silicon stop | No problem,,2800.0,2800.0,2800.0,2800.0,2800.0,3110.0
+2026-06-16,DAY,MI,MI 5,A,L55F70NA,75.0,CHANGE_MODEL,모델교체,복합,"change model (50min), silicon coating (25min/ 2 times)",,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-16,DAY,MI,MI 5,D,L55F70NA,60.0,CHANGE_MODEL,모델교체,복합,"change model ict --> coating (30min), change model ate (30min)",,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-16,DAY,MI,MI 5,TOTAL,L55F70NA,135.0,CHANGE_MODEL,모델교체,복합,"change model (50min), silicon coating (25min/ 2 times) | change model ict --> coating (30min), change model ate (30min)",,2999.0,3300.0,2999.0,3300.0,2999.0,3000.0
+2026-06-16,DAY,MI,MI 6,A,L65FE8N_HHS,5.0,ETC,기타,복합,No box packing,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-16,DAY,MI,MI 6,D,L65FE8N_HHS,30.0,CHANGE_MODEL,모델교체,복합,change model (30min),,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-16,DAY,MI,MI 6,TOTAL,L65FE8N_HHS,35.0,CHANGE_MODEL,모델교체,복합,No box packing | change model (30min),,1957.0,1956.0,1957.0,1956.0,2483.0,2366.0
+2026-06-16,DAY,MI,MI 7,A,L65E70A_HVD,22.0,ICT_ATE,ICT/ATE불량,복합,"Mising step (7min), Burn in off (10min), ICT error (5min)",,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-16,DAY,MI,MI 7,D,L65E70A_HVD,10.0,INLOADER,Inloader불량,복합,Inloader error,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-16,DAY,MI,MI 7,TOTAL,L65E70A_HVD,32.0,INLOADER,Inloader불량,복합,"Mising step (7min), Burn in off (10min), ICT error (5min) | Inloader error",,3620.0,3620.0,3620.0,3620.0,3620.0,3880.0
+2026-06-17,DAY,MI,MI 2,A,"55""/3in1, M70H, HKC",63.0,WAITING_SMT,SMT대기,복합,"waiting semi SMT (33min), Ate running 1 floor 30 min",,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-17,DAY,MI,MI 2,TOTAL,"55""/3in1, M70H, HKC",63.0,WAITING_SMT,SMT대기,복합,"waiting semi SMT (33min), Ate running 1 floor 30 min | no problem",,5760.0,5760.0,5760.0,5760.0,0.0,0.0
+2026-06-17,DAY,MI,MI 3,A,"75""/3IN1, U8000F, VIETNAM",30.0,WAITING_SMT,SMT대기,복합,Waiting semi SMT 3in1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-17,DAY,MI,MI 3,D,L75S7A_HVD,30.0,CHANGE_MODEL,모델교체,복합,Change model,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-17,DAY,MI,MI 3,TOTAL,"75""/3IN1, U8000F, VIETNAM",60.0,WAITING_SMT,SMT대기,복합,Waiting semi SMT 3in1 | Change model,,3824.0,3160.0,3824.0,3160.0,3042.0,2432.0
+2026-06-17,DAY,MI,MI 4,A,L65CA9N_HVD,90.0,ETC,기타,복합,waiting pcb from 8h to now,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-17,DAY,MI,MI 4,TOTAL,L65CA9N_HVD,90.0,ETC,기타,복합,waiting pcb from 8h to now | no problem,,2381.0,2380.0,2381.0,2380.0,2381.0,2756.0
+2026-06-17,DAY,MI,MI 5,A,L65S7_HVD,92.0,ICT_ATE,ICT/ATE불량,복합,"waiting pcb fro 8h07 to now (67min0, ate run 1 floor (25min)",,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-17,DAY,MI,MI 5,D,L65S7_HVD,47.0,ICT_ATE,ICT/ATE불량,복합,"Waiting pcb (13min), Ate running 1 floor (47min)",,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-17,DAY,MI,MI 5,TOTAL,L65S7_HVD,139.0,ICT_ATE,ICT/ATE불량,복합,"waiting pcb fro 8h07 to now (67min0, ate run 1 floor (25min) | Waiting pcb (13min), Ate running 1 floor (47min)",,3320.0,3478.0,3320.0,3478.0,3522.0,5242.0
+2026-06-17,DAY,MI,MI 6,A,L85E70NA_HVD,70.0,ETC,기타,복합,wating semi pcb (70min/ 2 times),,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-17,DAY,MI,MI 6,D,L85E70NA_HVD,43.0,WAITING_SMT,SMT대기,복합,waiting semi pcb (43min/ 2 times),,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-17,DAY,MI,MI 6,TOTAL,L85E70NA_HVD,113.0,WAITING_SMT,SMT대기,복합,wating semi pcb (70min/ 2 times) | waiting semi pcb (43min/ 2 times),,1399.0,1290.0,1399.0,1290.0,1512.0,1926.0
+2026-06-17,DAY,MI,MI 7,A,L55CA9N_HVD,24.0,WAITING_SMT,SMT대기,복합,WAITING SEMI SMT,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-17,DAY,MI,MI 7,D,L55CA9N_HVD,56.0,WAITING_SMT,SMT대기,복합,WAITING SEMI PCB,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-17,DAY,MI,MI 7,TOTAL,L55CA9N_HVD,80.0,WAITING_SMT,SMT대기,복합,WAITING SEMI SMT | WAITING SEMI PCB,,2319.0,1676.0,2319.0,1676.0,2319.0,1972.0
+2026-06-18,DAY,MI,MI 2,A,"55""/3in1, M70H, HKC",16.0,AOI_SAOI,AOI/S-AOI불량,복합,"Wave solder error (11min), Aoi error (4min)",,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-18,DAY,MI,MI 2,TOTAL,"55""/3in1, M70H, HKC",16.0,AOI_SAOI,AOI/S-AOI불량,복합,"Wave solder error (11min), Aoi error (4min) | No problem",,5760.0,5760.0,5760.0,5760.0,0.0,0.0
+2026-06-18,DAY,MI,MI 3,TOTAL,L75S7_HVD,0.0,ETC,기타,복합,FT error (4min) | No problem,,5720.0,5720.0,5720.0,5720.0,5720.0,4714.0
+2026-06-18,DAY,MI,MI 4,A,L65CA9N_HVD,8.0,ICT_ATE,ICT/ATE불량,복합,"Ate running 1 floor (4min), waiting HS (4min)",,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-18,DAY,MI,MI 4,D,L65CA9N_HVD,6.0,ICT_ATE,ICT/ATE불량,복합,ICT error (6min),,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-18,DAY,MI,MI 4,TOTAL,L65CA9N_HVD,14.0,ICT_ATE,ICT/ATE불량,복합,"Ate running 1 floor (4min), waiting HS (4min) | ICT error (6min)",,2760.0,2760.0,2760.0,2760.0,2760.0,2770.0
+2026-06-18,DAY,MI,MI 5,A,L65S7_HVD,32.0,WAITING_SMT,SMT대기,복합,Waiting semi SMT (32min),,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-18,DAY,MI,MI 5,D,L65S7_HVD,25.0,WAITING_SMT,SMT대기,복합,Waiting semi SMT (25min),,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-18,DAY,MI,MI 5,TOTAL,L65S7_HVD,57.0,WAITING_SMT,SMT대기,복합,Waiting semi SMT (32min) | Waiting semi SMT (25min),,5361.0,5360.0,5361.0,5360.0,5361.0,5370.0
+2026-06-18,DAY,MI,MI 6,TOTAL,L55E70A_HVD,0.0,ETC,기타,단일,No problem | No problem,,1910.0,1866.0,1910.0,1866.0,1910.0,2562.0
+2026-06-18,DAY,MI,MI 7,A,L55CA9N_HVD,2.0,WAITING_SMT,SMT대기,복합,waiting semi pcb,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-18,DAY,MI,MI 7,D,L55CA9N_HVD,27.0,COATING,Coating/Reflow불량,복합,"coating error (22min), waiting pcb (5min)",,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-18,DAY,MI,MI 7,TOTAL,L55CA9N_HVD,29.0,WAITING_SMT,SMT대기,복합,"waiting semi pcb | coating error (22min), waiting pcb (5min)",,2940.0,2940.0,2940.0,2940.0,2940.0,3026.0
+2026-06-19,DAY,MI,MI 2,TOTAL,"55""/3in1, M70H, HKC",0.0,ETC,기타,단일,No problem | No problem,,5760.0,5760.0,5760.0,5760.0,2880.0,0.0
+2026-06-19,DAY,MI,MI 3,A,L75S7A_HVD,15.0,ETC,기타,복합,FT error,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-19,DAY,MI,MI 3,TOTAL,L75S7A_HVD,15.0,ETC,기타,복합,FT error | No problem,,5306.0,5264.0,5306.0,5264.0,5306.0,5108.0
+2026-06-19,DAY,MI,MI 4,A,L65CA9N_HVD,5.0,ETC,기타,복합,FT error,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-19,DAY,MI,MI 4,TOTAL,L65CA9N_HVD,5.0,ETC,기타,복합,FT error | No problem,,2760.0,2760.0,2760.0,2760.0,2760.0,2778.0
+2026-06-19,DAY,MI,MI 5,A,L65E70A_HVD,15.0,COATING,Coating/Reflow불량,복합,Coating error (15min),,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-19,DAY,MI,MI 5,D,L65E70A_HVD,30.0,CHANGE_MODEL,모델교체,복합,change model L65s7 --> L65E70A,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-19,DAY,MI,MI 5,TOTAL,L65E70A_HVD,45.0,CHANGE_MODEL,모델교체,복합,Coating error (15min) | change model L65s7 --> L65E70A,,3542.0,3542.0,3542.0,3542.0,3542.0,3326.0
+2026-06-19,DAY,MI,MI 6,A,L75E70NA_HVD,8.0,WAVE,Wave Solder불량,복합,wave solder error,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-19,DAY,MI,MI 6,D,L75E70NA_HVD,20.0,COATING,Coating/Reflow불량,복합,Coating error,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-19,DAY,MI,MI 6,TOTAL,L75E70NA_HVD,28.0,COATING,Coating/Reflow불량,복합,wave solder error | Coating error,,2000.0,2000.0,2000.0,2000.0,2000.0,2170.0
+2026-06-19,DAY,MI,MI 7,A,L55CA9N_HVD,34.0,WAITING_SMT,SMT대기,복합,"waiting semi pcb (27min, coating, aoi, wave solder error.",,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-19,DAY,MI,MI 7,D,L55CA9N_HVD,43.0,COATING,Coating/Reflow불량,복합,"waiting pcb (40min), coating error (3min)",,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-19,DAY,MI,MI 7,TOTAL,L55CA9N_HVD,77.0,WAITING_SMT,SMT대기,복합,"waiting semi pcb (27min, coating, aoi, wave solder error. | waiting pcb (40min), coating error (3min)",,2940.0,2602.0,2940.0,2602.0,2940.0,2418.0
+2026-06-20,DAY,MI,MI 2,TOTAL,L55S7_HVD,0.0,ETC,기타,단일,No problem,,5720.0,5720.0,5720.0,5720.0,5720.0,5720.0
+2026-06-20,DAY,MI,MI 3,A,L75S7_HVD,30.0,CHANGE_MODEL,모델교체,복합,Change model,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-20,DAY,MI,MI 3,D,L55S7_HVD,32.0,WAITING_SMT,SMT대기,복합,waiting semi pcb,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-20,DAY,MI,MI 3,TOTAL,L75S7_HVD,62.0,WAITING_SMT,SMT대기,복합,Change model | waiting semi pcb,,5400.0,5400.0,5400.0,5400.0,5400.0,5190.0
+2026-06-20,DAY,MI,MI 4,A,L65CA9N_HVD,10.0,ETC,기타,복합,Waiting box packing,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-20,DAY,MI,MI 4,D,L65CA9N_HVD,2.0,AOI_SAOI,AOI/S-AOI불량,복합,AOI error,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-20,DAY,MI,MI 4,TOTAL,L65CA9N_HVD,12.0,AOI_SAOI,AOI/S-AOI불량,복합,Waiting box packing | AOI error,,2960.0,2960.0,2960.0,2960.0,2960.0,2960.0
+2026-06-20,DAY,MI,MI 5,A,L43E60A_HVD,94.0,WAITING_SMT,SMT대기,복합,"waiting semi PCB (60min), set up coating (13min), ate running 1 floor (18min), ft error (3min).",,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-20,DAY,MI,MI 5,D,L43E60A_HVD,21.0,WAITING_SMT,SMT대기,복합,waiting semi pcb,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-20,DAY,MI,MI 5,TOTAL,L43E60A_HVD,115.0,WAITING_SMT,SMT대기,복합,"waiting semi PCB (60min), set up coating (13min), ate running 1 floor (18min), ft error (3min). | waiting semi pcb",,4860.0,3760.0,4860.0,3760.0,4860.0,2808.0
+2026-06-20,DAY,MI,MI 6,A,L75E70NA_HVD,90.0,WAITING_SMT,SMT대기,단일,waiting semi PCB,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-20,DAY,MI,MI 6,D,L75E70NA_HVD,95.0,WAITING_SMT,SMT대기,단일,waiting semi PCB,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-20,DAY,MI,MI 6,TOTAL,L75E70NA_HVD,185.0,WAITING_SMT,SMT대기,단일,waiting semi PCB | waiting semi PCB,,1672.0,2246.0,1672.0,2246.0,1672.0,1056.0
+2026-06-20,DAY,MI,MI 7,A,L55CA9N_HVD,40.0,WAITING_SMT,SMT대기,단일,waiting semi PCB,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-20,DAY,MI,MI 7,TOTAL,L55CA9N_HVD,40.0,WAITING_SMT,SMT대기,단일,waiting semi PCB,,3000.0,3000.0,3000.0,3000.0,3000.0,2858.0
+2026-06-21,DAY,MI,MI 2,A,L65S7_HVD,48.0,CHANGE_MODEL,모델교체,복합,Change model,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-21,DAY,MI,MI 2,D,L65S7_HVD,42.0,COATING,Coating/Reflow불량,복합,"Coating error (12min), ATE (5min), coating nozzle error (26min).",,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-21,DAY,MI,MI 2,TOTAL,L65S7_HVD,90.0,CHANGE_MODEL,모델교체,복합,"Change model | Coating error (12min), ATE (5min), coating nozzle error (26min).",,5500.0,4406.0,5500.0,4406.0,5500.0,3706.0
+2026-06-21,DAY,MI,MI 3,TOTAL,L55S7_HVD,0.0,ETC,기타,단일,No problem | No problem,,4676.0,3760.0,4676.0,3760.0,4676.0,3778.0
+2026-06-21,DAY,MI,MI 4,A,L65CA9N_HVD,16.0,COATING,Coating/Reflow불량,복합,"ICT error (11min), Coating error (5min)",,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-21,DAY,MI,MI 4,D,L65CA9N_HVD,8.0,ICT_ATE,ICT/ATE불량,복합,"FT error (2min), ate error (2min), waiting HS (6min).",,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-21,DAY,MI,MI 4,TOTAL,L65CA9N_HVD,24.0,COATING,Coating/Reflow불량,복합,"ICT error (11min), Coating error (5min) | FT error (2min), ate error (2min), waiting HS (6min).",,3800.0,2234.0,3800.0,2234.0,3800.0,1870.0
+2026-06-21,DAY,MI,MI 5,D,L55F70NA_HHS,30.0,CHANGE_MODEL,모델교체,복합,Change model,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-21,DAY,MI,MI 5,TOTAL,L55F70NA_HHS,30.0,CHANGE_MODEL,모델교체,복합,No problem | Change model,,3460.0,2326.0,3460.0,2326.0,3460.0,2810.0
+2026-06-21,DAY,MI,MI 6,TOTAL,L55E70A_HVD,0.0,ETC,기타,단일,,,3400.0,0.0,3400.0,0.0,3400.0,590.0
+2026-06-21,DAY,MI,MI 7,A,L55CA9N_HVD,71.0,ICT_ATE,ICT/ATE불량,복합,"waiting pcb (61min), Ate no scan (10min),",,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-21,DAY,MI,MI 7,D,L83CA9N_FHS,45.0,CHANGE_MODEL,모델교체,복합,"wave solder (19min), change model (26min).",,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-21,DAY,MI,MI 7,TOTAL,L55CA9N_HVD,116.0,CHANGE_MODEL,모델교체,복합,"waiting pcb (61min), Ate no scan (10min), | wave solder (19min), change model (26min).",,2860.0,1112.0,2860.0,1112.0,2860.0,694.0
+2026-06-22,DAY,MI,MI 2,A,"55""/3in1, M70H, HKC,",71.0,COATING,Coating/Reflow불량,복합,coating error,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-22,DAY,MI,MI 2,D,"55""/3in1, M70H, HKC,",60.0,WAITING_SMT,SMT대기,복합,waiting semi SMT,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-22,DAY,MI,MI 2,TOTAL,"55""/3in1, M70H, HKC,",131.0,WAITING_SMT,SMT대기,복합,coating error | waiting semi SMT,,5500.0,3072.0,5500.0,3072.0,0.0,200.0
+2026-06-22,DAY,MI,MI 3,A,L75S7_HVD,10.0,WAVE,Wave Solder불량,복합,Wave soder error,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-22,DAY,MI,MI 3,TOTAL,L75S7_HVD,10.0,WAVE,Wave Solder불량,복합,Wave soder error | No problem,,5446.0,3132.0,5446.0,3132.0,5446.0,2558.0
+2026-06-22,DAY,MI,MI 4,A,L65S7_HVD,6.0,COATING,Coating/Reflow불량,복합,Hipot and coating error,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-22,DAY,MI,MI 4,TOTAL,L65S7_HVD,6.0,COATING,Coating/Reflow불량,복합,Hipot and coating error | No problem,,5760.0,3554.0,5760.0,3554.0,5760.0,2912.0
+2026-06-22,DAY,MI,MI 5,TOTAL,L55F70NA_HHS,0.0,COATING,Coating/Reflow불량,단일,UV lamps do not dry the coating | UV lamps do not dry the coating,,3600.0,1988.0,3600.0,1988.0,3600.0,1704.0
+2026-06-22,DAY,MI,MI 6,A,L55E70A_HVD,17.0,COATING,Coating/Reflow불량,복합,Hipot and coating error,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-22,DAY,MI,MI 6,D,L55E70A_HVD,9.0,ICT_ATE,ICT/ATE불량,복합,"ICT error (6min), Ate error (3min).",,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-22,DAY,MI,MI 6,TOTAL,L55E70A_HVD,26.0,COATING,Coating/Reflow불량,복합,"Hipot and coating error | ICT error (6min), Ate error (3min).",,3400.0,2020.0,3400.0,2020.0,3400.0,1422.0
+2026-06-22,DAY,MI,MI 7,A,L83CA9N_FHS,156.0,WAVE,Wave Solder불량,복합,"wave solder (122min/ 3 times), MI belt error (14min)",,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-22,DAY,MI,MI 7,D,L83CA9N_HVD,48.0,COATING,Coating/Reflow불량,복합,"Flux error (7min), Coating error (41min)",,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-22,DAY,MI,MI 7,TOTAL,L83CA9N_FHS,204.0,COATING,Coating/Reflow불량,복합,"wave solder (122min/ 3 times), MI belt error (14min) | Flux error (7min), Coating error (41min)",,1860.0,916.0,1860.0,916.0,1860.0,562.0
