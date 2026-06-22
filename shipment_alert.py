@@ -615,7 +615,7 @@ function sT(ci,tp){{
 # 메인
 # ════════════════════════════════════════════════════════════
 def render_shipment_alert_tab():
-    st.markdown("#### 🚨 Shipment Cut-off 알람 v30.12")
+    st.markdown("#### 🚨 Shipment Cut-off 알람")
 
     # ── GitHub DB 자동 로드 ───────────────────────────────
     if 'ship_db' not in st.session_state or \
@@ -779,7 +779,7 @@ def render_shipment_alert_tab():
     s1c = ['알람','순서','Cut off Cargo','Cus','model','code',
            'ERP','MODEL_TYPE','PO','현재재고','예상계획','예상제품재고','Note']
     s1c = [c for c in s1c if c in t1.columns]
-    v1  = apply_filter(t1,'알람')
+    v1  = t1
     if not v1.empty:
         render_html_table(v1[s1c], height=400, table_id="t1")
 
@@ -803,7 +803,7 @@ def render_shipment_alert_tab():
                'ERP','MODEL_TYPE','PO','현재재고','예상계획',
                actual_col,'실적차이','예상제품재고','Cutoff시점재고','Note']
         s2c = [c for c in s2c if c in t2.columns]
-        v2  = apply_filter(t2,'알람')
+        v2  = t2
         if not v2.empty:
             render_html_table(v2[s2c], height=500, table_id="t2")
             csv = v2[s2c].to_csv(index=False).encode('utf-8-sig')
