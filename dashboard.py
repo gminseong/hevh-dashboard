@@ -272,6 +272,7 @@ TYPE_COLOR = {
     "SMT대기":             "#0891b2",
     "기타":                "#94a3b8",
     "자재부족":            "#9333ea",
+    "AI자재부족":          "#7e22ce",
     "RH3삽입불량":         "#b45309",
     "Mouter불량":          "#0f766e",
     "Axial불량":           "#be185d",
@@ -289,6 +290,11 @@ TYPE_COLOR = {
     "SPI불량":             "#075985",
     "Inloader불량":        "#b0bec5",
     "문제없음":            "#e2e8f0",
+    "신규모델":            "#6d28d9",
+    "NG Buffer불량":       "#ea580c",
+    "Camera/Vision불량":   "#0284c7",
+    "부품불량":            "#c2410c",
+    "QC검사대기":          "#4f46e5",
 }
 
 PROC_COLOR = {
@@ -299,18 +305,24 @@ PROC_COLOR = {
 }
 
 LOSS_TYPE_RULES = [
-    # ★ 제외 항목 (최우선)
+    # ★ 제외 항목 (최우선 — 시간 0 처리)
     ("NO_PROBLEM",   "문제없음",           ["no problem","no probplem","no proplem",
                                             "no probem","không vấn đề","3in1"]),
-    # ★ 구체적 키워드 먼저
+    # ★ 계획완료 → 제외 (유실 아님)
+    ("DONE_PLAN",    "계획완료",           ["done plan","hết plan","kết thúc",
+                                            "het plan","ket thuc"]),
+    # ★ 구체적 키워드 먼저 (SMT 강화)
     ("NEW_OP",       "신규OP교육",         ["new op","đào tạo","op mới"]),
     ("WAITING_SMT",  "SMT대기",            ["waiting semi","waiting pcb","waiting hs",
                                             "wating semi","wating pcb","wating hs",
                                             "stop line waiting","stop line wating",
                                             "semi pcb","from smd","from smt",
-                                            "clear stock",
+                                            "clear stock","chờ board",
                                             "đợi semi","chờ semi",
                                             "wait semi","wait pcb"]),
+    ("AI_STOCK",     "AI자재부족",         ["ai hết","ai het","thiếu board ai",
+                                            "chờ boar","chờ board","từ ai",
+                                            "thiếu board","board ai","ai stock"]),
     ("MAGAZINE",     "Magazine부족",       ["magazine","magazin","mag"]),
     ("MATERIAL",     "자재부족",           ["waiting box","wating box",
                                             "heatsink","heat sink","h/s",
@@ -319,14 +331,26 @@ LOSS_TYPE_RULES = [
                                             "thiếu liệu","chờ liệu","đợi liệu",
                                             "thiếu hàng","chờ hàng","thiếu vật tư"]),
     ("CHANGE_MODEL", "모델교체",           ["change model","change cod",
-                                            "đổi model","tách lot",
-                                            "cover work","đổi ca","chuyển model",
-                                            "change m"]),
+                                            "đổi model","tách lot","tách lót",
+                                            "cover work","cover pending",
+                                            "đổi ca","chuyển model","change m"]),
+    ("NEW_MODEL",    "신규모델",           ["lần đầu","model mới","first time",
+                                            "sản xuất lần đầu"]),
+    ("NG_BUFFER",    "NG Buffer불량",      ["ng buffer","ng buffet","kẹt boar",
+                                            "kẹt board","buffer ng","kẹt bo"]),
+    ("CAMERA",       "Camera/Vision불량",  ["camera","vision","lỗi camera",
+                                            "don't connect"]),
+    ("COMP_ERR",     "부품불량",           ["lệch linh kiện","linh kiện","lỗi lệch",
+                                            "thiếu linh kiện","component"]),
+    ("QC_INSPECT",   "QC검사대기",         ["qc kiểm","qc check","kiểm tra board",
+                                            "vender","vendor"]),
     ("INSERT_RH3",   "RH3삽입불량",        ["rh3","rh 3","rhu"]),
     ("INSERT_XGZ",   "XGZ불량",            ["xzg","xgz"]),
     ("INSERT_AXIAL", "Axial불량",          ["axial","radial","cắm rớt","rad lỗi"]),
     ("INSERT_JUMP",  "Jumper불량",         ["jumper","jump "]),
-    ("MOUTER",       "Mouter불량",         ["moutor","mounter","stopper","băng tải"]),
+    ("MOUTER",       "Mouter불량",         ["moutor","mouter","mounter","mouotr",
+                                            "stopper","băng tải",
+                                            "mouter không","conveyor"]),
     ("PRINTER",      "Printer불량",        ["printer","priter","lỗi keo","tràn keo"]),
     ("SPI",          "SPI불량",            ["spi"]),
     ("INLOADER",     "Inloader불량",       ["inloader"]),
@@ -346,11 +370,9 @@ LOSS_TYPE_RULES = [
     ("SILCOAT",      "Silicon/Coating불량", ["silicon","coating","nozzle","coatin"]),
     ("REFLOW",       "Reflow불량",         ["reflow"]),
     ("EQUIP_FAIL",   "설비고장(기타)",     ["hư","lỗi máy","spare","power off"]),
-    ("DONE_PLAN",    "계획완료",           ["done plan","hết plan","kết thúc"]),
     ("SAMPLE",       "샘플/테스트",        ["sample","running sample"]),
     ("ETC",          "기타",               []),
 ]
-
 SCRAP_CAUSE_RULES = [
     ("BROKEN_DROP",  "낙하/파손",     ["rot","roi","be","vo","broken","drop","rong","sap"]),
     ("BROKEN_BI",    "Burn-in파손",   ["burn in","burin","tu burin","oc","tuot"]),
