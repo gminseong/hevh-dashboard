@@ -374,6 +374,8 @@ def analyze(ship_db, prod_db, plan_date_cols, note_dict):
 # HTML 테이블 (정렬 지원)
 # ════════════════════════════════════════════════════════════
 def render_html_table(df, height=500, table_id="t1"):
+    import streamlit.components.v1 as components
+    
     numeric_cols = set()
     for c in df.columns:
         if df[c].dtype.kind in 'iuf':
@@ -395,7 +397,6 @@ def render_html_table(df, height=500, table_id="t1"):
         return str(val)
 
     def bg(row):
-        # 알람_계획 또는 알람_실적 또는 알람 중 가장 심각한 것
         alerts = []
         for col in ['알람_실적', '알람_계획', '알람']:
             if col in row.index:
@@ -406,23 +407,33 @@ def render_html_table(df, height=500, table_id="t1"):
         if '차질' in combined: return '#FEF3C7'
         return '#FFFFFF'
 
-    # 정렬 가능 테이블 (JS 포함)
     parts = [f'''
     <style>
-    #{table_id}_wrap table {{ font-family:-apple-system,sans-serif; font-size:12px; }}
-    #{table_id}_wrap th {{ cursor: pointer; user-select: none; }}
+    body {{ margin: 0; font-family:-apple-system,sans-serif; font-size:12px; }}
+    #{table_id}_wrap table {{ border-collapse:collapse; width:100%; }}
+    #{table_id}_wrap th {{ 
+        cursor: pointer; user-select: none; 
+        padding:8px 6px; text-align:center; 
+        border:1px solid #4B5563; font-weight:700; 
+        white-space:nowrap; background-color:#374151; color:white;
+        position:sticky; top:0; z-index:10;
+    }}
     #{table_id}_wrap th:hover {{ background-color:#4B5563 !important; }}
-    #{table_id}_wrap th.sort-asc::after {{ content:" ▲"; }}
-    #{table_id}_wrap th.sort-desc::after {{ content:" ▼"; }}
+    #{table_id}_wrap th.sort-asc::after {{ content:" ▲"; color:#FCD34D; }}
+    #{table_id}_wrap th.sort-desc::after {{ content:" ▼"; color:#FCD34D; }}
+    #{table_id}_wrap td {{ 
+        padding:6px; border-bottom:1px solid #E5E7EB; 
+        white-space:nowrap; 
+    }}
     </style>
     <div id="{table_id}_wrap" style="max-height:{height}px;overflow:auto;border:1px solid #E5E7EB;border-radius:6px;">
-    <table id="{table_id}" style="width:100%;border-collapse:collapse;">
-    <thead style="position:sticky;top:0;z-index:10;"><tr style="background-color:#374151;color:white;">''']
+    <table id="{table_id}">
+    <thead><tr>''']
     
     for i, col in enumerate(df.columns):
         is_num = col in numeric_cols
         data_type = 'number' if is_num else 'string'
-        parts.append(f'<th data-col="{i}" data-type="{data_type}" onclick="sortTable_{table_id}({i},\'{data_type}\')" style="padding:8px 6px;text-align:center;border:1px solid #4B5563;font-weight:700;white-space:nowrap;">{col}</th>')
+        parts.append(f'<th data-col="{i}" data-type="{data_type}" onclick="sortTable_{table_id}({i},\'{data_type}\')">{col}</th>')
     parts.append('</tr></thead><tbody>')
 
     for _, row in df.iterrows():
@@ -439,47 +450,47 @@ def render_html_table(df, height=500, table_id="t1"):
                     sort_val = f' data-sort="{int(float(val))}"'
                 except Exception:
                     pass
-            parts.append(f'<td{sort_val} style="padding:6px;text-align:{align};border-bottom:1px solid #E5E7EB;white-space:nowrap;">{cell}</td>')
+            parts.append(f'<td{sort_val} style="text-align:{align};">{cell}</td>')
         parts.append('</tr>')
     
     parts.append(f'''</tbody></table></div>
     <script>
-    (function() {{
-        var sortStates_{table_id} = {{}};
-        window.sortTable_{table_id} = function(colIdx, type) {{
-            var table = document.getElementById("{table_id}");
-            var tbody = table.querySelector("tbody");
-            var rows = Array.from(tbody.querySelectorAll("tr"));
-            var ths = table.querySelectorAll("th");
-            
-            var currentAsc = sortStates_{table_id}[colIdx] === 'asc';
-            var newDir = currentAsc ? 'desc' : 'asc';
-            sortStates_{table_id} = {{}};
-            sortStates_{table_id}[colIdx] = newDir;
-            
-            ths.forEach(function(th) {{ th.classList.remove('sort-asc','sort-desc'); }});
-            ths[colIdx].classList.add('sort-' + newDir);
-            
-            rows.sort(function(a, b) {{
-                var ca = a.cells[colIdx];
-                var cb = b.cells[colIdx];
-                var va, vb;
-                if (type === 'number') {{
-                    va = parseFloat(ca.getAttribute('data-sort') || ca.textContent.replace(/[,\\s]/g,'')) || 0;
-                    vb = parseFloat(cb.getAttribute('data-sort') || cb.textContent.replace(/[,\\s]/g,'')) || 0;
-                }} else {{
-                    va = ca.textContent.trim();
-                    vb = cb.textContent.trim();
-                }}
-                if (va < vb) return newDir === 'asc' ? -1 : 1;
-                if (va > vb) return newDir === 'asc' ? 1 : -1;
-                return 0;
-            }});
-            rows.forEach(function(r) {{ tbody.appendChild(r); }});
-        }};
-    }})();
+    var sortStates_{table_id} = {{}};
+    function sortTable_{table_id}(colIdx, type) {{
+        var table = document.getElementById("{table_id}");
+        var tbody = table.querySelector("tbody");
+        var rows = Array.from(tbody.querySelectorAll("tr"));
+        var ths = table.querySelectorAll("th");
+        
+        var currentAsc = sortStates_{table_id}[colIdx] === 'asc';
+        var newDir = currentAsc ? 'desc' : 'asc';
+        sortStates_{table_id} = {{}};
+        sortStates_{table_id}[colIdx] = newDir;
+        
+        ths.forEach(function(th) {{ th.classList.remove('sort-asc','sort-desc'); }});
+        ths[colIdx].classList.add('sort-' + newDir);
+        
+        rows.sort(function(a, b) {{
+            var ca = a.cells[colIdx];
+            var cb = b.cells[colIdx];
+            var va, vb;
+            if (type === 'number') {{
+                va = parseFloat(ca.getAttribute('data-sort') || ca.textContent.replace(/[,\\s]/g,'')) || 0;
+                vb = parseFloat(cb.getAttribute('data-sort') || cb.textContent.replace(/[,\\s]/g,'')) || 0;
+            }} else {{
+                va = ca.textContent.trim();
+                vb = cb.textContent.trim();
+            }}
+            if (va < vb) return newDir === 'asc' ? -1 : 1;
+            if (va > vb) return newDir === 'asc' ? 1 : -1;
+            return 0;
+        }});
+        rows.forEach(function(r) {{ tbody.appendChild(r); }});
+    }}
     </script>''')
-    st.markdown(''.join(parts), unsafe_allow_html=True)
+    
+    html = ''.join(parts)
+    components.html(html, height=height + 80, scrolling=True)
 
 
 # ════════════════════════════════════════════════════════════
