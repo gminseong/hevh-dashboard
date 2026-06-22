@@ -579,19 +579,17 @@ def render_shipment_alert_tab():
         else:
             st.warning("📊 생산실적: 없음")
 
-        ship_file = st.file_uploader(
-            "출하계획 xlsx", type=["xlsx"],
-            key="ship_file_v30")
-        prod_file = st.file_uploader(
-            "생산실적 csv", type=["csv"],
-            key="prod_file_v30")
+                uploaded_files = st.file_uploader(
+            "출하계획(xlsx) + 생산실적(csv)",
+            type=["xlsx", "csv"],
+            accept_multiple_files=True,
+            key="ship_files_v30")
 
         if st.button("🚀 저장 및 분석", type="primary",
                      use_container_width=True, key="apply_v30"):
-            if ship_file:
-                with st.spinner("출하계획 처리 중..."):
-                    ship_file.seek(0)
-                    fb = ship_file.read()
+            for f in uploaded_files:
+                f.seek(0); fb = f.read()
+                if f.name.lower().endswith('.xlsx'):
                     df, p_cols = load_shipment_rev(fb)
                     notes = load_sheet1_notes(fb)
                     if not df.empty:
@@ -600,18 +598,13 @@ def render_shipment_alert_tab():
                         st.session_state['note_dict']      = notes
                         st.session_state['ship_updated']   = datetime.now().strftime('%m-%d %H:%M')
                         ok = _gh_save_xlsx(fb, "data/shipment.xlsx")
-                        st.success(f"✅ 출하계획 {len(df)}건 {'💾 DB저장' if ok else '⚠️ DB저장실패'}")
-
-            if prod_file:
-                with st.spinner("생산실적 처리 중..."):
-                    prod_file.seek(0)
-                    fb = prod_file.read()
+                        st.success(f"✅ 출하계획 {len(df)}건 {'💾 저장' if ok else '⚠️ 저장실패'}")
+                elif f.name.lower().endswith('.csv'):
                     df = read_csv_cached(fb)
                     st.session_state['prod_db']     = df
                     st.session_state['prod_updated'] = datetime.now().strftime('%m-%d %H:%M')
                     ok = _gh_save_csv(df, "data/production.csv")
-                    st.success(f"✅ 생산실적 {len(df)}건 {'💾 DB저장' if ok else '⚠️ DB저장실패'}")
-
+                    st.success(f"✅ 생산실적 {len(df)}건 {'💾 저장' if ok else '⚠️ 저장실패'}")
             st.rerun()
 
         st.markdown("---")
