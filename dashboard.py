@@ -778,11 +778,9 @@ def parse_sheet(ws, process, date_str, shift):
                         "target_ate":0,"actual_ate":0})
 
             if total > 0:
-                # ★ loss_detail 분리
                 sub_details = split_loss_detail(cause_all, total)
                 
                 if len(sub_details) == 1:
-                    # 단일 원인
                     sd = sub_details[0]
                     records.append({
                         "date": date_str, "shift": shift, "process": process,
@@ -794,10 +792,15 @@ def parse_sheet(ws, process, date_str, shift):
                         "complexity": "단일",
                         "loss_detail": sd["detail"],
                         "sub_idx": 1,
-                        "action": action
+                        "action": action,
+                        "target": round(target_tot, 0),
+                        "actual": round(actual_tot, 0),
+                        "target_mi": round(target_mi, 0),
+                        "actual_mi": round(actual_mi, 0),
+                        "target_ate": round(target_ate, 0),
+                        "actual_ate": round(actual_ate, 0),
                     })
                 else:
-                    # 복합 원인 — 분리된 각 행
                     for sd in sub_details:
                         records.append({
                             "date": date_str, "shift": shift, "process": process,
@@ -809,7 +812,13 @@ def parse_sheet(ws, process, date_str, shift):
                             "complexity": "복합",
                             "loss_detail": sd["detail"],
                             "sub_idx": sd["sub_idx"],
-                            "action": action
+                            "action": action,
+                            "target": round(target_tot, 0),
+                            "actual": round(actual_tot, 0),
+                            "target_mi": round(target_mi, 0),
+                            "actual_mi": round(actual_mi, 0),
+                            "target_ate": round(target_ate, 0),
+                            "actual_ate": round(actual_ate, 0),
                         })
         i+=1
     return records
