@@ -1,8 +1,8 @@
 """
-[한솔테크닉스 HEVH] Shipment Cut-off 알람 v30.4
-- calc_cutoff_stock 단순화 + 진단 메시지
-- code별 디버그 expander
-- 정렬: components.html
+[한솔테크닉스 HEVH] Shipment Cut-off 알람 v30.5
+- calc_cutoff_stock 변수명 충돌 해결 (_code, _cutoff)
+- 명시적 버전 표시
+- daily_dict_erp 직접 사용 (단순/명확)
 """
 from datetime import datetime
 import io
@@ -208,9 +208,38 @@ def load_shipment_rev(file_bytes):
 
 
 # ════════════════════════════════════════════════════════════
-# 분석 v30.4
+# Cutoff시점재고 계산 — 모듈 레벨 함수 (클로저 충돌 방지)
+# ════════════════════════════════════════════════════════════
+def compute_cutoff_stock(stock_val, cutoff_dt, erp_list, daily_dict_erp, 
+                          code_daily_plan_dict, today_norm):
+    """Cut off 시점까지의 재고 = stock + 누적 실적(과거) + 누적 계획(미래)"""
+    if pd.isna(cutoff_dt):
+        cutoff_n = pd.Timestamp(2030, 1, 1)
+    else:
+        cutoff_n = cutoff_dt.normalize()
+    
+    production = 0
+    
+    # 과거 실적: daily_dict_erp 순회
+    erp_set = set(erp_list) if erp_list else set()
+    for (erp_key, d), qty in daily_dict_erp.items():
+        if erp_key in erp_set and d <= cutoff_n:
+            production += qty
+    
+    # 미래 계획: code_daily_plan_dict 순회
+    for d, plan_qty in code_daily_plan_dict.items():
+        if today_norm < d <= cutoff_n:
+            production += plan_qty
+    
+    return stock_val + production
+
+
+# ════════════════════════════════════════════════════════════
+# 분석 v30.5
 # ════════════════════════════════════════════════════════════
 def analyze(ship_db, prod_db, plan_date_cols, note_dict):
+    st.error("🚀 **v30.5 실행 중** (이 메시지가 안 보이면 코드 미적용)")
+    
     prod_db = prod_db.copy()
     prod_db['TRAN_WORK_DATE'] = pd.to_datetime(prod_db['TRAN_WORK_DATE'], errors='coerce')
     today = prod_db['TRAN_WORK_DATE'].max()
@@ -264,8 +293,8 @@ def analyze(ship_db, prod_db, plan_date_cols, note_dict):
     code_erp_map = m.groupby('code')['ERP'].apply(lambda x: list(set(x))).to_dict()
     
     code_total_actual = {}
-    for code, erp_list in code_erp_map.items():
-        code_total_actual[code] = sum(erp_total_actual.get(erp, 0) for erp in erp_list)
+    for c_key, erp_list_val in code_erp_map.items():
+        code_total_actual[c_key] = sum(erp_total_actual.get(erp_v, 0) for erp_v in erp_list_val)
     
     m['현재재고'] = m['code'].map(code_stock).fillna(0).astype(int)
     m['예상계획'] = m['code'].map(code_plan).fillna(0).astype(int)
@@ -275,55 +304,27 @@ def analyze(ship_db, prod_db, plan_date_cols, note_dict):
     plan_date_map = {col: parse_date_from_col(col) for col in plan_date_cols}
     valid_plan_cols = {col: dt for col, dt in plan_date_map.items() if dt is not None}
 
-    code_daily_plan = {}
-    for code in m['code'].unique():
-        first_row = m[m['code'] == code].iloc[0]
+    # code별 일자별 계획 (code -> {date: qty} 형식)
+    code_daily_plan_by_code = {}
+    for c_key in m['code'].unique():
+        first_row = m[m['code'] == c_key].iloc[0]
+        daily_plan = {}
         for col, dt in valid_plan_cols.items():
             plan_val = pd.to_numeric(first_row.get(col, 0), errors='coerce')
             if pd.isna(plan_val):
                 plan_val = 0
-            code_daily_plan[(code, dt.normalize())] = int(plan_val)
+            daily_plan[dt.normalize()] = int(plan_val)
+        code_daily_plan_by_code[c_key] = daily_plan
 
+    # 미래 계획
     code_future_plan = {}
-    for code in m['code'].unique():
-        fp = sum(
-            qty for (c, d), qty in code_daily_plan.items()
-            if c == code and d > today_norm
-        )
-        code_future_plan[code] = int(fp)
+    for c_key, daily_plan in code_daily_plan_by_code.items():
+        fp = sum(qty for d, qty in daily_plan.items() if d > today_norm)
+        code_future_plan[c_key] = int(fp)
 
     m['_미래계획'] = m['code'].map(code_future_plan).fillna(0).astype(int)
     m['_현재기반_생산'] = m['_현재실적'] + m['_미래계획']
     m['실적차이'] = m['_현재기반_생산'] - m['예상계획']
-
-    # ⭐ 사전 계산: code별 cutoff별 누적 실적/계획
-    # daily_dict_erp를 code 단위로 변환
-    code_daily_actual = {}  # {(code, date): qty}
-    for code in m['code'].unique():
-        erp_list = code_erp_map.get(code, [])
-        for erp in erp_list:
-            for (e, d), qty in daily_dict_erp.items():
-                if e == erp:
-                    key = (code, d)
-                    code_daily_actual[key] = code_daily_actual.get(key, 0) + qty
-
-    # ⭐ calc_cutoff_stock (단순/명확)
-    def calc_cutoff_stock(code, cutoff_dt):
-        stock = code_stock.get(code, 0)
-        if pd.isna(cutoff_dt):
-            cutoff_norm_local = pd.Timestamp(2030, 1, 1)
-        else:
-            cutoff_norm_local = cutoff_dt.normalize()
-        production = 0
-        # 과거 실적 (code 단위)
-        for (c, d), qty in code_daily_actual.items():
-            if c == code and d <= cutoff_norm_local:
-                production += qty
-        # 미래 계획
-        for (c, d), plan_qty in code_daily_plan.items():
-            if c == code and today_norm < d <= cutoff_norm_local:
-                production += plan_qty
-        return stock + production
 
     m['_cutoff_dt'] = pd.to_datetime(m['Cut off Cargo'], errors='coerce')
     m = m.sort_values(['code', '_cutoff_dt']).reset_index(drop=True)
@@ -332,11 +333,11 @@ def analyze(ship_db, prod_db, plan_date_cols, note_dict):
     m['예상제품재고_계획'] = 0
     m['_부족1'] = 0
     
-    for code in m['code'].unique():
-        code_idx = m[m['code'] == code].index.tolist()
+    for c_key in m['code'].unique():
+        code_idx = m[m['code'] == c_key].index.tolist()
         total = len(code_idx)
-        stock = code_stock.get(code, 0)
-        plan = code_plan.get(code, 0)
+        stock = code_stock.get(c_key, 0)
+        plan = code_plan.get(c_key, 0)
         available = stock + plan
         
         for i, idx in enumerate(code_idx):
@@ -355,23 +356,30 @@ def analyze(ship_db, prod_db, plan_date_cols, note_dict):
                 m.at[idx, '예상제품재고_계획'] = -po
                 m.at[idx, '_부족1'] = po
 
-    # 시뮬레이션 2: 실적 반영
+    # 시뮬레이션 2: 실적 반영 + Cutoff시점재고
     m['예상제품재고_실적'] = 0
     m['Cutoff시점재고'] = 0
     m['_부족2'] = 0
     
-    for code in m['code'].unique():
-        code_idx = m[m['code'] == code].index.tolist()
-        stock = code_stock.get(code, 0)
-        actual = code_total_actual.get(code, 0)
-        future = code_future_plan.get(code, 0)
+    for c_key in m['code'].unique():
+        code_idx = m[m['code'] == c_key].index.tolist()
+        stock = code_stock.get(c_key, 0)
+        actual = code_total_actual.get(c_key, 0)
+        future = code_future_plan.get(c_key, 0)
         available = stock + actual + future
+        
+        erp_list_local = code_erp_map.get(c_key, [])
+        daily_plan_local = code_daily_plan_by_code.get(c_key, {})
         
         for i, idx in enumerate(code_idx):
             po = int(m.loc[idx, 'PO'])
             cutoff_dt = m.loc[idx, '_cutoff_dt']
             
-            m.at[idx, 'Cutoff시점재고'] = calc_cutoff_stock(code, cutoff_dt)
+            # ⭐ Cutoff시점재고 — 모듈 레벨 함수 호출
+            m.at[idx, 'Cutoff시점재고'] = compute_cutoff_stock(
+                stock, cutoff_dt, erp_list_local, 
+                daily_dict_erp, daily_plan_local, today_norm
+            )
             
             if available >= po:
                 available -= po
@@ -405,22 +413,35 @@ def analyze(ship_db, prod_db, plan_date_cols, note_dict):
             m[col] = m[col].astype(int)
 
     # 디버그 expander
-    with st.expander("🐛 디버그: code별 값", expanded=False):
+    with st.expander("🐛 디버그: code별 값 (v30.5)", expanded=False):
         debug_data = []
-        for code in sorted(m['code'].unique()):
-            erp_list = code_erp_map.get(code, [])
-            code_plan_days = {d: q for (c, d), q in code_daily_plan.items() if c == code}
-            plan_str = ', '.join([f"{d.strftime('%m/%d')}:{q:,}" for d, q in sorted(code_plan_days.items()) if q > 0])
-            code_actual_days = {d: q for (c, d), q in code_daily_actual.items() if c == code}
-            actual_str = ', '.join([f"{d.strftime('%m/%d')}:{q:,}" for d, q in sorted(code_actual_days.items())])
+        for c_key in sorted(m['code'].unique()):
+            erp_list_val = code_erp_map.get(c_key, [])
+            daily_plan_val = code_daily_plan_by_code.get(c_key, {})
+            plan_str = ', '.join([f"{d.strftime('%m/%d')}:{q:,}" 
+                                   for d, q in sorted(daily_plan_val.items()) if q > 0])
+            actual_days = {}
+            for erp_v in erp_list_val:
+                for (e, d), qty in daily_dict_erp.items():
+                    if e == erp_v:
+                        actual_days[d] = actual_days.get(d, 0) + qty
+            actual_str = ', '.join([f"{d.strftime('%m/%d')}:{q:,}" 
+                                     for d, q in sorted(actual_days.items())])
+            
+            # Cutoff시점재고 테스트 (6/20 기준)
+            test_cutoff = pd.Timestamp(2026, 6, 20)
+            test_stock = compute_cutoff_stock(
+                code_stock.get(c_key, 0), test_cutoff, erp_list_val,
+                daily_dict_erp, daily_plan_val, today_norm
+            )
+            
             debug_data.append({
-                'code': code,
-                'ERP': ', '.join(erp_list),
-                '현재재고': code_stock.get(code, 0),
-                '예상계획': code_plan.get(code, 0),
-                '실적합': code_total_actual.get(code, 0),
-                '미래계획': code_future_plan.get(code, 0),
-                '일자별계획': plan_str if plan_str else '(없음)',
+                'code': c_key,
+                'ERP': ', '.join(erp_list_val),
+                '현재재고': code_stock.get(c_key, 0),
+                '실적합': code_total_actual.get(c_key, 0),
+                '미래계획': code_future_plan.get(c_key, 0),
+                '6/20Cutoff재고': test_stock,
                 '일자별실적': actual_str if actual_str else '(없음)',
             })
         debug_df = pd.DataFrame(debug_data)
@@ -557,8 +578,8 @@ function sortTable(colIdx, type) {
 # 메인
 # ════════════════════════════════════════════════════════════
 def render_shipment_alert_tab():
-    st.markdown("#### 🚨 Shipment Cut-off 알람")
-    st.caption("📌 계획 vs 실적 비교 | 컬럼 클릭으로 정렬")
+    st.markdown("#### 🚨 Shipment Cut-off 알람 **v30.5**")
+    st.caption("📌 계획 vs 실적 비교 | 컬럼 클릭 정렬 | 모듈 레벨 함수 사용")
 
     ship_db = st.session_state.get('ship_db', pd.DataFrame())
     plan_cols = st.session_state.get('plan_date_cols', [])
@@ -627,7 +648,6 @@ def render_shipment_alert_tab():
 
     actual_col = f'현재실적({today_str})'
 
-    # 통합 비교 표
     st.markdown("---")
     st.markdown("### 🚨 즉시 조치 필요 (계획 또는 실적 기준 문제)")
     st.caption("⚠️ 두 시뮬레이션 중 하나라도 문제 발생한 행만 표시 | 컬럼 클릭 정렬")
@@ -649,7 +669,6 @@ def render_shipment_alert_tab():
     else:
         st.success("✅ 모든 모델 정상")
 
-    # 필터
     st.markdown("---")
     st.markdown("### 🎛️ 필터")
     f1, f2, f3 = st.columns(3)
@@ -665,7 +684,6 @@ def render_shipment_alert_tab():
         if c_sel: v = v[v['Cus'].isin(c_sel)]
         return v
 
-    # 테이블 1
     st.markdown("---")
     st.markdown("### 📋 1) 이번 주 Cut off 예상 (계획 100%)")
     st.caption("예상제품재고 = 현재재고 + 예상계획 - 누적 PO")
@@ -685,7 +703,6 @@ def render_shipment_alert_tab():
     if not v1.empty:
         render_html_table(v1[show1], height=400, table_id="t1")
 
-    # 테이블 2
     st.markdown("---")
     st.markdown("### 📋 2) 현재 실적 반영 시 Cut off 예상")
     st.caption(f"예상제품재고 = 현재재고 + ({actual_col} + 미래 계획) - 누적 PO | Cutoff시점재고 = Cut off 날짜까지 재고+생산")
