@@ -645,7 +645,6 @@ def render_shipment_alert_tab():
 
     # ── 사이드바 ─────────────────────────────────────────
     with st.sidebar:
-        st.markdown("---")
         st.markdown("#### 📤 Shipment 파일 업로드")
 
         if not ship_db.empty:
