@@ -300,34 +300,35 @@ def analyze(ship_db, prod_db, plan_date_cols, note_dict):
     m['실적차이'] = m['_현재기반_생산'] - m['예상계획']
 
     # ⭐ Cutoff 시점 재고 계산 헬퍼
-    def calc_cutoff_stock(code, cutoff_dt):
-        """Cutoff 시점까지 재고 + 누적 생산 (실적 포함)"""
+     def calc_cutoff_stock(code, cutoff_dt):
+        """Cutoff 시점까지 누적 생산 + 현재재고 (작성 기준)"""
         stock = code_stock.get(code, 0)
+        
         if pd.isna(cutoff_dt):
-            # 전체 (실적 + 미래계획)
-            production = code_total_actual.get(code, 0) + code_future_plan.get(code, 0)
-            return stock + production
+            # 전체 (모든 일자 합산)
+            cutoff_norm = pd.Timestamp(2030, 1, 1)
+        else:
+            cutoff_norm = cutoff_dt.normalize()
         
-        cutoff_norm = cutoff_dt.normalize()
         erp_list = code_erp_map.get(code, [])
+        production = 0
         
-        # cutoff까지 일자별 생산 (과거: 실적, 미래: 계획)
-        # 모든 일자 dates_to_consider = code의 plan 일자들
-        all_dates = set(d for (c, d) in code_daily_plan.keys() if c == code)
-        
-        production_until = 0
-        for d in all_dates:
-            if d > cutoff_norm:
+        # code의 모든 일자별 계획 순회
+        for (c, d), plan_qty in code_daily_plan.items():
+            if c != code:
                 continue
+            if d > cutoff_norm:
+                continue  # cutoff 이후 제외
+            
             if d <= today_norm:
-                # 과거: 해당 일자의 실적
+                # 과거/오늘: 실적 사용 (해당 일자의 ERP별 실적 합)
                 for erp in erp_list:
-                    production_until += daily_dict_erp.get((erp, d), 0)
+                    production += daily_dict_erp.get((erp, d), 0)
             else:
-                # 미래: 해당 일자의 계획
-                production_until += code_daily_plan.get((code, d), 0)
+                # 미래: 계획 사용
+                production += plan_qty
         
-        return stock + production_until
+        return stock + production
 
     # Cut off 정렬
     m['_cutoff_dt'] = pd.to_datetime(m['Cut off Cargo'], errors='coerce')
