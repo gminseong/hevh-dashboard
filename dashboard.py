@@ -529,7 +529,13 @@ def detect_process(fn):
 
 def parse_date(text):
     if not text: return None
+    # datetime 객체인 경우
+    import datetime
+    if isinstance(text, (datetime.datetime, datetime.date)):
+        return text.strftime("%Y-%m-%d")
     t = re.sub(r'\b(DAY|NIGHT)\b','',str(text),flags=re.I).strip()
+    # 시간 부분 제거 (2026-06-21 00:00:00 → 2026-06-21)
+    t = re.sub(r'\s+\d{2}:\d{2}:\d{2}.*$', '', t).strip()
     m = re.search(r'\b(\d{1,2})\.(\d{1,2})\b',t)
     if m:
         a,b=int(m.group(1)),int(m.group(2))
@@ -544,30 +550,29 @@ def detect_shift(sn, fn):
     return "NIGHT" if "NIGHT" in (sn+fn).upper() else "DAY"
 
 def find_date_in_sheet(ws):
-    """시트 내 셀에서 날짜 검색 - MI 헤더 포함 전체 탐색"""
     rows = list(ws.iter_rows(values_only=True, max_row=20))
     for row in rows:
         for cell in row:
             if cell is None:
                 continue
             s = str(cell)
-            # "MI PRODUCTION REPORT BY TIME (04/06)" 패턴
+            # MI 헤더: (04/06), (21/06) 패턴
             m = re.search(r'\((\d{1,2})/(\d{1,2})\)', s)
             if m:
-                day, month = int(m.group(1)), int(m.group(2))
-                if 1 <= day <= 31 and 1 <= month <= 12:
-                    return f"2026-{month:02d}-{day:02d}"
-            # "SMD PRODUCTION REPORT BY TIME 21/06" 패턴
-            m2 = re.search(r'(\d{1,2})/(\d{2})', s)
+                a, b = int(m.group(1)), int(m.group(2))
+                if 1 <= a <= 31 and 1 <= b <= 12:
+                    return f"2026-{b:02d}-{a:02d}"
+            # SMD 헤더: 21/06 패턴
+            m2 = re.search(r'\b(\d{1,2})/(\d{2})\b', s)
             if m2:
-                day2, month2 = int(m2.group(1)), int(m2.group(2))
-                if 1 <= day2 <= 31 and 1 <= month2 <= 12:
-                    return f"2026-{month2:02d}-{day2:02d}"
-            # "21.06" 패턴
+                a2, b2 = int(m2.group(1)), int(m2.group(2))
+                if 1 <= a2 <= 31 and 1 <= b2 <= 12:
+                    return f"2026-{b2:02d}-{a2:02d}"
             d = parse_date(s)
             if d:
                 return d
     return None
+    
 def normalize_line(raw):
     s = str(raw).strip()
     s = re.sub(r':.*$','',s).strip()
