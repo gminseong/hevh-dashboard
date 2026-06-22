@@ -525,6 +525,12 @@ def split_loss_detail(loss_detail, total_min):
     
     raw = str(loss_detail).strip()
     
+    # ★ 전체가 no problem 계열이면 즉시 제외
+    raw_lower = raw.lower()
+    if raw_lower in ["no problem", "no probplem", "no proplem", 
+                     "không vấn đề", "no probem"]:
+        return []
+    
     # ★ 1차: | 로 분리
     if "|" in raw:
         chunks = [p.strip() for p in raw.split("|") if p.strip()]
