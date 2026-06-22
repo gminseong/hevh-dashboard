@@ -228,6 +228,7 @@ def load_shipment_rev(file_bytes):
         elif 'ttl ship'  in cl or 'ttl.ship'  in cl:  rename_map[c] = '_TTLShip'
         elif 'ttl plan'  in cl or 'ttl.plan'  in cl:  rename_map[c] = '예상계획'
         elif 'o/stock'   in cl or 'o.stock'   in cl:  rename_map[c] = '현재재고'
+        elif 'hq' in cl and ('req' in cl or 'rqt' in cl or 'request' in cl): rename_map[c] = 'HQ Rqt'
     df = df.rename(columns=rename_map)
 
     plan_date_cols = []
@@ -773,7 +774,7 @@ def render_shipment_alert_tab():
     k3.metric("🟠 부족",     int((t1['알람']=='🟠 부족').sum()))
     k4.metric("✅ 정상",     int((t1['알람']=='✅ 정상').sum()))
 
-    s1c = ['알람','순서','Cut off Cargo','Cus','model','code',
+    s1c = ['알람','순서','HQ Rqt','Cut off Cargo','Cus','model','code',
            'ERP','MODEL_TYPE','PO','현재재고','예상계획','예상제품재고','Note']
     s1c = [c for c in s1c if c in t1.columns]
     v1  = t1
@@ -796,7 +797,7 @@ def render_shipment_alert_tab():
         k4.metric("🟡 차질",     int((t2['알람']=='🟡 차질').sum()))
         k5.metric("✅ 정상",     int((t2['알람']=='✅ 정상').sum()))
 
-        s2c = ['알람','순서','Cut off Cargo','Cus','model','code',
+        s2c = ['알람','순서','HQ Rqt','Cut off Cargo','Cus','model','code',
                'ERP','MODEL_TYPE','PO','현재재고','예상계획',
                actual_col,'실적차이','예상제품재고','Cutoff시점재고','Note']
         s2c = [c for c in s2c if c in t2.columns]
