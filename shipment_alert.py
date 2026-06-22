@@ -192,19 +192,28 @@ def load_shipment_rev(file_bytes):
 def compute_cutoff_stock(stock_val, cutoff_dt,
                           erp_set, daily_dict_erp,
                           daily_plan_dict, today_norm):
-    """
-    재고(stock_val) + cutoff_dt 까지 누적 생산
-      - cutoff_dt 이전 일자: 실적(daily_dict_erp)
-      - today_norm < d <= cutoff_dt: 계획(daily_plan_dict)
-    """
     cutoff_n = (pd.Timestamp(2030, 1, 1)
                 if pd.isna(cutoff_dt)
                 else pd.Timestamp(cutoff_dt).normalize())
 
     production = 0
+    match_count = 0
+    
     for (ek, d), qty in daily_dict_erp.items():
         if ek in erp_set and d <= cutoff_n:
             production += qty
+            match_count += 1
+    
+    # ⭐ 첫 번째 호출만 출력
+    if stock_val == 8064:
+        sample_keys = list(daily_dict_erp.keys())[:3]
+        sample_erp_set = list(erp_set)[:3]
+        import streamlit as _st
+        _st.error(f"DEBUG compute: stock={stock_val}, cutoff={cutoff_n}, "
+                  f"erp_set={sample_erp_set}, "
+                  f"sample_keys={sample_keys}, "
+                  f"match={match_count}, production={production}")
+    
     for d, pq in daily_plan_dict.items():
         if today_norm < d <= cutoff_n:
             production += pq
