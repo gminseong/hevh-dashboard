@@ -615,7 +615,7 @@ function sT(ci,tp){{
 # 메인
 # ════════════════════════════════════════════════════════════
 def render_shipment_alert_tab():
-    st.markdown("#### 🚨 Shipment Cut-off 알람")
+
 
     # ── GitHub DB 자동 로드 ───────────────────────────────
     if 'ship_db' not in st.session_state or \
