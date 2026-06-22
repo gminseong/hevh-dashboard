@@ -693,67 +693,106 @@ def parse_sheet(ws, process, date_str, shift):
                     records.append(rec)
                     slot_total_records.append(rec)
 
-            # ── TOTAL 레코드 (time_slot별 합산) ──
-            if total > 0 or (target_tot + actual_tot) > 0:
-                # 원인별로 합산
-                from collections import defaultdict
-                type_totals = defaultdict(float)
-                type_names  = {}
-                type_detail = {}
+                    # — TOTAL 레코드 (time_slot별 합산) —
+        if total > 0 or (target_tot + actual_tot) > 0:
+            # cause_all에서 원인별 분리
+            cause_list_total = []
+            if cause_all:
+                _t = str(cause_all).strip()
+                # 패턴1: 원인 (Nmin)
+                _p1 = re.findall(r'([^,;\n\(]+?)\s*\((\d+)\s*[Mm]in[^)]*\)', _t)
+                if _p1:
+                    for _desc, _mins in _p1:
+                        _desc = _desc.strip(' ,;|()')
+                        if _desc and int(_mins) > 0:
+                            _c, _n = classify_loss_type(_desc)
+                            cause_list_total.append((_c, _n, int(_mins)))
+                if not cause_list_total:
+                    # 패턴2: | 로 분리된 슬롯별 원인
+                    _parts = [p.strip() for p in _t.split('|') if p.strip()
+                              and p.strip().lower() not in [
+                                  "no problem","no proplem","3in1",
+                                  "3 in 1","none","-"]]
+                    # 중복 제거
+                    seen = set()
+                    unique_parts = []
+                    for p in _parts:
+                        if p not in seen:
+                            seen.add(p)
+                            unique_parts.append(p)
+                    if unique_parts:
+                        for _part in unique_parts:
+                            _m = re.search(r'(\d+)\s*[Mm]in', _part)
+                            _mins = int(_m.group(1)) if _m else 0
+                            _c, _n = classify_loss_type(_part)
+                            cause_list_total.append((_c, _n, _mins))
+                        _has = [r for r in cause_list_total if r[2] > 0]
+                        if _has:
+                            _has.sort(key=lambda x: x[2], reverse=True)
+                            cause_list_total = _has
+                        else:
+                            # 시간 없으면 첫번째 원인으로 전체
+                            cause_list_total = [(cause_list_total[0][0], cause_list_total[0][1], total)]
 
-                for rec in slot_total_records:
-                    k = rec["loss_type_code"]
-                    type_totals[k] += rec["loss_min"]
-                    type_names[k]   = rec["loss_type_name"]
-                    type_detail[k]  = rec["loss_detail"]
+            if not cause_list_total:
+                _c, _n = classify_loss_type(cause_all if cause_all else "")
+                cause_list_total = [(_c, _n, total)]
 
-                if type_totals:
-                    # 원인별 TOTAL 레코드 생성
-                    for code, total_min in type_totals.items():
-                        records.append({
-                            "date":           date_str,
-                            "shift":          shift,
-                            "process":        process,
-                            "line":           line,
-                            "time_slot":      "TOTAL",
-                            "model":          models.get(slots[0], ""),
-                            "loss_min":       round(total_min, 1),
-                            "loss_type_code": code,
-                            "loss_type_name": type_names[code],
-                            "complexity":     complexity,
-                            "loss_detail":    type_detail[code],
-                            "action":         action,
-                            "target":         round(target_tot, 0),
-                            "actual":         round(actual_tot, 0),
-                            "target_mi":      round(target_mi,  0),
-                            "actual_mi":      round(actual_mi,  0),
-                            "target_ate":     round(target_ate, 0),
-                            "actual_ate":     round(actual_ate, 0),
-                        })
+            # 원인별 TOTAL 레코드 생성
+            _total_stated = sum(m for _, _, m in cause_list_total if m > 0)
+            for _code, _name, _mins in cause_list_total:
+                if _total_stated > 0 and _mins > 0:
+                    _loss = round(total * _mins / _total_stated, 1)
+                elif _total_stated == 0:
+                    _loss = round(total / len(cause_list_total), 1)
                 else:
-                    # slot 레코드 없어도 target/actual은 저장
-                    if target_tot + actual_tot > 0:
-                        code_t, name_t = classify_loss_type(cause_all)
-                        records.append({
-                            "date":           date_str,
-                            "shift":          shift,
-                            "process":        process,
-                            "line":           line,
-                            "time_slot":      "TOTAL",
-                            "model":          models.get(slots[0], ""),
-                            "loss_min":       0,
-                            "loss_type_code": code_t,
-                            "loss_type_name": name_t,
-                            "complexity":     complexity,
-                            "loss_detail":    cause_all,
-                            "action":         action,
-                            "target":         round(target_tot, 0),
-                            "actual":         round(actual_tot, 0),
-                            "target_mi":      round(target_mi,  0),
-                            "actual_mi":      round(actual_mi,  0),
-                            "target_ate":     round(target_ate, 0),
-                            "actual_ate":     round(actual_ate, 0),
-                        })
+                    _loss = 0
+                if _loss <= 0:
+                    continue
+                records.append({
+                    "date":           date_str,
+                    "shift":          shift,
+                    "process":        process,
+                    "line":           line,
+                    "time_slot":      "TOTAL",
+                    "model":          models.get(slots[0], ""),
+                    "loss_min":       _loss,
+                    "loss_type_code": _code,
+                    "loss_type_name": _name,
+                    "complexity":     complexity,
+                    "loss_detail":    cause_all,
+                    "action":         action,
+                    "target":         round(target_tot, 0),
+                    "actual":         round(actual_tot, 0),
+                    "target_mi":      round(target_mi, 0),
+                    "actual_mi":      round(actual_mi, 0),
+                    "target_ate":     round(target_ate, 0),
+                    "actual_ate":     round(actual_ate, 0),
+                })
+        else:
+            # slot 레코드 없어도 target/actual은 저장
+            if target_tot + actual_tot > 0:
+                code_t, name_t = classify_loss_type(cause_all)
+                records.append({
+                    "date":           date_str,
+                    "shift":          shift,
+                    "process":        process,
+                    "line":           line,
+                    "time_slot":      "TOTAL",
+                    "model":          models.get(slots[0], ""),
+                    "loss_min":       0,
+                    "loss_type_code": code_t,
+                    "loss_type_name": name_t,
+                    "complexity":     complexity,
+                    "loss_detail":    cause_all,
+                    "action":         action,
+                    "target":         round(target_tot, 0),
+                    "actual":         round(actual_tot, 0),
+                    "target_mi":      round(target_mi, 0),
+                    "actual_mi":      round(actual_mi, 0),
+                    "target_ate":     round(target_ate, 0),
+                    "actual_ate":     round(actual_ate, 0),
+                })
         i += 1
     return records
 
