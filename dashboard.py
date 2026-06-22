@@ -1085,7 +1085,7 @@ def parse_sheet(ws, process, date_str, shift):
                         "actual_mi":round(actual_mi,0),
                         "target_ate":round(target_ate,0),
                         "actual_ate":round(actual_ate,0)})
-                    except Exception as _e:
+                except Exception as _e:
                     code_t,name_t=classify_loss_type(cause_all if cause_all else "")
                     records.append({
                         "date":date_str,"shift":shift,"process":process,
