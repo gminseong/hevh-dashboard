@@ -620,14 +620,9 @@ def parse_sheet(ws, process, date_str, shift):
                             break
 
                 # 원인별 분리
-                st.write(f"parse_sheet 실행중: {line} / {slot} / {cs[:30] if cs else 'empty'}")
+                st.sidebar.write(f"CS: {cs[:50] if cs else 'empty'}")
                 cause_list = extract_causes_with_minutes(cs, lv)
-                # 디버그
-                import streamlit as st
-                if cs and len(cause_list) == 1:
-                    st.write(f"미분리: [{cs[:60]}] → {cause_list[0][1]}")
-                elif cs and len(cause_list) > 1:
-                    st.write(f"✅분리: [{cs[:60]}] → {[(n,m) for _,n,m in cause_list]}")
+               
 
                 # 분배 계산
                 total_stated = sum(m for _, _, m in cause_list if m > 0)
