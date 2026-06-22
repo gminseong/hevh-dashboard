@@ -1,1 +1,54 @@
-﻿
+﻿date,shift,process,line,time_slot,model,loss_min,loss_type_code,loss_type_name,complexity,loss_detail,action,target,actual,target_mi,actual_mi,target_ate,actual_ate
+2026-06-21,DAY,AI,SA01,A,L65S7,23.0,CHANGE_MODEL,모델교체,복합,"Change model đầu ca , máy rh3-rad cắm rớt nhiều , không ổn định","vừa chạy vừa xử lý | Stop line xử lý ,bốc hàng chờ thả",0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-21,DAY,AI,SA01,C,L65S7,29.0,ETC,기타,복합,Rad kẹt xich 13:30 -15:00 eye 2.0 lỗi 15:45-16:00,"vừa chạy vừa xử lý | Stop line xử lý ,bốc hàng chờ thả",0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-21,DAY,AI,SA01,D,L65S7,53.0,CHANGE_MODEL,모델교체,복합,"Change model đầu ca , máy rh3-rad cắm rớt nhiều , không ổn định","vừa chạy vừa xử lý | Stop line xử lý ,bốc hàng chờ thả",0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-21,DAY,AI,SA01,E,L65S7,19.0,INSERT_XGZ,XGZ불량,복합,Rad - XZG cắm rớt : 17:40-18:00,"vừa chạy vừa xử lý | Stop line xử lý ,bốc hàng chờ thả",0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-21,DAY,AI,SA01,F,L65S7,70.0,INSERT_XGZ,XGZ불량,복합,XZG lỗi 18:00-18:47 Rad lỗi cutter 19:15-19:45,"vừa chạy vừa xử lý | Stop line xử lý ,bốc hàng chờ thả",0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-21,DAY,AI,SA01,TOTAL,L65S7,194.0,CHANGE_MODEL,모델교체,복합,"Change model đầu ca , máy rh3-rad cắm rớt nhiều , không ổn định | Rad kẹt xich 13:30 -15:00 eye 2.0 lỗi 15:45-16:00 | Rad - XZG cắm rớt : 17:40-18:00 | XZG lỗi 18:00-18:47 Rad lỗi cutter 19:15-19:45","vừa chạy vừa xử lý | Stop line xử lý ,bốc hàng chờ thả",2030.0,1376.0,0.0,0.0,0.0,0.0
+2026-06-21,DAY,AI,SA02,A,L75S7-FVD,7.0,INSERT_RH3,RH3삽입불량,복합,"RH3 không cắt giấy , cắm rớt nhiều","thiếu nhân lực xử lý , op xử lý lâu . | Stop line xử lý .",0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-21,DAY,AI,SA02,C,L75S7-HVD,26.0,INSERT_RH3,RH3삽입불량,복합,"RH3 không cắt giấy , cắm rớt nhiều","thiếu nhân lực xử lý , op xử lý lâu . | Stop line xử lý .",0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-21,DAY,AI,SA02,D,L75S7-HVD,48.0,INSERT_JUMP,Jumper불량,복합,Jumper lỗi 14:00-14:30,"thiếu nhân lực xử lý , op xử lý lâu . | Stop line xử lý .",0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-21,DAY,AI,SA02,E,L75S7-HVD,23.0,INSERT_RH3,RH3삽입불량,복합,"RH3 không cắt giấy , cắm rớt nhiều","thiếu nhân lực xử lý , op xử lý lâu . | Stop line xử lý .",0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-21,DAY,AI,SA02,F,L75S7-HVD,49.0,INSERT_RH3,RH3삽입불량,복합,xzg không cắt liệu 18:15 -18:45 . Rh3 kẹt liệu cắm rớt .,"thiếu nhân lực xử lý , op xử lý lâu . | Stop line xử lý .",0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-21,DAY,AI,SA02,TOTAL,L75S7-FVD,153.0,INSERT_RH3,RH3삽입불량,복합,"RH3 không cắt giấy , cắm rớt nhiều | Jumper lỗi 14:00-14:30 | xzg không cắt liệu 18:15 -18:45 . Rh3 kẹt liệu cắm rớt .","thiếu nhân lực xử lý , op xử lý lâu . | Stop line xử lý .",1467.0,1030.0,0.0,0.0,0.0,0.0
+2026-06-21,DAY,AI,SA03,A,L55CA9N,25.0,MAGAZINE,Magazine부족,복합,không đủ maga sắt SX,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-21,DAY,AI,SA03,F,L55E70A,32.0,MAGAZINE,Magazine부족,복합,không đủ maga sắt SX,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-21,DAY,AI,SA03,TOTAL,L55CA9N,57.0,MAGAZINE,Magazine부족,복합,không đủ maga sắt SX | Change model,,1180.0,1100.0,0.0,0.0,0.0,0.0
+2026-06-21,DAY,AI,SA04,A,L55S7,15.0,CHANGE_MODEL,모델교체,복합,Change model 55=>65HVD,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-21,DAY,AI,SA04,D,L65S7,30.0,INSERT_JUMP,Jumper불량,복합,Jumper lỗi 15:30-16:30,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-21,DAY,AI,SA04,E,L65S7,30.0,CHANGE_MODEL,모델교체,복합,Change model 55=>65HVD,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-21,DAY,AI,SA04,F,L65S7,43.0,CHANGE_MODEL,모델교체,복합,Change model 55=>65HVD,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-21,DAY,AI,SA04,TOTAL,L55S7,118.0,CHANGE_MODEL,모델교체,복합,Change model 55=>65HVD | Jumper lỗi 15:30-16:30,,1830.0,1420.0,0.0,0.0,0.0,0.0
+2026-06-21,DAY,AI,SA05,A,L83CA9N,100.0,MAGAZINE,Magazine부족,단일,không đủ maga sắt SX,đóng box,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-21,DAY,AI,SA05,B,L83CA9N,7.0,MAGAZINE,Magazine부족,단일,không đủ maga sắt SX,đóng box,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-21,DAY,AI,SA05,C,L83CA9N,8.0,MAGAZINE,Magazine부족,단일,không đủ maga sắt SX,đóng box,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-21,DAY,AI,SA05,F,L83CA9N,6.0,MAGAZINE,Magazine부족,단일,không đủ maga sắt SX,đóng box,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-21,DAY,AI,SA05,TOTAL,L83CA9N,121.0,MAGAZINE,Magazine부족,단일,không đủ maga sắt SX,đóng box,650.0,529.0,0.0,0.0,0.0,0.0
+2026-06-21,DAY,AI,SA07,B,L53E70A,45.0,INSERT_AXIAL,Axial불량,복합,Axial lỗi 9:30-10:30,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-21,DAY,AI,SA07,C,L53E70A,47.0,ETC,기타,복합,không đủ nhân lực vận hành,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-21,DAY,AI,SA07,D,L53E70A,7.0,INSERT_RH3,RH3삽입불량,복합,Rh3 cắm rớt,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-21,DAY,AI,SA07,TOTAL,L53E70A,99.0,INSERT_RH3,RH3삽입불량,복합,Axial lỗi 9:30-10:30 | không đủ nhân lực vận hành | Rh3 cắm rớt,,1377.0,1210.0,0.0,0.0,0.0,0.0
+2026-06-21,DAY,AI,SA08,A,L55E70A,13.0,ICT_ATE,ICT/ATE불량,단일,Update new code,Line thả hàng cover 65E70,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-21,DAY,AI,SA08,TOTAL,L55E70A,13.0,ICT_ATE,ICT/ATE불량,단일,Update new code,Line thả hàng cover 65E70,280.0,250.0,0.0,0.0,0.0,0.0
+2026-06-21,DAY,AI,SA10,A,L55F70NA,64.0,MAGAZINE,Magazine부족,복합,không đủ maga sắt SX,đóng box | vừa chạy vừa xử lý .,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-21,DAY,AI,SA10,E,L55F70NA,23.0,INSERT_RH3,RH3삽입불량,복합,Rh3 lỗi giả,đóng box | vừa chạy vừa xử lý .,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-21,DAY,AI,SA10,TOTAL,L55F70NA,87.0,MAGAZINE,Magazine부족,복합,không đủ maga sắt SX | Rh3 lỗi giả,đóng box | vừa chạy vừa xử lý .,1300.0,1096.0,0.0,0.0,0.0,0.0
+2026-06-21,NIGHT,AI,SA01,F,L65S7,17.0,ETC,기타,복합,Rad cắm rớt lk,kỹ thuật vừa chạy vừa xử lý | kỹ thuật vừa chạy vừa xử lý,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-21,NIGHT,AI,SA01,I,L65S7,39.0,INSERT_JUMP,Jumper불량,복합,Jump lỗi,kỹ thuật vừa chạy vừa xử lý | kỹ thuật vừa chạy vừa xử lý,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-21,NIGHT,AI,SA01,TOTAL,L65S7,56.0,INSERT_JUMP,Jumper불량,복합,Rad cắm rớt lk | Jump lỗi | done plan,kỹ thuật vừa chạy vừa xử lý | kỹ thuật vừa chạy vừa xử lý,2100.0,1799.0,0.0,0.0,0.0,0.0
+2026-06-21,NIGHT,AI,SA02,F,L75S7,20.0,ETC,기타,복합,Đứt Jump,kỹ thuật vừa chạy vừa xử lý | kỹ thuật stop line xử lý,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-21,NIGHT,AI,SA02,H,L75S7,42.0,ETC,기타,복합,Máy JV 131 lỗi từ 1:15 -2:00,kỹ thuật vừa chạy vừa xử lý | kỹ thuật stop line xử lý,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-21,NIGHT,AI,SA02,TOTAL,L75S7,62.0,INSERT_JUMP,Jumper불량,복합,Đứt Jump | Máy JV 131 lỗi từ 1:15 -2:00,kỹ thuật vừa chạy vừa xử lý | kỹ thuật stop line xử lý,1700.0,1517.0,0.0,0.0,0.0,0.0
+2026-06-21,NIGHT,AI,SA03,F,L55E70A,19.0,ETC,기타,복합,Vaccum lỗi,kỹ thuật vừa chạy vừa xử lý,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-21,NIGHT,AI,SA03,TOTAL,L55E70A,19.0,CHANGE_MODEL,모델교체,복합,Vaccum lỗi | done plan | Change model,kỹ thuật vừa chạy vừa xử lý,1275.0,1322.0,0.0,0.0,0.0,0.0
+2026-06-21,NIGHT,AI,SA04,F,L65S7,49.0,ETC,기타,복합,Rad lỗi insert,kỹ thuật vừa chạy vừa xử lý | kỹ thuật vừa chạy vừa xử lý,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-21,NIGHT,AI,SA04,I,L65S7,11.0,ETC,기타,복합,Máy Rad lỗi cắm rớt lk,kỹ thuật vừa chạy vừa xử lý | kỹ thuật vừa chạy vừa xử lý,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-21,NIGHT,AI,SA04,J,L65S7,28.0,ETC,기타,복합,Rad lỗi insert,kỹ thuật vừa chạy vừa xử lý | kỹ thuật vừa chạy vừa xử lý,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-21,NIGHT,AI,SA04,TOTAL,L65S7,88.0,ETC,기타,복합,Rad lỗi insert | Máy Rad lỗi cắm rớt lk,kỹ thuật vừa chạy vừa xử lý | kỹ thuật vừa chạy vừa xử lý,2100.0,1763.0,0.0,0.0,0.0,0.0
+2026-06-21,NIGHT,AI,SA05,G,L83CA9N,2.0,ETC,기타,복합,code liệu 271800591CAF không cùng kích cỡ với feeder nên không chạy được,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-21,NIGHT,AI,SA05,I,L83CA9N,29.0,ETC,기타,복합,code liệu 271800591CAF không cùng kích cỡ với feeder nên không chạy được,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-21,NIGHT,AI,SA05,J,L83CA9N,72.0,ETC,기타,복합,code liệu 271800591CAF không cùng kích cỡ với feeder nên không chạy được,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-21,NIGHT,AI,SA05,TOTAL,L83CA9N,103.0,CHANGE_MODEL,모델교체,복합,code liệu 271800591CAF không cùng kích cỡ với feeder nên không chạy được | Change model,,660.0,415.0,0.0,0.0,0.0,0.0
+2026-06-21,NIGHT,AI,SA07,H,L55E70A,8.0,ETC,기타,단일,,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-21,NIGHT,AI,SA07,TOTAL,L55E70A,8.0,ETC,기타,단일,,,1500.0,1723.0,0.0,0.0,0.0,0.0
+2026-06-21,NIGHT,AI,SA10,TOTAL,L55F70NA,0.0,ETC,기타,단일,,,1445.0,1421.0,0.0,0.0,0.0,0.0
