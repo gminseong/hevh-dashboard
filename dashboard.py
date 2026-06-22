@@ -618,9 +618,40 @@ def parse_sheet(ws, process, date_str, shift):
                             cs = slot_causes[s2]
                             break
 
-                # 원인별 분리
-                st.sidebar.write(f"CS: {cs[:50] if cs else 'empty'}")
-                cause_list = extract_causes_with_minutes(cs, lv)
+                # 원인별 분리 (인라인 처리)
+            cause_list = []
+            if cs:
+                _t = str(cs).strip()
+                # 패턴1: 원인 (Nmin)
+                _p1 = re.findall(r'([^,;\|\n\(]+)\s*\((\d+)\s*[Mm]in[^\)]*\)', _t)
+                if _p1:
+                    for _desc, _mins in _p1:
+                        _desc = _desc.strip(' ,;|()')
+                        if _desc and int(_mins) > 0:
+                            _c, _n = classify_loss_type(_desc)
+                            cause_list.append((_c, _n, int(_mins)))
+                if not cause_list:
+                    # 패턴2: | 또는 , 로 분리
+                    _parts = re.split(r'[,;\|]', _t)
+                    _parts = [p.strip() for p in _parts if p.strip()
+                              and p.strip().lower() not in [
+                                  "no problem","no proplem","3in1",
+                                  "3 in 1","none","-"]]
+                    if len(_parts) > 1:
+                        for _part in _parts:
+                            _m = re.search(r'(\d+)\s*[Mm]in', _part)
+                            _mins = int(_m.group(1)) if _m else 0
+                            _c, _n = classify_loss_type(_part)
+                            cause_list.append((_c, _n, _mins))
+                        _has = [r for r in cause_list if r[2] > 0]
+                        if _has:
+                            _has.sort(key=lambda x: x[2], reverse=True)
+                            cause_list = _has
+                        else:
+                            cause_list = [(cause_list[0][0], cause_list[0][1], lv)]
+            if not cause_list:
+                _c, _n = classify_loss_type(cs if cs else "")
+                cause_list = [(_c, _n, lv)]
                
 
                 # 분배 계산
