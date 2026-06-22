@@ -78,23 +78,6 @@ def merge_two_row_header(raw, header_row):
     return merged
 
 
-# 저장 (업로드 버튼 클릭 시)
-github_save_xlsx(file_bytes, "data/shipment.xlsx")
-github_save_csv(prod_df, "data/production.csv")
-
-# 로드 (앱 시작 시)
-if 'ship_db' not in st.session_state:
-    df = github_load_xlsx("data/shipment.xlsx")
-    if not df.empty:
-        st.session_state['ship_db'] = df
-        
-if 'prod_db' not in st.session_state:
-    df = github_load_csv("data/production.csv")
-    if not df.empty:
-        st.session_state['prod_db'] = df
-
-
-
 def load_sheet1_notes(file_bytes):
     try:
         sheet_names = list_sheets(file_bytes)
