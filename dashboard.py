@@ -531,8 +531,12 @@ def split_loss_detail(loss_detail, total_min):
         code, name = classify_loss_type(part)
         
         if extracted is not None and extracted > 0:
-            actual = min(extracted, total_min - allocated)
-            actual = max(0.0, actual)
+            # ★ 남은 시간 초과 방지
+            remain = total_min - allocated
+            if remain <= 0:
+                no_time_parts.append((idx, part, code, name))
+                continue
+            actual = min(extracted, remain)
             results.append({
                 "detail": part, "min": round(actual, 1),
                 "type_code": code, "type_name": name,
