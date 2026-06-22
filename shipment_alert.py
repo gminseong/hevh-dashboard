@@ -728,7 +728,6 @@ def render_shipment_alert_tab():
     problem_alerts = ['🔴 출하불가','🟠 부족','🟡 차질']
 
     # 즉시 조치
-    st.markdown("---")
     st.markdown("### 🚨 즉시 조치 필요")
     st.caption("두 시뮬레이션 중 하나라도 문제 발생한 행 | 컬럼 클릭 정렬")
 
