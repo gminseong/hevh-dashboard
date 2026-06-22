@@ -616,7 +616,6 @@ function sT(ci,tp){{
 # ════════════════════════════════════════════════════════════
 def render_shipment_alert_tab():
     st.markdown("#### 🚨 Shipment Cut-off 알람 v30.12")
-    st.caption("📌 출하계획만으로 시뮬레이션1 | 실적 있으면 시뮬레이션2 추가")
 
     # ── GitHub DB 자동 로드 ───────────────────────────────
     if 'ship_db' not in st.session_state or \
@@ -762,25 +761,9 @@ def render_shipment_alert_tab():
     else:
         st.success("✅ 모든 모델 정상")
 
-    # 필터
-    st.markdown("---")
-    st.markdown("### 🎛️ 필터")
-    f1,f2,f3 = st.columns(3)
-    a_sel = f1.multiselect("알람 (계획)",
-        ['🔴 출하불가','🟠 부족','✅ 정상'], key="a_v30")
-    t_sel = f2.multiselect("모델", ['PD','3IN1','OTHER'], key="t_v30")
-    cus_opt = sorted(mdf['Cus'].dropna().unique()) \
-        if 'Cus' in mdf.columns else []
-    c_sel = f3.multiselect("거래선", cus_opt, key="c_v30")
 
-    def apply_filter(df, acol='알람_계획'):
-        v = df.copy()
-        if a_sel: v = v[v[acol].isin(a_sel)]
-        if t_sel: v = v[v['MODEL_TYPE'].isin(t_sel)]
-        if c_sel: v = v[v['Cus'].isin(c_sel)]
-        return v
-
-    # 테이블 1
+    
+     # 테이블 1
     st.markdown("---")
     st.markdown("### 📋 1) Cut off 예상 (계획 100%)")
     st.caption("예상제품재고 = 현재재고 + 예상계획 - 누적PO")
