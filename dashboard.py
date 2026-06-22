@@ -466,73 +466,59 @@ def classify_loss_type(text):
     return ("ETC","기타")
 
 def extract_causes_with_minutes(cause_text, total_loss):
-    """
-    원인별 (code, name, minutes) 리스트 반환
-    규칙:
-    1. 분리 가능하면 분리
-    2. 불가능시 유실 시간 큰 사유
-    3. 시간 구분 안될시 첫번째 원인
-    """
     if not cause_text or str(cause_text).strip() in ["", "None", "-"]:
         code, name = classify_loss_type("")
         return [(code, name, total_loss)]
-    
+
     t = str(cause_text).strip()
     results = []
-    
-    # ── 패턴 1: "원인 (Nmin)" 형태 ──
+
+    # ── 패턴 1: "원인 (Nmin)" 또는 "원인 Nmin" 형태로 시간 명시된 경우 ──
     # 예: "wave solder (122min/ 3 times), MI belt error (14min)"
-    pattern1 = re.findall(r'([^,\n;]+?)\s*\((\d+)\s*[Mm]in[^)]*\)', t)
-    
-    # ── 패턴 2: "원인 Nmin" 형태 (괄호 없음) ──
-    # 예: "wave solder 122min, coating error 41min"
-    pattern2 = re.findall(r'([^,\n;]+?)\s+(\d+)\s*[Mm]in\b', t)
-    
-    # ── 패턴 3: "Nmin 원인" 형태 ──
-    # 예: "122min wave solder"
-    pattern3 = re.findall(r'(\d+)\s*[Mm]in[^,\n;]*?([^,\n;]+)', t)
-    
-    patterns = pattern1 if pattern1 else (pattern2 if pattern2 else [])
-    
+    # 예: "wave solder 122min, coating 41min"
+    patterns = re.findall(
+        r'([^,;\|\n]+?)\s*[\(]?(\d+)\s*[Mm]in[^\)]*[\)]?',
+        t
+    )
+
     if patterns:
-        # 분리 가능한 경우 → 규칙 1
         for desc, mins in patterns:
-            desc = desc.strip().strip(',').strip()
-            if not desc:
+            desc = desc.strip().strip(',').strip('(').strip()
+            if not desc or int(mins) == 0:
                 continue
             code, name = classify_loss_type(desc)
             results.append((code, name, int(mins)))
-        
         if results:
             return results
-    
-    # ── 분리 불가능한 경우 ──
-    # 콤마/세미콜론으로 분리 시도
-    parts = re.split(r'[,;\n]', t)
-    parts = [p.strip() for p in parts if p.strip()]
-    
+
+    # ── 패턴 2: 시간 명시 없음 → 구분자로 분리 ──
+    # 구분자: 콤마, 세미콜론, |, 개행
+    parts = re.split(r'[,;\|\n]', t)
+    parts = [p.strip() for p in parts if p.strip()
+             and p.strip().lower() not in ["no problem", "no proplem",
+                                           "3in1", "3 in 1", "none", "-"]]
+
     if len(parts) > 1:
-        # 각 파트에서 시간 추출 시도
         part_results = []
         for part in parts:
+            # 각 파트에서 시간 추출 시도
             m = re.search(r'(\d+)\s*[Mm]in', part)
             mins = int(m.group(1)) if m else 0
             code, name = classify_loss_type(part)
-            part_results.append((code, name, mins, part))
-        
-        # 시간 있는 파트가 있으면
+            part_results.append((code, name, mins))
+
         has_time = [r for r in part_results if r[2] > 0]
+
         if has_time:
-            # 규칙 2: 시간 큰 순서로
+            # 규칙 2: 시간 있는 것만 시간 큰 순서
             has_time.sort(key=lambda x: x[2], reverse=True)
             return [(r[0], r[1], r[2]) for r in has_time]
         else:
-            # 규칙 3: 첫번째 원인
+            # 규칙 3: 첫번째 원인으로 전체 손실
             first = part_results[0]
-            code, name = first[0], first[1]
-            return [(code, name, total_loss)]
-    
-    # 단일 원인
+            return [(first[0], first[1], total_loss)]
+
+    # ── 단일 원인 ──
     code, name = classify_loss_type(t)
     return [(code, name, total_loss)]
 
