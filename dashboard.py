@@ -380,6 +380,51 @@ def github_save_csv(df, filename, msg=None):
         return r.status_code in [200, 201]
     except: return False
 
+
+def github_load_xlsx(filename):
+    token, repo = get_github_config()
+    if not token:
+        try: return pd.read_excel(filename)
+        except FileNotFoundError: return pd.DataFrame()
+    url = f"https://api.github.com/repos/{repo}/contents/{filename}"
+    headers = {"Authorization": f"token {token}",
+               "Accept": "application/vnd.github.v3+json"}
+    try:
+        r = requests.get(url, headers=headers, timeout=10)
+        if r.status_code == 200:
+            content = base64.b64decode(r.json()["content"])
+            return pd.read_excel(io.BytesIO(content))
+        return pd.DataFrame()
+    except: return pd.DataFrame()
+
+
+def github_save_xlsx(df_or_bytes, filename, msg=None):
+    token, repo = get_github_config()
+    if not token:
+        return False
+    url = f"https://api.github.com/repos/{repo}/contents/{filename}"
+    headers = {"Authorization": f"token {token}",
+               "Accept": "application/vnd.github.v3+json"}
+    # bytes면 그대로, DataFrame이면 변환
+    if isinstance(df_or_bytes, bytes):
+        content = base64.b64encode(df_or_bytes).decode()
+    else:
+        buf = io.BytesIO()
+        df_or_bytes.to_excel(buf, index=False)
+        content = base64.b64encode(buf.getvalue()).decode()
+    sha = None
+    try:
+        r = requests.get(url, headers=headers, timeout=10)
+        if r.status_code == 200: sha = r.json().get("sha")
+    except: pass
+    payload = {"message": msg or f"DB:{filename}", "content": content}
+    if sha: payload["sha"] = sha
+    try:
+        r = requests.put(url, headers=headers, json=payload, timeout=15)
+        return r.status_code in [200, 201]
+    except: return False
+
+
 # ─────────────────────────────────────────────
 # 로그인
 # ─────────────────────────────────────────────
