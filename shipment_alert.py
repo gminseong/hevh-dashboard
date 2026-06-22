@@ -218,7 +218,9 @@ def load_shipment_rev(file_bytes):
         cl  = str(c).lower().strip()
         clc = cl.replace(' ','').replace('(','').replace(')','')
         if cl == 'cus' or 'customer' in cl:           rename_map[c] = 'Cus'
-        elif 'cut off cargo' in cl:                   rename_map[c] = 'Cut off Cargo'
+        elif 'cut' in cl and 'off' in cl: rename_map[c] = 'Cut off Cargo'
+        elif 'cut' in cl and 'cargo' in cl: rename_map[c] = 'Cut off Cargo'
+        elif cl == 'cut off': rename_map[c] = 'Cut off Cargo'
         elif cl == 'model':                           rename_map[c] = 'model'
         elif cl == 'inch':                            rename_map[c] = 'Inch'
         elif cl == 'bncode' or ('bn' in cl and 'code' in cl):
