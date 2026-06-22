@@ -425,8 +425,8 @@ def analyze(ship_db, plan_date_cols, note_dict, prod_db=None):
                     for ck,ev in code_erp_map.items()
                  }
 
-avail = stk + float(code_future_actual.get(ck,0)) \
-           + float(code_future_plan.get(ck,0))
+                 avail = stk + float(code_future_actual.get(ck,0)) \
+                            + float(code_future_plan.get(ck,0))
                 erp_set_lc = set(code_erp_map.get(ck,[]))
                 cumul_po   = 0.0
 
