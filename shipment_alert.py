@@ -428,10 +428,14 @@ def analyze(ship_db, plan_date_cols, note_dict, prod_db=None):
                     po       = float(mdf.loc[idx,'PO'])
                     cdt      = mdf.loc[idx,'_cdt']
                     cutoff_n = normalize_cutoff(cdt)
+                    stock_base_date = today_norm  # 6/21
+
                     actual_until = sum(
                         qty for (ek,d),qty in daily_dict_erp.items()
-                        if ek in erp_set_lc and d <= cutoff_n
-                    )
+                        if ek in erp_set_lc 
+                        and d > stock_base_date   # ⭐ 6/21 이후만
+                        and d <= cutoff_n
+                    ) 
                     cumul_po += po
                     mdf.loc[idx,'Cutoff시점재고'] = float(
                         stk + actual_until - cumul_po)
