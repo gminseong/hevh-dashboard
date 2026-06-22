@@ -273,20 +273,22 @@ TYPE_COLOR = {
     "기타":                "#94a3b8",
     "자재부족":            "#9333ea",
     "AI자재부족":          "#7e22ce",
-    "RH3삽입불량":         "#b45309",
+    "Radial불량":          "#b45309",
     "Mouter불량":          "#0f766e",
     "Axial불량":           "#be185d",
+    "Jumper불량":          "#be123c",
+    "아일렛/서포트불량":    "#d946ef",
     "Wave Solder불량":     "#1d4ed8",
     "ICT/FT/HiPOT불량":   "#15803d",
     "ATE불량":             "#166534",
     "AOI/S-AOI불량":       "#b45309",
+    "SMT Feeder불량":      "#ea580c",
     "계획완료":            "#cbd5e1",
     "설비고장(기타)":      "#dc2626",
     "Silicon/Coating불량": "#047857",
     "Reflow불량":          "#059669",
     "Flux불량":            "#d97706",
     "XGZ불량":             "#7c3aed",
-    "Jumper불량":          "#be123c",
     "SPI불량":             "#075985",
     "Inloader불량":        "#b0bec5",
     "문제없음":            "#e2e8f0",
@@ -295,6 +297,7 @@ TYPE_COLOR = {
     "Camera/Vision불량":   "#0284c7",
     "부품불량":            "#c2410c",
     "QC검사대기":          "#4f46e5",
+    "UPH미달":             "#78716c",
 }
 
 PROC_COLOR = {
@@ -305,55 +308,78 @@ PROC_COLOR = {
 }
 
 LOSS_TYPE_RULES = [
-    # ★ 제외 항목 (최우선 — 시간 0 처리)
+    # ★ 제외 항목
     ("NO_PROBLEM",   "문제없음",           ["no problem","no probplem","no proplem",
-                                            "no probem","không vấn đề","3in1"]),
-    # ★ 계획완료 → 제외 (유실 아님)
+                                            "no probem","không vấn đề","3in1","3 in 1"]),
     ("DONE_PLAN",    "계획완료",           ["done plan","hết plan","kết thúc",
-                                            "het plan","ket thuc"]),
-    # ★ 구체적 키워드 먼저 (SMT 강화)
-    ("NEW_OP",       "신규OP교육",         ["new op","đào tạo","op mới"]),
+                                            "het plan","ket thuc","sản xuất lúc"]),
+    # ★ SMT대기
     ("WAITING_SMT",  "SMT대기",            ["waiting semi","waiting pcb","waiting hs",
                                             "wating semi","wating pcb","wating hs",
-                                            "stop line waiting","stop line wating",
-                                            "semi pcb","from smd","from smt",
+                                            "waitng","stop line waiting","stop line wating",
+                                            "semi pcb","from smd","from smt","from mst",
                                             "clear stock","chờ board",
                                             "đợi semi","chờ semi",
-                                            "wait semi","wait pcb"]),
+                                            "wait semi","wait pcb","waiting se mi"]),
+    # ★ AI자재부족
     ("AI_STOCK",     "AI자재부족",         ["ai hết","ai het","thiếu board ai",
                                             "chờ boar","chờ board","từ ai",
-                                            "thiếu board","board ai","ai stock"]),
-    ("MAGAZINE",     "Magazine부족",       ["magazine","magazin","mag"]),
+                                            "thiếu board","board ai","ai stock",
+                                            "đợi ai","chờ ai","vừa chờ board"]),
+    # ★ 자재부족
     ("MATERIAL",     "자재부족",           ["waiting box","wating box",
-                                            "heatsink","heat sink","h/s",
+                                            "heatsink","heat sink","h/s ",
                                             "packing","mat ","material",
                                             " ic ","ic부족","thiếu ic",
+                                            "out of stock",
                                             "thiếu liệu","chờ liệu","đợi liệu",
                                             "thiếu hàng","chờ hàng","thiếu vật tư"]),
+    # ★ Magazine부족 (확장)
+    ("MAGAZINE",     "Magazine부족",       ["magazine","magazin","maga sắt","maga sat",
+                                            "mag "]),
+    # ★ 모델교체 (확장)
     ("CHANGE_MODEL", "모델교체",           ["change model","change cod",
                                             "đổi model","tách lot","tách lót",
-                                            "cover work","cover pending",
-                                            "đổi ca","chuyển model","change m"]),
+                                            "cover work","cover pending","cover sa","cover ca",
+                                            "đổi ca","chuyển model","change m",
+                                            "new code","setup","set up","line change",
+                                            "làm program","program new","program ver"]),
+    ("NEW_OP",       "신규OP교육",         ["new op","đào tạo","op mới"]),
     ("NEW_MODEL",    "신규모델",           ["lần đầu","model mới","first time",
                                             "sản xuất lần đầu"]),
-    ("NG_BUFFER",    "NG Buffer불량",      ["ng buffer","ng buffet","kẹt boar",
-                                            "kẹt board","buffer ng","kẹt bo"]),
-    ("CAMERA",       "Camera/Vision불량",  ["camera","vision","lỗi camera",
-                                            "don't connect"]),
-    ("COMP_ERR",     "부품불량",           ["lệch linh kiện","linh kiện","lỗi lệch",
-                                            "thiếu linh kiện","component"]),
-    ("QC_INSPECT",   "QC검사대기",         ["qc kiểm","qc check","kiểm tra board",
-                                            "vender","vendor"]),
-    ("INSERT_RH3",   "RH3삽입불량",        ["rh3","rh 3","rhu"]),
-    ("INSERT_XGZ",   "XGZ불량",            ["xzg","xgz"]),
-    ("INSERT_AXIAL", "Axial불량",          ["axial","radial","cắm rớt","rad lỗi"]),
-    ("INSERT_JUMP",  "Jumper불량",         ["jumper","jump "]),
+    # ★ SMT Feeder
+    ("FEEDER",       "SMT Feeder불량",     ["feeder","feed error","feed lỗi"]),
+    # ★ Mouter (확장)
     ("MOUTER",       "Mouter불량",         ["moutor","mouter","mounter","mouotr",
-                                            "stopper","băng tải",
-                                            "mouter không","conveyor"]),
+                                            "mount ","mount불","stopper","băng tải",
+                                            "mouter không","conveyor",
+                                            "không ổn định","văng linh kiện",
+                                            "pickup","pick up","pick-up",
+                                            "trục z","mất khí","head ",
+                                            "treo máy","kẹt board"]),
+    # ★ Printer
     ("PRINTER",      "Printer불량",        ["printer","priter","lỗi keo","tràn keo"]),
     ("SPI",          "SPI불량",            ["spi"]),
-    ("INLOADER",     "Inloader불량",       ["inloader"]),
+    # ★ Inloader (확장)
+    ("INLOADER",     "Inloader불량",       ["inloader","inloarder","unloder","unloader"]),
+    # ★ AI 설비
+    ("INSERT_AXIAL", "Axial불량",          ["av131","av 131","av insert","axial","ax불"]),
+    ("INSERT_JUMP",  "Jumper불량",         ["jv13","jv ","jv불","jumper","jump "]),
+    ("INSERT_RAD",   "Radial불량",         ["radial","rad ","rad불","rad lỗi","rad rớt",
+                                            "rad mất","rad insert",
+                                            "rg131","rg 131","rg불",
+                                            "rh3","rh 3","rh5","rh 5",
+                                            "rhu","rh ","rhu lỗi",
+                                            "pin insert"]),
+    ("EYELET",       "아일렛/서포트불량",   ["eyelet","eylet","eye.sp","eye sp",
+                                            "eys ","eye ","ey ","ey불",
+                                            " sp ","sp불","sp lỗi","support",
+                                            "bể eye"]),
+    ("INSERT_XGZ",   "XGZ불량",            ["xzg","xgz"]),
+    # ★ NG Buffer
+    ("NG_BUFFER",    "NG Buffer불량",      ["ng buffer","ng buffet","kẹt boar ng",
+                                            "buffer ng","kẹt bo"]),
+    # ★ 검사/테스트
     ("ATE",          "ATE불량",            ["ate error","ate run","ate lỗi",
                                             "ate 1st","ate 1 floor","ate running",
                                             "running 1 floor","running 1floor",
@@ -362,17 +388,31 @@ LOSS_TYPE_RULES = [
     ("ICT_FT",       "ICT/FT/HiPOT불량",  ["ict error","ict no scan","ict lỗi",
                                             "ft error","ft no scan","ft lỗi",
                                             "hipot","hi-pot","hi pot",
-                                            "hipot error","cleaning ict"]),
+                                            "hipot error","cleaning ict",
+                                            "ict ","ft "]),
     ("AOI_SAOI",     "AOI/S-AOI불량",      ["saoi","s-aoi","aoi error","aoi no scan",
-                                            "aoi lỗi","aoi"]),
+                                            "aoi lỗi","aoi","scan sót","scan nhầm",
+                                            "no scan"]),
+    ("CAMERA",       "Camera/Vision불량",  ["camera","vision","lỗi camera",
+                                            "don't connect"]),
+    ("QC_INSPECT",   "QC검사대기",         ["qc kiểm","qc check","kiểm tra board",
+                                            "vender","vendor"]),
+    # ★ UPH미달 (신규)
+    ("UPH",          "UPH미달",            ["uph","không đáp ứng"]),
+    # ★ 기타 설비
     ("WAVE",         "Wave Solder불량",    ["wave solder","wave"]),
     ("FLUX",         "Flux불량",           ["flux machine","flux error","flux"]),
     ("SILCOAT",      "Silicon/Coating불량", ["silicon","coating","nozzle","coatin"]),
     ("REFLOW",       "Reflow불량",         ["reflow"]),
-    ("EQUIP_FAIL",   "설비고장(기타)",     ["hư","lỗi máy","spare","power off"]),
-    ("SAMPLE",       "샘플/테스트",        ["sample","running sample"]),
+    ("COMP_ERR",     "부품불량",           ["lệch linh kiện","linh kiện lỗi",
+                                            "thiếu linh kiện","component",
+                                            "lỗi lệch","chân dài","dài chân"]),
+    ("EQUIP_FAIL",   "설비고장(기타)",     ["hư","lỗi máy","spare","power off",
+                                            "vaccum","vacuum","rail bị"]),
+    ("SAMPLE",       "샘플/테스트",        ["sample","running sample","kiểm bo"]),
     ("ETC",          "기타",               []),
 ]
+
 SCRAP_CAUSE_RULES = [
     ("BROKEN_DROP",  "낙하/파손",     ["rot","roi","be","vo","broken","drop","rong","sap"]),
     ("BROKEN_BI",    "Burn-in파손",   ["burn in","burin","tu burin","oc","tuot"]),
@@ -580,8 +620,9 @@ def split_loss_detail(loss_detail, total_min):
                  "type_name": name, "sub_idx": 1}]
     
     # ★ no problem 파트 먼저 제거
-    parts = [p for p in parts
-             if not re.search(r'no\s*prob', p, re.I)
+     parts = [p for p in parts
+             if p.strip()
+             and not re.search(r'no\s*prob', p, re.I)
              and not re.search(r'(hết\s*plan|kết\s*thúc|het\s*plan|ket\s*thuc|done\s*plan)', p, re.I)]
     if not parts:
         return []
