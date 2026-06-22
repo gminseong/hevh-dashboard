@@ -1024,7 +1024,7 @@ def parse_sheet(ws, process, date_str, shift):
                         "target_ate":0,"actual_ate":0})
 
             if total>0 or (target_tot+actual_tot)>0:
-            try:
+              try:
                 # cause_all에서 원인별 분리
                 _cause_list = []
                 if cause_all:
