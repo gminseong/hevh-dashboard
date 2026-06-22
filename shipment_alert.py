@@ -297,7 +297,7 @@ def analyze(ship_db, prod_db, plan_date_cols, note_dict):
     m['실적차이'] = m['_현재기반_생산'] - m['예상계획']
 
     # ⭐ calc_cutoff_stock: daily_dict_erp 직접 순회
- def calc_cutoff_stock(code, cutoff_dt):
+    def calc_cutoff_stock(code, cutoff_dt):
         stock = code_stock.get(code, 0)
         
         if pd.isna(cutoff_dt):
