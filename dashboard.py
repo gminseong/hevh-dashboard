@@ -495,8 +495,18 @@ def parse_date(text):
         if 1<=a<=31 and 1<=b<=12: return f"2026-{b:02d}-{a:02d}"
     return None
 
-def detect_shift(sn,fn):
+def detect_shift(sn, fn):
     return "NIGHT" if "NIGHT" in (sn+fn).upper() else "DAY"
+
+def find_date_in_sheet(ws):
+    """시트 내 셀에서 날짜 검색 (헤더 영역 우선)"""
+    rows = list(ws.iter_rows(values_only=True, max_row=5))
+    for row in rows:
+        for cell in row:
+            if cell is None: continue
+            d = parse_date(str(cell))
+            if d: return d
+    return None
 
 def normalize_line(raw):
     s = str(raw).strip()
@@ -683,7 +693,18 @@ def parse_files(uploaded_files):
                 ws=wb[sn]
                 if isinstance(ws,Chartsheet): continue
                 shift=detect_shift(sn,fn)
-                ds=fd if fd!="UNKNOWN" else (parse_date(sn) or "UNKNOWN")
+
+                # 날짜 우선순위: 파일명 → 시트명 → 시트 내부 헤더
+                ds = fd
+                if ds == "UNKNOWN":
+                    ds = parse_date(sn) or "UNKNOWN"
+                if ds == "UNKNOWN":
+                    ds = find_date_in_sheet(ws) or "UNKNOWN"
+
+                if ds == "UNKNOWN":
+                    st.warning(f"날짜 파싱 실패: {fn} / {sn}")
+                    continue
+
                 try: loss_records.extend(parse_sheet(ws,process,ds,shift))
                 except Exception as e: st.warning(f"파싱오류[{sn}]: {e}")
         prog.progress((fi+1)/len(uploaded_files))
