@@ -732,7 +732,9 @@ def parse_sheet(ws, process, date_str, shift):
             r=rows[j]; lbl=get_label(r)
             if is_line_cell(r[1] if len(r)>1 else None) and j>i+1: break
             if "MODEL"    in lbl and model_row  is None: model_row=r
-            if "LOSSTIME" in lbl and loss_row   is None: loss_row=r
+            if "LOSSTIME" in lbl and loss_row is None:
+                if any(isinstance(r[c], (int, float)) for c in range(2, min(len(r), 10))):
+                    loss_row=r
             elif lbl=="CAUSE"  and cause_row  is None: cause_row=r
             elif lbl=="ACTION" and action_row is None: action_row=r
             elif "TARGET" in lbl and target_row is None: target_row=r
