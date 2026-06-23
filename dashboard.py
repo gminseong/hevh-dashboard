@@ -247,10 +247,6 @@ section[data-testid="stMain"] {
     transition: margin-left 0.3s ease, width 0.3s ease;
 }
 
-/* 상단 툴바(Share, GitHub 등)만 숨기기 */
-[data-testid="stToolbar"] {display: none !important;}
-
-
 /* 헤더 배경만 투명하게 (화살표 유지) */
 header[data-testid="stHeader"] {
     background: transparent !important;
