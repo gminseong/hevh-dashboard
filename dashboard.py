@@ -247,6 +247,10 @@ section[data-testid="stMain"] {
     transition: margin-left 0.3s ease, width 0.3s ease;
 }
 
+/* 상단 메뉴만 숨기기 (header 전체 X) */
+#MainMenu {display: none;}
+footer {display: none;}
+[data-testid="stToolbar"] {display: none;}
 
 /* 버튼 */
 div[data-testid="stButton"] button {
