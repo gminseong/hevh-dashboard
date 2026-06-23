@@ -737,11 +737,10 @@ def parse_sheet(ws, process, date_str, shift):
                     if is_line_cell(rr[1] if len(rr)>1 else None) and jj>i+1:
                         st.write(f"★PS05: 다음 라인 발견 j={jj}, 탐색 중단")
                         break
+        if i == 46:
+                st.write(f"★i=46: c1=[{c1}], is_line={is_line_cell(c1)}, shift={shift}")
         if not is_line_cell(c1): i+=1; continue
-        # UPH 테이블 행 스킵: 같은 행에 UPH 관련 텍스트가 있으면 라인이 아님
-        if any("UPH" in str(cell or "").upper() for cell in row):
-            i += 1
-            continue    
+                    
         line=normalize_line(str(c1))
         model_row=loss_row=cause_row=action_row=None
         target_row=actual_row=None
