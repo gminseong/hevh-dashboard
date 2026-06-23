@@ -249,7 +249,7 @@ section[data-testid="stMain"] {
 
 /* 상단 툴바(Share, GitHub 등)만 숨기기 */
 [data-testid="stToolbar"] {display: none !important;}
-footer {display: none !important;}
+
 
 /* 헤더 배경만 투명하게 (화살표 유지) */
 header[data-testid="stHeader"] {
