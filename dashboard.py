@@ -637,8 +637,11 @@ def parse_losstime(val):
     return max(0.0, float(m.group(1)) if m else 0.0)
 
 def is_line_cell(val):
-    return bool(re.match(r'^(SA\s*\d+|PA\s*\d+|PS\s*\d+|MI\s*\d+)',
-                         str(val or "").strip(),re.I))
+        s = str(val or "").strip()
+        if not s:
+            return False
+        return bool(re.match(r'^(SA\s*\d+|PA\s*\d+|PS\s*\d+|MI\s*\d+)$',
+                             s, re.I))
 
 def get_label(row):
     return str(row[1] or "").strip().upper() if len(row)>1 else ""
