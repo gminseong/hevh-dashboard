@@ -829,6 +829,8 @@ def parse_sheet(ws, process, date_str, shift):
                         "target_ate":0,"actual_ate":0})
 
             if total > 0:
+                if "PS05" in str(line) and "06-22" in str(date_str):
+                    st.write(f"★PS05 6/22 RECORD: shift={shift}, total={total}")
                 sub_details = split_loss_detail(cause_all, total)
                 
                 # ★ 문제없음으로 전부 제거된 경우 스킵
