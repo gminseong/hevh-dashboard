@@ -724,8 +724,7 @@ def parse_sheet(ws, process, date_str, shift):
     i=0
     while i<len(rows):
         row=rows[i]; c1=row[1] if len(row)>1 else None
-        if not is_line_cell(c1): i+=1; continue
-        st.write(f"LINE: {c1}")    
+        if not is_line_cell(c1): i+=1; continue  
         line=normalize_line(str(c1))
         model_row=loss_row=cause_row=action_row=None
         target_row=actual_row=None
@@ -832,8 +831,6 @@ def parse_sheet(ws, process, date_str, shift):
                         "target_ate":0,"actual_ate":0})
 
             if total > 0:
-                if "PS05" in str(line) and "06-22" in str(date_str):
-                    st.write(f"★PS05 6/22 RECORD: shift={shift}, total={total}")
                 sub_details = split_loss_detail(cause_all, total)
                 
                 # ★ 문제없음으로 전부 제거된 경우 스킵
@@ -951,7 +948,7 @@ def parse_files(uploaded_files):
                 if ds=="UNKNOWN":
                     ds=find_date_in_sheet(ws) or "UNKNOWN"
                 if ds=="UNKNOWN":
-                    st.warning(f"날짜 파싱 실패: {fn} / {sn}")
+                    pass  # 날짜 파싱 실패 시 무시
                     continue
                 try: loss_records.extend(parse_sheet(ws,process,ds,shift))
                 except Exception as e: st.warning(f"파싱오류[{sn}]: {e}")
