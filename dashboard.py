@@ -729,14 +729,7 @@ def parse_sheet(ws, process, date_str, shift):
         row=rows[i]; c1=row[1] if len(row)>1 else None
         if shift == "DAY" and is_line_cell(c1):
             st.write(f"★DAY LINE: i={i}, c1=[{c1}]")
-                # j 탐색 미리 실행해서 loss_row 찾는지 확인
-                for jj in range(i+1, min(i+16, len(rows))):
-                    rr = rows[jj]
-                    ll = str(rr[1] or "").strip().upper() if len(rr)>1 else ""
-                    st.write(f"★PS05 j={jj}: label=[{ll}], vals={[str(rr[c])[:10] for c in range(2, min(len(rr), 9))]}")
-                    if is_line_cell(rr[1] if len(rr)>1 else None) and jj>i+1:
-                        st.write(f"★PS05: 다음 라인 발견 j={jj}, 탐색 중단")
-                        break
+  
         if is_line_cell(c1) and "PS05" in str(c1).upper():
                 st.write(f"★PS05 HIT: i={i}, shift={shift}")
         if i == 46:
