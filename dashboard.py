@@ -742,15 +742,27 @@ def parse_sheet(ws, process, date_str, shift):
 
         if loss_row:
             loss_vals=[]
-            for c in range(2,2+len(slots)):
-                try:
-                    v=loss_row[c] if c<len(loss_row) else None
-                    mm=re.search(r'(\d+)\s*min',str(v or ""),re.I)
-                    loss_vals.append(float(mm.group(1)) if mm else parse_losstime(v))
-                except: loss_vals.append(0.0)
-            while len(loss_vals)<len(slots): loss_vals.append(0.0)
-            loss_vals=[max(0.0,v) for v in loss_vals]
-            total=sum(loss_vals)
+            for c in range(2, len(loss_row)):
+                v = loss_row[c]
+                if v is None or str(v).strip() == "":
+                    loss_vals.append(0.0)
+                elif isinstance(v, (int, float)):
+                    loss_vals.append(max(0.0, float(v)))
+                else:
+                    s = str(v).strip()
+                    mm = re.search(r'(\d+)\s*min', s, re.I)
+                    if mm:
+                        loss_vals.append(float(mm.group(1)))
+                    else:
+                        pv = parse_losstime(v)
+                        if pv > 0:
+                            loss_vals.append(pv)
+                        else:
+                            break
+            while len(loss_vals) < len(slots): loss_vals.append(0.0)
+            loss_vals = loss_vals[:len(slots)]
+            loss_vals = [max(0.0, v) for v in loss_vals]
+            total = sum(loss_vals)
             models=extract_model_per_slot(model_row,slots)
             slot_causes=extract_slot_causes(cause_row,slots)
             cause_all=" | ".join(v for v in slot_causes.values() if v)
