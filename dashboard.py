@@ -314,7 +314,7 @@ LOSS_TYPE_RULES = [
                                             "không vấn đề","3in1","3 in 1",
                                             "3in 1","3 in1"]),
     ("DONE_PLAN",    "계획완료",           ["done plan","hết plan","kết thúc",
-                                            "het plan","ket thuc","sản xuất lúc"]),
+                                            "het plan","ket thuc","no plan"]),
     ("WAITING_SMT",  "SMT대기",            ["waiting semi","waiting pcb","waiting hs",
                                             "wating semi","wating pcb","wating hs",
                                             "waitng","stop line waiting","stop line wating",
@@ -579,7 +579,7 @@ def split_loss_detail(loss_detail, total_min):
         return []
     
     # 계획완료면 빈 리스트
-    if re.search(r'(hết\s*plan|kết\s*thúc|het\s*plan|ket\s*thuc|done\s*plan)', raw, re.I):
+    if re.search(r'(hết\s*plan|kết\s*thúc|het\s*plan|ket\s*thuc|done\s*plan|no\s*plan)', pl):
         return []
     
     code, name = classify_loss_type(raw)
