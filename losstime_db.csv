@@ -2054,6 +2054,23 @@ cover khung giờ sau",1686.0,1503.0,0.0,0.0,0.0,0.0
 2026-06-16,NIGHT,AI,SA10,I,L85E70NA,14.0,INSERT_RAD,Radial불량,단일,Máy Rh 3 lỗi ảo,1,kỹ thuật vừa chạy vừa xử lý,0.0,0.0,0.0,0.0,0.0,0.0
 2026-06-16,NIGHT,AI,SA10,K,L85E70NA,8.0,INSERT_RAD,Radial불량,단일,Máy Rh 3 lỗi ảo,1,kỹ thuật vừa chạy vừa xử lý,0.0,0.0,0.0,0.0,0.0,0.0
 2026-06-16,NIGHT,AI,SA10,TOTAL,L85E70NA,38.0,INSERT_RAD,Radial불량,단일,Máy Rh 3 lỗi ảo,1,kỹ thuật vừa chạy vừa xử lý,1190.0,1125.0,0.0,0.0,0.0,0.0
+2026-06-16,NIGHT,MI,MI 2,F,"55""/3in1, M70H",20.0,WAITING_SMT,SMT대기,복합,"ATE running 1 floor, waiting semi PCB SMT",1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-16,NIGHT,MI,MI 2,TOTAL,"55""/3in1, M70H",20.0,WAITING_SMT,SMT대기,단일,"ATE running 1 floor, waiting semi PCB SMT | ATE running 1 floor",1,,5400.0,5400.0,5400.0,5400.0,5400.0,3574.0
+2026-06-16,NIGHT,MI,MI 3,F,L75S7A_HVD-70,85.0,WAITING_SMT,SMT대기,복합,"waiting semi PCB, change model , waiting material , ICT - FT change code",1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-16,NIGHT,MI,MI 3,I,L75S7N_HVD,37.0,ATE,ATE불량,복합,"ATE error, ICT error , wave solder error",1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-16,NIGHT,MI,MI 3,TOTAL,L75S7A_HVD-70,122.0,WAITING_SMT,SMT대기,단일,"waiting semi PCB, change model , waiting material , ICT - FT change code | ATE error, ICT error , wave solder error",1,,5100.0,4788.0,5100.0,4788.0,5100.0,3902.0
+2026-06-16,NIGHT,MI,MI 4,F,L65CA9N_HVD,15.0,ICT_FT,ICT/FT/HiPOT불량,복합,FT error,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-16,NIGHT,MI,MI 4,I,L65CA9N_HVD,14.0,ICT_FT,ICT/FT/HiPOT불량,복합,"FT error , ICT flase error",1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-16,NIGHT,MI,MI 4,TOTAL,L65CA9N_HVD,29.0,ICT_FT,ICT/FT/HiPOT불량,단일,"FT error | FT error , ICT flase error",1,,2600.0,2500.0,2600.0,2500.0,2600.0,2702.0
+2026-06-16,NIGHT,MI,MI 5,F,L55F70NA_HHS,155.0,WAITING_SMT,SMT대기,복합,"waiting semi PCB SMT ,ATE running 1 floor, ATE error",1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-16,NIGHT,MI,MI 5,I,L65S7_HVD,120.0,ATE,ATE불량,복합,"ATE running 1 floor, ATE error",1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-16,NIGHT,MI,MI 5,TOTAL,L55F70NA_HHS,275.0,WAITING_SMT,SMT대기,단일,"waiting semi PCB SMT ,ATE running 1 floor, ATE error | ATE running 1 floor, ATE error",1,,5020.0,5020.0,5020.0,5020.0,5020.0,3192.0
+2026-06-16,NIGHT,MI,MI 6,F,L85E70NA_HVD,106.0,WAITING_SMT,SMT대기,복합,waiting semi PCB SMT .ATE error,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-16,NIGHT,MI,MI 6,I,L85E70NA_HVD,110.0,WAITING_SMT,SMT대기,복합,waiting semi PCB SMT,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-16,NIGHT,MI,MI 6,TOTAL,L85E70NA_HVD,216.0,WAITING_SMT,SMT대기,단일,waiting semi PCB SMT .ATE error | waiting semi PCB SMT,1,,2260.0,1698.0,2260.0,1698.0,2260.0,1542.0
+2026-06-16,NIGHT,MI,MI 7,F,L55CA9N_HVD,69.0,CHANGE_MODEL,모델교체,복합,"Coating- ATE change model , AOI flase eror tech debug",1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-16,NIGHT,MI,MI 7,I,L55CA9N_HVD,41.0,ICT_FT,ICT/FT/HiPOT불량,복합,"FT no MES ,wave solder error , ICT flase error",1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-16,NIGHT,MI,MI 7,TOTAL,L55CA9N_HVD,110.0,CHANGE_MODEL,모델교체,단일,"Coating- ATE change model , AOI flase eror tech debug | FT no MES ,wave solder error , ICT flase error",1,,3200.0,2460.0,3200.0,2460.0,3200.0,2192.0
 2026-06-16,NIGHT,SMT,PS01,F,"E-PAPER, EM42DX, E415IXAA_LEFT",120.0,CHANGE_MODEL,모델교체,복합,CHANGE MODEL L65CA9N TỪ 00:00 ĐẾN 01:00,1,kĩ thuật chỉnh sửa ,0.0,0.0,0.0,0.0,0.0,0.0
 2026-06-16,NIGHT,SMT,PS01,H,L65CA9N_HVD,112.0,CHANGE_MODEL,모델교체,복합,CHANGE MODEL L65CA9N TỪ 00:00 ĐẾN 01:00,1,kĩ thuật chỉnh sửa ,0.0,0.0,0.0,0.0,0.0,0.0
 2026-06-16,NIGHT,SMT,PS01,I,L65CA9N_HVD,15.0,CHANGE_MODEL,모델교체,복합,CHANGE MODEL L65CA9N TỪ 00:00 ĐẾN 01:00,1,kĩ thuật chỉnh sửa ,0.0,0.0,0.0,0.0,0.0,0.0
@@ -2113,6 +2130,19 @@ cover khung giờ sau",1686.0,1503.0,0.0,0.0,0.0,0.0
 2026-06-17,DAY,SMT,PS11,B,L85E70NA_HVD,27.8,NEW_OP,신규OP교육,복합,OP mới,1,Kỹ thuật điều chỉnh  | Kỹ thuật điều chỉnh ,0.0,0.0,0.0,0.0,0.0,0.0
 2026-06-17,DAY,SMT,PS11,E,L75S7A_HVD,100.0,CHANGE_MODEL,모델교체,복합,Change model 70'p Lỗi printer qét nhiều keo đỏ stop line điều chỉnh 30'p,1,Kỹ thuật điều chỉnh  | Kỹ thuật điều chỉnh ,0.0,0.0,0.0,0.0,0.0,0.0
 2026-06-17,DAY,SMT,PS11,TOTAL,L85E70NA_HVD,151.8,WAITING_SMT,SMT대기,단일,OP mới | Chờ Board AI | Chờ board AI plan đối ứng đổi qa 75S7_HVD | Change model 70'p Lỗi printer qét nhiều keo đỏ stop line điều chỉnh 30'p | Lỗi printer qét nhiều keo đỏ stop line điều chỉnh,1,Kỹ thuật điều chỉnh  | Kỹ thuật điều chỉnh ,1600.0,605.0,0.0,0.0,0.0,0.0
+2026-06-17,NIGHT,MI,MI 3,F,L75S7_HVD,5.0,WAITING_SMT,SMT대기,복합,"wave soder error , ATE waiting PCB because change code",1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-17,NIGHT,MI,MI 3,I,L75S7_HVD,18.0,ICT_FT,ICT/FT/HiPOT불량,복합,"ICT flase error,coating ,AOI error",1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-17,NIGHT,MI,MI 3,TOTAL,L75S7_HVD,23.0,WAITING_SMT,SMT대기,단일,"wave soder error , ATE waiting PCB because change code | ICT flase error,coating ,AOI error",1,,5400.0,5400.0,5400.0,5400.0,5400.0,5344.0
+2026-06-17,NIGHT,MI,MI 4,F,L65E70A_HVD,8.0,ICT_FT,ICT/FT/HiPOT불량,복합,ICT flase error,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-17,NIGHT,MI,MI 4,TOTAL,L65E70A_HVD,8.0,ICT_FT,ICT/FT/HiPOT불량,단일,ICT flase error | No problem,1,,3200.0,3200.0,3200.0,3200.0,3200.0,3184.0
+2026-06-17,NIGHT,MI,MI 5,F,L65S7_HVD,7.0,FLUX,Flux불량,복합,FLUX error,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-17,NIGHT,MI,MI 5,I,L65S7_HVD,29.0,FLUX,Flux불량,복합,"manual inser conveyor error , FLUX error",1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-17,NIGHT,MI,MI 5,TOTAL,L65S7_HVD,36.0,FLUX,Flux불량,단일,"FLUX error | manual inser conveyor error , FLUX error",1,,5400.0,5400.0,5400.0,5400.0,5400.0,5428.0
+2026-06-17,NIGHT,MI,MI 6,I,L55E70A_HVD,105.0,CHANGE_MODEL,모델교체,복합,"ATE Change model 60min,ATE running 1 floor 35min, FT error",1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-17,NIGHT,MI,MI 6,TOTAL,L85E70NA_HVD,105.0,WAITING_SMT,SMT대기,단일,"waiting semi PCB SMT , change model | ATE Change model 60min,ATE running 1 floor 35min, FT error",1,,3542.0,3320.0,3542.0,3320.0,3542.0,2640.0
+2026-06-17,NIGHT,MI,MI 7,F,L55CA9N_HVD,14.0,ICT_FT,ICT/FT/HiPOT불량,복합,"ICT /FT error , FT no MES",1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-17,NIGHT,MI,MI 7,I,L55CA9N_HVD,8.0,ATE,ATE불량,복합,"ATE error ,wave solder error",1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-17,NIGHT,MI,MI 7,TOTAL,L55CA9N_HVD,22.0,ATE,ATE불량,단일,"ICT /FT error , FT no MES | ATE error ,wave solder error",1,,2280.0,2280.0,2280.0,2280.0,2280.0,2336.0
 2026-06-17,NIGHT,SMT,PS01,F,L65CA9N-HVD,94.0,PRINTER,Printer불량,복합,"lỗi lệch linh kiện,lỗi printer từ 20:54-...",1,vừa chạy vừa chỉnh | vừa chạy vừa chỉnh,0.0,0.0,0.0,0.0,0.0,0.0
 2026-06-17,NIGHT,SMT,PS01,G,L65CA9N-HVD,36.0,MOUTER,Mouter불량,복합,lỗi lệch linh kiện + vendor chỉnh delay time moutor,1,vừa chạy vừa chỉnh | vừa chạy vừa chỉnh,0.0,0.0,0.0,0.0,0.0,0.0
 2026-06-17,NIGHT,SMT,PS01,H,L65CA9N-HVD,23.0,MOUTER,Mouter불량,복합,vendor chỉnh delay time moutor,1,vừa chạy vừa chỉnh | vừa chạy vừa chỉnh,0.0,0.0,0.0,0.0,0.0,0.0
@@ -2220,6 +2250,18 @@ Cover khung giờ sau",1814.0,1737.0,0.0,0.0,0.0,0.0
 2026-06-18,NIGHT,AI,SA10,J,L65CA9N,77.0,INSERT_AXIAL,Axial불량,복합,Máy AV lỗi,1,kỹ thuật vừa chạy vừa xử lý | kỹ thuật stop line xử lý,0.0,0.0,0.0,0.0,0.0,0.0
 2026-06-18,NIGHT,AI,SA10,K,L65CA9N,21.0,MAGAZINE,Magazine부족,복합,Không đủ magazin sắt lớn để sản xuất,1,kỹ thuật vừa chạy vừa xử lý | kỹ thuật stop line xử lý,0.0,0.0,0.0,0.0,0.0,0.0
 2026-06-18,NIGHT,AI,SA10,TOTAL,L65CA9N,179.0,MAGAZINE,Magazine부족,단일,Không đủ magazin sắt lớn để sản xuất | Rh3 không hút giất | Máy AV lỗi,1,kỹ thuật vừa chạy vừa xử lý | kỹ thuật stop line xử lý,1445.0,998.0,0.0,0.0,0.0,0.0
+2026-06-18,NIGHT,MI,MI 2,F,"55""/3in1, M70H",15.0,NG_BUFFER,NG Buffer불량,복합,NG buffer Ict error,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-18,NIGHT,MI,MI 2,TOTAL,"55""/3in1, M70H",15.0,NG_BUFFER,NG Buffer불량,단일,NG buffer Ict error | 3in1,1,,5400.0,5400.0,5400.0,5400.0,5400.0,1030.0
+2026-06-18,NIGHT,MI,MI 3,F,L75S7_HVD,25.0,AOI_SAOI,AOI/S-AOI불량,복합,"Wave solder error ,AOI error",1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-18,NIGHT,MI,MI 3,I,L75S7_HVD,110.0,AOI_SAOI,AOI/S-AOI불량,복합,AOI Fipping machine error,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-18,NIGHT,MI,MI 3,TOTAL,L75S7_HVD,135.0,AOI_SAOI,AOI/S-AOI불량,단일,"Wave solder error ,AOI error | AOI Fipping machine error",1,,5400.0,5400.0,5400.0,5400.0,5400.0,6088.0
+2026-06-18,NIGHT,MI,MI 4,I,L65E70A_HVD,6.0,AOI_SAOI,AOI/S-AOI불량,복합,AOI machine error,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-18,NIGHT,MI,MI 4,TOTAL,L65E70A_HVD,6.0,AOI_SAOI,AOI/S-AOI불량,단일,No problem | AOI machine error,1,,2600.0,2600.0,2600.0,2600.0,2600.0,2628.0
+2026-06-18,NIGHT,MI,MI 5,F,L65S7_HVD,10.0,WAITING_SMT,SMT대기,복합,Waiting semi PCB SMT,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-18,NIGHT,MI,MI 5,TOTAL,L65S7_HVD,10.0,WAITING_SMT,SMT대기,단일,Waiting semi PCB SMT | No problem,1,,5400.0,5400.0,5400.0,5400.0,5400.0,5414.0
+2026-06-18,NIGHT,MI,MI 7,F,L55CA9N_HVD,31.0,ATE,ATE불량,복합,ATE Jammed board,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-18,NIGHT,MI,MI 7,I,L55CA9N_HVD,5.0,WAVE,Wave Solder불량,복합,waver solder,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-18,NIGHT,MI,MI 7,TOTAL,L55CA9N_HVD,36.0,ATE,ATE불량,단일,ATE Jammed board | waver solder,1,,2699.0,2700.0,2699.0,2700.0,2699.0,2664.0
 2026-06-18,NIGHT,SMT,PS01,F,L65CA9N-HVD,26.0,PRINTER,Printer불량,단일,lỗi priter nhiều keo chỉnh từ 20:18-20:45 phút,1,,0.0,0.0,0.0,0.0,0.0,0.0
 2026-06-18,NIGHT,SMT,PS01,J,L65CA9N-HVD,3.0,PRINTER,Printer불량,단일,lỗi priter nhiều keo chỉnh từ 20:18-20:45 phút,1,,0.0,0.0,0.0,0.0,0.0,0.0
 2026-06-18,NIGHT,SMT,PS01,K,L65CA9N-HVD,9.5,PRINTER,Printer불량,단일,lỗi priter nhiều keo chỉnh từ 20:18-20:45 phút,1,,0.0,0.0,0.0,0.0,0.0,0.0
@@ -2330,6 +2372,20 @@ Cover khung giờ sau",2100.0,1963.0,0.0,0.0,0.0,0.0
 2026-06-19,NIGHT,AI,SA10,I,L65CA9N,4.0,INSERT_RAD,Radial불량,단일,Máy Rh 3 lỗi cắm rớt lk,1,kỹ thuật stop line xử lý,0.0,0.0,0.0,0.0,0.0,0.0
 2026-06-19,NIGHT,AI,SA10,K,L65CA9N,40.0,INSERT_RAD,Radial불량,단일,Máy Rh 3 lỗi cắm rớt lk,1,kỹ thuật stop line xử lý,0.0,0.0,0.0,0.0,0.0,0.0
 2026-06-19,NIGHT,AI,SA10,TOTAL,L65CA9N,44.0,INSERT_RAD,Radial불량,단일,Máy Rh 3 lỗi cắm rớt lk,1,kỹ thuật stop line xử lý,1190.0,1303.0,0.0,0.0,0.0,0.0
+2026-06-19,NIGHT,MI,MI 3,F,L75S7_HVD,20.0,CHANGE_MODEL,모델교체,복합,separatinon lot change model,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-19,NIGHT,MI,MI 3,I,L75S7_HVD,10.0,WAVE,Wave Solder불량,복합,Wave solder error,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-19,NIGHT,MI,MI 3,TOTAL,L75S7_HVD,30.0,CHANGE_MODEL,모델교체,단일,separatinon lot change model | Wave solder error,1,,5400.0,5400.0,5400.0,5400.0,5400.0,5416.0
+2026-06-19,NIGHT,MI,MI 4,I,L65E70A_HVD,13.0,ATE,ATE불량,복합,ATE running 1 floor,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-19,NIGHT,MI,MI 4,TOTAL,L65E70A_HVD,13.0,ATE,ATE불량,단일,No problem | ATE running 1 floor,1,,2600.0,2080.0,2600.0,2080.0,2600.0,2060.0
+2026-06-19,NIGHT,MI,MI 5,F,L65S7_HVD,11.0,ICT_FT,ICT/FT/HiPOT불량,복합,FT error,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-19,NIGHT,MI,MI 5,I,L65S7_HVD,20.0,ATE,ATE불량,복합,"JIG ATE error ,ATE running 1 floor",1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-19,NIGHT,MI,MI 5,TOTAL,L65S7_HVD,31.0,ATE,ATE불량,단일,"FT error | JIG ATE error ,ATE running 1 floor",1,,5400.0,5400.0,5400.0,5400.0,5400.0,5412.0
+2026-06-19,NIGHT,MI,MI 6,F,L75E70NA_HVD,25.0,WAITING_SMT,SMT대기,복합,"Wating PCB , wave solder error",1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-19,NIGHT,MI,MI 6,I,L75E70NA_HVD,23.0,ATE,ATE불량,복합,"ATE running 1 floor , wave solder , ICT error",1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-19,NIGHT,MI,MI 6,TOTAL,L75E70NA_HVD,48.0,WAITING_SMT,SMT대기,단일,"Wating PCB , wave solder error | ATE running 1 floor , wave solder , ICT error",1,,2000.0,2280.0,2000.0,2280.0,2000.0,2274.0
+2026-06-19,NIGHT,MI,MI 7,F,L55CA9N_HVD,31.0,ETC,기타,단일,,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-19,NIGHT,MI,MI 7,I,L55CA9N_HVD,5.0,ETC,기타,단일,,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-19,NIGHT,MI,MI 7,TOTAL,L55CA9N_HVD,36.0,ETC,기타,단일,,1,,2699.0,0.0,2699.0,0.0,2699.0,0.0
 2026-06-19,NIGHT,SMT,PS01,F,L65CA9N-HVD,14.0,ETC,기타,단일,Lỗi trùng label,1,,0.0,0.0,0.0,0.0,0.0,0.0
 2026-06-19,NIGHT,SMT,PS01,TOTAL,L65CA9N-HVD,14.0,ETC,기타,단일,Lỗi trùng label,1,,1320.0,1320.0,0.0,0.0,0.0,0.0
 2026-06-19,NIGHT,SMT,PS02,J,L55S7-HVD,16.0,ETC,기타,단일,tách label,1,,0.0,0.0,0.0,0.0,0.0,0.0
@@ -2448,6 +2504,18 @@ Cover khung giờ sau",2100.0,1963.0,0.0,0.0,0.0,0.0
 2026-06-20,NIGHT,AI,SA10,I,L55F70NA,14.0,MAGAZINE,Magazine부족,단일,Không đủ magazin sắt để sản xuất,1,,0.0,0.0,0.0,0.0,0.0,0.0
 2026-06-20,NIGHT,AI,SA10,K,L55F70NA,10.0,MAGAZINE,Magazine부족,단일,Không đủ magazin sắt để sản xuất,1,,0.0,0.0,0.0,0.0,0.0,0.0
 2026-06-20,NIGHT,AI,SA10,TOTAL,L55F70NA,28.0,MAGAZINE,Magazine부족,단일,Không đủ magazin sắt để sản xuất | Không đủ magazin sắt để sản xuất | Không đủ magazin sắt để sản xuất,1,,1445.0,1400.0,0.0,0.0,0.0,0.0
+2026-06-20,NIGHT,MI,MI 2,F,L55S7_HVD,10.0,ICT_FT,ICT/FT/HiPOT불량,복합,FT error,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-20,NIGHT,MI,MI 2,TOTAL,L55S7_HVD,10.0,ICT_FT,ICT/FT/HiPOT불량,단일,FT error | No problem,1,,5400.0,5400.0,5400.0,5400.0,5400.0,5340.0
+2026-06-20,NIGHT,MI,MI 3,F,L55S7_HVD,15.0,ICT_FT,ICT/FT/HiPOT불량,복합,FT error,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-20,NIGHT,MI,MI 3,TOTAL,L55S7_HVD,15.0,ICT_FT,ICT/FT/HiPOT불량,단일,FT error | No problem,1,,5400.0,5400.0,5400.0,5400.0,5400.0,5376.0
+2026-06-20,NIGHT,MI,MI 4,F,L65CA9N_HVD,10.0,SILCOAT,Silicon/Coating불량,복합,Coating error,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-20,NIGHT,MI,MI 4,TOTAL,L65CA9N_HVD,10.0,SILCOAT,Silicon/Coating불량,단일,Coating error | No problem,1,,2800.0,2800.0,2800.0,2800.0,2800.0,2900.0
+2026-06-20,NIGHT,MI,MI 5,F,L43E60A_HVD,49.0,ATE,ATE불량,복합,"ATE running 1 floor,Hipot errot",1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-20,NIGHT,MI,MI 5,I,L43E60A_HVD,20.0,ICT_FT,ICT/FT/HiPOT불량,복합,"Hipot error,",1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-20,NIGHT,MI,MI 5,TOTAL,L43E60A_HVD,69.0,ATE,ATE불량,단일,"ATE running 1 floor,Hipot errot | Hipot error,",1,,3780.0,3402.0,3780.0,3402.0,3780.0,3868.0
+2026-06-20,NIGHT,MI,MI 7,F,L55CA9N_HVD,15.0,WAITING_SMT,SMT대기,단일,Waiting semi PCB SMT,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-20,NIGHT,MI,MI 7,I,L55CA9N_HVD,80.0,WAITING_SMT,SMT대기,단일,Waiting semi PCB SMT,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-20,NIGHT,MI,MI 7,TOTAL,L55CA9N_HVD,95.0,WAITING_SMT,SMT대기,단일,Waiting semi PCB SMT | Waiting semi PCB SMT,1,,2800.0,1878.0,2800.0,1878.0,2800.0,1740.0
 2026-06-20,NIGHT,SMT,PS01,H,L65CA9N-HVD,91.0,DONE_PLAN,계획완료,복합,"change model từ 01:00 ,chạy hàng đã start end 30 phút,kết thúc model lúc 01:00",1,,0.0,0.0,0.0,0.0,0.0,0.0
 2026-06-20,NIGHT,SMT,PS01,I,L55CA9N-HVD,26.0,NEW_MODEL,신규모델,복합,"chạy lần đầu trên line,đợi kĩ thuật làm chương trình SAOI",1,,0.0,0.0,0.0,0.0,0.0,0.0
 2026-06-20,NIGHT,SMT,PS01,J,L55CA9N-HVD,17.5,DONE_PLAN,계획완료,복합,"change model từ 01:00 ,chạy hàng đã start end 30 phút,kết thúc model lúc 01:00",1,,0.0,0.0,0.0,0.0,0.0,0.0
