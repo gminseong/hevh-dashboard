@@ -132,7 +132,7 @@ st.markdown("""
     font-weight: 700;
     color: #16a34a;
     line-height: 1.2;
-    white-space: nowrap;
+    white-space: nowrap;split_loss
 }
 .kpi-val-red {
     font-size: 21px;
@@ -586,106 +586,6 @@ def split_loss_detail(loss_detail, total_min):
         return [{"detail": raw, "min": total_min, "type_code": code,
                  "type_name": name, "sub_idx": 1}]
     
-    raw = str(loss_detail).strip()
-    
-    # ★ 전체가 no problem이면 빈 리스트
-    if re.search(r'^no\s*prob', raw, re.I):
-        return []
-    
-    # 1차: | 로 분리
-    if "|" in raw:
-        chunks = [p.strip() for p in raw.split("|") if p.strip()]
-    else:
-        chunks = [raw]
-    
-    # 2차: 각 chunk를 , 로 추가 분리 (시간 패턴 2개 이상)
-    parts = []
-    for chunk in chunks:
-        time_count = len(re.findall(r'\d+\s*min', chunk, re.I))
-        if time_count >= 2:
-            sub = [s.strip() for s in chunk.split(",") if s.strip()]
-            parts.extend(sub)
-        else:
-            parts.append(chunk)
-    
-    if not parts:
-        code, name = classify_loss_type(raw)
-        return [{"detail": raw, "min": total_min, "type_code": code,
-                 "type_name": name, "sub_idx": 1}]
-    
-    # ★ no problem 파트 먼저 제거
-    cleaned = []
-    for p in parts:
-        if not p.strip():
-            continue
-        pl = p.lower()
-        if re.search(r'no\s*prob', pl):
-            continue
-        if re.search(r'(hết\s*plan|kết\s*thúc|het\s*plan|ket\s*thuc|done\s*plan)', pl):
-            continue
-        cleaned.append(p)
-    parts = cleaned
-    if not parts:
-        return []
-    
-    results = []
-    allocated = 0.0
-    no_time_parts = []
-    
-    for idx, part in enumerate(parts):
-        extracted = parse_time_from_text(part)
-        code, name = classify_loss_type(part)
-        
-        if extracted is not None and extracted > 0:
-            remain = total_min - allocated
-            if remain <= 0:
-                no_time_parts.append((idx, part, code, name))
-                continue
-            actual = min(extracted, remain)
-            results.append({
-                "detail": part, "min": round(actual, 1),
-                "type_code": code, "type_name": name,
-                "sub_idx": idx + 1
-            })
-            allocated += actual
-        else:
-            no_time_parts.append((idx, part, code, name))
-    
-    remaining = max(0.0, total_min - allocated)
-    if no_time_parts:
-        if remaining > 0:
-            each = round(remaining / len(no_time_parts), 1)
-        else:
-            each = 0.0
-        for i, (idx, part, code, name) in enumerate(no_time_parts):
-            if i == len(no_time_parts) - 1:
-                alloc = round(remaining - each * (len(no_time_parts) - 1), 1)
-            else:
-                alloc = each
-            results.append({
-                "detail": part, "min": max(0.0, alloc),
-                "type_code": code, "type_name": name,
-                "sub_idx": idx + 1
-            })
-    
-    # ★ 문제없음 최종 제거 + 시간 재배분
-    exclude = {"문제없음", "계획완료"}
-    no_prob_mins = sum(r["min"] for r in results if r["type_name"] in exclude)
-    results = [r for r in results if r["type_name"] not in exclude]    
-  
-    if not results:
-        return []
-    
-    if no_prob_mins > 0:
-        extra = round(no_prob_mins / len(results), 1)
-        for r in results:
-            r["min"] = round(r["min"] + extra, 1)
-    
-    # sub_idx 재정렬
-    for i, r in enumerate(results):
-        r["sub_idx"] = i + 1
-    
-    return results
 
 def classify_scrap_cause(comment):
     if not comment: return ("AUTO","자동판정(ATE)")
