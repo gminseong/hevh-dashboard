@@ -815,8 +815,8 @@ def parse_sheet(ws, process, date_str, shift):
 
                 if total > 0:
                 # ★ 시간대별로 각각 분류 → 최대 유형 선택
-                type_mins = {}
-                type_details = {}
+                    type_mins = {}
+                    type_details = {}
                 for slot_key, slot_data in sorted(slots.items()):
                     if slot_key == "TOTAL":
                         continue
