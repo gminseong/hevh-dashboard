@@ -247,6 +247,10 @@ section[data-testid="stMain"] {
     transition: margin-left 0.3s ease, width 0.3s ease;
 }
 
+/* Share/GitHub/메뉴 버튼만 숨기기 */
+    [data-testid="stToolbar"] > div {display: none !important;}
+    footer {display: none !important;}
+
 /* 헤더 배경만 투명하게 (화살표 유지) */
 header[data-testid="stHeader"] {
     background: transparent !important;
