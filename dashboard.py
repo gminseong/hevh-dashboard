@@ -737,6 +737,8 @@ def parse_sheet(ws, process, date_str, shift):
                     if is_line_cell(rr[1] if len(rr)>1 else None) and jj>i+1:
                         st.write(f"★PS05: 다음 라인 발견 j={jj}, 탐색 중단")
                         break
+        if is_line_cell(c1) and "PS05" in str(c1).upper():
+                st.write(f"★PS05 HIT: i={i}, shift={shift}")
         if i == 46:
                 st.write(f"★i=46: c1=[{c1}], is_line={is_line_cell(c1)}, shift={shift}")
         if not is_line_cell(c1): i+=1; continue
