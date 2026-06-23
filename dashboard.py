@@ -725,7 +725,6 @@ def parse_sheet(ws, process, date_str, shift):
     while i<len(rows):
         row=rows[i]; c1=row[1] if len(row)>1 else None
         if not is_line_cell(c1): i+=1; continue
-        if "PS05" in str(c1): st.write(f"PS05 loss_row: {loss_row}")
         st.write(f"LINE: {c1}")    
         line=normalize_line(str(c1))
         model_row=loss_row=cause_row=action_row=None
@@ -818,6 +817,7 @@ def parse_sheet(ws, process, date_str, shift):
                             if slot_causes.get(s2,""): cs=slot_causes[s2]; break
                     code,name=classify_loss_type(cs)
                     records.append({
+                        if "PS05" in str(line) and "06-22" in str(date_str): st.write(f"PS05 6/22: shift={shift}, total={total}, loss_vals={loss_vals}")
                         "date": date_str, "shift": shift, "process": process,
                         "line": line, "time_slot": slot, "model": models.get(slot, ""),
                         "loss_min": round(lv, 1), "loss_type_code": code,
