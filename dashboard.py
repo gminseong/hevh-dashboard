@@ -247,6 +247,17 @@ section[data-testid="stMain"] {
     transition: margin-left 0.3s ease, width 0.3s ease;
 }
 
+/* 상단 메뉴/헤더/푸터 숨기기 */
+#MainMenu {visibility: hidden;}
+header {visibility: hidden;}
+footer {visibility: hidden;}
+
+/* 사이드바 화살표 유지 */
+[data-testid="collapsedControl"] {
+    visibility: visible !important;
+    z-index: 9999 !important;
+}
+
 /* 버튼 */
 div[data-testid="stButton"] button {
     border-radius: 7px !important;
