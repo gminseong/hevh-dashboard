@@ -745,16 +745,8 @@ def parse_sheet(ws, process, date_str, shift):
             for c in range(2,2+len(slots)):
                 try:
                     v=loss_row[c] if c<len(loss_row) else None
-                    if v is None or str(v).strip() in ["", "None", "-", "—"]:
-                        loss_vals.append(0.0)
-                    else:
-                        nv = parse_losstime(v)
-                        if nv == 0.0:
-                            try:
-                                nv = float(v)
-                            except:
-                                pass
-                        loss_vals.append(max(0.0, nv))
+                    mm=re.search(r'(\d+)\s*min',str(v or ""),re.I)
+                    loss_vals.append(float(mm.group(1)) if mm else parse_losstime(v))
                 except: loss_vals.append(0.0)
             while len(loss_vals)<len(slots): loss_vals.append(0.0)
             loss_vals=[max(0.0,v) for v in loss_vals]
