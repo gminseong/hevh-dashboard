@@ -4,6 +4,7 @@
 2026-06-22,DAY,SMT,PS03,TOTAL,L55F70NA_HHS,30.0,UPH,UPH미달,단일,Line không đáp ứng được UPH | Line không đáp ứng được UPH | Line không đáp ứng được UPH,1,,1375.0,1250.0,0.0,0.0,0.0,0.0
 2026-06-22,DAY,SMT,PS05,A,L75S7_HVD,30.0,MOUTER,Mouter불량,복합,"máy mounter #1 kẹt board , lỗi pickup mounter #3",1,kỹ thuật điều chỉnh  | kỹ thuật điều chỉnh ,0.0,0.0,0.0,0.0,0.0,0.0
 2026-06-22,DAY,SMT,PS05,B,L75S7_HVD,13.0,MOUTER,Mouter불량,복합,Printer nghẹt keo mounter kẹt board,1,kỹ thuật điều chỉnh  | kỹ thuật điều chỉnh ,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-22,DAY,SMT,PS05,TOTAL,L75S7_HVD,43.0,MOUTER,Mouter불량,단일,"máy mounter #1 kẹt board , lỗi pickup mounter #3 | Printer nghẹt keo mounter kẹt board",1,kỹ thuật điều chỉnh  | kỹ thuật điều chỉnh ,2000.0,1920.0,0.0,0.0,0.0,0.0
 2026-06-22,DAY,SMT,PS08,B,L55E70A_HVD,32.0,NEW_OP,신규OP교육,복합,Lỗi feeder / OP mới,1,kỹ thuật điều chỉnh  | kỹ thuật điều chỉnh ,0.0,0.0,0.0,0.0,0.0,0.0
 2026-06-22,DAY,SMT,PS08,C,L55E70A_HVD,40.0,FEEDER,SMT Feeder불량,복합,"Lỗi treo máy mounter #1 từ 12:05 - 12:30, lỗi feeder mounter #3",1,kỹ thuật điều chỉnh  | kỹ thuật điều chỉnh ,0.0,0.0,0.0,0.0,0.0,0.0
 2026-06-22,DAY,SMT,PS08,TOTAL,L55E70A_HVD,72.0,NEW_OP,신규OP교육,단일,"Lỗi feeder / OP mới | Lỗi treo máy mounter #1 từ 12:05 - 12:30, lỗi feeder mounter #3",1,kỹ thuật điều chỉnh  | kỹ thuật điều chỉnh ,1375.0,1386.0,0.0,0.0,0.0,0.0
