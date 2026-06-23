@@ -844,7 +844,8 @@ def parse_sheet(ws, process, date_str, shift):
                         "target":0,"actual":0,
                         "target_mi":0,"actual_mi":0,
                         "target_ate":0,"actual_ate":0})
-
+            if "PS05" in line.upper():
+                st.write(f"★PS05 TOTAL: shift={shift}, total={total}, loss_vals={loss_vals}")
             if total > 0:
                 sub_details = split_loss_detail(cause_all, total)
                 
