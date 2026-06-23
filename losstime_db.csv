@@ -1,1 +1,6 @@
-﻿
+﻿date,shift,process,line,time_slot,model,loss_min,loss_type_code,loss_type_name,complexity,loss_detail,sub_idx,action,target,actual,target_mi,actual_mi,target_ate,actual_ate
+2026-06-08,DAY,MI,MI 4,D,L65E70A_HVD,6.0,ETC,기타,단일,,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-08,DAY,MI,MI 4,TOTAL,L65E70A_HVD,6.0,ETC,기타,단일,,1,,4200.0,0.0,4200.0,0.0,4264.0,0.0
+2026-06-08,DAY,MI,MI 6,A,"58""/3in1, U8000H",15.0,ETC,기타,단일,,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-08,DAY,MI,MI 6,D,"58""/3in1, U8000H",13.0,ETC,기타,단일,,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-08,DAY,MI,MI 6,TOTAL,"58""/3in1, U8000H",28.0,ETC,기타,단일,,1,,5348.0,0.0,5348.0,0.0,5348.0,0.0
