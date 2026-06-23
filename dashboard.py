@@ -309,10 +309,6 @@ PROC_COLOR = {
 }
 
 LOSS_TYPE_RULES = [
-    ("NO_PROBLEM",   "문제없음",           ["no problem","no probplem","no proplem",
-                                            "no probem","no proble","no prob",
-                                            "không vấn đề","3in1","3 in 1",
-                                            "3in 1","3 in1"]),
     ("DONE_PLAN",    "계획완료",           ["done plan","hết plan","kết thúc",
                                             "het plan","ket thuc","no plan"]),
     ("WAITING_SMT",  "SMT대기",            ["waiting semi","waiting pcb","waiting hs",
@@ -404,6 +400,9 @@ LOSS_TYPE_RULES = [
                                             "stop line xử","stop line xu",
                                             "kẹt dao","ket dao","cutter"]),
     ("SAMPLE",       "샘플/테스트",        ["sample","running sample","kiểm bo"]),
+    ("NO_PROBLEM",   "문제없음",           ["no problem","no probplem","no proplem",
+                                            "no probem","no proble","no prob",
+                                            "không vấn đề"]),
     ("ETC",          "기타",               []),
 ]
 
@@ -574,15 +573,12 @@ def split_loss_detail(loss_detail, total_min):
         
         raw = str(loss_detail).strip()
         
-        # 전체가 no problem이면 빈 리스트
-        if re.search(r'no\s*prob', raw, re.I):
-            return []
-        
-        # 계획완료면 빈 리스트
-        if re.search(r'(hết\s*plan|kết\s*thúc|het\s*plan|ket\s*thuc|done\s*plan|no\s*plan)', raw, re.I):
-            return []
-        
         code, name = classify_loss_type(raw)
+        
+        # 문제없음/계획완료면 제거
+        if name in ("문제없음", "계획완료"):
+            return []
+        
         return [{"detail": raw, "min": total_min, "type_code": code,
                  "type_name": name, "sub_idx": 1}]
     
