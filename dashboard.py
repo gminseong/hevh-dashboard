@@ -762,6 +762,8 @@ def parse_sheet(ws, process, date_str, shift):
             loss_vals = loss_vals[:len(slots)]
             loss_vals = [max(0.0, v) for v in loss_vals]
             total = sum(loss_vals)
+            if "PS05" in str(line) and "06-22" in str(date_str):
+                st.write(f"★PS05 6/22 TOTAL: shift={shift}, total={total}, loss_vals={loss_vals}")
             models=extract_model_per_slot(model_row,slots)
             slot_causes=extract_slot_causes(cause_row,slots)
             cause_all=" | ".join(v for v in slot_causes.values() if v)
@@ -809,8 +811,6 @@ def parse_sheet(ws, process, date_str, shift):
                 target_mi=target_ate=actual_mi=actual_ate=0.0
 
             for idx,slot in enumerate(slots):
-                if "PS05" in str(line) and "06-22" in str(date_str):
-                        st.write(f"PS05 6/22: shift={shift}, lv={lv}, slot={slot}")
                 lv=loss_vals[idx] if idx<len(loss_vals) else 0.0
                 if lv>0:
                     cs=slot_causes.get(slot,"")
