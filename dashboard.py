@@ -587,10 +587,24 @@ def parse_time_from_text(text):
 
 
 def split_loss_detail(loss_detail, total_min):
-    """loss_detail을 분리하고 시간 배분"""
+    """loss_detail에서 유형만 분류 (분리 없음)"""
     if not loss_detail or str(loss_detail).strip() in ["", "None", "—", "-"]:
         return [{"detail": "", "min": total_min, "type_code": "ETC",
                  "type_name": "기타", "sub_idx": 1}]
+    
+    raw = str(loss_detail).strip()
+    
+    # 전체가 no problem이면 빈 리스트
+    if re.search(r'no\s*prob', raw, re.I):
+        return []
+    
+    # 계획완료면 빈 리스트
+    if re.search(r'(hết\s*plan|kết\s*thúc|het\s*plan|ket\s*thuc|done\s*plan)', raw, re.I):
+        return []
+    
+    code, name = classify_loss_type(raw)
+    return [{"detail": raw, "min": total_min, "type_code": code,
+             "type_name": name, "sub_idx": 1}]
     
     raw = str(loss_detail).strip()
     
