@@ -53,6 +53,25 @@
 2026-06-01,NIGHT,AI,SA10,J,L48CA9N,14.0,INSERT_RAD,Radial불량,복합,RH 3 lỗi insert,1,kỹ thuật vừa chạy vừa xử lý | kỹ thuật stop line xử lý,0.0,0.0,0.0,0.0,0.0,0.0
 2026-06-01,NIGHT,AI,SA10,K,L48CA9N,38.0,INSERT_JUMP,Jumper불량,복합,Máy Jump lỗi,1,kỹ thuật vừa chạy vừa xử lý | kỹ thuật stop line xử lý,0.0,0.0,0.0,0.0,0.0,0.0
 2026-06-01,NIGHT,AI,SA10,TOTAL,L48CA9N,94.0,INSERT_JUMP,Jumper불량,단일,RH 3 lỗi insert | Máy Jump lỗi,1,kỹ thuật vừa chạy vừa xử lý | kỹ thuật stop line xử lý,1200.0,1056.0,0.0,0.0,0.0,0.0
+2026-06-01,NIGHT,SMT,PS02,F,L55S7_HVD,5.0,PRINTER,Printer불량,복합,Lỗi keo priter,1,Kỹ thuật đang theo dõi và sửa chữa,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-01,NIGHT,SMT,PS02,G,L55S7_HVD,10.0,PRINTER,Printer불량,복합,Lỗi keo priter,1,Kỹ thuật đang theo dõi và sửa chữa,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-01,NIGHT,SMT,PS03,F,L75S7A-HVD,27.0,PRINTER,Printer불량,복합,Lỗi priter tràn keo,1,Kỹ thuật đang theo dõi và sửa chữa | Kỹ thuật đang theo dõi và sửa chữa,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-01,NIGHT,SMT,PS03,G,L75S7A-HVD,13.0,PRINTER,Printer불량,복합,Lỗi priter tràn keo,1,Kỹ thuật đang theo dõi và sửa chữa | Kỹ thuật đang theo dõi và sửa chữa,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-01,NIGHT,SMT,PS03,J,L75S7A-HVD,34.0,CHANGE_MODEL,모델교체,복합,change model L75S7-FVD từ 04:45-05:15,1,Kỹ thuật đang theo dõi và sửa chữa | Kỹ thuật đang theo dõi và sửa chữa,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-01,NIGHT,SMT,PS03,TOTAL,L75S7A-HVD,74.0,CHANGE_MODEL,모델교체,단일,Lỗi priter tràn keo | Lỗi priter tràn keo | change model L75S7-FVD từ 04:45-05:15,1,Kỹ thuật đang theo dõi và sửa chữa | Kỹ thuật đang theo dõi và sửa chữa,1926.0,1750.0,0.0,0.0,0.0,0.0
+2026-06-01,NIGHT,SMT,PS04,F,L75S7A-HVD,32.0,MOUTER,Mouter불량,단일,Lỗi moutor,1,Kỹ thuật đang theo dõi và sửa chữa,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-01,NIGHT,SMT,PS04,TOTAL,L75S7A-HVD,32.0,MOUTER,Mouter불량,단일,Lỗi moutor,1,Kỹ thuật đang theo dõi và sửa chữa,1600.0,1600.0,0.0,0.0,0.0,0.0
+2026-06-01,NIGHT,SMT,PS08,F,L65S7-HVD,60.0,AI_STOCK,AI자재부족,복합,"AI hết stock, đối ứng change model L65S7-HVD",1,Kỹ thuật đang theo dõi và sửa chữa | Đang đào tạo | Đang đào tạo.Kỹ thuật đang theo dõi và sửa chữa | Đang đào tạo,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-01,NIGHT,SMT,PS08,G,L65S7-HVD,88.0,NEW_OP,신규OP교육,복합,OP mới+ Lỗi printer tràn keo 20 phút,1,Kỹ thuật đang theo dõi và sửa chữa | Đang đào tạo | Đang đào tạo.Kỹ thuật đang theo dõi và sửa chữa | Đang đào tạo,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-01,NIGHT,SMT,PS08,H,L65S7-HVD,35.0,NEW_OP,신규OP교육,복합,OP mới,1,Kỹ thuật đang theo dõi và sửa chữa | Đang đào tạo | Đang đào tạo.Kỹ thuật đang theo dõi và sửa chữa | Đang đào tạo,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-01,NIGHT,SMT,PS08,I,L65S7-HVD,75.0,NEW_OP,신규OP교육,복합,OP mới + lỗi moutor cắm lệch lk 30 phút,1,Kỹ thuật đang theo dõi và sửa chữa | Đang đào tạo | Đang đào tạo.Kỹ thuật đang theo dõi và sửa chữa | Đang đào tạo,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-01,NIGHT,SMT,PS08,J,L65S7-HVD,38.0,NEW_OP,신규OP교육,복합,OP mới,1,Kỹ thuật đang theo dõi và sửa chữa | Đang đào tạo | Đang đào tạo.Kỹ thuật đang theo dõi và sửa chữa | Đang đào tạo,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-01,NIGHT,SMT,PS08,TOTAL,L65S7-HVD,296.0,AI_STOCK,AI자재부족,단일,"AI hết stock, đối ứng change model L65S7-HVD | OP mới+ Lỗi printer tràn keo 20 phút | OP mới | OP mới + lỗi moutor cắm lệch lk 30 phút | OP mới",1,Kỹ thuật đang theo dõi và sửa chữa | Đang đào tạo | Đang đào tạo.Kỹ thuật đang theo dõi và sửa chữa | Đang đào tạo,2335.0,1208.0,0.0,0.0,0.0,0.0
+2026-06-01,NIGHT,SMT,PS11,F,L65S8-HVD,25.0,PRINTER,Printer불량,복합,Lỗi priter,1,Kỹ thuật đang theo dõi và sửa chữa | Kỹ thuật đang theo dõi và sửa chữa | Kỹ thuật đang theo dõi và sửa chữa | Kỹ thuật đang theo dõi và sửa chữa,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-01,NIGHT,SMT,PS11,H,L65S8-HVD,60.0,MOUTER,Mouter불량,복합,lỗi moutor cắm lệch lk,1,Kỹ thuật đang theo dõi và sửa chữa | Kỹ thuật đang theo dõi và sửa chữa | Kỹ thuật đang theo dõi và sửa chữa | Kỹ thuật đang theo dõi và sửa chữa,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-01,NIGHT,SMT,PS11,I,L65S8-HVD,54.0,PRINTER,Printer불량,복합,Lỗi priter tràn keo,1,Kỹ thuật đang theo dõi và sửa chữa | Kỹ thuật đang theo dõi và sửa chữa | Kỹ thuật đang theo dõi và sửa chữa | Kỹ thuật đang theo dõi và sửa chữa,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-01,NIGHT,SMT,PS11,J,L65S8-HVD,74.0,PRINTER,Printer불량,복합,Lỗi priter tràn keo,1,Kỹ thuật đang theo dõi và sửa chữa | Kỹ thuật đang theo dõi và sửa chữa | Kỹ thuật đang theo dõi và sửa chữa | Kỹ thuật đang theo dõi và sửa chữa,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-01,NIGHT,SMT,PS11,TOTAL,L65S8-HVD,213.0,MOUTER,Mouter불량,단일,Lỗi priter | lỗi moutor cắm lệch lk | Lỗi priter tràn keo | Lỗi priter tràn keo,1,Kỹ thuật đang theo dõi và sửa chữa | Kỹ thuật đang theo dõi và sửa chữa | Kỹ thuật đang theo dõi và sửa chữa | Kỹ thuật đang theo dõi và sửa chữa,2126.0,1492.0,0.0,0.0,0.0,0.0
 2026-06-02,DAY,AI,SA01,A,L55S7,10.0,INSERT_AXIAL,Axial불량,복합,Axial lỗi 10:20 -10:40,1,vender đang hỗ trợ,0.0,0.0,0.0,0.0,0.0,0.0
 2026-06-02,DAY,AI,SA01,B,L55S7,24.0,INSERT_AXIAL,Axial불량,복합,Axial lỗi 10:20 -10:40,1,vender đang hỗ trợ,0.0,0.0,0.0,0.0,0.0,0.0
 2026-06-02,DAY,AI,SA01,C,L55S7,48.0,INSERT_AXIAL,Axial불량,복합,Axial lỗi bàn xoay,1,vender đang hỗ trợ,0.0,0.0,0.0,0.0,0.0,0.0
@@ -128,6 +147,36 @@ line Sa01 cover khung giờ sau",1770.0,1641.0,0.0,0.0,0.0,0.0
 2026-06-02,NIGHT,MI,MI 6,TOTAL,L65S8_HVD,66.0,ETC,기타,단일,,1,,5360.0,4680.0,5360.0,4680.0,5360.0,3730.0
 2026-06-02,NIGHT,MI,MI 7,K,L65E70A_HVD,70.0,ETC,기타,단일,,1,,0.0,0.0,0.0,0.0,0.0,0.0
 2026-06-02,NIGHT,MI,MI 7,TOTAL,L65E70A_HVD,70.0,ETC,기타,단일,,1,,1000.0,1000.0,1000.0,1000.0,1000.0,1000.0
+2026-06-02,NIGHT,SMT,PS01,F,L65CA9N-HVD,26.0,MOUTER,Mouter불량,복합,Lỗi moutor văng linh kiện nhiều vị trí từ 21:30,1,Kỹ thuật đang chỉnh,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-02,NIGHT,SMT,PS01,I,L65CA9N-HVD,52.0,PRINTER,Printer불량,복합,Rớt boar trong máy priter,1,Kỹ thuật đang chỉnh,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-02,NIGHT,SMT,PS01,J,L65CA9N-HVD,22.0,PRINTER,Printer불량,복합,Lỗi printer từ 05:14-05:35,1,Kỹ thuật đang chỉnh,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-02,NIGHT,SMT,PS01,TOTAL,L65CA9N-HVD,100.0,MOUTER,Mouter불량,단일,Lỗi moutor văng linh kiện nhiều vị trí từ 21:30 | Rớt boar trong máy priter | Lỗi printer từ 05:14-05:35,1,Kỹ thuật đang chỉnh,1150.0,1100.0,0.0,0.0,0.0,0.0
+2026-06-02,NIGHT,SMT,PS02,F,L55S7_HVD,49.0,AI_STOCK,AI자재부족,복합,Lỗi kẹt boar inloader 10 phút.Tách lot 15 phút. Đợi AI kiếm stock từ 21:40-….,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-02,NIGHT,SMT,PS02,H,L55S7_HVD,18.0,SPI,SPI불량,복합,Lỗi SPI từ 01:11-01:30,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-02,NIGHT,SMT,PS02,TOTAL,L55S7_HVD,67.0,AI_STOCK,AI자재부족,단일,Lỗi kẹt boar inloader 10 phút.Tách lot 15 phút. Đợi AI kiếm stock từ 21:40-…. | Lỗi SPI từ 01:11-01:30,1,,1810.0,1810.0,0.0,0.0,0.0,0.0
+2026-06-02,NIGHT,SMT,PS03,F,L75S7A-HVD,24.0,EQUIP_FAIL,설비고장(기타),복합,Hàng repeir chưa end,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-02,NIGHT,SMT,PS03,G,L75S7A-HVD,3.0,EQUIP_FAIL,설비고장(기타),복합,Hàng repeir chưa end,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-02,NIGHT,SMT,PS04,F,P30020-HHS,120.0,MATERIAL,자재부족,복합,change model + thiếu liệu,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-02,NIGHT,SMT,PS04,G,P30020-HHS,120.0,CHANGE_MODEL,모델교체,복합,"Moutor Chạy xong sample lúc 23:00 change model L65E70A, SAMPLE chưa có chương trình test S-AOI đang chờ",1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-02,NIGHT,SMT,PS04,H,L65E70A-HVD,72.0,AOI_SAOI,AOI/S-AOI불량,복합,Đợi chương trình S-AOI test hàng sample đến 01:12 phút,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-02,NIGHT,SMT,PS04,I,L65E70A-HVD,96.0,AI_STOCK,AI자재부족,복합,AI hết stock từ 02:08-03:44,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-02,NIGHT,SMT,PS04,J,L65E70A-HVD,112.0,AI_STOCK,AI자재부족,복합,AI hết stock từ 02:08-04:00-05:50,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-02,NIGHT,SMT,PS04,K,L65E70A-HVD,96.0,AI_STOCK,AI자재부족,복합,AI hết stock từ 06:00-07:00,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-02,NIGHT,SMT,PS04,TOTAL,P30020-HHS,616.0,AI_STOCK,AI자재부족,단일,"change model + thiếu liệu | Moutor Chạy xong sample lúc 23:00 change model L65E70A, SAMPLE chưa có chương trình test S-AOI đang chờ | Đợi chương trình S-AOI test hàng sample đến 01:12 phút | AI hết stock từ 02:08-03:44 | AI hết stock từ 02:08-04:00-05:50 | AI hết stock từ 06:00-07:00",1,,942.0,206.0,0.0,0.0,0.0,0.0
+2026-06-02,NIGHT,SMT,PS05,F,L55E70A-HVD,26.0,MOUTER,Mouter불량,복합,"Lỗi scan moutor 1, 3 từ 20:45-09:11",1,Kỹ thuật đã điều chỉnh,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-02,NIGHT,SMT,PS05,G,L55E70A-HVD,44.0,CHANGE_MODEL,모델교체,복합,"Xong lot lúc 22:25, change model L55E70NA-HVD từ 22:25-23:10",1,Kỹ thuật đã điều chỉnh,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-02,NIGHT,SMT,PS05,K,L55E70A-HVD,49.0,AI_STOCK,AI자재부족,복합,AI hết stock từ 06:00-06:50,1,Kỹ thuật đã điều chỉnh,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-02,NIGHT,SMT,PS05,TOTAL,L55E70A-HVD,119.0,AI_STOCK,AI자재부족,단일,"Lỗi scan moutor 1, 3 từ 20:45-09:11 | Xong lot lúc 22:25, change model L55E70NA-HVD từ 22:25-23:10 | AI hết stock từ 06:00-06:50",1,Kỹ thuật đã điều chỉnh,1234.0,1000.0,0.0,0.0,0.0,0.0
+2026-06-02,NIGHT,SMT,PS08,F,L65S7-HVD,38.0,PRINTER,Printer불량,복합,"Lỗi printer đầu ca, sản xuất lúc 20:35",1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-02,NIGHT,SMT,PS08,G,L65S7-HVD,75.0,AI_STOCK,AI자재부족,복합,"AI hết stock, vừa chạy vừa chờ boar từ AI",1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-02,NIGHT,SMT,PS08,H,L65S7-HVD,120.0,AI_STOCK,AI자재부족,복합,"AI hết stock, đối ứng change model L55S7-HVD",1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-02,NIGHT,SMT,PS08,I,L55S7-HVD,120.0,NEW_MODEL,신규모델,복합,"Model sản xuất lần đầu, lỗi camera",1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-02,NIGHT,SMT,PS08,TOTAL,L65S7-HVD,353.0,AI_STOCK,AI자재부족,단일,"Lỗi printer đầu ca, sản xuất lúc 20:35 | AI hết stock, vừa chạy vừa chờ boar từ AI | AI hết stock, đối ứng change model L55S7-HVD | Model sản xuất lần đầu, lỗi camera",1,,2130.0,1059.0,0.0,0.0,0.0,0.0
+2026-06-02,NIGHT,SMT,PS11,F,L65S8-HVD,23.0,AOI_SAOI,AOI/S-AOI불량,복합,Lỗi S-AOI từ 21:40-….,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-02,NIGHT,SMT,PS11,G,L65S8-HVD,26.0,NG_BUFFER,NG Buffer불량,복합,"Lỗi NG buffet SAOI từ 21:40-22:20, ko test được boar",1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-02,NIGHT,SMT,PS11,H,L65S8-HVD,11.0,PRINTER,Printer불량,복합,Lỗi keo priter 10 phút,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-02,NIGHT,SMT,PS11,I,L65S8-HVD,73.0,SPI,SPI불량,복합,Lỗi SPI từ 02:27-03:40,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-02,NIGHT,SMT,PS11,TOTAL,L65S8-HVD,133.0,PRINTER,Printer불량,단일,"Lỗi S-AOI từ 21:40-…. | Lỗi NG buffet SAOI từ 21:40-22:20, ko test được boar | Lỗi keo priter 10 phút | Lỗi SPI từ 02:27-03:40",1,,2356.0,1905.0,0.0,0.0,0.0,0.0
 2026-06-03,DAY,AI,SA01,A,L55S7,81.0,INSERT_JUMP,Jumper불량,단일,Tách Rev 1.2 Clean tồn PCB 1.1 PD và 3in1 (20 min) - update prog 1.2 eye 15min - Chờ PCQ check Fisrt bo 30 min - Jumper Insert NG 15 min,1,,0.0,0.0,0.0,0.0,0.0,0.0
 2026-06-03,DAY,AI,SA01,B,L55S7,1.0,INSERT_JUMP,Jumper불량,단일,Tách Rev 1.2 Clean tồn PCB 1.1 PD và 3in1 (20 min) - update prog 1.2 eye 15min - Chờ PCQ check Fisrt bo 30 min - Jumper Insert NG 15 min,1,,0.0,0.0,0.0,0.0,0.0,0.0
 2026-06-03,DAY,AI,SA01,E,L55S7,5.0,INSERT_JUMP,Jumper불량,단일,Tách Rev 1.2 Clean tồn PCB 1.1 PD và 3in1 (20 min) - update prog 1.2 eye 15min - Chờ PCQ check Fisrt bo 30 min - Jumper Insert NG 15 min,1,,0.0,0.0,0.0,0.0,0.0,0.0
@@ -195,6 +244,35 @@ cover khung giờ sau",1200.0,1405.0,0.0,0.0,0.0,0.0
 2026-06-03,NIGHT,MI,MI 6,F,L65S8_HVD,70.0,WAITING_SMT,SMT대기,복합,Waiting PCB,1,,0.0,0.0,0.0,0.0,0.0,0.0
 2026-06-03,NIGHT,MI,MI 6,H,L65S8_HVD,5.0,ICT_FT,ICT/FT/HiPOT불량,복합,ICT error,1,,0.0,0.0,0.0,0.0,0.0,0.0
 2026-06-03,NIGHT,MI,MI 6,TOTAL,L65S8_HVD,75.0,WAITING_SMT,SMT대기,단일,Waiting PCB | ICT error | No problem,1,,5360.0,5080.0,5360.0,5080.0,5360.0,4962.0
+2026-06-03,NIGHT,SMT,PS01,F,L65S8-HVD,36.0,MOUTER,Mouter불량,복합,"Lỗi priter lệch keo 15 phút,lỗi lệch linh kiện mouotr 2",1,kỹ thuật đã điều chỉnh | kỹ thuật đã điều chỉnh,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-03,NIGHT,SMT,PS01,G,L65S8-HVD,19.0,MOUTER,Mouter불량,복합,lỗi lệch linh kiện mouotr 2 22:00-22:20,1,kỹ thuật đã điều chỉnh | kỹ thuật đã điều chỉnh,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-03,NIGHT,SMT,PS01,J,L65S8-HVD,26.0,NG_BUFFER,NG Buffer불량,복합,Kẹt boar NG buffet từ 04:00-04:26,1,kỹ thuật đã điều chỉnh | kỹ thuật đã điều chỉnh,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-03,NIGHT,SMT,PS01,TOTAL,L65S8-HVD,81.0,MOUTER,Mouter불량,단일,"Lỗi priter lệch keo 15 phút,lỗi lệch linh kiện mouotr 2 | lỗi lệch linh kiện mouotr 2 22:00-22:20 | Kẹt boar NG buffet từ 04:00-04:26",1,kỹ thuật đã điều chỉnh | kỹ thuật đã điều chỉnh,2413.0,2263.0,0.0,0.0,0.0,0.0
+2026-06-03,NIGHT,SMT,PS02,F,L65S7-HVD,11.0,MOUTER,Mouter불량,복합,Lỗi pickup moutor 1,1,kỹ thuật đã điều chỉnh,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-03,NIGHT,SMT,PS02,G,L65S7-HVD,11.0,DONE_PLAN,계획완료,복합,kết thúc lot lúc 23:50,1,kỹ thuật đã điều chỉnh,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-03,NIGHT,SMT,PS02,J,L65S7A-HVD,120.0,MOUTER,Mouter불량,복합,lỗi ổ cứng moutor 3 tử 04:00-…,1,kỹ thuật đã điều chỉnh,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-03,NIGHT,SMT,PS02,K,L65S7A-HVD,55.0,ETC,기타,복합,sản xuất lại lúc 07:00,1,kỹ thuật đã điều chỉnh,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-03,NIGHT,SMT,PS04,H,L65E70A-HVD,22.0,NG_BUFFER,NG Buffer불량,복합,Kẹt boar NG buffet từ 01:40-02:00,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-03,NIGHT,SMT,PS04,I,L65E70A-HVD,34.0,MOUTER,Mouter불량,복합,lỗi pickup moutor 2 từ 02:22-02:50,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-03,NIGHT,SMT,PS04,K,L65E70A-HVD,24.0,WAITING_SMT,SMT대기,복합,hàng chờ repeir chưa scan end,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-03,NIGHT,SMT,PS04,TOTAL,L65E70A-HVD,80.0,WAITING_SMT,SMT대기,단일,Kẹt boar NG buffet từ 01:40-02:00 | lỗi pickup moutor 2 từ 02:22-02:50 | hàng chờ repeir chưa scan end,1,,1200.0,1050.0,0.0,0.0,0.0,0.0
+2026-06-03,NIGHT,SMT,PS05,F,L55S7-HVD,22.0,CHANGE_MODEL,모델교체,복합,cover pending PS08 ca ngày tách lót 15 phút,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-03,NIGHT,SMT,PS05,I,L55S7-HVD,120.0,CHANGE_MODEL,모델교체,복합,change model L65E70A từ 02:00-04:00(model chạy lần đầu),1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-03,NIGHT,SMT,PS05,J,L65E70A-HVD,120.0,NEW_MODEL,신규모델,복합,"model sản xuất lần đầu ,chưa sảm xuất được",1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-03,NIGHT,SMT,PS05,K,L65E70A-HVD,90.0,CHANGE_MODEL,모델교체,복합,cover pending PS08 ca ngày tách lót 15 phút,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-03,NIGHT,SMT,PS05,TOTAL,L55S7-HVD,352.0,CHANGE_MODEL,모델교체,단일,"cover pending PS08 ca ngày tách lót 15 phút | change model L65E70A từ 02:00-04:00(model chạy lần đầu) | model sản xuất lần đầu ,chưa sảm xuất được",1,,2076.0,1203.0,0.0,0.0,0.0,0.0
+2026-06-03,NIGHT,SMT,PS08,F,L55S7-HVD,120.0,ETC,기타,복합,Sản xuất nhầm MODEL L55S7-HVD (3IN1),1,đang đào tạo | đang đào tạo | \ | đang đào tạo,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-03,NIGHT,SMT,PS08,G,L55S7-HVD,31.0,NEW_OP,신규OP교육,복합,"OP mới, chưa thành thạo thao tác",1,đang đào tạo | đang đào tạo | \ | đang đào tạo,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-03,NIGHT,SMT,PS08,H,L55S7-HVD,77.0,NEW_OP,신규OP교육,복합,"OP mới, chưa thành thạo thao tác, lối priter tràn keo từ 01:10-01:35",1,đang đào tạo | đang đào tạo | \ | đang đào tạo,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-03,NIGHT,SMT,PS08,I,L55S7-HVD,24.0,NEW_OP,신규OP교육,복합,"OP mới, chưa thành thạo thao tác",1,đang đào tạo | đang đào tạo | \ | đang đào tạo,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-03,NIGHT,SMT,PS08,J,L55S7-HVD,60.0,NEW_OP,신규OP교육,복합,"OP mới,kẹt boar NG buffet từ 05:30-06:00",1,đang đào tạo | đang đào tạo | \ | đang đào tạo,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-03,NIGHT,SMT,PS08,K,L55S7-HVD,23.0,NEW_OP,신규OP교육,복합,"OP mới, chưa thành thạo thao tác",1,đang đào tạo | đang đào tạo | \ | đang đào tạo,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-03,NIGHT,SMT,PS08,TOTAL,L55S7-HVD,335.0,NEW_OP,신규OP교육,단일,"Sản xuất nhầm MODEL L55S7-HVD (3IN1) | OP mới, chưa thành thạo thao tác | OP mới, chưa thành thạo thao tác, lối priter tràn keo từ 01:10-01:35 | OP mới, chưa thành thạo thao tác | OP mới,kẹt boar NG buffet từ 05:30-06:00 | OP mới, chưa thành thạo thao tác",1,đang đào tạo | đang đào tạo | \ | đang đào tạo,2456.0,1249.0,0.0,0.0,0.0,0.0
+2026-06-03,NIGHT,SMT,PS11,G,L65S8-HVD,26.0,PRINTER,Printer불량,복합,printer bị tràn keo,1,kĩ thuật đang điểu chỉnh và theo dõi,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-03,NIGHT,SMT,PS11,H,L65S8-HVD,62.0,CHANGE_MODEL,모델교체,복합,Change model L75S7A-HVD từ 01:00-…..,1,kĩ thuật đang điểu chỉnh và theo dõi,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-03,NIGHT,SMT,PS11,I,L75S7A-HVD,72.0,ETC,기타,복합,sản xuất lúc 03:10,1,kĩ thuật đang điểu chỉnh và theo dõi,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-03,NIGHT,SMT,PS11,K,L75S7A-HVD,55.0,PRINTER,Printer불량,복합,lỗi priter lệch keo từ 06:00-06:55,1,kĩ thuật đang điểu chỉnh và theo dõi,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-03,NIGHT,SMT,PS11,TOTAL,L65S8-HVD,215.0,CHANGE_MODEL,모델교체,단일,printer bị tràn keo | Change model L75S7A-HVD từ 01:00-….. | sản xuất lúc 03:10 | lỗi priter lệch keo từ 06:00-06:55,1,kĩ thuật đang điểu chỉnh và theo dõi,2163.0,1497.0,0.0,0.0,0.0,0.0
 2026-06-04,DAY,AI,SA01,A,L55S7,69.0,INSERT_JUMP,Jumper불량,복합,- Vender chỉnh Cam Rad 8:00-8:30 Jumper NG 9:00-9:39,1,Vender support,0.0,0.0,0.0,0.0,0.0,0.0
 2026-06-04,DAY,AI,SA01,D,L55S7,24.0,INSERT_RAD,Radial불량,복합,Rh3 insert NG,1,Vender support,0.0,0.0,0.0,0.0,0.0,0.0
 2026-06-04,DAY,AI,SA01,E,L55S7,11.0,FEEDER,SMT Feeder불량,복합,"Feeder 10 lỗi , kẹt liệu",1,Vender support,0.0,0.0,0.0,0.0,0.0,0.0
