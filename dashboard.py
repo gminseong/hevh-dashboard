@@ -725,6 +725,9 @@ def parse_sheet(ws, process, date_str, shift):
     while i<len(rows):
         row=rows[i]; c1=row[1] if len(row)>1 else None
         if not is_line_cell(c1): i+=1; continue
+        if not is_line_cell(c1): i+=1; continue
+        import streamlit as st
+        st.write(f"LINE: {c1}")    
         line=normalize_line(str(c1))
         model_row=loss_row=cause_row=action_row=None
         target_row=actual_row=None
