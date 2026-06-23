@@ -1,1 +1,26 @@
-﻿
+﻿date,shift,process,line,time_slot,model,loss_min,loss_type_code,loss_type_name,complexity,loss_detail,sub_idx,action,target,actual,target_mi,actual_mi,target_ate,actual_ate
+2026-06-12,DAY,MI,MI 2,A,L55S7_HVD,10.0,CHANGE_MODEL,모델교체,복합,"FT ERROR (6MIN), CHANGE MODEL L55S7 --> L55S7W AOI NO SCAN (4MIN)",1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-12,DAY,MI,MI 2,D,L55S7_HVD,55.0,WAITING_SMT,SMT대기,복합,"stop line waiting pcb from SMD (15min) , change model 55S7W--> 55S& HVD",1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-12,DAY,MI,MI 2,TOTAL,L55S7_HVD,65.0,WAITING_SMT,SMT대기,단일,"FT ERROR (6MIN), CHANGE MODEL L55S7 --> L55S7W AOI NO SCAN (4MIN) | stop line waiting pcb from SMD (15min) , change model 55S7W--> 55S& HVD",1,,5594.0,5594.0,5594.0,5594.0,2797.0,5284.0
+2026-06-13,DAY,MI,MI 2,A,L55S7_HVD,18.0,WAITING_SMT,SMT대기,복합,"stop waiting pcb (15min), FT no scan (3min)",1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-13,DAY,MI,MI 2,D,L55S7_HVD,42.0,WAITING_SMT,SMT대기,복합,"waiting pcb (20min), ft error (2min), ATE error (20min)",1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-13,DAY,MI,MI 2,TOTAL,L55S7_HVD,60.0,WAITING_SMT,SMT대기,단일,"stop waiting pcb (15min), FT no scan (3min) | waiting pcb (20min), ft error (2min), ATE error (20min)",1,,5720.0,5720.0,5720.0,5720.0,2860.0,5852.0
+2026-06-14,DAY,MI,MI 2,A,L65S7_HVD,132.0,WAITING_SMT,SMT대기,복합,"waiting semi PCB (35min), coating error (30min), change cod 65 21A--> 6521b (30min), silicon coating (27min).",1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-14,DAY,MI,MI 2,D,L65S7A_HVD,23.0,CHANGE_MODEL,모델교체,복합,"silicon coating error (7min), flux error (11min), change model ICT --> coating (5min)",1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-14,DAY,MI,MI 2,TOTAL,L65S7_HVD,155.0,WAITING_SMT,SMT대기,단일,"waiting semi PCB (35min), coating error (30min), change cod 65 21A--> 6521b (30min), silicon coating (27min). | silicon coating error (7min), flux error (11min), change model ICT --> coating (5min)",1,,5200.0,4254.0,5200.0,4254.0,2600.0,3814.0
+2026-06-15,DAY,MI,MI 2,A,"55""/3in1, M70H,",67.0,ATE,ATE불량,복합,ATE running 1 floor from 8h15 (3IN1),1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-15,DAY,MI,MI 2,D,"55""/3in1, M70H,",56.0,WAITING_SMT,SMT대기,복합,Waiting semi SMT (3IN1),1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-15,DAY,MI,MI 2,TOTAL,"55""/3in1, M70H,",123.0,WAITING_SMT,SMT대기,단일,ATE running 1 floor from 8h15 (3IN1) | Waiting semi SMT (3IN1),1,,5760.0,5760.0,5760.0,5760.0,0.0,0.0
+2026-06-16,DAY,MI,MI 2,A,"55""/3in1, M70H",96.0,WAITING_SMT,SMT대기,복합,"ATE running 1 floor (90min), waiting semi pcb (6min), 3in1",1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-16,DAY,MI,MI 2,D,"55""/3in1, M70H",13.0,WAITING_SMT,SMT대기,복합,waiting semi PCB,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-16,DAY,MI,MI 2,TOTAL,"55""/3in1, M70H",109.0,WAITING_SMT,SMT대기,단일,"ATE running 1 floor (90min), waiting semi pcb (6min), 3in1 | waiting semi PCB",1,,5720.0,5720.0,5720.0,5720.0,0.0,0.0
+2026-06-17,DAY,MI,MI 2,A,"55""/3in1, M70H, HKC",63.0,WAITING_SMT,SMT대기,복합,"waiting semi SMT (33min), Ate running 1 floor 30 min",1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-17,DAY,MI,MI 2,TOTAL,"55""/3in1, M70H, HKC",63.0,WAITING_SMT,SMT대기,단일,"waiting semi SMT (33min), Ate running 1 floor 30 min",1,,5760.0,5760.0,5760.0,5760.0,0.0,0.0
+2026-06-18,DAY,MI,MI 2,A,"55""/3in1, M70H, HKC",16.0,AOI_SAOI,AOI/S-AOI불량,복합,"Wave solder error (11min), Aoi error (4min)",1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-18,DAY,MI,MI 2,TOTAL,"55""/3in1, M70H, HKC",16.0,AOI_SAOI,AOI/S-AOI불량,단일,"Wave solder error (11min), Aoi error (4min)",1,,5760.0,5760.0,5760.0,5760.0,0.0,0.0
+2026-06-21,DAY,MI,MI 2,A,L65S7_HVD,48.0,CHANGE_MODEL,모델교체,복합,Change model,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-21,DAY,MI,MI 2,D,L65S7_HVD,42.0,ATE,ATE불량,복합,"Coating error (12min), ATE (5min), coating nozzle error (26min).",1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-21,DAY,MI,MI 2,TOTAL,L65S7_HVD,90.0,CHANGE_MODEL,모델교체,단일,"Change model | Coating error (12min), ATE (5min), coating nozzle error (26min).",1,,5500.0,4406.0,5500.0,4406.0,5500.0,3706.0
+2026-06-22,DAY,MI,MI 2,A,"55""/3in1, M70H, HKC,",71.0,SILCOAT,Silicon/Coating불량,복합,coating error,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-22,DAY,MI,MI 2,D,"55""/3in1, M70H, HKC,",60.0,WAITING_SMT,SMT대기,복합,waiting semi SMT,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-22,DAY,MI,MI 2,TOTAL,"55""/3in1, M70H, HKC,",131.0,WAITING_SMT,SMT대기,단일,coating error | waiting semi SMT,1,,5500.0,5100.0,5500.0,5100.0,0.0,800.0
