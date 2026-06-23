@@ -727,6 +727,8 @@ def parse_sheet(ws, process, date_str, shift):
     i=0
     while i<len(rows):
         row=rows[i]; c1=row[1] if len(row)>1 else None
+        if is_line_cell(c1) and "PS05" in str(c1).upper():
+                st.write(f"★PS05 발견: i={i}, row={[str(cell)[:20] for cell in row[:15]]}")
         if not is_line_cell(c1): i+=1; continue
         # UPH 테이블 행 스킵: 같은 행에 UPH 관련 텍스트가 있으면 라인이 아님
         if any("UPH" in str(cell or "").upper() for cell in row):
