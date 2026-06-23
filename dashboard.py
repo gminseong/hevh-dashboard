@@ -727,7 +727,11 @@ def parse_sheet(ws, process, date_str, shift):
     i=0
     while i<len(rows):
         row=rows[i]; c1=row[1] if len(row)>1 else None
-        if not is_line_cell(c1): i+=1; continue  
+        if not is_line_cell(c1): i+=1; continue
+        # UPH 테이블 행 스킵: 같은 행에 UPH 관련 텍스트가 있으면 라인이 아님
+        if any("UPH" in str(cell or "").upper() for cell in row):
+            i += 1
+            continue    
         line=normalize_line(str(c1))
         model_row=loss_row=cause_row=action_row=None
         target_row=actual_row=None
