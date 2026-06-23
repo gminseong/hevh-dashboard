@@ -809,6 +809,8 @@ def parse_sheet(ws, process, date_str, shift):
                 target_mi=target_ate=actual_mi=actual_ate=0.0
 
             for idx,slot in enumerate(slots):
+                if "PS05" in str(line) and "06-22" in str(date_str):
+                        st.write(f"PS05 6/22: shift={shift}, lv={lv}, slot={slot}")
                 lv=loss_vals[idx] if idx<len(loss_vals) else 0.0
                 if lv>0:
                     cs=slot_causes.get(slot,"")
@@ -816,8 +818,6 @@ def parse_sheet(ws, process, date_str, shift):
                         for s2 in slots:
                             if slot_causes.get(s2,""): cs=slot_causes[s2]; break
                     code,name=classify_loss_type(cs)
-                    if "PS05" in str(line) and "06-22" in str(date_str):
-                        st.write(f"PS05 6/22: shift={shift}, lv={lv}, slot={slot}")
                     records.append({
                         "date": date_str, "shift": shift, "process": process,
                         "line": line, "time_slot": slot, "model": models.get(slot, ""),
