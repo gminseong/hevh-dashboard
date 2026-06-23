@@ -727,8 +727,8 @@ def parse_sheet(ws, process, date_str, shift):
     i=0
     while i<len(rows):
         row=rows[i]; c1=row[1] if len(row)>1 else None
-        if "PS05" in str(c1).upper():
-                import json
+        if shift == "DAY" and is_line_cell(c1):
+            st.write(f"★DAY LINE: i={i}, c1=[{c1}]")
                 # j 탐색 미리 실행해서 loss_row 찾는지 확인
                 for jj in range(i+1, min(i+16, len(rows))):
                     rr = rows[jj]
