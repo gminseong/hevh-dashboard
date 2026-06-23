@@ -762,8 +762,11 @@ def parse_sheet(ws, process, date_str, shift):
             loss_vals = loss_vals[:len(slots)]
             loss_vals = [max(0.0, v) for v in loss_vals]
             total = sum(loss_vals)
-            if "PS05" in str(line) and "06-22" in str(date_str):
-                st.write(f"★PS05 6/22 TOTAL: shift={shift}, total={total}, loss_vals={loss_vals}")
+            if total == 0 and loss_row is not None:
+                has_any = any(isinstance(loss_row[c], (int, float)) and loss_row[c] not in (None, 0) for c in range(2, min(len(loss_row), 2+len(slots))))
+                if not has_any:
+                    i += 1
+                    continue
             models=extract_model_per_slot(model_row,slots)
             slot_causes=extract_slot_causes(cause_row,slots)
             cause_all=" | ".join(v for v in slot_causes.values() if v)
