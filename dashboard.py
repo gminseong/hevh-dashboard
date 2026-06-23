@@ -727,8 +727,16 @@ def parse_sheet(ws, process, date_str, shift):
     i=0
     while i<len(rows):
         row=rows[i]; c1=row[1] if len(row)>1 else None
-        if is_line_cell(c1) and "PS05" in str(c1).upper():
-                st.write(f"★PS05 발견: i={i}, row={[str(cell)[:20] for cell in row[:15]]}")
+        if "PS05" in str(c1).upper():
+                import json
+                # j 탐색 미리 실행해서 loss_row 찾는지 확인
+                for jj in range(i+1, min(i+16, len(rows))):
+                    rr = rows[jj]
+                    ll = str(rr[1] or "").strip().upper() if len(rr)>1 else ""
+                    st.write(f"★PS05 j={jj}: label=[{ll}], vals={[str(rr[c])[:10] for c in range(2, min(len(rr), 9))]}")
+                    if is_line_cell(rr[1] if len(rr)>1 else None) and jj>i+1:
+                        st.write(f"★PS05: 다음 라인 발견 j={jj}, 탐색 중단")
+                        break
         if not is_line_cell(c1): i+=1; continue
         # UPH 테이블 행 스킵: 같은 행에 UPH 관련 텍스트가 있으면 라인이 아님
         if any("UPH" in str(cell or "").upper() for cell in row):
