@@ -867,7 +867,7 @@ def parse_sheet(ws, process, date_str, shift):
                         "target_ate": round(target_ate, 0),
                         "actual_ate": round(actual_ate, 0),
                     })
-                    i += 1
+                        i += 1
             continue
                 else:
                     for sd in sub_details:
