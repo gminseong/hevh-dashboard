@@ -578,13 +578,17 @@ def split_loss_detail(loss_detail, total_min):
                      "type_name": "기타", "sub_idx": 1}]
         
         raw = str(loss_detail).strip()
+        # "|" 구분자로 여러 원인이 합쳐진 경우, 계획완료/문제없음 제거 후 나머지 사용
+        parts = [p.strip() for p in raw.split("|") if p.strip()]
+        filtered = [p for p in parts if classify_loss_type(p)[1] not in ("문제없음", "계획완료")]
+        if filtered:
+            raw = " | ".join(filtered)
+        elif parts:
+            return []
         
         code, name = classify_loss_type(raw)
         
-        # 문제없음/계획완료면 제거
-        if name in ("문제없음", "계획완료"):
-            return []
-        
+     
         return [{"detail": raw, "min": total_min, "type_code": code,
                  "type_name": name, "sub_idx": 1}]
     
