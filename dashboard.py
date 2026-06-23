@@ -839,9 +839,9 @@ def parse_sheet(ws, process, date_str, shift):
                 else:
                     top_type = max(type_mins, key=type_mins.get)
                     top_code = None
-                    for c, n, _ in LOSS_TYPE_RULES:
-                        if n == top_type:
-                            top_code = c
+                    for rule in LOSS_TYPE_RULES:
+                        if rule[1] == top_type:
+                            top_code = rule[0]
                             break
                     if not top_code:
                         top_code = "ETC"
