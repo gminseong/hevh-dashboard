@@ -310,7 +310,9 @@ PROC_COLOR = {
 
 LOSS_TYPE_RULES = [
     ("NO_PROBLEM",   "문제없음",           ["no problem","no probplem","no proplem",
-                                            "no probem","không vấn đề","3in1","3 in 1"]),
+                                            "no probem","no proble","no prob",
+                                            "không vấn đề","3in1","3 in 1",
+                                            "3in 1","3 in1"]),x`
     ("DONE_PLAN",    "계획완료",           ["done plan","hết plan","kết thúc",
                                             "het plan","ket thuc","sản xuất lúc"]),
     ("WAITING_SMT",  "SMT대기",            ["waiting semi","waiting pcb","waiting hs",
