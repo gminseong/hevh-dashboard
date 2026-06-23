@@ -814,7 +814,40 @@ def parse_sheet(ws, process, date_str, shift):
                         "target_ate":0,"actual_ate":0})
 
             if total > 0:
+            # ★ 시간대별로 각각 분류 → 최대 유형 선택
+            type_mins = {}
+            type_details = {}
+            for slot_key, slot_data in sorted(slots.items()):
+                if slot_key == "TOTAL":
+                    continue
+                s_min = slot_data.get("loss", 0)
+                s_cause = slot_data.get("cause", "")
+                if s_min <= 0 or not s_cause:
+                    continue
+                sd_list = split_loss_detail(s_cause, s_min)
+                if not sd_list:
+                    continue
+                sd = sd_list[0]
+                tname = sd["type_name"]
+                type_mins[tname] = type_mins.get(tname, 0) + s_min
+                if tname not in type_details:
+                    type_details[tname] = []
+                type_details[tname].append(s_cause)
+            
+            if not type_mins:
                 sub_details = split_loss_detail(cause_all, total)
+            else:
+                top_type = max(type_mins, key=type_mins.get)
+                top_code = None
+                for c, n, _ in LOSS_TYPE_RULES:
+                    if n == top_type:
+                        top_code = c
+                        break
+                if not top_code:
+                    top_code = "ETC"
+                sub_details = [{"detail": cause_all, "min": total,
+                                "type_code": top_code, "type_name": top_type,
+                                "sub_idx": 1}]
                 
                 # ★ 문제없음으로 전부 제거된 경우 스킵
                 if not sub_details:
