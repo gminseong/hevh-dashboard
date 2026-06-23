@@ -738,7 +738,7 @@ def parse_sheet(ws, process, date_str, shift):
             elif "TARGET" in lbl and target_row is None: target_row=r
             elif "ACTUAL" in lbl and actual_row is None: actual_row=r
 
-        if loss_row:
+        if loss_row and any(isinstance(loss_row[c], (int, float)) for c in range(2, min(len(loss_row), 2+len(slots)))):
             loss_vals=[]
             for c in range(2, len(loss_row)):
                 v = loss_row[c]
@@ -761,11 +761,7 @@ def parse_sheet(ws, process, date_str, shift):
             loss_vals = loss_vals[:len(slots)]
             loss_vals = [max(0.0, v) for v in loss_vals]
             total = sum(loss_vals)
-            if total == 0 and loss_row is not None:
-                has_any = any(isinstance(loss_row[c], (int, float)) and loss_row[c] not in (None, 0) for c in range(2, min(len(loss_row), 2+len(slots))))
-                if not has_any:
-                    i += 1
-                    continue
+            
             models=extract_model_per_slot(model_row,slots)
             slot_causes=extract_slot_causes(cause_row,slots)
             cause_all=" | ".join(v for v in slot_causes.values() if v)
