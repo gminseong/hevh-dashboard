@@ -725,8 +725,7 @@ def parse_sheet(ws, process, date_str, shift):
     while i<len(rows):
         row=rows[i]; c1=row[1] if len(row)>1 else None
         if not is_line_cell(c1): i+=1; continue
-        if not is_line_cell(c1): i+=1; continue
-        import streamlit as st
+        if "PS05" in str(c1): st.write(f"PS05 loss_row: {loss_row}")
         st.write(f"LINE: {c1}")    
         line=normalize_line(str(c1))
         model_row=loss_row=cause_row=action_row=None
@@ -746,8 +745,16 @@ def parse_sheet(ws, process, date_str, shift):
             for c in range(2,2+len(slots)):
                 try:
                     v=loss_row[c] if c<len(loss_row) else None
-                    mm=re.search(r'(\d+)\s*min',str(v or ""),re.I)
-                    loss_vals.append(float(mm.group(1)) if mm else parse_losstime(v))
+                    if v is None or str(v).strip() in ["", "None", "-", "—"]:
+                        loss_vals.append(0.0)
+                    else:
+                        nv = parse_losstime(v)
+                        if nv == 0.0:
+                            try:
+                                nv = float(v)
+                            except:
+                                pass
+                        loss_vals.append(max(0.0, nv))
                 except: loss_vals.append(0.0)
             while len(loss_vals)<len(slots): loss_vals.append(0.0)
             loss_vals=[max(0.0,v) for v in loss_vals]
