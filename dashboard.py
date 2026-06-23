@@ -848,6 +848,8 @@ def parse_sheet(ws, process, date_str, shift):
                 st.write(f"★PS05 TOTAL: shift={shift}, total={total}, loss_vals={loss_vals}")
             if total > 0:
                 sub_details = split_loss_detail(cause_all, total)
+            if "PS05" in line.upper() and total > 0:
+                st.write(f"★PS05 cause_all=[{cause_all}], sub_details={split_loss_detail(cause_all, total)}")    
                 
                 # ★ 문제없음으로 전부 제거된 경우 스킵
                 if not sub_details:
