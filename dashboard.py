@@ -1080,7 +1080,7 @@ def dashboard():
                         with st.spinner("저장..."): ok2=save_scrap_db(ms)
                         st.session_state["scrap_df"]=ms
                         st.success(f"OK SCRAP {len(ns):,}건")
-                    if nl.empty and ns.empty: st.error("파싱 실패")
+                    if nl.empty and ns.empty: st.warning("데이터 없음 — 스킵")
 
         if st.button("💾 DB 불러오기", use_container_width=True):
             with st.spinner("로드 중..."):
