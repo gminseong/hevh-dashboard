@@ -413,24 +413,23 @@ def analyze(ship_db, plan_date_cols, note_dict, prod_db=None):
             code_future_plan  = {ck: sum(q for d, q in dp.items() if d > today_norm) for ck, dp in code_daily_plan.items()}
 
             
-           # ⭐ 누적계획 계산
+           # ⭐ 누적계획 = ERP 기준으로 기준일까지 plan 컬럼 합산
             code_cumul_plan = {}
-            for ck in mdf['code'].unique():
-                fr = mdf[mdf['code'] == ck].iloc[0]
+            for ek in mdf['ERP'].unique():
+                fr = mdf[mdf['ERP'] == ek].iloc[0]
                 total = 0
-                for col in mdf.columns:  # ⭐ plan_date_cols 대신 mdf.columns 직접 순회
+                for col in mdf.columns:
                     dt = parse_date_from_col(col)
                     if dt is not None and dt.normalize() <= today_norm:
                         v = pd.to_numeric(fr.get(col, 0), errors='coerce')
                         total += int(v) if not pd.isna(v) else 0
-                code_cumul_plan[ck] = total
-
-            st.warning(f"today_norm={today_norm} | valid_plan={sorted([str(v) for v in valid_plan.values()])[:5]} | sample={dict(list(code_cumul_plan.items())[:2])}")
+                code_cumul_plan[ek] = total
 
             mdf[f'현재실적({today_str})'] = mdf['code'].map(code_total_actual).fillna(0).astype(int)
-            mdf['누적계획'] = mdf['code'].map(code_cumul_plan).fillna(0).astype(int)
+            mdf['누적계획'] = mdf['ERP'].map(code_cumul_plan).fillna(0).astype(int)
             mdf['누적실적'] = mdf[f'현재실적({today_str})']
             mdf['누적차이'] = mdf['누적실적'] - mdf['누적계획']
+            mdf['_미래계획'] = mdf['code'].map(code_future_plan).fillna(0).astype(int)
 
             for ck in mdf['code'].unique():
                 idxs       = mdf[mdf['code'] == ck].index.tolist()
