@@ -412,10 +412,7 @@ def analyze(ship_db, plan_date_cols, note_dict, prod_db=None):
             code_total_actual = {ck: sum(erp_total_actual.get(e, 0) for e in ev) for ck, ev in code_erp_map.items()}
             code_future_plan  = {ck: sum(q for d, q in dp.items() if d > today_norm) for ck, dp in code_daily_plan.items()}
 
-            # ⭐ 디버그
-            st.warning(f"today_norm: {today_norm}")
-            st.warning(f"valid_plan dates: {sorted(valid_plan.values())[:5]}")
-            st.warning(f"code_cumul_plan sample: {dict(list(code_cumul_plan.items())[:3])}")
+            
             # ⭐ 누적계획 = Plan&actual 컬럼 중 today_norm 이하 날짜 합산
             code_cumul_plan = {}
             for ck in mdf['code'].unique():
