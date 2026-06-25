@@ -418,7 +418,8 @@ def analyze(ship_db, plan_date_cols, note_dict, prod_db=None):
             for ck in mdf['code'].unique():
                 fr = mdf[mdf['code'] == ck].iloc[0]
                 total = 0
-                for col, dt in valid_plan.items():
+                for col in mdf.columns:  # ⭐ plan_date_cols 대신 mdf.columns 직접 순회
+                    dt = parse_date_from_col(col)
                     if dt is not None and dt.normalize() <= today_norm:
                         v = pd.to_numeric(fr.get(col, 0), errors='coerce')
                         total += int(v) if not pd.isna(v) else 0
