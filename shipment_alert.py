@@ -285,10 +285,13 @@ def save_shipment_db(df, note_dict):
 def load_shipment_db():
     df = _gh_load_csv("data/shipment_db.csv")
     if df.empty: return pd.DataFrame(), [], {}
-    p_cols = [c for c in df.columns
-              if ('plan' in str(c).lower() or 'actual' in str(c).lower())
-              and any(ch.isdigit() for ch in str(c))
-              and 'ttl' not in str(c).lower()]
+    p_cols = []
+    for c in df.columns:
+        cl = str(c).lower().strip()
+        if ('plan' in cl or 'actual' in cl) and any(ch.isdigit() for ch in cl):
+            if 'ttl' not in cl: p_cols.append(c)
+        elif re.search(r'202\d[-/]\d{1,2}[-/]\d{1,2}', cl):
+            p_cols.append(c)
     note_df = _gh_load_csv("data/note_db.csv")
     if not note_df.empty and 'ERP' in note_df.columns and 'Note' in note_df.columns:
         note_dict = dict(zip(note_df['ERP'], note_df['Note'].fillna('')))
