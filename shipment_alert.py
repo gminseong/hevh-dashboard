@@ -91,15 +91,22 @@ def classify(x):
 
 def parse_date_from_col(col_name, year=2026):
     try:
-        s = str(col_name).lower()
-        # ⭐ 전체 날짜 형식 먼저 시도 (2026-06-23)
+        s = str(col_name).strip()
+        # ⭐ 1순위: pandas가 직접 날짜 파싱 (2026-06-23 00:00:00 형태)
         ts = pd.to_datetime(s, errors='coerce')
-        if not pd.isna(ts): return ts.normalize()
-        # 기존 로직
-        s = re.sub(r'(plan|actual|cut\s*off|cargo)[\.\s_&]*', '', s).strip()
-        nums = re.findall(r'\d+', s)
+        if not pd.isna(ts):
+            return ts.normalize()
+        # ⭐ 2순위: 문자열에서 숫자 추출
+        s2 = s.lower()
+        s2 = re.sub(r'(plan|actual|cut\s*off|cargo)[\.\s_&]*', '', s2).strip()
+        nums = re.findall(r'\d+', s2)
+        if len(nums) >= 3:
+            # 연도 포함 (2026, 6, 23)
+            yr, m2, d2 = int(nums[0]), int(nums[1]), int(nums[2])
+            if 2020 <= yr <= 2030 and 1 <= m2 <= 12 and 1 <= d2 <= 31:
+                return pd.Timestamp(yr, m2, d2)
         if len(nums) >= 2:
-            m2, d2 = int(nums[-2]), int(nums[-1])  # ⭐ 마지막 2개 사용
+            m2, d2 = int(nums[-2]), int(nums[-1])
             if 1 <= m2 <= 12 and 1 <= d2 <= 31:
                 return pd.Timestamp(year, m2, d2)
         return None
