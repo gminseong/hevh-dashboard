@@ -92,16 +92,16 @@ def classify(x):
 def parse_date_from_col(col_name, year=2026):
     try:
         s = str(col_name).lower()
+        # ⭐ 전체 날짜 형식 먼저 시도 (2026-06-23)
+        ts = pd.to_datetime(s, errors='coerce')
+        if not pd.isna(ts): return ts.normalize()
+        # 기존 로직
         s = re.sub(r'(plan|actual|cut\s*off|cargo)[\.\s_&]*', '', s).strip()
         nums = re.findall(r'\d+', s)
         if len(nums) >= 2:
-            m2, d2 = int(nums[0]), int(nums[1])
+            m2, d2 = int(nums[-2]), int(nums[-1])  # ⭐ 마지막 2개 사용
             if 1 <= m2 <= 12 and 1 <= d2 <= 31:
                 return pd.Timestamp(year, m2, d2)
-        elif len(nums) == 1:
-            d2 = int(nums[0])
-            if 1 <= d2 <= 31:
-                return pd.Timestamp(year, 6, d2)
         return None
     except: return None
 
