@@ -300,6 +300,8 @@ def load_shipment_db():
 
 
 def analyze(ship_db, plan_date_cols, note_dict, prod_db=None):
+    st.warning(f"plan_date_cols: {plan_date_cols}")
+    st.warning(f"ship_db columns: {list(ship_db.columns)}")
     mdf = ship_db.copy()
     mdf['MODEL_TYPE'] = mdf['ERP'].apply(classify)
     if note_dict:
