@@ -250,8 +250,12 @@ def load_shipment_rev(file_bytes):
     plan_date_cols = []
     for c in df.columns:
         cl = str(c).lower().strip()
+        # plan/actual 포함 컬럼
         if ('plan' in cl or 'actual' in cl) and any(ch.isdigit() for ch in cl):
             if 'ttl' in cl: continue
+            plan_date_cols.append(c)
+        # ⭐ 순수 날짜 형식 컬럼 (2026-06-23 00:00:00)
+        elif re.search(r'202\d[-/]\d{1,2}[-/]\d{1,2}', cl):
             plan_date_cols.append(c)
     if 'ERP' not in df.columns:
         for col in df.columns:
