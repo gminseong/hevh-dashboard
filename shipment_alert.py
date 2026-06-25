@@ -307,8 +307,9 @@ def load_shipment_db():
 
 
 def analyze(ship_db, plan_date_cols, note_dict, prod_db=None):
-    st.warning(f"plan_date_cols: {plan_date_cols}")
-    st.warning(f"ship_db columns: {list(ship_db.columns)}")
+    st.warning(f"code_cumul_plan sample: {dict(list(code_cumul_plan.items())[:3])}")
+    st.warning(f"today_norm: {today_norm}")
+    st.warning(f"valid_plan dates: {list(valid_plan.values())[:5]}")
     mdf = ship_db.copy()
     mdf['MODEL_TYPE'] = mdf['ERP'].apply(classify)
     if note_dict:
