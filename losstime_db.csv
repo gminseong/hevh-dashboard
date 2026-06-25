@@ -2495,6 +2495,20 @@ Cover khung giờ sau",2100.0,1963.0,0.0,0.0,0.0,0.0
 2026-06-22,DAY,MI,MI 2,A,"55""/3in1, M70H, HKC,",71.0,SILCOAT,Silicon/Coating불량,복합,coating error,1,,0.0,0.0,0.0,0.0,0.0,0.0
 2026-06-22,DAY,MI,MI 2,D,"55""/3in1, M70H, HKC,",60.0,WAITING_SMT,SMT대기,복합,waiting semi SMT,1,,0.0,0.0,0.0,0.0,0.0,0.0
 2026-06-22,DAY,MI,MI 2,TOTAL,"55""/3in1, M70H, HKC,",131.0,WAITING_SMT,SMT대기,단일,coating error | waiting semi SMT,1,,5500.0,5100.0,5500.0,5100.0,0.0,800.0
+2026-06-22,DAY,SMT,PS03,A,L55F70NA_HHS,20.0,UPH,UPH미달,단일,Line không đáp ứng được UPH,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-22,DAY,SMT,PS03,C,L55F70NA_HHS,10.0,UPH,UPH미달,단일,Line không đáp ứng được UPH,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-22,DAY,SMT,PS03,TOTAL,L55F70NA_HHS,30.0,UPH,UPH미달,단일,Line không đáp ứng được UPH | Line không đáp ứng được UPH | Line không đáp ứng được UPH,1,,1375.0,1250.0,0.0,0.0,0.0,0.0
+2026-06-22,DAY,SMT,PS05,A,L75S7_HVD,30.0,MOUTER,Mouter불량,복합,"máy mounter #1 kẹt board , lỗi pickup mounter #3",1,kỹ thuật điều chỉnh  | kỹ thuật điều chỉnh ,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-22,DAY,SMT,PS05,B,L75S7_HVD,13.0,MOUTER,Mouter불량,복합,Printer nghẹt keo mounter kẹt board,1,kỹ thuật điều chỉnh  | kỹ thuật điều chỉnh ,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-22,DAY,SMT,PS05,TOTAL,L75S7_HVD,43.0,MOUTER,Mouter불량,단일,"máy mounter #1 kẹt board , lỗi pickup mounter #3 | Printer nghẹt keo mounter kẹt board",1,kỹ thuật điều chỉnh  | kỹ thuật điều chỉnh ,2000.0,1920.0,0.0,0.0,0.0,0.0
+2026-06-22,DAY,SMT,PS08,B,L55E70A_HVD,32.0,NEW_OP,신규OP교육,복합,Lỗi feeder / OP mới,1,kỹ thuật điều chỉnh  | kỹ thuật điều chỉnh ,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-22,DAY,SMT,PS08,C,L55E70A_HVD,40.0,FEEDER,SMT Feeder불량,복합,"Lỗi treo máy mounter #1 từ 12:05 - 12:30, lỗi feeder mounter #3",1,kỹ thuật điều chỉnh  | kỹ thuật điều chỉnh ,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-22,DAY,SMT,PS08,TOTAL,L55E70A_HVD,72.0,NEW_OP,신규OP교육,단일,"Lỗi feeder / OP mới | Lỗi treo máy mounter #1 từ 12:05 - 12:30, lỗi feeder mounter #3",1,kỹ thuật điều chỉnh  | kỹ thuật điều chỉnh ,1375.0,1386.0,0.0,0.0,0.0,0.0
+2026-06-22,DAY,SMT,PS11,B,L55S7_HVD,108.0,CHANGE_MODEL,모델교체,복합,Change model từ 8:25 - 11:00 Lỗi treo máy mounter #2,1,kỹ thuật điều chỉnh | kỹ thuật điều chỉnh | kỹ thuật điều chỉnh | kỹ thuật điều chỉnh,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-22,DAY,SMT,PS11,C,L55S7_HVD,45.0,FEEDER,SMT Feeder불량,복합,"lỗi lệch linh kiện máy mounter #3 , lỗi feeder mounter #2",1,kỹ thuật điều chỉnh | kỹ thuật điều chỉnh | kỹ thuật điều chỉnh | kỹ thuật điều chỉnh,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-22,DAY,SMT,PS11,D,L55S7_HVD,24.0,MOUTER,Mouter불량,복합,"Kẹt board máy printer , op sai thao tác",1,kỹ thuật điều chỉnh | kỹ thuật điều chỉnh | kỹ thuật điều chỉnh | kỹ thuật điều chỉnh,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-22,DAY,SMT,PS11,E,L55S7_HVD,10.0,MOUTER,Mouter불량,복합,Lỗi pickup,1,kỹ thuật điều chỉnh | kỹ thuật điều chỉnh | kỹ thuật điều chỉnh | kỹ thuật điều chỉnh,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-22,DAY,SMT,PS11,TOTAL,L83CA9N_HVD,187.0,CHANGE_MODEL,모델교체,단일,"Dừng lúc 8:25 change model L55S7_HVD(3in1) | Change model từ 8:25 - 11:00 Lỗi treo máy mounter #2 | lỗi lệch linh kiện máy mounter #3 , lỗi feeder mounter #2 | Kẹt board máy printer , op sai thao tác | Lỗi pickup | Lỗi pickup",1,kỹ thuật điều chỉnh | kỹ thuật điều chỉnh | kỹ thuật điều chỉnh | kỹ thuật điều chỉnh,2530.0,1646.0,0.0,0.0,0.0,0.0
 2026-06-22,NIGHT,AI,SA01,G,L65S7,26.0,CHANGE_MODEL,모델교체,복합,Change model 55HVD từ 23:00 - 00:30,1,kỹ thuật vừa chạy vừa xử lý,0.0,0.0,0.0,0.0,0.0,0.0
 2026-06-22,NIGHT,AI,SA01,H,L55S7,18.0,CHANGE_MODEL,모델교체,복합,Change model 55HVD từ 23:00 - 00:30,1,kỹ thuật vừa chạy vừa xử lý,0.0,0.0,0.0,0.0,0.0,0.0
 2026-06-22,NIGHT,AI,SA01,I,L55S7,15.0,INSERT_XGZ,XGZ불량,복합,"Rad, XGZ cắm rớt nhiều",1,kỹ thuật vừa chạy vừa xử lý,0.0,0.0,0.0,0.0,0.0,0.0
@@ -2534,3 +2548,20 @@ Cover khung giờ sau",2100.0,1963.0,0.0,0.0,0.0,0.0
 2026-06-22,NIGHT,MI,MI 7,F,L83CA9N_HVD,54.0,AOI_SAOI,AOI/S-AOI불량,복합,"AOI program error, Bridge the components behind the Wave",1,,0.0,0.0,0.0,0.0,0.0,0.0
 2026-06-22,NIGHT,MI,MI 7,I,L83CA9N_HVD,11.0,WAITING_SMT,SMT대기,복합,"clear stock shimnet ,waiting box packing warehouse",1,,0.0,0.0,0.0,0.0,0.0,0.0
 2026-06-22,NIGHT,MI,MI 7,TOTAL,L83CA9N_HVD,65.0,WAITING_SMT,SMT대기,단일,"AOI program error, Bridge the components behind the Wave | clear stock shimnet ,waiting box packing warehouse",1,,3200.0,2644.0,3200.0,2644.0,3200.0,1540.0
+2026-06-22,NIGHT,SMT,PS01,F,L55E70A_HVD,15.0,MAGAZINE,Magazine부족,복합,Lỗi magazine inloader,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-22,NIGHT,SMT,PS01,H,L55E70A_HVD,23.0,INLOADER,Inloader불량,복합,Kẹt boar inloader,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-22,NIGHT,SMT,PS01,J,L55E70A_HVD,6.0,MAGAZINE,Magazine부족,복합,Lỗi magazine inloader,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-22,NIGHT,SMT,PS01,TOTAL,L55E70A_HVD,44.0,MAGAZINE,Magazine부족,단일,Lỗi magazine inloader | Kẹt boar inloader,1,,1220.0,1220.0,0.0,0.0,0.0,0.0
+2026-06-22,NIGHT,SMT,PS03,F,L55F70NA_HHS,47.0,UPH,UPH미달,단일,Line không đáp ứng được UPH,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-22,NIGHT,SMT,PS03,G,L55F70NA_HHS,24.0,UPH,UPH미달,단일,Line không đáp ứng được UPH,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-22,NIGHT,SMT,PS03,H,L55F70NA_HHS,24.0,UPH,UPH미달,단일,Line không đáp ứng được UPH,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-22,NIGHT,SMT,PS03,I,L55F70NA_HHS,9.0,UPH,UPH미달,단일,Line không đáp ứng được UPH,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-22,NIGHT,SMT,PS03,TOTAL,L55F70NA_HHS,104.0,UPH,UPH미달,단일,Line không đáp ứng được UPH | Line không đáp ứng được UPH | Line không đáp ứng được UPH | Line không đáp ứng được UPH,1,,1260.0,1190.0,0.0,0.0,0.0,0.0
+2026-06-22,NIGHT,SMT,PS08,J,L55E70A_HVD,11.0,ETC,기타,단일,,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-22,NIGHT,SMT,PS08,TOTAL,L55E70A_HVD,11.0,ETC,기타,단일,,1,,1320.0,1320.0,0.0,0.0,0.0,0.0
+2026-06-22,NIGHT,SMT,PS11,G,L55S7_HVD,52.0,CHANGE_MODEL,모델교체,복합,Change model L65CA9N-HVD từ 23:00-00:00,1,kỹ thuật đang điều chỉnh | đối ứng change model L55CA9N-HVD PLAN PS04 NGÀY 23/6,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-22,NIGHT,SMT,PS11,H,L65CA9N_HVD,110.0,PRINTER,Printer불량,복합,Lỗi keo priter + lệch mising lk nhiều vị trí từ 23:00-01:48,1,kỹ thuật đang điều chỉnh | đối ứng change model L55CA9N-HVD PLAN PS04 NGÀY 23/6,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-22,NIGHT,SMT,PS11,I,L65CA9N_HVD,75.0,AI_STOCK,AI자재부족,복합,AI hết stock từ 02:40-…,1,kỹ thuật đang điều chỉnh | đối ứng change model L55CA9N-HVD PLAN PS04 NGÀY 23/6,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-22,NIGHT,SMT,PS11,J,L65CA9N_HVD,96.0,AI_STOCK,AI자재부족,복합,AI hết stock từ 02:40-…,1,kỹ thuật đang điều chỉnh | đối ứng change model L55CA9N-HVD PLAN PS04 NGÀY 23/6,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-22,NIGHT,SMT,PS11,K,L55CA9N-HVD,90.0,CHANGE_MODEL,모델교체,복합,Kỹ thuật setup thiết bị,1,kỹ thuật đang điều chỉnh | đối ứng change model L55CA9N-HVD PLAN PS04 NGÀY 23/6,0.0,0.0,0.0,0.0,0.0,0.0
+2026-06-22,NIGHT,SMT,PS11,TOTAL,L55S7_HVD,423.0,AI_STOCK,AI자재부족,단일,Change model L65CA9N-HVD từ 23:00-00:00 | Lỗi keo priter + lệch mising lk nhiều vị trí từ 23:00-01:48 | AI hết stock từ 02:40-… | AI hết stock từ 02:40-… | Kỹ thuật setup thiết bị,1,kỹ thuật đang điều chỉnh | đối ứng change model L55CA9N-HVD PLAN PS04 NGÀY 23/6,1723.0,800.0,0.0,0.0,0.0,0.0
