@@ -413,7 +413,7 @@ def analyze(ship_db, plan_date_cols, note_dict, prod_db=None):
             code_future_plan  = {ck: sum(q for d, q in dp.items() if d > today_norm) for ck, dp in code_daily_plan.items()}
 
             
-            # ⭐ 누적계획 = Plan&actual 컬럼 중 today_norm 이하 날짜 합산
+           # ⭐ 누적계획 계산
             code_cumul_plan = {}
             for ck in mdf['code'].unique():
                 fr = mdf[mdf['code'] == ck].iloc[0]
@@ -424,15 +424,12 @@ def analyze(ship_db, plan_date_cols, note_dict, prod_db=None):
                         total += int(v) if not pd.isna(v) else 0
                 code_cumul_plan[ck] = total
 
-            mdf[f'현재실적({today_str})'] = mdf['code'].map(code_total_actual).fillna(0).astype(int)
-            mdf['누적계획']               = mdf['code'].map(code_cumul_plan).fillna(0).astype(int)
-            mdf['누적실적']               = mdf[f'현재실적({today_str})']
-            mdf['누적차이']               = mdf['누적실적'] - mdf['누적계획']  # ⭐ 실적차이 대체
-            mdf['_미래계획']              = mdf['code'].map(code_future_plan).fillna(0).astype(int)
+            st.warning(f"today_norm={today_norm} | valid_plan={sorted([str(v) for v in valid_plan.values()])[:5]} | sample={dict(list(code_cumul_plan.items())[:2])}")
 
-            mdf['예상제품재고_실적'] = 0.0
-            mdf['Cutoff시점재고']   = 0.0
-            mdf['_부족2']           = 0.0
+            mdf[f'현재실적({today_str})'] = mdf['code'].map(code_total_actual).fillna(0).astype(int)
+            mdf['누적계획'] = mdf['code'].map(code_cumul_plan).fillna(0).astype(int)
+            mdf['누적실적'] = mdf[f'현재실적({today_str})']
+            mdf['누적차이'] = mdf['누적실적'] - mdf['누적계획']
 
             for ck in mdf['code'].unique():
                 idxs       = mdf[mdf['code'] == ck].index.tolist()
