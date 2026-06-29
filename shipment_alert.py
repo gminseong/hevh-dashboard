@@ -424,6 +424,17 @@ def analyze(ship_db, plan_date_cols, note_dict, prod_db=None):
                         total += int(v) if not pd.isna(v) else 0
                 code_cumul_plan[ek] = total
 
+            # code_cumul_plan 계산 직후 추가
+            target_erp = '0137556089CA'  # L55CA9N
+            fr = mdf[mdf['ERP'] == target_erp].iloc[0]
+            debug_vals = {}
+            for col in mdf.columns:
+                dt = parse_date_from_col(col)
+                if dt is not None and dt.normalize() <= today_norm:
+                    v = pd.to_numeric(fr.get(col, 0), errors='coerce')
+                    debug_vals[col] = v
+            st.warning(f"L55CA9N plan cols: {debug_vals}")                    
+
             mdf[f'현재실적({today_str})'] = mdf['code'].map(code_total_actual).fillna(0).astype(int)
             mdf['누적계획'] = mdf['ERP'].map(code_cumul_plan).fillna(0).astype(int)
             mdf['누적실적'] = mdf[f'현재실적({today_str})']
