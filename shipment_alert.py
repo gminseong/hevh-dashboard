@@ -403,7 +403,7 @@ def analyze(ship_db, plan_date_cols, note_dict, prod_db=None):
             daily = valid.groupby(['ERP', valid['TRAN_WORK_DATE'].dt.normalize()])['QTY'].sum().reset_index()
             daily.columns = ['ERP', 'DATE', 'QTY']
             daily_dict_erp   = {(r.ERP, r.DATE): r.QTY for r in daily.itertuples()}
-            erp_after_actual = valid[valid['TRAN_WORK_DATE'].dt.normalize() > stock_base].groupby('ERP')['QTY'].sum().to_dict()
+            erp_after_actual = valid[valid['TRAN_WORK_DATE'].dt.normalize() >= stock_base].groupby('ERP')['QTY'].sum().to_dict()
             erp_total_actual = valid.groupby('ERP')['QTY'].sum().to_dict()
 
             code_after_actual = {ck: sum(erp_after_actual.get(e, 0) for e in ev) for ck, ev in code_erp_map.items()}
