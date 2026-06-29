@@ -415,12 +415,13 @@ def analyze(ship_db, plan_date_cols, note_dict, prod_db=None):
            # ⭐ 누적계획 = ERP 기준으로 기준일까지 plan 컬럼 합산
             code_cumul_plan = {}
             for ek in mdf['ERP'].unique():
-                fr = mdf[mdf['ERP'] == ek].iloc[0]
+                rows = mdf[mdf['ERP'] == ek]
                 total = 0
                 for col in mdf.columns:
                     dt = parse_date_from_col(col)
                     if dt is not None and dt.normalize() <= today_norm:
-                        v = pd.to_numeric(fr.get(col, 0), errors='coerce')
+                        # ⭐ 첫 행이 아닌 최대값 사용 (plan은 모든 행에 동일하게 있어야 함)
+                        v = pd.to_numeric(rows[col], errors='coerce').max()
                         total += int(v) if not pd.isna(v) else 0
                 code_cumul_plan[ek] = total
 
