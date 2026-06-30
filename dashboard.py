@@ -816,8 +816,7 @@ def parse_sheet(ws, process, date_str, shift):
                 loss_vals = loss_vals[:len(slots)]
                 loss_vals = [max(0.0, v) for v in loss_vals]
                 total = sum(loss_vals)
-            
-            total = sum(loss_vals)
+           
             if "PS05" in line.upper():
                 st.write(f"★PS05 after-total: total={total}")
             if total == 0 and all(v == 0.0 for v in loss_vals):
