@@ -202,7 +202,7 @@ section[data-testid="stSidebar"] .block-container {
     background-color: #f1f5f9 !important;
 }
 section[data-testid="stSidebar"] * {
-    color: #111827 !important;
+    color: #f1f5f9 !important;
 }
 section[data-testid="stSidebar"] hr {
     border-color: #cbd5e1 !important;
