@@ -978,7 +978,7 @@ def parse_files(uploaded_files):
    
     loss_records=[]; scrap_list=[]
     prog=st.progress(0); status=st.empty()
-    for fi, uf in enumerate(uploaded):  # uploaded_files → uploaded
+    for fi, uf in enumerate(uploaded_files):
         fn=uf.name; process=detect_process(fn)
         if process=="UNKNOWN":
             status.warning(f"skip: {fn}")
