@@ -975,6 +975,7 @@ def parse_scrap_file(uploaded_file):
     return pd.DataFrame(records)
 
 def parse_files(uploaded_files):
+    uploaded = list(uploaded)  # ← 이 줄 추가
     for f in uploaded:
         st.write(f"★파일: {f.name}")
     loss_records=[]; scrap_list=[]
@@ -1127,7 +1128,7 @@ def dashboard():
                 if st.button("🚀 분석 / 누적",type="primary",
                              use_container_width=True):
                     with st.spinner("처리 중..."):
-                        nl,ns=parse_files(uploaded)
+                        nl, ns = parse_files(list(uploaded))
                     if not nl.empty:
                         ex=load_db(); mg=merge_db(ex,nl)
                         with st.spinner("저장..."): ok=save_db(mg)
