@@ -770,27 +770,53 @@ def parse_sheet(ws, process, date_str, shift):
             elif "ACTUAL" in lbl and actual_row is None: actual_row=r
 
         if loss_row:
-            loss_vals=[]
-            for c in range(2, len(loss_row)):
-                v = loss_row[c]
-                if v is None or str(v).strip() == "":
-                    loss_vals.append(0.0)
-                elif isinstance(v, (int, float)):
-                    loss_vals.append(max(0.0, float(v)))
-                else:
-                    s = str(v).strip()
-                    mm = re.search(r'(\d+)\s*min', s, re.I)
-                    if mm:
-                        loss_vals.append(float(mm.group(1)))
+            if process == "MI":
+                loss_vals = []
+                for c in range(2, len(loss_row)):
+                    v = loss_row[c]
+                    if v is None or str(v).strip() == "":
+                        loss_vals.append(0.0)
+                    elif isinstance(v, (int, float)):
+                        loss_vals.append(max(0.0, float(v)))
                     else:
-                        pv = parse_losstime(v)
-                        if pv > 0:
-                            loss_vals.append(pv)
+                        s = str(v).strip()
+                        mm = re.search(r'(\d+)\s*min', s, re.I)
+                        if mm:
+                            loss_vals.append(float(mm.group(1)))
                         else:
-                            break
-            while len(loss_vals) < len(slots): loss_vals.append(0.0)
-            loss_vals = loss_vals[:len(slots)]
-            loss_vals = [max(0.0, v) for v in loss_vals]
+                            pv = parse_losstime(v)
+                            if pv > 0:
+                                loss_vals.append(pv)
+                            else:
+                                break
+                while len(loss_vals) < len(slots): loss_vals.append(0.0)
+                loss_vals = loss_vals[:len(slots)]
+                loss_vals = [max(0.0, v) for v in loss_vals]
+                total = loss_vals[0] if loss_vals else 0.0
+            else:
+                loss_vals = []
+                for c in range(2, len(loss_row)):
+                    v = loss_row[c]
+                    if v is None or str(v).strip() == "":
+                        loss_vals.append(0.0)
+                    elif isinstance(v, (int, float)):
+                        loss_vals.append(max(0.0, float(v)))
+                    else:
+                        s = str(v).strip()
+                        mm = re.search(r'(\d+)\s*min', s, re.I)
+                        if mm:
+                            loss_vals.append(float(mm.group(1)))
+                        else:
+                            pv = parse_losstime(v)
+                            if pv > 0:
+                                loss_vals.append(pv)
+                            else:
+                                break
+                while len(loss_vals) < len(slots): loss_vals.append(0.0)
+                loss_vals = loss_vals[:len(slots)]
+                loss_vals = [max(0.0, v) for v in loss_vals]
+                total = sum(loss_vals)
+            
             total = sum(loss_vals)
             if "PS05" in line.upper():
                 st.write(f"★PS05 after-total: total={total}")
