@@ -835,7 +835,26 @@ def parse_sheet(ws, process, date_str, shift):
                 target_tot = 0.0; actual_tot = 0.0
                 target_mi = 0.0; actual_mi = 0.0    # ← 이 줄 추가
                 target_ate = 0.0; actual_ate = 0.0  # ← 이 줄 추가
-                
+                for idx, slot in enumerate(slots):        # 836
+                    lv = loss_vals[idx] if idx < len(loss_vals) else 0.0   # 837
+                    cs = ""  # ← 반드시 초기화               # 838
+                    if lv > 0:                             # 839
+                        cs = slot_causes.get(slot, "")     # 840
+                        if not cs:                         # 841
+                            for s2 in slots:              # 842
+                                if slot_causes.get(s2, ""): cs = slot_causes[s2]; break  # 843
+                        code, name = classify_loss_type(cs) # 844
+                        records.append({                   # 845
+                            "date": date_str, "shift": shift, "process": process,  # 846
+                            "line": line, "time_slot": slot, "model": models.get(slot, ""),  # 847
+                            "loss_min": round(lv, 1), "loss_type_code": code,  # 848
+                            "loss_type_name": name, "complexity": complexity,  # 849
+                            "loss_detail": cs, "sub_idx": 1, "action": action,  # 850
+                            "target": 0, "actual": 0,     # 851
+                            "target_mi": 0, "actual_mi": 0,  # 852
+                            "target_ate": 0, "actual_ate": 0,  # 853
+                        }) 
+                        
             if total > 0:
                 sub_details = split_loss_detail(cause_all, total)
               
@@ -989,7 +1008,7 @@ def merge_db(existing, new_df):
     if existing.empty: return new_df
     if new_df.empty:   return existing
     combined = pd.concat([existing, new_df], ignore_index=True)
-    key = ["date", "shift", "process", "line", "time_slot", "sub_idx"]
+    key = ["date", "shift", "process", "line", "time_slot"]
     combined = combined.drop_duplicates(
         subset=[c for c in key if c in combined.columns], keep="last")
     return combined.sort_values(
