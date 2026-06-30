@@ -1090,6 +1090,9 @@ def reset_all():
         if k in st.session_state: del st.session_state[k]
 
 # ← 여기에 추가
+def parse_files(uploaded):
+    uploaded = list(uploaded)
+    st.write(f"★parse_files 호출: 파일수={len(uploaded)}, 파일명={[f.name for f in uploaded]}")
 def get_ach_color(v):
     if v >= 100:  return "#16a34a"
     elif v >= 90: return "#475569"
