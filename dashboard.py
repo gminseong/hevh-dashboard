@@ -210,6 +210,11 @@ section[data-testid="stSidebar"] * {
 section[data-testid="stSidebar"] div[data-testid="stButton"] button {
     color: #1e293b !important;
 }
+/* 분석/누적 primary 버튼만 흰색 */
+section[data-testid="stSidebar"] div[data-testid="stButton"] button[kind="primary"] {
+    color: #ffffff !important;
+}
+
 section[data-testid="stSidebar"] hr {
     border-color: #cbd5e1 !important;
 }
