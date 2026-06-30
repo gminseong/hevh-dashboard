@@ -793,6 +793,8 @@ def parse_sheet(ws, process, date_str, shift):
                 loss_vals = loss_vals[:len(slots)]
                 loss_vals = [max(0.0, v) for v in loss_vals]
                 total = loss_vals[0] if loss_vals else 0.0
+                if process == "MI" and total > 100:
+                    st.write(f"★MI debug: line={line}, loss_vals={loss_vals[:5]}, total={total}")
             else:
                 loss_vals = []
                 for c in range(2, len(loss_row)):
