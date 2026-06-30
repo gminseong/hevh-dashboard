@@ -1461,6 +1461,35 @@ def dashboard():
             if line_df.empty:
                 st.warning("데이터 없음")
             else:
+                # ── 공정 전체 요약 카드
+                tot_proc = round(line_df["loss_min"].sum(), 1)
+                c1,c2,c3 = st.columns(3)
+                c1.metric("📦 공정 전체 누계 손실", f"{tot_proc:,.1f}분")
+                c2.metric("⏱ 손실 시간", f"{round(tot_proc/60,1)}h")
+                c3.metric("📅 발생 일수", f"{line_df['date'].nunique()}일")
+                
+                st.markdown("<br>", unsafe_allow_html=True)
+                
+                # ── 손실 유형별 집계 바차트 (전 라인 합산)
+                lt_proc = (line_df.groupby("loss_type_name")["loss_min"]
+                           .sum().reset_index()
+                           .sort_values("loss_min", ascending=True))
+                lt_proc["loss_min"] = lt_proc["loss_min"].round(1)
+                fig_lt = px.bar(lt_proc, x="loss_min", y="loss_type_name",
+                                orientation="h",
+                                color="loss_type_name",
+                                color_discrete_map=TYPE_COLOR,
+                                height=400, text="loss_min",
+                                labels={"loss_min":"손실(분)","loss_type_name":"유형"})
+                fig_lt.update_traces(texttemplate="%{text:,.0f}", textposition="outside")
+                fig_lt.update_layout(margin=dict(l=0,r=0,t=30,b=0),
+                                     showlegend=False,
+                                     xaxis=dict(rangemode="tozero"))
+                st.markdown("##### 손실 유형별 집계 (전 라인)")
+                st.plotly_chart(fig_lt, use_container_width=True)
+                
+                st.markdown("<hr class='section-divider'>", unsafe_allow_html=True)
+                
                 st.markdown("##### 라인별 누계 손실")
                 ls2=(line_df.groupby(["process","line"])["loss_min"]
                      .sum().reset_index().sort_values("loss_min",ascending=False))
