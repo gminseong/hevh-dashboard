@@ -791,7 +791,10 @@ def parse_sheet(ws, process, date_str, shift):
             while len(loss_vals) < len(slots): loss_vals.append(0.0)
             loss_vals = loss_vals[:len(slots)]
             loss_vals = [max(0.0, v) for v in loss_vals]
-            total = sum(loss_vals)
+            if process == "MI":
+                total = loss_vals[0] if loss_vals else 0.0   # ← 이 줄만 추가
+            else:
+                total = sum(loss_vals)
             if "PS05" in line.upper():
                 st.write(f"★PS05 after-total: total={total}")
             if total == 0 and all(v == 0.0 for v in loss_vals):
