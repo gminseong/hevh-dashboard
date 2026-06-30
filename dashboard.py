@@ -341,7 +341,7 @@ LOSS_TYPE_RULES = [
     
     ("NEW_OP",       "신규OP교육",         ["new op","đào tạo","op mới","cover ca","cover work"]),
     ("NEW_MODEL",    "신규모델",           ["lần đầu","model mới","first time",
-                                            "new code","setup","set up",
+                                            "new code","setup","set up","new code setup prog",
                                             "sản xuất lần đầu"]),
     ("MANPOWER",     "인력부족",           ["nhân lực","nhan luc","không đủ nhân",
                                             "thiếu người","thiếu cn"]),
