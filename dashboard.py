@@ -832,7 +832,9 @@ def parse_sheet(ws, process, date_str, shift):
                 actual_ate = round(ate_actual,0)
             else:
                 # AI / SMT: 시간대별 단일 컬럼
-                target_tot=0.0; actual_tot=0.0
+                target_tot = 0.0; actual_tot = 0.0
+                target_mi = 0.0; actual_mi = 0.0    # ← 이 줄 추가
+                target_ate = 0.0; actual_ate = 0.0  # ← 이 줄 추가
                 for idx, slot in enumerate(slots):
                     lv = loss_vals[idx] if idx < len(loss_vals) else 0.0
                     cs = ""  # ← 반드시 초기화
