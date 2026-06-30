@@ -818,9 +818,7 @@ def parse_sheet(ws, process, date_str, shift):
                 loss_vals = loss_vals[:len(slots)]
                 loss_vals = [max(0.0, v) for v in loss_vals]
                 total = sum(loss_vals)
-           
-            if "PS05" in line.upper():
-                st.write(f"★PS05 after-total: total={total}")
+                       
             if total == 0 and all(v == 0.0 for v in loss_vals):
                 i += 1
                 continue
@@ -977,6 +975,9 @@ def parse_scrap_file(uploaded_file):
     return pd.DataFrame(records)
 
 def parse_files(uploaded_files):
+    st.write(f"★parse_files 호출: 파일수={len(uploaded)}")
+    for f in uploaded:
+        st.write(f"★파일: {f.name}")
     loss_records=[]; scrap_list=[]
     prog=st.progress(0); status=st.empty()
     for fi,uf in enumerate(uploaded_files):
@@ -1035,7 +1036,7 @@ def merge_db(existing, new_df):
     if existing.empty: return new_df
     if new_df.empty:   return existing
     combined = pd.concat([existing, new_df], ignore_index=True)
-    key = ["date", "shift", "process", "line", "time_slot"]
+    key = ["date", "shift", "process", "line", "time_slot","loss_type_code"]
     combined = combined.drop_duplicates(
         subset=[c for c in key if c in combined.columns], keep="last")
     return combined.sort_values(
