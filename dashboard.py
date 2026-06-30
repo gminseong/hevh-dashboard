@@ -1499,7 +1499,24 @@ def dashboard():
                                      showlegend=False,
                                      xaxis=dict(rangemode="tozero"))
                 st.markdown("##### 손실 유형별 집계 (전 라인)")
-                st.plotly_chart(fig_lt, use_container_width=True)
+                cl_lt = st.plotly_chart(fig_lt, use_container_width=True,
+                                         on_select="rerun", key="lt_tab_chart")
+                
+                # 클릭된 유형 감지
+                sel_type = ""
+                if cl_lt and cl_lt.get("selection", {}).get("points"):
+                    sel_type = cl_lt["selection"]["points"][0].get("y", "")
+                
+                # 선택된 유형 상세 테이블
+                if sel_type:
+                    st.markdown(f"##### 🔍 **{sel_type}** 상세 내역")
+                    type_df = line_df[line_df["loss_type_name"] == sel_type].copy()
+                    show_type = type_df[["date","shift","line","time_slot","model",
+                                          "loss_min","loss_detail","action"]
+                                        ].sort_values(["date","shift"])
+                    show_type["loss_min"] = show_type["loss_min"].round(1)
+                    st.dataframe(show_type.reset_index(drop=True),
+                                 use_container_width=True, height=300)
                 
                 st.markdown("<hr class='section-divider'>", unsafe_allow_html=True)
                 
