@@ -833,25 +833,14 @@ def parse_sheet(ws, process, date_str, shift):
             else:
                 # AI / SMT: 시간대별 단일 컬럼
                 target_tot=0.0; actual_tot=0.0
-                for s_idx in range(len(slots)):
-                    col = 2 + s_idx
-                    if target_row:
-                        try: target_tot += parse_losstime(target_row[col] if col < len(target_row) else None)
-                        except: pass
-                    if actual_row:
-                        try: actual_tot += parse_losstime(actual_row[col] if col < len(actual_row) else None)
-                        except: pass
-                target_mi=target_ate=actual_mi=actual_ate=0.0
-            if "PS05" in line.upper():
-                st.write(f"★PS05 before-for: total={total}, cause_all=[{cause_all}]")
-            for idx,slot in enumerate(slots):
-                lv=loss_vals[idx] if idx<len(loss_vals) else 0.0
-                if lv>0:
-                    cs=slot_causes.get(slot,"")
-                    if not cs:
-                        for s2 in slots:
-                            if slot_causes.get(s2,""): cs=slot_causes[s2]; break
-                    code,name=classify_loss_type(cs)
+                for idx, slot in enumerate(slots):
+                    lv = loss_vals[idx] if idx < len(loss_vals) else 0.0
+                    if lv > 0:
+                        cs = slot_causes.get(slot, "")
+                        if not cs:
+                            for s2 in slots:
+                                if slot_causes.get(s2, ""): cs = slot_causes[s2]; break
+                    code, name = classify_loss_type(cs)  # ← 그대로 유지 (split 호출 금지)
                     records.append({
                         "date": date_str, "shift": shift, "process": process,
                         "line": line, "time_slot": slot, "model": models.get(slot, ""),
