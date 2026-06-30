@@ -201,8 +201,14 @@ section[data-testid="stSidebar"] .block-container {
     padding: 1rem 0.9rem;
     background-color: #f1f5f9 !important;
 }
+/* 204줄 - 전체 글자 진하게 */
 section[data-testid="stSidebar"] * {
-    color: #f1f5f9 !important;
+    color: #111827 !important;
+}
+
+/* 버튼 글자만 흰색 유지 */
+section[data-testid="stSidebar"] div[data-testid="stButton"] button {
+    color: #1e293b !important;
 }
 section[data-testid="stSidebar"] hr {
     border-color: #cbd5e1 !important;
