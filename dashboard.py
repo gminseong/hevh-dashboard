@@ -835,21 +835,23 @@ def parse_sheet(ws, process, date_str, shift):
                 target_tot=0.0; actual_tot=0.0
                 for idx, slot in enumerate(slots):
                     lv = loss_vals[idx] if idx < len(loss_vals) else 0.0
+                    cs = ""  # ← 반드시 초기화
                     if lv > 0:
                         cs = slot_causes.get(slot, "")
                         if not cs:
                             for s2 in slots:
                                 if slot_causes.get(s2, ""): cs = slot_causes[s2]; break
-                    code, name = classify_loss_type(cs)  # ← 그대로 유지 (split 호출 금지)
-                    records.append({
-                        "date": date_str, "shift": shift, "process": process,
-                        "line": line, "time_slot": slot, "model": models.get(slot, ""),
-                        "loss_min": round(lv, 1), "loss_type_code": code,
-                        "loss_type_name": name, "complexity": complexity,
-                        "loss_detail": cs, "sub_idx": 1, "action": action,
-                        "target":0,"actual":0,
-                        "target_mi":0,"actual_mi":0,
-                        "target_ate":0,"actual_ate":0})
+                        code, name = classify_loss_type(cs)
+                        records.append({
+                            "date": date_str, "shift": shift, "process": process,
+                            "line": line, "time_slot": slot, "model": models.get(slot, ""),
+                            "loss_min": round(lv, 1), "loss_type_code": code,
+                            "loss_type_name": name, "complexity": complexity,
+                            "loss_detail": cs, "sub_idx": 1, "action": action,
+                            "target": 0, "actual": 0,
+                            "target_mi": 0, "actual_mi": 0,  # ← 0으로 고정
+                            "target_ate": 0, "actual_ate": 0,
+                        })
             
             if total > 0:
                 sub_details = split_loss_detail(cause_all, total)
