@@ -975,7 +975,6 @@ def parse_scrap_file(uploaded_file):
     return pd.DataFrame(records)
 
 def parse_files(uploaded_files):
-    st.write(f"★parse_files 호출: 파일수={len(list(uploaded))}")
     for f in uploaded:
         st.write(f"★파일: {f.name}")
     loss_records=[]; scrap_list=[]
