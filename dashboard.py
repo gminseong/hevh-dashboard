@@ -202,7 +202,7 @@ section[data-testid="stSidebar"] .block-container {
     background-color: #f1f5f9 !important;
 }
 section[data-testid="stSidebar"] * {
-    color: #374151 !important;
+    color: #111827 !important;
 }
 section[data-testid="stSidebar"] hr {
     border-color: #cbd5e1 !important;
@@ -1320,7 +1320,8 @@ def dashboard():
             col_trend,col_slot=st.columns(2)
             with col_trend:
                 st.markdown("#### 📈 날짜별 손실 트렌드")
-                dt=(total_df[total_df["time_slot"]=="TOTAL"].groupby(["date","process"])["loss_min"].sum().reset_index())
+                dt=(total_df[total_df["time_slot"]=="TOTAL"]
+                    .groupby(["date","process"])["loss_min"].sum().reset_index())
                 dt["loss_min"]=dt["loss_min"].round(1)
                 fig_t=px.line(dt,x="date",y="loss_min",color="process",
                               color_discrete_map=PROC_COLOR,markers=True,height=320,
@@ -1468,9 +1469,8 @@ def dashboard():
             st.markdown("#### 🏭 라인별 상세 분석")
             proc_sel=st.radio("공정 선택",["전체","AI","SMT","MI"],
                               horizontal=True,key="line_tab_proc")
-            line_df = total_df.copy() if proc_sel == "전체" else total_df[total_df["process"] == proc_sel].copy()
-            line_df = line_df[line_df["time_slot"] == "TOTAL"].copy()  # ← 이 줄 추가
-
+            line_df = total_df.copy() if proc_sel=="전체" else total_df[total_df["process"]==proc_sel].copy()
+            line_df = line_df[line_df["time_slot"]=="TOTAL"].copy()
             if line_df.empty:
                 st.warning("데이터 없음")
             else:
