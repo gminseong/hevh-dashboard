@@ -798,7 +798,14 @@ def parse_sheet(ws, process, date_str, shift):
             loss_vals = loss_vals[:len(slots)]
             loss_vals = [max(0.0, v) for v in loss_vals]
             if process == "MI":
-                total = loss_vals[0] if loss_vals else 0.0   # ← 이 줄만 추가
+                # MI: 컬럼 구조 = [MI, WAITING TEST, ATE] × 시간대수
+                # loss_row에서 MI 컬럼만 추출 (0, 3, 6, 9, ...)
+                loss_vals = []
+                for s_idx in range(len(slots)):
+                    col = 2 + s_idx * 3   # MI 컬럼 위치
+                    v = loss_row[col] if col < len(loss_row) else None
+                    loss_vals.append(max(0.0, parse_losstime(v)))
+                total = sum(loss_vals)
             else:
                 total = sum(loss_vals)
             if "PS05" in line.upper():
