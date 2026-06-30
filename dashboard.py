@@ -1320,7 +1320,7 @@ def dashboard():
             col_trend,col_slot=st.columns(2)
             with col_trend:
                 st.markdown("#### 📈 날짜별 손실 트렌드")
-                dt=(total_df.groupby(["date","process"])["loss_min"].sum().reset_index())
+                dt=(total_df[total_df["time_slot"]=="TOTAL"].groupby(["date","process"])["loss_min"].sum().reset_index())
                 dt["loss_min"]=dt["loss_min"].round(1)
                 fig_t=px.line(dt,x="date",y="loss_min",color="process",
                               color_discrete_map=PROC_COLOR,markers=True,height=320,
@@ -1486,16 +1486,16 @@ def dashboard():
                 # ── 손실 유형별 집계 바차트 (전 라인 합산)
                 lt_proc = (line_df.groupby("loss_type_name")["loss_min"]
                            .sum().reset_index()
-                           .sort_values("loss_min", ascending=True))
+                           .sort_values("loss_min", ascending=False))
                 lt_proc["loss_min"] = lt_proc["loss_min"].round(1)
                 fig_lt = px.bar(lt_proc, x="loss_min", y="loss_type_name",
                                 orientation="h",
                                 color="loss_type_name",
                                 color_discrete_map=TYPE_COLOR,
-                                height=400, text="loss_min",
+                                height=max(400, len(lt_proc) * 28), text="loss_min",
                                 labels={"loss_min":"손실(분)","loss_type_name":"유형"})
                 fig_lt.update_traces(texttemplate="%{text:,.0f}", textposition="outside")
-                fig_lt.update_layout(margin=dict(l=0,r=0,t=30,b=0),
+                fig_lt.update_layout(margin=dict(l=150, r=20, t=30, b=0),
                                      showlegend=False,
                                      xaxis=dict(rangemode="tozero"))
                 st.markdown("##### 손실 유형별 집계 (전 라인)")
@@ -1511,7 +1511,7 @@ def dashboard():
                              color_discrete_map=PROC_COLOR,height=380,text="loss_min",
                              labels={"loss_min":"손실(분)","line":"라인","process":"공정"})
                 fig_l.update_traces(texttemplate="%{text:,.0f}",textposition="outside")
-                fig_l.update_layout(margin=dict(l=0,r=0,t=30,b=0),
+                fig_l.update_layout(margin=dict(l=0, r=60, t=30, b=0),
                                     yaxis=dict(rangemode="tozero"),
                                     legend=dict(orientation="h",y=1.05))
                 cl2=st.plotly_chart(fig_l,use_container_width=True,
