@@ -711,7 +711,13 @@ def parse_date(text):
     return None
 
 def detect_shift(sn, fn):
-    return "NIGHT" if "NIGHT" in (sn+fn).upper() else "DAY"
+    combined = (sn + fn).upper()
+    if "NIGHT" in combined or "NIGH" in combined:
+        return "NIGHT"
+    # MI 시트명에서 야간 패턴 추가 체크
+    if re.search(r'N[Ii][Gg][Hh]', sn+fn):
+        return "NIGHT"
+    return "DAY"
 
 def find_date_in_sheet(ws):
     rows = list(ws.iter_rows(values_only=True, max_row=20))
