@@ -975,12 +975,12 @@ def parse_scrap_file(uploaded_file):
     return pd.DataFrame(records)
 
 def parse_files(uploaded_files):
-    uploaded = list(uploaded)  # ← 이 줄 추가
+    uploaded = list(uploaded_files)  # uploaded_files → uploaded
     for f in uploaded:
         st.write(f"★파일: {f.name}")
     loss_records=[]; scrap_list=[]
     prog=st.progress(0); status=st.empty()
-    for fi,uf in enumerate(uploaded_files):
+    for fi, uf in enumerate(uploaded):  # uploaded_files → uploaded
         fn=uf.name; process=detect_process(fn)
         if process=="UNKNOWN":
             status.warning(f"skip: {fn}")
