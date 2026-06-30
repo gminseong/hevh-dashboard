@@ -203,7 +203,7 @@ section[data-testid="stSidebar"] .block-container {
 }
 /* 204줄 - 전체 글자 진하게 */
 section[data-testid="stSidebar"] * {
-    color: #f0f0f0 !important;
+    color: #111827 !important;
 }
 
 /* 버튼 글자만 흰색 유지 */
