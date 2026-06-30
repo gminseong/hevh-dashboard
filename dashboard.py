@@ -1468,7 +1468,8 @@ def dashboard():
             st.markdown("#### 🏭 라인별 상세 분석")
             proc_sel=st.radio("공정 선택",["전체","AI","SMT","MI"],
                               horizontal=True,key="line_tab_proc")
-            line_df=total_df.copy() if proc_sel=="전체" else total_df[total_df["process"]==proc_sel].copy()
+            line_df = total_df.copy() if proc_sel == "전체" else total_df[total_df["process"] == proc_sel].copy()
+            line_df = line_df[line_df["time_slot"] == "TOTAL"].copy()  # ← 이 줄 추가
 
             if line_df.empty:
                 st.warning("데이터 없음")
