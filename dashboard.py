@@ -972,12 +972,10 @@ def parse_scrap_file(uploaded_file):
                 "result_desc":result_desc,"reason_code":reason_cd,
                 "reason_desc":reason_desc,"is_auto":is_auto,"comment":comment})
         except: continue
-    return pd.DataFrame(records)
+    return pd.DataFrame(loss_records), pd.DataFrame(scrap_list)
 
 def parse_files(uploaded_files):
-    uploaded = list(uploaded_files)  # uploaded_files → uploaded
-    for f in uploaded:
-        st.write(f"★파일: {f.name}")
+   
     loss_records=[]; scrap_list=[]
     prog=st.progress(0); status=st.empty()
     for fi, uf in enumerate(uploaded):  # uploaded_files → uploaded
@@ -1128,7 +1126,7 @@ def dashboard():
                 if st.button("🚀 분석 / 누적",type="primary",
                              use_container_width=True):
                     with st.spinner("처리 중..."):
-                        nl, ns = parse_files(list(uploaded))
+                        nl, ns = parse_files(uploaded)
                     if not nl.empty:
                         ex=load_db(); mg=merge_db(ex,nl)
                         with st.spinner("저장..."): ok=save_db(mg)
