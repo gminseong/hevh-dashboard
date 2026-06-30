@@ -571,25 +571,37 @@ def parse_time_from_text(text):
 
 
 def split_loss_detail(loss_detail, total_min):
-        """loss_detail에서 유형만 분류 (분리 없음)"""
-        if not loss_detail or str(loss_detail).strip() in ["", "None", "—", "-"]:
-            return [{"detail": "", "min": total_min, "type_code": "ETC",
-                     "type_name": "기타", "sub_idx": 1}]
-        
-        raw = str(loss_detail).strip()
-        # "|" 구분자로 여러 원인이 합쳐진 경우, 계획완료/문제없음 제거 후 나머지 사용
-        parts = [p.strip() for p in raw.split("|") if p.strip()]
-        filtered = [p for p in parts if classify_loss_type(p)[1] not in ("문제없음", "계획완료")]
-        if filtered:
-            raw = " | ".join(filtered)
-        elif parts:
-            return []
-        
-        code, name = classify_loss_type(raw)
-        
-     
-        return [{"detail": raw, "min": total_min, "type_code": code,
-                 "type_name": name, "sub_idx": 1}]
+    """loss_detail에서 유형별 분리 (균등분배)"""
+    if not loss_detail or str(loss_detail).strip() in ["", "None", "–", "-"]:
+        return [{"detail": "", "min": total_min, "type_code": "ETC",
+                 "type_name": "기타", "sub_idx": 1}]
+
+    raw = str(loss_detail).strip()
+    parts = [p.strip() for p in raw.split("|") if p.strip()]
+    filtered = [p for p in parts if classify_loss_type(p)[1] not in ("문제없음", "계획완료")]
+
+    if not filtered:
+        return []
+
+    # 유형별로 분류 후 중복 제거 (동일 유형은 묶음)
+    seen = {}
+    for p in filtered:
+        code, name = classify_loss_type(p)
+        if code not in seen:
+            seen[code] = {"detail": p, "type_code": code, "type_name": name}
+        else:
+            seen[code]["detail"] += " | " + p
+
+    unique_types = list(seen.values())
+    n = len(unique_types)
+    per_min = round(total_min / n, 1)
+
+    return [
+        {"detail": v["detail"], "min": per_min,
+         "type_code": v["type_code"], "type_name": v["type_name"],
+         "sub_idx": idx + 1}
+        for idx, v in enumerate(unique_types)
+    ]
     
 
 def classify_scrap_cause(comment):
