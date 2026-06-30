@@ -203,7 +203,7 @@ section[data-testid="stSidebar"] .block-container {
 }
 /* 204줄 - 전체 글자 진하게 */
 section[data-testid="stSidebar"] * {
-    color: #111827 !important;
+    color: #1a1a1a !important;
 }
 
 /* 버튼 글자만 흰색 유지 */
@@ -770,55 +770,30 @@ def parse_sheet(ws, process, date_str, shift):
             elif "ACTUAL" in lbl and actual_row is None: actual_row=r
 
         if loss_row:
-            if process == "MI":
-                loss_vals = []
-                for c in range(2, len(loss_row)):
-                    v = loss_row[c]
-                    if v is None or str(v).strip() == "":
-                        loss_vals.append(0.0)
-                    elif isinstance(v, (int, float)):
-                        loss_vals.append(max(0.0, float(v)))
+            loss_vals=[]
+            for c in range(2, len(loss_row)):
+                v = loss_row[c]
+                if v is None or str(v).strip() == "":
+                    loss_vals.append(0.0)
+                elif isinstance(v, (int, float)):
+                    loss_vals.append(max(0.0, float(v)))
+                else:
+                    s = str(v).strip()
+                    mm = re.search(r'(\d+)\s*min', s, re.I)
+                    if mm:
+                        loss_vals.append(float(mm.group(1)))
                     else:
-                        s = str(v).strip()
-                        mm = re.search(r'(\d+)\s*min', s, re.I)
-                        if mm:
-                            loss_vals.append(float(mm.group(1)))
+                        pv = parse_losstime(v)
+                        if pv > 0:
+                            loss_vals.append(pv)
                         else:
-                            pv = parse_losstime(v)
-                            if pv > 0:
-                                loss_vals.append(pv)
-                            else:
-                                break
-                while len(loss_vals) < len(slots): loss_vals.append(0.0)
-                loss_vals = loss_vals[:len(slots)]
-                loss_vals = [max(0.0, v) for v in loss_vals]
-                total = loss_vals[0] if loss_vals else 0.0
-                if process == "MI" and total > 100:
-                    st.write(f"★MI debug: line={line}, loss_vals={loss_vals[:5]}, total={total}")
-            else:
-                loss_vals = []
-                for c in range(2, len(loss_row)):
-                    v = loss_row[c]
-                    if v is None or str(v).strip() == "":
-                        loss_vals.append(0.0)
-                    elif isinstance(v, (int, float)):
-                        loss_vals.append(max(0.0, float(v)))
-                    else:
-                        s = str(v).strip()
-                        mm = re.search(r'(\d+)\s*min', s, re.I)
-                        if mm:
-                            loss_vals.append(float(mm.group(1)))
-                        else:
-                            pv = parse_losstime(v)
-                            if pv > 0:
-                                loss_vals.append(pv)
-                            else:
-                                break
-                while len(loss_vals) < len(slots): loss_vals.append(0.0)
-                loss_vals = loss_vals[:len(slots)]
-                loss_vals = [max(0.0, v) for v in loss_vals]
-                total = sum(loss_vals)
-                       
+                            break
+            while len(loss_vals) < len(slots): loss_vals.append(0.0)
+            loss_vals = loss_vals[:len(slots)]
+            loss_vals = [max(0.0, v) for v in loss_vals]
+            total = sum(loss_vals)
+            if "PS05" in line.upper():
+                st.write(f"★PS05 after-total: total={total}")
             if total == 0 and all(v == 0.0 for v in loss_vals):
                 i += 1
                 continue
@@ -857,29 +832,36 @@ def parse_sheet(ws, process, date_str, shift):
                 actual_ate = round(ate_actual,0)
             else:
                 # AI / SMT: 시간대별 단일 컬럼
-                target_tot = 0.0; actual_tot = 0.0
-                target_mi = 0.0; actual_mi = 0.0    # ← 이 줄 추가
-                target_ate = 0.0; actual_ate = 0.0  # ← 이 줄 추가
-                for idx, slot in enumerate(slots):        # 836
-                    lv = loss_vals[idx] if idx < len(loss_vals) else 0.0   # 837
-                    cs = ""  # ← 반드시 초기화               # 838
-                    if lv > 0:                             # 839
-                        cs = slot_causes.get(slot, "")     # 840
-                        if not cs:                         # 841
-                            for s2 in slots:              # 842
-                                if slot_causes.get(s2, ""): cs = slot_causes[s2]; break  # 843
-                        code, name = classify_loss_type(cs) # 844
-                        records.append({                   # 845
-                            "date": date_str, "shift": shift, "process": process,  # 846
-                            "line": line, "time_slot": slot, "model": models.get(slot, ""),  # 847
-                            "loss_min": round(lv, 1), "loss_type_code": code,  # 848
-                            "loss_type_name": name, "complexity": complexity,  # 849
-                            "loss_detail": cs, "sub_idx": 1, "action": action,  # 850
-                            "target": 0, "actual": 0,     # 851
-                            "target_mi": 0, "actual_mi": 0,  # 852
-                            "target_ate": 0, "actual_ate": 0,  # 853
-                        }) 
-                        
+                target_tot=0.0; actual_tot=0.0
+                for s_idx in range(len(slots)):
+                    col = 2 + s_idx
+                    if target_row:
+                        try: target_tot += parse_losstime(target_row[col] if col < len(target_row) else None)
+                        except: pass
+                    if actual_row:
+                        try: actual_tot += parse_losstime(actual_row[col] if col < len(actual_row) else None)
+                        except: pass
+                target_mi=target_ate=actual_mi=actual_ate=0.0
+            if "PS05" in line.upper():
+                st.write(f"★PS05 before-for: total={total}, cause_all=[{cause_all}]")
+            for idx,slot in enumerate(slots):
+                lv=loss_vals[idx] if idx<len(loss_vals) else 0.0
+                if lv>0:
+                    cs=slot_causes.get(slot,"")
+                    if not cs:
+                        for s2 in slots:
+                            if slot_causes.get(s2,""): cs=slot_causes[s2]; break
+                    code,name=classify_loss_type(cs)
+                    records.append({
+                        "date": date_str, "shift": shift, "process": process,
+                        "line": line, "time_slot": slot, "model": models.get(slot, ""),
+                        "loss_min": round(lv, 1), "loss_type_code": code,
+                        "loss_type_name": name, "complexity": complexity,
+                        "loss_detail": cs, "sub_idx": 1, "action": action,
+                        "target":0,"actual":0,
+                        "target_mi":0,"actual_mi":0,
+                        "target_ate":0,"actual_ate":0})
+            
             if total > 0:
                 sub_details = split_loss_detail(cause_all, total)
               
@@ -931,7 +913,7 @@ def parse_sheet(ws, process, date_str, shift):
                             "target_ate": round(target_ate, 0),
                             "actual_ate": round(actual_ate, 0),
                         })
-            i+=1
+        i+=1
     return records
 
 def parse_scrap_file(uploaded_file):
@@ -972,13 +954,12 @@ def parse_scrap_file(uploaded_file):
                 "result_desc":result_desc,"reason_code":reason_cd,
                 "reason_desc":reason_desc,"is_auto":is_auto,"comment":comment})
         except: continue
-    return pd.DataFrame(loss_records), pd.DataFrame(scrap_list)
+    return pd.DataFrame(records)
 
 def parse_files(uploaded_files):
-   
     loss_records=[]; scrap_list=[]
     prog=st.progress(0); status=st.empty()
-    for fi, uf in enumerate(uploaded_files):
+    for fi,uf in enumerate(uploaded_files):
         fn=uf.name; process=detect_process(fn)
         if process=="UNKNOWN":
             status.warning(f"skip: {fn}")
@@ -1034,7 +1015,7 @@ def merge_db(existing, new_df):
     if existing.empty: return new_df
     if new_df.empty:   return existing
     combined = pd.concat([existing, new_df], ignore_index=True)
-    key = ["date", "shift", "process", "line", "time_slot","loss_type_code"]
+    key = ["date", "shift", "process", "line", "time_slot", "sub_idx"]
     combined = combined.drop_duplicates(
         subset=[c for c in key if c in combined.columns], keep="last")
     return combined.sort_values(
@@ -1089,9 +1070,6 @@ def reset_all():
         if k in st.session_state: del st.session_state[k]
 
 # ← 여기에 추가
-def parse_files(uploaded):
-    uploaded = list(uploaded)
-    st.write(f"★parse_files 호출: 파일수={len(uploaded)}, 파일명={[f.name for f in uploaded]}")
 def get_ach_color(v):
     if v >= 100:  return "#16a34a"
     elif v >= 90: return "#475569"
@@ -1126,7 +1104,7 @@ def dashboard():
                 if st.button("🚀 분석 / 누적",type="primary",
                              use_container_width=True):
                     with st.spinner("처리 중..."):
-                        nl, ns = parse_files(uploaded)
+                        nl,ns=parse_files(uploaded)
                     if not nl.empty:
                         ex=load_db(); mg=merge_db(ex,nl)
                         with st.spinner("저장..."): ok=save_db(mg)
