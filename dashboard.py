@@ -808,8 +808,6 @@ def parse_sheet(ws, process, date_str, shift):
                 total = sum(loss_vals)
             else:
                 total = sum(loss_vals)
-            if "PS05" in line.upper():
-                st.write(f"★PS05 after-total: total={total}")
             if total == 0 and all(v == 0.0 for v in loss_vals):
                 i += 1
                 continue
@@ -858,8 +856,7 @@ def parse_sheet(ws, process, date_str, shift):
                         try: actual_tot += parse_losstime(actual_row[col] if col < len(actual_row) else None)
                         except: pass
                 target_mi=target_ate=actual_mi=actual_ate=0.0
-            if "PS05" in line.upper():
-                st.write(f"★PS05 before-for: total={total}, cause_all=[{cause_all}]")
+
             for idx,slot in enumerate(slots):
                 lv=loss_vals[idx] if idx<len(loss_vals) else 0.0
                 if lv>0:
