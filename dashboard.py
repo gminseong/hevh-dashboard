@@ -780,12 +780,11 @@ def parse_sheet(ws, process, date_str, shift):
             for c in range(2, len(loss_row)):
                 v = loss_row[c]
                 if v is None or str(v).strip() == "":
-                    loss_vals.append(0.0)
+                    break
                 elif isinstance(v, (int, float)):
                     loss_vals.append(max(0.0, float(v)))  # 음수 float → 0 처리 ✅
                 else:
                     s = str(v).strip()
-                   
                     mm = re.search(r'(\d+)\s*min', s, re.I)
                     if mm:
                         loss_vals.append(float(mm.group(1)))
