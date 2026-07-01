@@ -2131,7 +2131,7 @@ def dashboard():
             srch2 = st.text_input("🔍 키워드 (라인/원인/모델)", key="t7_srch")
     
         # ── 필터 적용
-        sdf3 = fdf.copy()
+        sdf3 = df.copy()
         if t7_proc != "전체":
             sdf3 = sdf3[sdf3["process"] == t7_proc]
         if t7_shift != "전체":
