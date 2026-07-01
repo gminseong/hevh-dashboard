@@ -2102,23 +2102,55 @@ def dashboard():
                              use_container_width=True,height=360)
 
     # ════════ TAB7 - 상세 조회 ════════
+    
     with tab7:
         st.markdown("#### 상세 데이터 조회")
-        srch2=st.text_input("🔍 키워드 (라인/원인/모델)")
-        sdf3=fdf.copy()
+    
+        # ── 탭 내부 필터
+        fc1, fc2, fc3, fc4, fc5 = st.columns([1,1,1,1,2])
+        with fc1:
+            t7_proc = st.multiselect("공정", ["AI","SMT","MI"],
+                                      default=["AI","SMT","MI"], key="t7_proc")
+        with fc2:
+            t7_shift = st.multiselect("주야간", ["DAY","NIGHT"],
+                                       default=["DAY","NIGHT"], key="t7_shift")
+        with fc3:
+            t7_slot = st.multiselect("조회단위",
+                                      ["TOTAL","A","B","C","D","E","F","G","H","I","J","K"],
+                                      default=["TOTAL"], key="t7_slot")
+        with fc4:
+            df_all2 = st.session_state.get("df", pd.DataFrame())
+            dates_all = sorted(df_all2["date"].dropna().unique()) if not df_all2.empty else []
+            if len(dates_all) >= 2:
+                t7_date = st.select_slider("날짜", options=dates_all,
+                                            value=(dates_all[0], dates_all[-1]),
+                                            key="t7_date")
+            else:
+                t7_date = (dates_all[0], dates_all[0]) if dates_all else (None, None)
+        with fc5:
+            srch2 = st.text_input("🔍 키워드 (라인/원인/모델)", key="t7_srch")
+    
+        # ── 필터 적용
+        sdf3 = fdf.copy()
+        if t7_proc:  sdf3 = sdf3[sdf3["process"].isin(t7_proc)]
+        if t7_shift: sdf3 = sdf3[sdf3["shift"].isin(t7_shift)]
+        if t7_slot:  sdf3 = sdf3[sdf3["time_slot"].isin(t7_slot)]
+        if t7_date and t7_date[0]:
+            sdf3 = sdf3[(sdf3["date"] >= t7_date[0]) & (sdf3["date"] <= t7_date[1])]
         if srch2:
-            m2=(sdf3["line"].astype(str).str.contains(srch2,case=False,na=False)|
-                sdf3["loss_detail"].astype(str).str.contains(srch2,case=False,na=False)|
-                sdf3["model"].astype(str).str.contains(srch2,case=False,na=False))
-            sdf3=sdf3[m2]
+            m2 = (sdf3["line"].astype(str).str.contains(srch2,case=False,na=False)
+                 |sdf3["model"].astype(str).str.contains(srch2,case=False,na=False)
+                 |sdf3["loss_detail"].astype(str).str.contains(srch2,case=False,na=False))
+            sdf3 = sdf3[m2]
+    
         st.caption(f"총 {len(sdf3):,}건")
-        dc2=["date","shift","process","line","time_slot",
-             "model","loss_min","loss_type_name","complexity","loss_detail"]
-        dc2=[c for c in dc2 if c in sdf3.columns]
+        dc2 = ["date","shift","process","line","time_slot",
+               "model","loss_min","loss_type_name","complexity","loss_detail"]
+        dc2 = [c for c in dc2 if c in sdf3.columns]
         if not sdf3.empty:
-            sdf3["loss_min"]=sdf3["loss_min"].round(1)
+            sdf3["loss_min"] = sdf3["loss_min"].round(1)
             st.dataframe(sdf3[dc2].reset_index(drop=True),
-                         use_container_width=True,height=500)
+                         use_container_width=True, height=500)
         else:
             st.info("검색 결과 없음")
 
