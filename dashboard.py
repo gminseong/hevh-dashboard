@@ -659,7 +659,13 @@ def parse_losstime(val):
     if val is None: return 0.0
     s = str(val).strip()
     if s.startswith("(") and s.endswith(")"): return 0.0
-    m = re.search(r'(\d+\.?\d*)',s)
+    # 음수 체크
+    try:
+        f = float(s)
+        return max(0.0, f)  # 음수면 0 반환
+    except:
+        pass
+    m = re.search(r'(\d+\.?\d*)', s)
     return max(0.0, float(m.group(1)) if m else 0.0)
 
 def is_line_cell(val):
