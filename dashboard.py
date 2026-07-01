@@ -2115,9 +2115,10 @@ def dashboard():
             t7_shift = st.multiselect("주야간", ["DAY","NIGHT"],
                                        default=["DAY","NIGHT"], key="t7_shift")
         with fc3:
-            t7_slot = st.multiselect("조회단위",
-                                      ["TOTAL","A","B","C","D","E","F","G","H","I","J","K"],
-                                      default=["TOTAL"], key="t7_slot")
+           if t7_slot == "TOTAL(일계)":
+               sdf3 = sdf3[sdf3["time_slot"] == "TOTAL"]
+           else:
+               sdf3 = sdf3[sdf3["time_slot"] != "TOTAL"]
         with fc4:
             df_all2 = st.session_state.get("df", pd.DataFrame())
             dates_all = sorted(df_all2["date"].dropna().unique()) if not df_all2.empty else []
