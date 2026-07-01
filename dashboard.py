@@ -659,12 +659,6 @@ def parse_losstime(val):
     if val is None: return 0.0
     s = str(val).strip()
     if s.startswith("(") and s.endswith(")"): return 0.0
-    # 음수 체크
-    try:
-        f = float(s)
-        return max(0.0, f)  # 음수면 0 반환
-    except:
-        pass
     m = re.search(r'(\d+\.?\d*)', s)
     return max(0.0, float(m.group(1)) if m else 0.0)
 
@@ -788,9 +782,16 @@ def parse_sheet(ws, process, date_str, shift):
                 if v is None or str(v).strip() == "":
                     loss_vals.append(0.0)
                 elif isinstance(v, (int, float)):
-                    loss_vals.append(max(0.0, float(v)))
+                    loss_vals.append(max(0.0, float(v)))  # 음수 float → 0 처리 ✅
                 else:
                     s = str(v).strip()
+                    # 음수 문자열 (-76.36 등) 먼저 체크
+                    try:
+                        fv = float(s)
+                        loss_vals.append(max(0.0, fv))  # 음수면 0, 양수면 그대로
+                        continue
+                    except:
+                        pass
                     mm = re.search(r'(\d+)\s*min', s, re.I)
                     if mm:
                         loss_vals.append(float(mm.group(1)))
