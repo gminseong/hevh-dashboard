@@ -2115,10 +2115,9 @@ def dashboard():
             t7_shift = st.multiselect("주야간", ["DAY","NIGHT"],
                                        default=["DAY","NIGHT"], key="t7_shift")
         with fc3:
-           if t7_slot == "TOTAL(일계)":
-               sdf3 = sdf3[sdf3["time_slot"] == "TOTAL"]
-           else:
-               sdf3 = sdf3[sdf3["time_slot"] != "TOTAL"]
+            t7_slot = st.radio("조회단위",
+                               ["TOTAL(일계)", "타임별(A~K)"],
+                               horizontal=True, key="t7_slot")
         with fc4:
             df_all2 = st.session_state.get("df", pd.DataFrame())
             dates_all = sorted(df_all2["date"].dropna().unique()) if not df_all2.empty else []
@@ -2135,7 +2134,10 @@ def dashboard():
         sdf3 = fdf.copy()
         if t7_proc:  sdf3 = sdf3[sdf3["process"].isin(t7_proc)]
         if t7_shift: sdf3 = sdf3[sdf3["shift"].isin(t7_shift)]
-        if t7_slot:  sdf3 = sdf3[sdf3["time_slot"].isin(t7_slot)]
+        if t7_slot == "TOTAL(일계)":
+            sdf3 = sdf3[sdf3["time_slot"] == "TOTAL"]
+        else:
+            sdf3 = sdf3[sdf3["time_slot"] != "TOTAL"]
         if t7_date and t7_date[0]:
             sdf3 = sdf3[(sdf3["date"] >= t7_date[0]) & (sdf3["date"] <= t7_date[1])]
         if srch2:
