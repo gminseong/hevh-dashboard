@@ -785,13 +785,7 @@ def parse_sheet(ws, process, date_str, shift):
                     loss_vals.append(max(0.0, float(v)))  # 음수 float → 0 처리 ✅
                 else:
                     s = str(v).strip()
-                    # 음수 문자열 (-76.36 등) 먼저 체크
-                    try:
-                        fv = float(s)
-                        loss_vals.append(max(0.0, fv))  # 음수면 0, 양수면 그대로
-                        continue
-                    except:
-                        pass
+                   
                     mm = re.search(r'(\d+)\s*min', s, re.I)
                     if mm:
                         loss_vals.append(float(mm.group(1)))
