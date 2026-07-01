@@ -2109,11 +2109,11 @@ def dashboard():
         # ── 탭 내부 필터
         fc1, fc2, fc3, fc4, fc5 = st.columns([1,1,1,1,2])
         with fc1:
-            t7_proc = st.multiselect("공정", ["AI","SMT","MI"],
-                                      default=["AI","SMT","MI"], key="t7_proc")
+            t7_proc = st.radio("공정", ["전체","AI","SMT","MI"],
+                               horizontal=True, key="t7_proc")
         with fc2:
-            t7_shift = st.multiselect("주야간", ["DAY","NIGHT"],
-                                       default=["DAY","NIGHT"], key="t7_shift")
+            t7_shift = st.radio("주야간", ["전체","DAY","NIGHT"],
+                                horizontal=True, key="t7_shift")
         with fc3:
             t7_slot = st.radio("조회단위",
                                ["TOTAL(일계)", "타임별(A~K)"],
@@ -2132,8 +2132,10 @@ def dashboard():
     
         # ── 필터 적용
         sdf3 = fdf.copy()
-        if t7_proc:  sdf3 = sdf3[sdf3["process"].isin(t7_proc)]
-        if t7_shift: sdf3 = sdf3[sdf3["shift"].isin(t7_shift)]
+        if t7_proc != "전체":
+            sdf3 = sdf3[sdf3["process"] == t7_proc]
+        if t7_shift != "전체":
+            sdf3 = sdf3[sdf3["shift"] == t7_shift]
         if t7_slot == "TOTAL(일계)":
             sdf3 = sdf3[sdf3["time_slot"] == "TOTAL"]
         else:
