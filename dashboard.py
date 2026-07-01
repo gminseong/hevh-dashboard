@@ -879,7 +879,22 @@ def parse_sheet(ws, process, date_str, shift):
                         "target_ate":0,"actual_ate":0})
             
             if total > 0:
-                sub_details = split_loss_detail(cause_all, total)
+                cause_totals = {}
+                for idx, slot in enumerate(slots):
+                    lv = loss_vals[idx] if idx < len(loss_vals) else 0.0
+                    if lv > 0:
+                        cs = slot_causes.get(slot, "") or cause_all
+                        code, name = classify_loss_type(cs)
+                        if name not in cause_totals:
+                            cause_totals[name] = {"min": 0.0, "detail": cs,
+                                                  "type_code": code, "type_name": name}
+                        cause_totals[name]["min"] += lv
+                sub_details = [{"detail": v["detail"], "min": round(v["min"], 1),
+                                "type_code": v["type_code"], "type_name": v["type_name"],
+                                "sub_idx": i2 + 1}
+                               for i2, v in enumerate(cause_totals.values())]
+                if not sub_details:
+                    sub_details = split_loss_detail(cause_all, total)
               
                 
                 # ★ 문제없음으로 전부 제거된 경우 스킵
