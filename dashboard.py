@@ -715,10 +715,10 @@ def detect_shift(sn, fn):
     if "NIGHT" in combined or "NIGH" in combined:
         return "NIGHT"
     for sn in wb.sheetnames:
-    ws = wb[sn]
-    if isinstance(ws, Chartsheet): continue
-    shift = detect_shift(sn, fn)
-    st.write(f"★ 파일:{fn} | 시트:{sn} | shift:{shift}")  # ← 추가    
+        ws = wb[sn]
+        if isinstance(ws, Chartsheet): continue
+        shift = detect_shift(sn, fn)
+        st.write(f"★ 파일:{fn} | 시트:{sn} | shift:{shift}")  # ← 추가    
     # MI 시트명에서 야간 패턴 추가 체크
     if re.search(r'N[Ii][Gg][Hh]', sn+fn):
         return "NIGHT"
