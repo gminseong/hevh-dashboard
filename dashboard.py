@@ -714,11 +714,7 @@ def detect_shift(sn, fn):
     combined = (sn + fn).upper()
     if "NIGHT" in combined or "NIGH" in combined:
         return "NIGHT"
-    for sn in wb.sheetnames:
-        ws = wb[sn]
-        if isinstance(ws, Chartsheet): continue
-        shift = detect_shift(sn, fn)
-        st.write(f"★ 파일:{fn} | 시트:{sn} | shift:{shift}")  # ← 추가    
+       
     # MI 시트명에서 야간 패턴 추가 체크
     if re.search(r'N[Ii][Gg][Hh]', sn+fn):
         return "NIGHT"
@@ -992,6 +988,9 @@ def parse_scrap_file(uploaded_file):
 def parse_files(uploaded_files):
     loss_records=[]; scrap_list=[]
     prog=st.progress(0); status=st.empty()
+    
+    parsed_keys = set()  # ← 추가: 이미 파싱한 (date, process, shift) 추적
+    
     for fi,uf in enumerate(uploaded_files):
         fn=uf.name; process=detect_process(fn)
         if process=="UNKNOWN":
@@ -1016,8 +1015,15 @@ def parse_files(uploaded_files):
                 if ds=="UNKNOWN":
                     ds=find_date_in_sheet(ws) or "UNKNOWN"
                 if ds=="UNKNOWN":
-                    pass  # 날짜 파싱 실패 시 무시
                     continue
+                
+                # ← 추가: 동일 date+process+shift 이미 파싱했으면 스킵
+                pkey = (ds, process, shift)
+                if pkey in parsed_keys:
+                    status.warning(f"중복 스킵: {fn} [{sn}] {ds}/{process}/{shift}")
+                    continue
+                parsed_keys.add(pkey)
+                
                 try: loss_records.extend(parse_sheet(ws,process,ds,shift))
                 except Exception as e: st.warning(f"파싱오류[{sn}]: {e}")
         prog.progress((fi+1)/len(uploaded_files))
