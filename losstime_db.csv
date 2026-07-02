@@ -3970,6 +3970,12 @@ Op bốc hàng chờ",1200.0,576.0,0.0,0.0,0.0,0.0
 2026-07-01,DAY,AI,SA10,D,L83CA9N,1.0,INSERT_RAD,Radial불량,복합,Rh3 căm rớt lk,1,vender hỗ trợ xử lý,0.0,0.0,0.0,0.0,0.0,0.0
 2026-07-01,DAY,AI,SA10,E,L83CA9N,13.0,INSERT_RAD,Radial불량,복합,RHU cắm rớt lk,1,vender hỗ trợ xử lý,0.0,0.0,0.0,0.0,0.0,0.0
 2026-07-01,DAY,AI,SA10,TOTAL,L83CA9N,58.0,INSERT_RAD,Radial불량,단일,Rh3 căm rớt lk,1,vender hỗ trợ xử lý,650.0,457.0,0.0,0.0,0.0,0.0
+2026-07-01,DAY,MI,MI 2,A,"55""/3in1, M70H, HKC",13.0,ATE,ATE불량,복합,ict error (7min). Ate error (6min),1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-01,DAY,MI,MI 2,B,"55""/3in1, M70H, HKC",6.0,ATE,ATE불량,복합,ict error (7min). Ate error (6min),1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-01,DAY,MI,MI 2,C,"55""/3in1, M70H, HKC",13.0,ATE,ATE불량,복합,ict error (7min). Ate error (6min),1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-01,DAY,MI,MI 2,D,"55""/3in1, M70H, HKC",15.0,ETC,기타,복합,BOD,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-01,DAY,MI,MI 2,TOTAL,"55""/3in1, M70H, HKC",32.0,ATE,ATE불량,복합,ict error (7min). Ate error (6min),1,,5740.0,5740.0,5740.0,5740.0,2870.0,0.0
+2026-07-01,DAY,MI,MI 2,TOTAL,"55""/3in1, M70H, HKC",15.0,ETC,기타,복합,BOD,2,,5740.0,5740.0,5740.0,5740.0,2870.0,0.0
 2026-07-01,DAY,SMT,PS02,E,L65E70W_HVD,20.0,PRINTER,Printer불량,복합,Lỗi printer nghẹt keo,1,Kỹ thuật điều chỉnh,0.0,0.0,0.0,0.0,0.0,0.0
 2026-07-01,DAY,SMT,PS02,TOTAL,L65E70A_HVD,20.0,PRINTER,Printer불량,단일,Lỗi printer nghẹt keo,1,Kỹ thuật điều chỉnh,1387.0,1347.0,0.0,0.0,0.0,0.0
 2026-07-01,DAY,SMT,PS03,A,L75S7N_HVD,26.0,MOUTER,Mouter불량,단일,Máy mounter #1 lỗi,1,Kỹ thuật điều chỉnh,0.0,0.0,0.0,0.0,0.0,0.0
