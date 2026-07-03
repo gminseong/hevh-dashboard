@@ -1280,7 +1280,7 @@ def dashboard():
                       .sum().reset_index().sort_values("loss_min", ascending=False)
                       .rename(columns={"loss_type_name":"유형","loss_min":"손실(분)"}))
                 ts["손실(분)"] = ts["손실(분)"].round(1)
-                ft = px.bar(proc_type, x="손실(분)", y="유형", orientation="h",
+                ft = px.bar(proc_type, x="loss_min", y="loss_type_name", orientation="h",
                     color="유형", color_discrete_map=TYPE_COLOR,
                     height=max(300, len(proc_type) * 38))   # ★ 항목당 38px
                 ft.update_layout(
