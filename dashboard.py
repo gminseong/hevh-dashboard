@@ -1316,7 +1316,8 @@ def dashboard():
                       .sum().reset_index().sort_values("loss_min", ascending=False).head(15))
                 ls["loss_min"] = ls["loss_min"].round(1)
                 fig2 = px.bar(ls, x="line", y="loss_min", color="process",
-                              color_discrete_map=PROC_COLOR, height=500,
+                              color_discrete_map=PROC_COLOR,
+                              height=max(400, min(len(ts) * 22, 600)),  # ★ col_l과 동일
                               labels={"loss_min":"손실(분)","line":"라인"})
                 fig2.update_layout(margin=dict(l=0,r=0,t=10,b=0),
                                    yaxis=dict(rangemode="tozero"),
@@ -1372,6 +1373,7 @@ def dashboard():
                 proc_type = (total_df[total_df["process"] == sel_proc]
                              .groupby("loss_type_name")["loss_min"].sum().reset_index()
                              .sort_values("loss_min", ascending=True)
+                             .tail(8)
                              .rename(columns={"loss_type_name":"유형","loss_min":"손실(분)"}))
                 proc_type["손실(분)"] = proc_type["손실(분)"].round(1)
                 st.markdown(f"**{sel_proc} 손실유형**")
