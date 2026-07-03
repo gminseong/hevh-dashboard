@@ -1443,14 +1443,15 @@ def dashboard():
                         lt_src = line_df
                     lt_proc = (lt_src.groupby("loss_type_name")["loss_min"]
                                .sum().reset_index()
-                               .sort_values("loss_min", ascending=False))
+                               .sort_values("loss_min", ascending=False)
+                               .head(15))
                     lt_proc["loss_min"] = lt_proc["loss_min"].round(1)
                     fig_lt = px.bar(lt_proc, x="loss_min", y="loss_type_name",
                                     orientation="h", color="loss_type_name",
                                     color_discrete_map=TYPE_COLOR,
                                     height=500, text="loss_min",
                                     labels={"loss_min":"손실(분)","loss_type_name":"유형"})
-                    fig_lt.update_traces(texttemplate="%{text:,.0f}", textposition="outside")
+                    fig_lt.update_traces(texttemplate="%{text:,.0f}", textposition="inside")
                     fig_lt.update_layout(margin=dict(l=150,r=20,t=30,b=0),
                                          showlegend=False,
                                          xaxis=dict(rangemode="tozero"))
