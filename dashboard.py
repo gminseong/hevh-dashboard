@@ -1286,7 +1286,7 @@ def dashboard():
                             orientation="h",
                             color="loss_type_name",
                             color_discrete_map=TYPE_COLOR,
-                            height=max(500, len(ts) * 38),
+                            height=max(500, min(len(ts) * 38, 800)),   # ★ 최대 800px 제한
                             labels={"loss_min":"손실(분)", "loss_type_name":"유형"})
                 ft.update_layout(
                     showlegend=False,
@@ -1366,7 +1366,7 @@ def dashboard():
                             orientation="h",
                             color="loss_type_name",
                             color_discrete_map=TYPE_COLOR,
-                            height=max(300, len(proc_type) * 38),
+                            height=max(300, min(len(proc_type) * 38, 600)),   # ★ 최대 600px 제한
                             labels={"loss_min":"손실(분)", "loss_type_name":"유형"})
                 ft.update_layout(
                     showlegend=False,
