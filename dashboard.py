@@ -1272,12 +1272,12 @@ def dashboard():
                 ts["손실(분)"] = ts["손실(분)"].round(1)
                 fig = px.bar(ts, x="손실(분)", y="유형", orientation="h",
                              color="유형", color_discrete_map=TYPE_COLOR, height=500)
-                fig.update_layout(
+                ft.update_layout(
                     showlegend=False,
-                    margin=dict(l=130, r=20, t=10, b=0),      # ★ l=0 → l=130
+                    margin=dict(l=130, r=20, t=10, b=0),
+                    xaxis=dict(rangemode="tozero"),
                     yaxis=dict(categoryorder="total ascending",
-                               tickfont=dict(size=12)),
-                    xaxis=dict(rangemode="tozero")
+                               tickfont=dict(size=12))
                 )
                 ct = st.plotly_chart(fig, use_container_width=True,
                                      on_select="rerun", key="type_chart")
