@@ -1343,7 +1343,7 @@ def dashboard():
                 pp = (total_df.groupby("process")["loss_min"].sum().reset_index())
                 pp["loss_min"] = pp["loss_min"].round(1)
                 fp = px.pie(pp, values="loss_min", names="process",
-                            color="process", color_discrete_map=PROC_COLOR, height=500)
+                            color="process", color_discrete_map=PROC_COLOR, height=400)
                 fp.update_traces(textposition="inside", textinfo="percent+label")
                 fp.update_layout(margin=dict(l=0,r=0,t=10,b=0), showlegend=False)
                 cp = st.plotly_chart(fp, use_container_width=True,
