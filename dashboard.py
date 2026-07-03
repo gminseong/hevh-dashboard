@@ -1287,7 +1287,7 @@ def dashboard():
                             orientation="h",
                             color="loss_type_name",
                             color_discrete_map=TYPE_COLOR,
-                            height=600),   # ★ 최대 800px 제한
+                            height=max(400, min(len(ts) * 20, 600)),  # ★ col_l과 동일
                             labels={"loss_min":"손실(분)", "loss_type_name":"유형"})
                 ft.update_layout(
                     showlegend=False,
