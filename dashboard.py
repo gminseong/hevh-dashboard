@@ -1317,7 +1317,7 @@ def dashboard():
                 ls["loss_min"] = ls["loss_min"].round(1)
                 fig2 = px.bar(ls, x="line", y="loss_min", color="process",
                               color_discrete_map=PROC_COLOR,
-                              height=max(400, min(len(ts) * 22, 600)),  # ★ col_l과 동일
+                              height=max(400, min(len(ts) * 24, 600)),  # ★ col_l과 동일
                               labels={"loss_min":"손실(분)","line":"라인"})
                 fig2.update_layout(margin=dict(l=0,r=0,t=10,b=0),
                                    yaxis=dict(rangemode="tozero"),
