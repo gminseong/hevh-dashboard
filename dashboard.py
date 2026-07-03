@@ -1003,6 +1003,16 @@ def dashboard():
       <p>AI / SMT / PBA(MI) 공정 실적 | 호치민 법인</p>
     </div>""", unsafe_allow_html=True)
 
+    # ★ 자동 DB 로드 (세션에 없을 때만 한 번 실행)
+    if "df" not in st.session_state:
+        with st.spinner("DB 로드 중..."):
+            db  = load_db()
+            sdb = load_scrap_db()
+        if not db.empty:
+            st.session_state["df"] = db
+        if not sdb.empty:
+            st.session_state["scrap_df"] = sdb
+
     # ════════════════════════════════════════
     # 사이드바
     # ════════════════════════════════════════
