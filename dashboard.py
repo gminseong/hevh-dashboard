@@ -1461,64 +1461,64 @@ def dashboard():
                         sel_type = cl_lt["selection"]["points"][0].get("y","")
     
                 # ── 하단 상세 (라인 or 유형 클릭 시)
-                if sel_line or sel_type:
-                    st.markdown("<hr class='section-divider'>", unsafe_allow_html=True)
-                    detail_df = total_df.copy()
-                    if sel_line:
-                        detail_df = detail_df[detail_df["line"] == sel_line]
-                    if sel_type:
-                        detail_df = detail_df[detail_df["loss_type_name"] == sel_type]
-    
-                    title = ""
-                    if sel_line: title += f"📋 {sel_line} 라인"
-                    if sel_type: title += f"  |  {sel_type}"
-                    st.markdown(f'<div class="detail-box"><b>{title} 상세</b></div>',
-                                unsafe_allow_html=True)
-    
-                    total_sel = round(detail_df["loss_min"].sum(), 1)
-                    m1,m2,m3,m4 = st.columns(4)
-                    m1.metric("누계 손실", f"{total_sel:,.1f}분")
-                    m2.metric("손실 시간", f"{round(total_sel/60,1)}h")
-                    m3.metric("발생 일수", f"{detail_df['date'].nunique()}일")
-                    m4.metric("손실 유형수", f"{detail_df['loss_type_name'].nunique()}종")
-    
-                    st.markdown("<br>", unsafe_allow_html=True)
-                    col_da, col_db = st.columns(2)
-                    with col_da:
-                        st.markdown("##### 손실유형 비중")
-                        lt2 = (detail_df.groupby("loss_type_name")["loss_min"]
-                               .sum().reset_index()
-                               .sort_values("loss_min", ascending=False))
-                        lt2["loss_min"] = lt2["loss_min"].round(1)
-                        fp2 = px.pie(lt2, values="loss_min", names="loss_type_name",
-                                     color="loss_type_name", color_discrete_map=TYPE_COLOR,
-                                     height=300)
-                        fp2.update_traces(textposition="inside", textinfo="percent+label")
-                        fp2.update_layout(margin=dict(l=0,r=0,t=10,b=0), showlegend=False)
-                        st.plotly_chart(fp2, use_container_width=True)
-                    with col_db:
-                        st.markdown("##### 날짜별 트렌드")
-                        dt_l = (detail_df.groupby(["date","shift"])["loss_min"]
-                                .sum().reset_index())
-                        dt_l["loss_min"] = dt_l["loss_min"].round(1)
-                        dt_l["date"] = pd.to_datetime(dt_l["date"])
-                        fig_dt = px.bar(dt_l, x="date", y="loss_min", color="shift",
-                                        color_discrete_map={"DAY":"#f59e0b","NIGHT":"#6366f1"},
-                                        height=300, barmode="stack",
-                                        labels={"loss_min":"손실(분)","date":"날짜","shift":"구분"})
-                        fig_dt.update_layout(margin=dict(l=0,r=0,t=10,b=0),
-                                             yaxis=dict(rangemode="tozero"),
-                                             xaxis=dict(tickformat="%m/%d"),
-                                             legend=dict(orientation="h",y=1.05))
-                        st.plotly_chart(fig_dt, use_container_width=True)
-    
-                    st.markdown("##### 상세 데이터")
-                    dd = detail_df[["date","shift","line","time_slot","model",
-                                    "loss_min","loss_type_name","loss_detail"]]\
-                                   .sort_values(["date","line"])
-                    dd["loss_min"] = dd["loss_min"].round(1)
-                    st.dataframe(dd.reset_index(drop=True),
-                                 use_container_width=True, height=300)
+                
+                st.markdown("<hr class='section-divider'>", unsafe_allow_html=True)
+                detail_df = total_df.copy()
+                if sel_line:
+                    detail_df = detail_df[detail_df["line"] == sel_line]
+                if sel_type:
+                    detail_df = detail_df[detail_df["loss_type_name"] == sel_type]
+
+                title = ""
+                if sel_line: title += f"📋 {sel_line} 라인"
+                if sel_type: title += f"  |  {sel_type}"
+                st.markdown(f'<div class="detail-box"><b>{title} 상세</b></div>',
+                            unsafe_allow_html=True)
+
+                total_sel = round(detail_df["loss_min"].sum(), 1)
+                m1,m2,m3,m4 = st.columns(4)
+                m1.metric("누계 손실", f"{total_sel:,.1f}분")
+                m2.metric("손실 시간", f"{round(total_sel/60,1)}h")
+                m3.metric("발생 일수", f"{detail_df['date'].nunique()}일")
+                m4.metric("손실 유형수", f"{detail_df['loss_type_name'].nunique()}종")
+
+                st.markdown("<br>", unsafe_allow_html=True)
+                col_da, col_db = st.columns(2)
+                with col_da:
+                    st.markdown("##### 손실유형 비중")
+                    lt2 = (detail_df.groupby("loss_type_name")["loss_min"]
+                           .sum().reset_index()
+                           .sort_values("loss_min", ascending=False))
+                    lt2["loss_min"] = lt2["loss_min"].round(1)
+                    fp2 = px.pie(lt2, values="loss_min", names="loss_type_name",
+                                 color="loss_type_name", color_discrete_map=TYPE_COLOR,
+                                 height=300)
+                    fp2.update_traces(textposition="inside", textinfo="percent+label")
+                    fp2.update_layout(margin=dict(l=0,r=0,t=10,b=0), showlegend=False)
+                    st.plotly_chart(fp2, use_container_width=True)
+                with col_db:
+                    st.markdown("##### 날짜별 트렌드")
+                    dt_l = (detail_df.groupby(["date","shift"])["loss_min"]
+                            .sum().reset_index())
+                    dt_l["loss_min"] = dt_l["loss_min"].round(1)
+                    dt_l["date"] = pd.to_datetime(dt_l["date"])
+                    fig_dt = px.bar(dt_l, x="date", y="loss_min", color="shift",
+                                    color_discrete_map={"DAY":"#f59e0b","NIGHT":"#6366f1"},
+                                    height=300, barmode="stack",
+                                    labels={"loss_min":"손실(분)","date":"날짜","shift":"구분"})
+                    fig_dt.update_layout(margin=dict(l=0,r=0,t=10,b=0),
+                                         yaxis=dict(rangemode="tozero"),
+                                         xaxis=dict(tickformat="%m/%d"),
+                                         legend=dict(orientation="h",y=1.05))
+                    st.plotly_chart(fig_dt, use_container_width=True)
+
+                st.markdown("##### 상세 데이터")
+                dd = detail_df[["date","shift","line","time_slot","model",
+                                "loss_min","loss_type_name","loss_detail"]]\
+                               .sort_values(["date","line"])
+                dd["loss_min"] = dd["loss_min"].round(1)
+                st.dataframe(dd.reset_index(drop=True),
+                             use_container_width=True, height=300)
 
     # ════════ TAB3 - Plan/Actual ════════
     with tab3:
