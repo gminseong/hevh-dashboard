@@ -1348,18 +1348,25 @@ def dashboard():
                     if sp: st.session_state["sel_proc"] = sp
 
             with col_type:
-                sel_proc = st.session_state.get("sel_proc","MI")
+                sel_proc = st.session_state.get("sel_proc", "MI")
+                # ★ rename 제거 — 원본 컬럼명 그대로 사용
                 proc_type = (total_df[total_df["process"] == sel_proc]
-                             .groupby("loss_type_name")["loss_min"].sum().reset_index()
-                             .sort_values("loss_min", ascending=True)
-                             .rename(columns={"loss_type_name":"유형","loss_min":"손실(분)"}))
-                proc_type["손실(분)"] = proc_type["손실(분)"].round(1)
+                             .groupby("loss_type_name")["loss_min"].sum()
+                             .reset_index()
+                             .sort_values("loss_min", ascending=True))
+                proc_type["loss_min"] = proc_type["loss_min"].round(1)
                 st.markdown(f"**{sel_proc} 손실유형**")
-                ft = px.bar(proc_type, x="손실(분)", y="유형", orientation="h",
-                            color="유형", color_discrete_map=TYPE_COLOR, height=300)
+                ft = px.bar(proc_type,
+                            x="loss_min",
+                            y="loss_type_name",
+                            orientation="h",
+                            color="loss_type_name",
+                            color_discrete_map=TYPE_COLOR,
+                            height=max(300, len(proc_type) * 38),
+                            labels={"loss_min":"손실(분)", "loss_type_name":"유형"})
                 ft.update_layout(
                     showlegend=False,
-                    margin=dict(l=130, r=20, t=10, b=0),      # ★ l=0 → l=130
+                    margin=dict(l=130, r=20, t=10, b=0),
                     xaxis=dict(rangemode="tozero"),
                     yaxis=dict(categoryorder="total ascending",
                                tickfont=dict(size=12))
