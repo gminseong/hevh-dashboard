@@ -1384,32 +1384,7 @@ def dashboard():
 
             st.markdown("<hr class='section-divider'>", unsafe_allow_html=True)
             col_trend2, col_slot2 = st.columns(2)
-            with col_trend2:
-                st.markdown("#### 날짜별 트렌드 (라인별)")
-                dt2 = (total_df.groupby(["date","shift"])["loss_min"].sum().reset_index())
-                dt2["loss_min"] = dt2["loss_min"].round(1)
-                dt2["date"] = pd.to_datetime(dt2["date"])  # ★ v5.1
-                fig_d2 = px.bar(dt2, x="date", y="loss_min", color="shift",
-                                color_discrete_map={"DAY":"#f59e0b","NIGHT":"#6366f1"},
-                                height=300, barmode="stack",
-                                labels={"loss_min":"손실(분)","date":"날짜","shift":"구분"})
-                fig_d2.update_layout(margin=dict(l=0,r=0,t=10,b=0),
-                                     yaxis=dict(rangemode="tozero"),
-                                     xaxis=dict(tickformat="%m/%d"),
-                                     legend=dict(orientation="h",y=1.05))
-                st.plotly_chart(fig_d2, use_container_width=True)
-
-            with col_slot2:
-                st.markdown("#### DAY vs NIGHT")
-                sc = (total_df.groupby(["shift","loss_type_name"])["loss_min"].sum().reset_index())
-                sc["loss_min"] = sc["loss_min"].round(1)
-                fig5 = px.bar(sc, x="loss_type_name", y="loss_min", color="shift",
-                              color_discrete_map={"DAY":"#f59e0b","NIGHT":"#6366f1"},
-                              barmode="group", height=300,
-                              labels={"loss_min":"손실(분)","loss_type_name":"손실유형","shift":"구분"})
-                fig5.update_layout(margin=dict(l=0,r=0,t=10,b=0),
-                                   xaxis_tickangle=-30, yaxis=dict(rangemode="tozero"))
-                st.plotly_chart(fig5, use_container_width=True)
+            
 
     # ════════ TAB2 - 라인별 ════════
     with tab2:
