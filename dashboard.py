@@ -1272,9 +1272,13 @@ def dashboard():
                 ts["손실(분)"] = ts["손실(분)"].round(1)
                 fig = px.bar(ts, x="손실(분)", y="유형", orientation="h",
                              color="유형", color_discrete_map=TYPE_COLOR, height=500)
-                fig.update_layout(showlegend=False, margin=dict(l=0,r=0,t=10,b=0),
-                                  yaxis=dict(categoryorder="total ascending"),
-                                  xaxis=dict(rangemode="tozero"))
+                fig.update_layout(
+                    showlegend=False,
+                    margin=dict(l=130, r=20, t=10, b=0),      # ★ l=0 → l=130
+                    yaxis=dict(categoryorder="total ascending",
+                               tickfont=dict(size=12)),
+                    xaxis=dict(rangemode="tozero")
+                )
                 ct = st.plotly_chart(fig, use_container_width=True,
                                      on_select="rerun", key="type_chart")
                 if ct and ct.get("selection",{}).get("points"):
@@ -1342,9 +1346,13 @@ def dashboard():
                 st.markdown(f"**{sel_proc} 손실유형**")
                 ft = px.bar(proc_type, x="손실(분)", y="유형", orientation="h",
                             color="유형", color_discrete_map=TYPE_COLOR, height=300)
-                ft.update_layout(showlegend=False, margin=dict(l=0,r=0,t=10,b=0),
-                                 xaxis=dict(rangemode="tozero"),
-                                 yaxis=dict(categoryorder="total ascending"))
+                ft.update_layout(
+                    showlegend=False,
+                    margin=dict(l=130, r=20, t=10, b=0),      # ★ l=0 → l=130
+                    xaxis=dict(rangemode="tozero"),
+                    yaxis=dict(categoryorder="total ascending",
+                               tickfont=dict(size=12))
+                )
                 st.plotly_chart(ft, use_container_width=True)
 
             st.markdown("<hr class='section-divider'>", unsafe_allow_html=True)
