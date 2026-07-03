@@ -1277,20 +1277,24 @@ def dashboard():
             with col_l:
                 st.markdown("#### 손실유형별 누계")
                 ts = (total_df.groupby("loss_type_name")["loss_min"]
-                      .sum().reset_index().sort_values("loss_min", ascending=False)
-                      .rename(columns={"loss_type_name":"유형","loss_min":"손실(분)"}))
-                ts["손실(분)"] = ts["손실(분)"].round(1)
-                ft = px.bar(proc_type, x="loss_min", y="loss_type_name", orientation="h",
-                    color="유형", color_discrete_map=TYPE_COLOR,
-                    height=max(300, len(proc_type) * 38))   # ★ 항목당 38px
+                      .sum().reset_index()
+                      .sort_values("loss_min", ascending=False))
+                ts["loss_min"] = ts["loss_min"].round(1)
+                ft = px.bar(ts,
+                            x="loss_min",
+                            y="loss_type_name",
+                            orientation="h",
+                            color="loss_type_name",
+                            color_discrete_map=TYPE_COLOR,
+                            height=max(500, len(ts) * 38),
+                            labels={"loss_min":"손실(분)", "loss_type_name":"유형"})
                 ft.update_layout(
                     showlegend=False,
                     margin=dict(l=130, r=20, t=10, b=0),
-                    xaxis=dict(rangemode="tozero"),
                     yaxis=dict(categoryorder="total ascending",
-                               tickfont=dict(size=12))
-                )
-                ct = st.plotly_chart(fig, use_container_width=True,
+                               tickfont=dict(size=12)),
+                    xaxis=dict(rangemode="tozero"))
+                ct = st.plotly_chart(ft, use_container_width=True,
                                      on_select="rerun", key="type_chart")
                 if ct and ct.get("selection",{}).get("points"):
                     sn2 = ct["selection"]["points"][0]
