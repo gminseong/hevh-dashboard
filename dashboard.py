@@ -1278,7 +1278,7 @@ def dashboard():
                 st.markdown("#### 손실유형별 누계")
                 ts = (total_df.groupby("loss_type_name")["loss_min"]
                       .sum().reset_index()
-                      .sort_values("loss_min", ascending=False))
+                      .sort_values("loss_min", ascending=False)
                       .head(22))          
                 ts["loss_min"] = ts["loss_min"].round(1)
                 ft = px.bar(ts,
