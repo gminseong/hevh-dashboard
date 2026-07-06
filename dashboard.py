@@ -987,7 +987,7 @@ def parse_files(uploaded_files):
                 except Exception as e: st.warning(f"파싱오류[{sn}]: {e}")
                 # ★ planactual 파싱
                 try: pa_records.extend(parse_planactual(ws, process, ds, shift))
-                except Exception as e: st.warning(f"PA파싱오류[{sn}]: {e}")     
+                except Exception as e: st.error(f"PA파싱오류[{sn}]: {e}")
         prog.progress((fi+1)/len(uploaded_files))
 
     status.empty(); prog.empty()
