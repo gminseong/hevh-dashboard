@@ -977,7 +977,7 @@ def parse_files(uploaded_files):
                     ds = find_date_in_sheet(ws) or "UNKNOWN"
                 if ds == "UNKNOWN": continue
 
-                pkey = (ds, process, shift)
+                pkey = (fn, sn) 
                 if pkey in parsed_keys:
                     status.warning(f"중복 스킵: {fn} [{sn}] {ds}/{process}/{shift}")
                     continue
