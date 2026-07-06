@@ -1530,6 +1530,7 @@ def dashboard():
             proc_pa = st.radio("공정",["전체","AI","SMT","MI"],horizontal=True,key="pa_proc")
             pa_df = total_df.copy() if proc_pa == "전체" else \
                     total_df[total_df["process"] == proc_pa].copy()
+            pa_df = pa_df[pa_df["sub_idx"] == 1]        
 
             if proc_pa == "MI":
                 t_sum2  = pa_df["target_mi"].sum()
