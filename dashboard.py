@@ -465,6 +465,26 @@ def load_planactual_db():
 def save_planactual_db(df):
     return github_save_csv(df, PLANACTUAL_DB_PATH, "PLANACTUAL DB")
 
+def get_mi_totals(row):
+    """TARGET/ACTUAL행 뒤에서 숫자(int/float)만 찾아 (MI일계, ATE일계) 반환"""
+    if not row:
+        return 0.0, 0.0
+    numeric_indices = [
+        i for i, v in enumerate(row)
+        if isinstance(v, (int, float)) and v is not True and v is not False
+    ]
+    if len(numeric_indices) >= 3:
+        try: mi_val  = float(row[numeric_indices[-3]])
+        except: mi_val = 0.0
+        try: ate_val = float(row[numeric_indices[-1]])
+        except: ate_val = 0.0
+        return mi_val, ate_val
+    elif len(numeric_indices) >= 1:
+        try: return float(row[numeric_indices[-1]]), 0.0
+        except: return 0.0, 0.0
+    return 0.0, 0.0
+
+
 def parse_planactual(ws, process, date_str, shift):
     records = []
     rows  = list(ws.iter_rows(values_only=True))
@@ -498,19 +518,10 @@ def parse_planactual(ws, process, date_str, shift):
                 })
         else:
             mi_target = mi_actual = ate_target = ate_actual = 0.0
-            for s_idx in range(len(slots)):
-                col_mi  = 2 + s_idx * 3      # col3=index2, col6=index5 ...
-                col_ate = 2 + s_idx * 3 + 2  # col5=index4, col8=index7 ...
-                if target_row:
-                    try: mi_target  += parse_losstime(target_row[col_mi]  if col_mi  < len(target_row) else None)
-                    except: pass
-                    try: ate_target += parse_losstime(target_row[col_ate] if col_ate < len(target_row) else None)
-                    except: pass
-                if actual_row:
-                    try: mi_actual  += parse_losstime(actual_row[col_mi]  if col_mi  < len(actual_row) else None)
-                    except: pass
-                    try: ate_actual += parse_losstime(actual_row[col_ate] if col_ate < len(actual_row) else None)
-                    except: pass
+            if target_row:
+                mi_target, ate_target = get_mi_totals(target_row)
+            if actual_row:
+                mi_actual, ate_actual = get_mi_totals(actual_row)
             if mi_target > 0 or mi_actual > 0:
                 records.append({
                     "date": date_str, "shift": shift, "process": process, "line": line,
