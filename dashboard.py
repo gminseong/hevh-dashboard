@@ -1106,7 +1106,7 @@ def dashboard():
             if uploaded:
                 if st.button("🚀 분석 / 누적", type="primary", use_container_width=True):
                     with st.spinner("처리 중..."):
-                        nl, ns = parse_files(uploaded)
+                        nl, ns, npa = parse_files(uploaded)
                     if not nl.empty:
                         ex = load_db(); mg = merge_db(ex, nl)
                         with st.spinner("저장..."): save_db(mg)
