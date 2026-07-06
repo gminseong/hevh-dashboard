@@ -449,6 +449,78 @@ def save_db(df):       return github_save_csv(df, DB_PATH, "LOSSTIME DB")
 def load_scrap_db():   return github_load_csv(SCRAP_DB)
 def save_scrap_db(df): return github_save_csv(df, SCRAP_DB, "SCRAP DB")
 
+# ★ Plan/Actual DB
+PLANACTUAL_DB_PATH = "planactual_db.csv"
+
+def load_planactual_db():
+    df = github_load_csv(PLANACTUAL_DB_PATH)
+    if df.empty:
+        return pd.DataFrame(columns=["date","shift","process","line",
+                                      "target","actual","target_mi","actual_mi",
+                                      "target_ate","actual_ate"])
+    for col in ["target","actual","target_mi","actual_mi","target_ate","actual_ate"]:
+        if col not in df.columns: df[col] = 0
+    return df
+
+def save_planactual_db(df):
+    return github_save_csv(df, PLANACTUAL_DB_PATH, "PLANACTUAL DB")
+
+def parse_planactual(ws, process, date_str, shift):
+    records = []
+    rows  = list(ws.iter_rows(values_only=True))
+    slots = NIGHT_SLOTS if shift == "NIGHT" else DAY_SLOTS
+    i = 0
+    while i < len(rows):
+        row = rows[i]; c1 = row[1] if len(row) > 1 else None
+        if not is_line_cell(c1): i += 1; continue
+        line = normalize_line(str(c1))
+        target_row = actual_row = None
+        for j in range(i+1, min(i+16, len(rows))):
+            r = rows[j]; lbl = get_label(r)
+            if is_line_cell(r[1] if len(r) > 1 else None) and j > i+1: break
+            if "TARGET" in lbl and target_row is None: target_row = r
+            elif "ACTUAL" in lbl and actual_row is None: actual_row = r
+        if process != "MI":
+            target_tot = actual_tot = 0.0
+            for s_idx in range(len(slots)):
+                col = 2 + s_idx
+                if target_row:
+                    try: target_tot += parse_losstime(target_row[col] if col < len(target_row) else None)
+                    except: pass
+                if actual_row:
+                    try: actual_tot += parse_losstime(actual_row[col] if col < len(actual_row) else None)
+                    except: pass
+            if target_tot > 0 or actual_tot > 0:
+                records.append({
+                    "date": date_str, "shift": shift, "process": process, "line": line,
+                    "target": round(target_tot,0), "actual": round(actual_tot,0),
+                    "target_mi": 0, "actual_mi": 0, "target_ate": 0, "actual_ate": 0
+                })
+        else:
+            mi_target = mi_actual = ate_target = ate_actual = 0.0
+            for s_idx in range(len(slots)):
+                col_mi  = 2 + s_idx * 3
+                col_ate = 2 + s_idx * 3 + 2
+                if target_row:
+                    try: mi_target  += parse_losstime(target_row[col_mi]  if col_mi  < len(target_row) else None)
+                    except: pass
+                    try: ate_target += parse_losstime(target_row[col_ate] if col_ate < len(target_row) else None)
+                    except: pass
+                if actual_row:
+                    try: mi_actual  += parse_losstime(actual_row[col_mi]  if col_mi  < len(actual_row) else None)
+                    except: pass
+                    try: ate_actual += parse_losstime(actual_row[col_ate] if col_ate < len(actual_row) else None)
+                    except: pass
+            if mi_target > 0 or mi_actual > 0:
+                records.append({
+                    "date": date_str, "shift": shift, "process": process, "line": line,
+                    "target": 0, "actual": 0,
+                    "target_mi": round(mi_target,0), "actual_mi": round(mi_actual,0),
+                    "target_ate": round(ate_target,0), "actual_ate": round(ate_actual,0)
+                })
+        i += 1
+    return records
+
 def merge_db(existing, new_df):
     if existing.empty: return new_df
     if new_df.empty:   return existing
@@ -876,7 +948,7 @@ def parse_scrap_file(uploaded_file):
     return pd.DataFrame(records)
 
 def parse_files(uploaded_files):
-    loss_records = []; scrap_list = []
+    loss_records = []; scrap_list = []; pa_records = []  
     prog = st.progress(0); status = st.empty()
     parsed_keys = set()
 
@@ -913,6 +985,9 @@ def parse_files(uploaded_files):
 
                 try: loss_records.extend(parse_sheet(ws, process, ds, shift))
                 except Exception as e: st.warning(f"파싱오류[{sn}]: {e}")
+                # ★ planactual 파싱
+                try: pa_records.extend(parse_planactual(ws, process, ds, shift))
+                except Exception as e: st.warning(f"PA파싱오류[{sn}]: {e}")     
         prog.progress((fi+1)/len(uploaded_files))
 
     status.empty(); prog.empty()
@@ -920,7 +995,11 @@ def parse_files(uploaded_files):
     if not ldf.empty and "date" in ldf.columns:
         ldf = ldf[ldf["date"] != "UNKNOWN"].reset_index(drop=True)
     sdf = pd.concat(scrap_list, ignore_index=True) if scrap_list else pd.DataFrame()
-    return ldf, sdf
+    # ★ planactual
+    padf = pd.DataFrame(pa_records)
+    if not padf.empty and "date" in padf.columns:
+        padf = padf[padf["date"] != "UNKNOWN"].reset_index(drop=True)
+    return ldf, sdf, padf
 
 # ─────────────────────────────────────────────
 # 유틸
@@ -1038,8 +1117,17 @@ def dashboard():
                         with st.spinner("저장..."): save_scrap_db(ms)
                         st.session_state["scrap_df"] = ms
                         st.success(f"OK SCRAP {len(ns):,}건")
-                    if nl.empty and ns.empty: st.warning("데이터 없음 — 스킵")
-
+                    # ★ planactual 저장
+                    if not npa.empty:
+                        epa = load_planactual_db()
+                        mpa = pd.concat([epa, npa], ignore_index=True)
+                        mpa = mpa.drop_duplicates(
+                            subset=["date","shift","process","line"], keep="last"
+                        ).reset_index(drop=True)
+                        with st.spinner("저장..."): save_planactual_db(mpa)
+                        st.session_state["pa_df"] = mpa
+                        st.success(f"OK PLANACTUAL {len(npa):,}건")
+                    if nl.empty and ns.empty and npa.empty: st.warning("데이터 없음 — 스킵")
         if st.button("💾 DB 불러오기", use_container_width=True):
             with st.spinner("로드 중..."):
                 db = load_db(); sdb = load_scrap_db()
@@ -1523,23 +1611,30 @@ def dashboard():
 
     # ════════ TAB3 - Plan/Actual ════════
     with tab3:
-        if total_df.empty:
-            st.warning("TOTAL 데이터 없음")
+        st.markdown("#### 📋 Plan / Actual")
+        proc_pa = st.radio("공정",["전체","AI","SMT","MI"],horizontal=True,key="pa_proc")
+    
+        # ★ planactual_db 사용
+        pa_db = st.session_state.get("pa_df", load_planactual_db())
+    
+        if pa_db.empty:
+            st.warning("PLANACTUAL 데이터 없음 — 파일 재업로드 필요")
+            t_sum2 = a_sum2 = 0
         else:
-            st.markdown("#### 📋 Plan / Actual")
-            proc_pa = st.radio("공정",["전체","AI","SMT","MI"],horizontal=True,key="pa_proc")
-            pa_df = total_df.copy() if proc_pa == "전체" else \
-                    total_df[total_df["process"] == proc_pa].copy()
-            pa_df = pa_df[pa_df["sub_idx"] == 1]        
-
+            pa_df = pa_db.copy() if proc_pa == "전체" else \
+                    pa_db[pa_db["process"] == proc_pa].copy()
+            pa_df = pa_df.drop_duplicates(
+                subset=["date","shift","process","line"], keep="last"
+            )
             if proc_pa == "MI":
-                t_sum2  = pa_df["target_mi"].sum()
-                a_sum2  = pa_df["actual_mi"].sum()
+                t_sum2 = pa_df["target_mi"].sum()
+                a_sum2 = pa_df["actual_mi"].sum()
             else:
                 t_sum2 = pa_df["target"].sum()
                 a_sum2 = pa_df["actual"].sum()
-            gap2  = a_sum2 - t_sum2
-            ach2  = round(a_sum2 / t_sum2 * 100, 1) if t_sum2 > 0 else 0
+    
+        gap2 = a_sum2 - t_sum2
+        ach2 = round(a_sum2 / t_sum2 * 100, 1) if t_sum2 > 0 else 0
 
             c1,c2,c3,c4 = st.columns(4)
             for col_p, val_p, lbl_p, gap_val in [
@@ -1559,22 +1654,26 @@ def dashboard():
                     unsafe_allow_html=True)
 
             st.markdown("##### 날짜별 Target vs Actual")
-            if proc_pa == "MI":
-                dt_pa = (pa_df.groupby("date")[["target_mi","actual_mi",
-                                                 "target_ate","actual_ate"]].sum().reset_index())
-                fig_pa = go.Figure()
-                fig_pa.add_scatter(x=pd.to_datetime(dt_pa["date"]),y=dt_pa["target_mi"],
-                                   name="MI Target",line=dict(dash="dash",color="#94a3b8"))
-                fig_pa.add_scatter(x=pd.to_datetime(dt_pa["date"]),y=dt_pa["actual_mi"],
-                                   name="MI Actual",line=dict(color="#10b981",width=2),
-                                   mode="lines+markers")
-                fig_pa.add_scatter(x=pd.to_datetime(dt_pa["date"]),y=dt_pa["target_ate"],
-                                   name="ATE Target",line=dict(dash="dot",color="#cbd5e1"))
-                fig_pa.add_scatter(x=pd.to_datetime(dt_pa["date"]),y=dt_pa["actual_ate"],
-                                   name="ATE Actual",line=dict(color="#3b82f6",width=2),
-                                   mode="lines+markers")
+            if not pa_db.empty:
+                if proc_pa == "MI":
+                    dt_pa = pa_df.groupby("date")[
+                        ["target_mi","actual_mi","target_ate","actual_ate"]
+                    ].sum().reset_index()
+                    fig_pa = go.Figure()
+                    fig_pa.add_scatter(x=pd.to_datetime(dt_pa["date"]),y=dt_pa["target_mi"],
+                                       name="MI Target",line=dict(dash="dash",color="#94a3b8"))
+                    fig_pa.add_scatter(x=pd.to_datetime(dt_pa["date"]),y=dt_pa["actual_mi"],
+                                       name="MI Actual",line=dict(color="#10b981",width=2),
+                                       mode="lines+markers")
+                    fig_pa.add_scatter(x=pd.to_datetime(dt_pa["date"]),y=dt_pa["target_ate"],
+                                       name="ATE Target",line=dict(dash="dot",color="#cbd5e1"))
+                    fig_pa.add_scatter(x=pd.to_datetime(dt_pa["date"]),y=dt_pa["actual_ate"],
+                                       name="ATE Actual",line=dict(color="#3b82f6",width=2),
+                                       mode="lines+markers")
             else:
-                dt_pa = (pa_df.groupby(["date","process"])[["target","actual"]].sum().reset_index())
+                dt_pa = pa_df.groupby(["date","process"])[
+                    ["target","actual"]
+                ].sum().reset_index()
                 fig_pa = go.Figure()
                 for proc in dt_pa["process"].unique():
                     sub = dt_pa[dt_pa["process"] == proc]
