@@ -1690,6 +1690,8 @@ def dashboard():
                                  legend=dict(orientation="h",y=1.05),
                                  plot_bgcolor="#f8fafc")
             st.plotly_chart(fig_pa, use_container_width=True)
+        else:
+            st.info("파일 업로드 후 차트가 표시됩니다.")
 
     # ════════ TAB4 - 트렌드 ════════
     with tab4:
