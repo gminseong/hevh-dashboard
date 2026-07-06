@@ -472,6 +472,7 @@ def get_mi_totals(row):
     numeric_indices = [
         i for i, v in enumerate(row)
         if isinstance(v, (int, float)) and v is not True and v is not False
+        and float(v) >= 100
     ]
     if len(numeric_indices) >= 3:
         try: mi_val  = float(row[numeric_indices[-3]])
