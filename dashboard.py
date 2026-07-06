@@ -1670,28 +1670,28 @@ def dashboard():
                     fig_pa.add_scatter(x=pd.to_datetime(dt_pa["date"]),y=dt_pa["actual_ate"],
                                        name="ATE Actual",line=dict(color="#3b82f6",width=2),
                                        mode="lines+markers")
+                else:
+                    dt_pa = pa_df.groupby(["date","process"])[
+                        ["target","actual"]
+                    ].sum().reset_index()
+                    fig_pa = go.Figure()
+                    for proc in dt_pa["process"].unique():
+                        sub = dt_pa[dt_pa["process"] == proc]
+                        c   = PROC_COLOR.get(proc,"#94a3b8")
+                        fig_pa.add_scatter(x=pd.to_datetime(sub["date"]),y=sub["target"],
+                                           name=f"{proc} Target",
+                                           line=dict(dash="dash",color=c),opacity=0.5)
+                        fig_pa.add_scatter(x=pd.to_datetime(sub["date"]),y=sub["actual"],
+                                           name=f"{proc} Actual",
+                                           line=dict(color=c,width=2),mode="lines+markers")
+                        fig_pa.update_layout(margin=dict(l=0,r=0,t=10,b=0),
+                                             yaxis=dict(rangemode="tozero"),height=360,
+                                             xaxis=dict(tickformat="%m/%d"),
+                                             legend=dict(orientation="h",y=1.05),
+                                             plot_bgcolor="#f8fafc")
+                    st.plotly_chart(fig_pa, use_container_width=True)
             else:
-                dt_pa = pa_df.groupby(["date","process"])[
-                    ["target","actual"]
-                ].sum().reset_index()
-                fig_pa = go.Figure()
-                for proc in dt_pa["process"].unique():
-                    sub = dt_pa[dt_pa["process"] == proc]
-                    c   = PROC_COLOR.get(proc,"#94a3b8")
-                    fig_pa.add_scatter(x=pd.to_datetime(sub["date"]),y=sub["target"],
-                                       name=f"{proc} Target",
-                                       line=dict(dash="dash",color=c),opacity=0.5)
-                    fig_pa.add_scatter(x=pd.to_datetime(sub["date"]),y=sub["actual"],
-                                       name=f"{proc} Actual",
-                                       line=dict(color=c,width=2),mode="lines+markers")
-            fig_pa.update_layout(margin=dict(l=0,r=0,t=10,b=0),
-                                 yaxis=dict(rangemode="tozero"),height=360,
-                                 xaxis=dict(tickformat="%m/%d"),
-                                 legend=dict(orientation="h",y=1.05),
-                                 plot_bgcolor="#f8fafc")
-            st.plotly_chart(fig_pa, use_container_width=True)
-        else:
-            st.info("파일 업로드 후 차트가 표시됩니다.")
+                st.info("파일 업로드 후 차트가 표시됩니다.")
 
     # ════════ TAB4 - 트렌드 ════════
     with tab4:
