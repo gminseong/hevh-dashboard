@@ -1611,87 +1611,87 @@ def dashboard():
 
     # ════════ TAB3 - Plan/Actual ════════
     with tab3:
-    st.markdown("#### 📋 Plan / Actual")
-    proc_pa = st.radio("공정",["전체","AI","SMT","MI"],horizontal=True,key="pa_proc")
-
-    # ★ planactual_db 사용
-    pa_db = st.session_state.get("pa_df", load_planactual_db())
-
-    if pa_db.empty:
-        st.warning("PLANACTUAL 데이터 없음 — 파일 재업로드 필요")
-        t_sum2 = a_sum2 = 0
-    else:
-        pa_df = pa_db.copy() if proc_pa == "전체" else \
-                pa_db[pa_db["process"] == proc_pa].copy()
-        pa_df = pa_df.drop_duplicates(
-            subset=["date","shift","process","line"], keep="last"
-        )
-        if proc_pa == "MI":
-            t_sum2 = pa_df["target_mi"].sum()
-            a_sum2 = pa_df["actual_mi"].sum()
+        st.markdown("#### 📋 Plan / Actual")
+        proc_pa = st.radio("공정",["전체","AI","SMT","MI"],horizontal=True,key="pa_proc")
+    
+        # ★ planactual_db 사용
+        pa_db = st.session_state.get("pa_df", load_planactual_db())
+    
+        if pa_db.empty:
+            st.warning("PLANACTUAL 데이터 없음 — 파일 재업로드 필요")
+            t_sum2 = a_sum2 = 0
         else:
-            t_sum2 = pa_df["target"].sum()
-            a_sum2 = pa_df["actual"].sum()
-
-    gap2 = a_sum2 - t_sum2
-    ach2 = round(a_sum2 / t_sum2 * 100, 1) if t_sum2 > 0 else 0
-
-    c1,c2,c3,c4 = st.columns(4)
-    for col_p, val_p, lbl_p, gap_val in [
-        (c1, f"{int(t_sum2):,}", "TARGET", None),
-        (c2, f"{int(a_sum2):,}", "ACTUAL", None),
-        (c3, f"{int(gap2):+,}",  "GAP",    gap2),
-        (c4, f"{ach2}%",         "달성률", ach2-100),
-    ]:
-        if gap_val is not None:
-            cls  = "kpi-card-green" if gap_val >= 0 else "kpi-card-red"
-            vcls = "kpi-val-green"  if gap_val >= 0 else "kpi-val-red"
+            pa_df = pa_db.copy() if proc_pa == "전체" else \
+                    pa_db[pa_db["process"] == proc_pa].copy()
+            pa_df = pa_df.drop_duplicates(
+                subset=["date","shift","process","line"], keep="last"
+            )
+            if proc_pa == "MI":
+                t_sum2 = pa_df["target_mi"].sum()
+                a_sum2 = pa_df["actual_mi"].sum()
+            else:
+                t_sum2 = pa_df["target"].sum()
+                a_sum2 = pa_df["actual"].sum()
+    
+        gap2 = a_sum2 - t_sum2
+        ach2 = round(a_sum2 / t_sum2 * 100, 1) if t_sum2 > 0 else 0
+    
+        c1,c2,c3,c4 = st.columns(4)
+        for col_p, val_p, lbl_p, gap_val in [
+            (c1, f"{int(t_sum2):,}", "TARGET", None),
+            (c2, f"{int(a_sum2):,}", "ACTUAL", None),
+            (c3, f"{int(gap2):+,}",  "GAP",    gap2),
+            (c4, f"{ach2}%",         "달성률", ach2-100),
+        ]:
+            if gap_val is not None:
+                cls  = "kpi-card-green" if gap_val >= 0 else "kpi-card-red"
+                vcls = "kpi-val-green"  if gap_val >= 0 else "kpi-val-red"
+            else:
+                cls = "kpi-card"; vcls = "kpi-val"
+            col_p.markdown(f"""<div class="{cls}">
+            <div class="{vcls}">{val_p}</div>
+            <div class="kpi-lbl">{lbl_p}</div></div>""",
+            unsafe_allow_html=True)
+    
+        st.markdown("##### 날짜별 Target vs Actual")
+        if not pa_db.empty:
+            if proc_pa == "MI":
+                dt_pa = pa_df.groupby("date")[
+                    ["target_mi","actual_mi","target_ate","actual_ate"]
+                ].sum().reset_index()
+                fig_pa = go.Figure()
+                fig_pa.add_scatter(x=pd.to_datetime(dt_pa["date"]),y=dt_pa["target_mi"],
+                                   name="MI Target",line=dict(dash="dash",color="#94a3b8"))
+                fig_pa.add_scatter(x=pd.to_datetime(dt_pa["date"]),y=dt_pa["actual_mi"],
+                                   name="MI Actual",line=dict(color="#10b981",width=2),
+                                   mode="lines+markers")
+                fig_pa.add_scatter(x=pd.to_datetime(dt_pa["date"]),y=dt_pa["target_ate"],
+                                   name="ATE Target",line=dict(dash="dot",color="#cbd5e1"))
+                fig_pa.add_scatter(x=pd.to_datetime(dt_pa["date"]),y=dt_pa["actual_ate"],
+                                   name="ATE Actual",line=dict(color="#3b82f6",width=2),
+                                   mode="lines+markers")
+            else:
+                dt_pa = pa_df.groupby(["date","process"])[
+                    ["target","actual"]
+                ].sum().reset_index()
+                fig_pa = go.Figure()
+                for proc in dt_pa["process"].unique():
+                    sub = dt_pa[dt_pa["process"] == proc]
+                    c   = PROC_COLOR.get(proc,"#94a3b8")
+                    fig_pa.add_scatter(x=pd.to_datetime(sub["date"]),y=sub["target"],
+                                       name=f"{proc} Target",
+                                       line=dict(dash="dash",color=c),opacity=0.5)
+                    fig_pa.add_scatter(x=pd.to_datetime(sub["date"]),y=sub["actual"],
+                                       name=f"{proc} Actual",
+                                       line=dict(color=c,width=2),mode="lines+markers")
+            fig_pa.update_layout(margin=dict(l=0,r=0,t=10,b=0),
+                                 yaxis=dict(rangemode="tozero"),height=360,
+                                 xaxis=dict(tickformat="%m/%d"),
+                                 legend=dict(orientation="h",y=1.05),
+                                 plot_bgcolor="#f8fafc")
+            st.plotly_chart(fig_pa, use_container_width=True)
         else:
-            cls = "kpi-card"; vcls = "kpi-val"
-        col_p.markdown(f"""<div class="{cls}">
-        <div class="{vcls}">{val_p}</div>
-        <div class="kpi-lbl">{lbl_p}</div></div>""",
-        unsafe_allow_html=True)
-
-    st.markdown("##### 날짜별 Target vs Actual")
-    if not pa_db.empty:
-        if proc_pa == "MI":
-            dt_pa = pa_df.groupby("date")[
-                ["target_mi","actual_mi","target_ate","actual_ate"]
-            ].sum().reset_index()
-            fig_pa = go.Figure()
-            fig_pa.add_scatter(x=pd.to_datetime(dt_pa["date"]),y=dt_pa["target_mi"],
-                               name="MI Target",line=dict(dash="dash",color="#94a3b8"))
-            fig_pa.add_scatter(x=pd.to_datetime(dt_pa["date"]),y=dt_pa["actual_mi"],
-                               name="MI Actual",line=dict(color="#10b981",width=2),
-                               mode="lines+markers")
-            fig_pa.add_scatter(x=pd.to_datetime(dt_pa["date"]),y=dt_pa["target_ate"],
-                               name="ATE Target",line=dict(dash="dot",color="#cbd5e1"))
-            fig_pa.add_scatter(x=pd.to_datetime(dt_pa["date"]),y=dt_pa["actual_ate"],
-                               name="ATE Actual",line=dict(color="#3b82f6",width=2),
-                               mode="lines+markers")
-        else:
-            dt_pa = pa_df.groupby(["date","process"])[
-                ["target","actual"]
-            ].sum().reset_index()
-            fig_pa = go.Figure()
-            for proc in dt_pa["process"].unique():
-                sub = dt_pa[dt_pa["process"] == proc]
-                c   = PROC_COLOR.get(proc,"#94a3b8")
-                fig_pa.add_scatter(x=pd.to_datetime(sub["date"]),y=sub["target"],
-                                   name=f"{proc} Target",
-                                   line=dict(dash="dash",color=c),opacity=0.5)
-                fig_pa.add_scatter(x=pd.to_datetime(sub["date"]),y=sub["actual"],
-                                   name=f"{proc} Actual",
-                                   line=dict(color=c,width=2),mode="lines+markers")
-        fig_pa.update_layout(margin=dict(l=0,r=0,t=10,b=0),
-                             yaxis=dict(rangemode="tozero"),height=360,
-                             xaxis=dict(tickformat="%m/%d"),
-                             legend=dict(orientation="h",y=1.05),
-                             plot_bgcolor="#f8fafc")
-        st.plotly_chart(fig_pa, use_container_width=True)
-    else:
-        st.info("파일 업로드 후 차트가 표시됩니다.")
+            st.info("파일 업로드 후 차트가 표시됩니다.")
 
     # ════════ TAB4 - 트렌드 ════════
     with tab4:
