@@ -483,7 +483,7 @@ def parse_planactual(ws, process, date_str, shift):
         if process != "MI":
             target_tot = actual_tot = 0.0
             for s_idx in range(len(slots)):
-                col = 2 + s_idx
+                col = 1 + s_idx
                 if target_row:
                     try: target_tot += parse_losstime(target_row[col] if col < len(target_row) else None)
                     except: pass
@@ -499,8 +499,8 @@ def parse_planactual(ws, process, date_str, shift):
         else:
             mi_target = mi_actual = ate_target = ate_actual = 0.0
             for s_idx in range(len(slots)):
-                col_mi  = 2 + s_idx * 3
-                col_ate = 2 + s_idx * 3 + 2
+                col_mi  = 2 + s_idx * 3      # col3=index2, col6=index5 ...
+                col_ate = 2 + s_idx * 3 + 2  # col5=index4, col8=index7 ...
                 if target_row:
                     try: mi_target  += parse_losstime(target_row[col_mi]  if col_mi  < len(target_row) else None)
                     except: pass
