@@ -1636,22 +1636,22 @@ def dashboard():
         gap2 = a_sum2 - t_sum2
         ach2 = round(a_sum2 / t_sum2 * 100, 1) if t_sum2 > 0 else 0
 
-            c1,c2,c3,c4 = st.columns(4)
-            for col_p, val_p, lbl_p, gap_val in [
-                (c1, f"{int(t_sum2):,}", "TARGET", None),
-                (c2, f"{int(a_sum2):,}", "ACTUAL", None),
-                (c3, f"{int(gap2):+,}",  "GAP",   gap2),
-                (c4, f"{ach2}%",         "달성률", ach2-100),
-            ]:
-                if gap_val is not None:
-                    cls  = "kpi-card-green" if gap_val >= 0 else "kpi-card-red"
-                    vcls = "kpi-val-green"  if gap_val >= 0 else "kpi-val-red"
-                else:
-                    cls = "kpi-card"; vcls = "kpi-val"
-                col_p.markdown(f"""<div class="{cls}">
-                    <div class="{vcls}">{val_p}</div>
-                    <div class="kpi-lbl">{lbl_p}</div></div>""",
-                    unsafe_allow_html=True)
+        c1,c2,c3,c4 = st.columns(4)
+        for col_p, val_p, lbl_p, gap_val in [
+            (c1, f"{int(t_sum2):,}", "TARGET", None),
+            (c2, f"{int(a_sum2):,}", "ACTUAL", None),
+            (c3, f"{int(gap2):+,}",  "GAP",   gap2),
+            (c4, f"{ach2}%",         "달성률", ach2-100),
+        ]:
+            if gap_val is not None:
+                cls  = "kpi-card-green" if gap_val >= 0 else "kpi-card-red"
+                vcls = "kpi-val-green"  if gap_val >= 0 else "kpi-val-red"
+            else:
+                cls = "kpi-card"; vcls = "kpi-val"
+            col_p.markdown(f"""<div class="{cls}">
+                <div class="{vcls}">{val_p}</div>
+                <div class="kpi-lbl">{lbl_p}</div></div>""",
+                unsafe_allow_html=True)
 
             st.markdown("##### 날짜별 Target vs Actual")
             if not pa_db.empty:
