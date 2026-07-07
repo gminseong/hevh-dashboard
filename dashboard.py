@@ -1633,8 +1633,12 @@ def dashboard():
             st.warning("PLANACTUAL 데이터 없음 — 파일 재업로드 필요")
             t_sum2 = a_sum2 = 0
         else:
-            pa_df = pa_db.copy() if proc_pa == "전체" else \
-                    pa_db[pa_db["process"] == proc_pa].copy()
+            padf = st.session_state.get("pa_df", pd.DataFrame())
+            if padf.empty:
+                st.warning("Plan/Actual 데이터 없음")
+            else:
+                pa_df = padf.copy() if proc_pa == "전체" else \
+                        padf[padf["process"] == proc_pa].copy()
             pa_df = pa_df.drop_duplicates(
                 subset=["date","shift","process","line"], keep="last"
             )
