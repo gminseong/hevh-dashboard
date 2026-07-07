@@ -1627,18 +1627,18 @@ def dashboard():
         proc_pa = st.radio("공정",["전체","AI","SMT","MI"],horizontal=True,key="pa_proc")
     
         # ★ planactual_db 사용
-        pa_db = st.session_state.get("pa_df", load_planactual_db())
+        pa_db = st.session_state.get("pa_df", pd.DataFrame())
+        if pa_db.empty:
+            pa_db = load_planactual_db()
+            if not pa_db.empty:
+                st.session_state["pa_df"] = pa_db
     
         if pa_db.empty:
             st.warning("PLANACTUAL 데이터 없음 — 파일 재업로드 필요")
             t_sum2 = a_sum2 = 0
         else:
-            padf = st.session_state.get("pa_df", pd.DataFrame())
-            if padf.empty:
-                st.warning("Plan/Actual 데이터 없음")
-            else:
-                pa_df = padf.copy() if proc_pa == "전체" else \
-                        padf[padf["process"] == proc_pa].copy()
+            pa_df = pa_db.copy() if proc_pa == "전체" else \
+                    pa_db[pa_db["process"] == proc_pa].copy()
             pa_df = pa_df.drop_duplicates(
                 subset=["date","shift","process","line"], keep="last"
             )
