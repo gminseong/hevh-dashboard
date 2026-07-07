@@ -441,7 +441,6 @@ def load_db():
     df = github_load_csv(DB_PATH)
     if not df.empty and "date" in df.columns:
         df = df[df["date"] != "UNKNOWN"].reset_index(drop=True)
-        df = df[df["date"] >= "2026-06-01"].reset_index(drop=True)  # ★ 5월 제외
     for col in ["target","actual","target_mi","actual_mi","target_ate","actual_ate"]:
         if col not in df.columns: df[col] = 0
     return df
@@ -457,10 +456,8 @@ def load_planactual_db():
     df = github_load_csv(PLANACTUAL_DB_PATH)
     if df.empty:
         return pd.DataFrame(columns=["date","shift","process","line",
-                                     "target","actual","target_mi","actual_mi",
-                                     "target_ate","actual_ate"])
-    if "date" in df.columns:
-        df = df[df["date"] >= "2026-06-01"].reset_index(drop=True)
+                                      "target","actual","target_mi","actual_mi",
+                                      "target_ate","actual_ate"])
     for col in ["target","actual","target_mi","actual_mi","target_ate","actual_ate"]:
         if col not in df.columns: df[col] = 0
     return df
@@ -474,20 +471,18 @@ def get_mi_totals(row):
         return 0.0, 0.0
     numeric_indices = [
         i for i, v in enumerate(row)
-        if isinstance(v, (int, float))
-        and v is not True and v is not False
+        if isinstance(v, (int, float)) and v is not True and v is not False
         and float(v) >= 100
     ]
     if len(numeric_indices) >= 3:
-        mi_val  = float(row[numeric_indices[-3]])
-        ate_val = float(row[numeric_indices[-1]])
-        # ★ 슬롯 합산 검증: 일계가 슬롯합의 1.5배 초과면 슬롯 직접 합산으로 대체
-        slot_sum = sum(float(row[i]) for i in numeric_indices[:-3])
-        if slot_sum > 0 and mi_val > slot_sum * 1.5:
-            mi_val = slot_sum
+        try: mi_val  = float(row[numeric_indices[-3]])
+        except: mi_val = 0.0
+        try: ate_val = float(row[numeric_indices[-1]])
+        except: ate_val = 0.0
         return mi_val, ate_val
     elif len(numeric_indices) >= 1:
-        return float(row[numeric_indices[-1]]), 0.0
+        try: return float(row[numeric_indices[-1]]), 0.0
+        except: return 0.0, 0.0
     return 0.0, 0.0
 
 
@@ -1644,7 +1639,9 @@ def dashboard():
         else:
             pa_df = pa_db.copy() if proc_pa == "전체" else \
                     pa_db[pa_db["process"] == proc_pa].copy()
-            
+            pa_df = pa_df.drop_duplicates(
+                subset=["date","shift","process","line"], keep="last"
+            )
             if proc_pa == "MI":
                 t_sum2 = pa_df["target_mi"].sum()
                 a_sum2 = pa_df["actual_mi"].sum()
@@ -1690,12 +1687,7 @@ def dashboard():
                                    name="ATE Actual",line=dict(color="#3b82f6",width=2),
                                    mode="lines+markers")
             else:
-                # 전체/AI/SMT: MI는 target_mi/actual_mi를 target/actual로 대체
-                pa_df_chart = pa_df.copy()
-                mi_mask = pa_df_chart["process"] == "MI"
-                pa_df_chart.loc[mi_mask, "target"] = pa_df_chart.loc[mi_mask, "target_mi"]
-                pa_df_chart.loc[mi_mask, "actual"] = pa_df_chart.loc[mi_mask, "actual_mi"]
-                dt_pa = pa_df_chart.groupby(["date","process"])[
+                dt_pa = pa_df.groupby(["date","process"])[
                     ["target","actual"]
                 ].sum().reset_index()
                 fig_pa = go.Figure()
