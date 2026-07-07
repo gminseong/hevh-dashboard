@@ -1642,9 +1642,7 @@ def dashboard():
         else:
             pa_df = pa_db.copy() if proc_pa == "전체" else \
                     pa_db[pa_db["process"] == proc_pa].copy()
-            pa_df = pa_df.drop_duplicates(
-                subset=["date","shift","process","line"], keep="last"
-            )
+            
             if proc_pa == "MI":
                 t_sum2 = pa_df["target_mi"].sum()
                 a_sum2 = pa_df["actual_mi"].sum()
