@@ -474,18 +474,20 @@ def get_mi_totals(row):
         return 0.0, 0.0
     numeric_indices = [
         i for i, v in enumerate(row)
-        if isinstance(v, (int, float)) and v is not True and v is not False
+        if isinstance(v, (int, float))
+        and v is not True and v is not False
         and float(v) >= 100
     ]
     if len(numeric_indices) >= 3:
-        try: mi_val  = float(row[numeric_indices[-3]])
-        except: mi_val = 0.0
-        try: ate_val = float(row[numeric_indices[-1]])
-        except: ate_val = 0.0
+        mi_val  = float(row[numeric_indices[-3]])
+        ate_val = float(row[numeric_indices[-1]])
+        # ★ 슬롯 합산 검증: 일계가 슬롯합의 1.5배 초과면 슬롯 직접 합산으로 대체
+        slot_sum = sum(float(row[i]) for i in numeric_indices[:-3])
+        if slot_sum > 0 and mi_val > slot_sum * 1.5:
+            mi_val = slot_sum
         return mi_val, ate_val
     elif len(numeric_indices) >= 1:
-        try: return float(row[numeric_indices[-1]]), 0.0
-        except: return 0.0, 0.0
+        return float(row[numeric_indices[-1]]), 0.0
     return 0.0, 0.0
 
 
