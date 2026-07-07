@@ -441,6 +441,7 @@ def load_db():
     df = github_load_csv(DB_PATH)
     if not df.empty and "date" in df.columns:
         df = df[df["date"] != "UNKNOWN"].reset_index(drop=True)
+        df = df[df["date"] >= "2026-06-01"].reset_index(drop=True)  # ★ 5월 제외
     for col in ["target","actual","target_mi","actual_mi","target_ate","actual_ate"]:
         if col not in df.columns: df[col] = 0
     return df
@@ -456,8 +457,10 @@ def load_planactual_db():
     df = github_load_csv(PLANACTUAL_DB_PATH)
     if df.empty:
         return pd.DataFrame(columns=["date","shift","process","line",
-                                      "target","actual","target_mi","actual_mi",
-                                      "target_ate","actual_ate"])
+                                     "target","actual","target_mi","actual_mi",
+                                     "target_ate","actual_ate"])
+    if "date" in df.columns:
+        df = df[df["date"] >= "2026-06-01"].reset_index(drop=True)
     for col in ["target","actual","target_mi","actual_mi","target_ate","actual_ate"]:
         if col not in df.columns: df[col] = 0
     return df
@@ -1687,7 +1690,12 @@ def dashboard():
                                    name="ATE Actual",line=dict(color="#3b82f6",width=2),
                                    mode="lines+markers")
             else:
-                dt_pa = pa_df.groupby(["date","process"])[
+                # 전체/AI/SMT: MI는 target_mi/actual_mi를 target/actual로 대체
+                pa_df_chart = pa_df.copy()
+                mi_mask = pa_df_chart["process"] == "MI"
+                pa_df_chart.loc[mi_mask, "target"] = pa_df_chart.loc[mi_mask, "target_mi"]
+                pa_df_chart.loc[mi_mask, "actual"] = pa_df_chart.loc[mi_mask, "actual_mi"]
+                dt_pa = pa_df_chart.groupby(["date","process"])[
                     ["target","actual"]
                 ].sum().reset_index()
                 fig_pa = go.Figure()
