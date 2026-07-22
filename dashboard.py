@@ -934,21 +934,13 @@ def parse_files(uploaded_files):
                 ws = wb[sn]
                 if isinstance(ws, Chartsheet): continue
                 shift = detect_shift(sn, fn)
-                # ★ 시트 제목에 찍힌 날짜를 최우선으로 사용.
-                #   주간 제출 시점엔 NIGHT 시트가 아직 전날 데이터로 남아있는 경우가 있어
-                #   파일명 날짜만 믿으면 그 날짜에 다른 날 데이터가 섞여 들어간다.
-                title_ds = sheet_title_date(ws)
-                if title_ds:
-                    ds = title_ds
-                    if fd != "UNKNOWN" and title_ds != fd:
-                        status.warning(
-                            f"⚠️ 날짜 불일치: {fn} [{sn}] 파일명={fd} / 시트제목={title_ds} "
-                            f"→ 시트제목 기준({title_ds})으로 처리"
-                        )
-                else:
-                    ds = fd if fd != "UNKNOWN" else (parse_date(sn) or "UNKNOWN")
-                    if ds == "UNKNOWN":
-                        ds = find_date_in_sheet(ws) or "UNKNOWN"
+                # ★ 날짜는 파일명 기준으로만 정리한다.
+                #   시트 안 제목(REPORT BY TIME ...) 날짜는 갱신 안 된 채로 남아있는
+                #   경우가 많아(담당자가 복붙 후 날짜 텍스트를 안 고침) 신뢰할 수 없음.
+                #   파일명이 업로더가 실제로 의도한 날짜이므로 이것만 사용한다.
+                ds = fd if fd != "UNKNOWN" else (parse_date(sn) or "UNKNOWN")
+                if ds == "UNKNOWN":
+                    ds = find_date_in_sheet(ws) or "UNKNOWN"
                 if ds == "UNKNOWN": continue
 
                 pkey = (ds, process, shift)
