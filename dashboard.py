@@ -603,6 +603,23 @@ def find_date_in_sheet(ws):
             if d: return d
     return None
 
+def sheet_title_date(ws):
+    """★ 시트 자체의 'PRODUCTION REPORT BY TIME ...' 제목 셀에서만 날짜를 추출한다.
+       주간 마감 직후 업로드된 파일은 NIGHT 시트가 아직 전날 데이터로 남아있는
+       경우가 있어(야간 마감 전), 파일명 날짜만 믿으면 잘못된 날짜로 섞여 들어간다.
+       제목 셀(REPORT/PRODUCTION 키워드 포함)에서만 날짜를 찾으므로 UPH, 비율 등
+       임의의 숫자 셀을 날짜로 오인하는 일은 없다."""
+    rows = list(ws.iter_rows(values_only=True, max_row=6))
+    for row in rows:
+        for cell in row:
+            if cell is None: continue
+            s = str(cell)
+            if not re.search(r'REPORT|PRODUCTION', s, re.I):
+                continue
+            d = parse_date(s)
+            if d: return d
+    return None
+
 def normalize_line(raw):
     s = str(raw).strip()
     s = re.sub(r':.*$', '', s).strip()
@@ -917,9 +934,21 @@ def parse_files(uploaded_files):
                 ws = wb[sn]
                 if isinstance(ws, Chartsheet): continue
                 shift = detect_shift(sn, fn)
-                ds = fd if fd != "UNKNOWN" else (parse_date(sn) or "UNKNOWN")
-                if ds == "UNKNOWN":
-                    ds = find_date_in_sheet(ws) or "UNKNOWN"
+                # ★ 시트 제목에 찍힌 날짜를 최우선으로 사용.
+                #   주간 제출 시점엔 NIGHT 시트가 아직 전날 데이터로 남아있는 경우가 있어
+                #   파일명 날짜만 믿으면 그 날짜에 다른 날 데이터가 섞여 들어간다.
+                title_ds = sheet_title_date(ws)
+                if title_ds:
+                    ds = title_ds
+                    if fd != "UNKNOWN" and title_ds != fd:
+                        status.warning(
+                            f"⚠️ 날짜 불일치: {fn} [{sn}] 파일명={fd} / 시트제목={title_ds} "
+                            f"→ 시트제목 기준({title_ds})으로 처리"
+                        )
+                else:
+                    ds = fd if fd != "UNKNOWN" else (parse_date(sn) or "UNKNOWN")
+                    if ds == "UNKNOWN":
+                        ds = find_date_in_sheet(ws) or "UNKNOWN"
                 if ds == "UNKNOWN": continue
 
                 pkey = (ds, process, shift)
