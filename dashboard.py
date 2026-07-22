@@ -1329,10 +1329,11 @@ def dashboard():
             col_l, col_r = st.columns(2)
             with col_l:
                 st.markdown("#### 손실유형별 누계")
+                # ★ 유형이 20개 넘게 다 나오면 못 읽으니 상위 8개만 표시
                 ts = (total_df.groupby("loss_type_name")["loss_min"]
                       .sum().reset_index()
                       .sort_values("loss_min", ascending=False)
-                      .head(21))          
+                      .head(8))
                 ts["loss_min"] = ts["loss_min"].round(1)
                 ft = px.bar(ts,
                             x="loss_min",
@@ -1340,7 +1341,7 @@ def dashboard():
                             orientation="h",
                             color="loss_type_name",
                             color_discrete_map=TYPE_COLOR,
-                            height=max(500, min(len(ts) * 28, 700)),   # ★ 최대 800px 제한
+                            height=500,   # ★ 옆 '라인별 누계 TOP 15' 차트와 높이를 맞춤
                             labels={"loss_min":"손실(분)", "loss_type_name":"유형"})
                 ft.update_layout(
                     showlegend=False,
@@ -1405,22 +1406,36 @@ def dashboard():
                     sp = cp["selection"]["points"][0].get("label","")
                     if sp: st.session_state["sel_proc"] = sp
 
+                # ★ 파이차트 클릭이 안 먹힐 때를 대비해 버튼으로도 바로 전환 가능하게
+                proc_opts = [p for p in ["AI","SMT","MI"] if p in pp["process"].unique()]
+                if proc_opts:
+                    btn_cols = st.columns(len(proc_opts))
+                    for bc, p in zip(btn_cols, proc_opts):
+                        is_sel = st.session_state.get("sel_proc", "MI") == p
+                        if bc.button(p, key=f"sel_proc_btn_{p}",
+                                     type="primary" if is_sel else "secondary",
+                                     use_container_width=True):
+                            st.session_state["sel_proc"] = p
+                            st.rerun()
+
             with col_type:
                 sel_proc = st.session_state.get("sel_proc", "MI")
-                # ★ rename 제거 — 원본 컬럼명 그대로 사용
+                # ★ 유형이 많은 공정(SMT 등)은 상위 8개만 표시
                 proc_type = (total_df[total_df["process"] == sel_proc]
                              .groupby("loss_type_name")["loss_min"].sum()
                              .reset_index()
+                             .sort_values("loss_min", ascending=False)
+                             .head(8)
                              .sort_values("loss_min", ascending=True))
                 proc_type["loss_min"] = proc_type["loss_min"].round(1)
-                st.markdown(f"**{sel_proc} 손실유형**")
+                st.markdown(f"**{sel_proc} 손실유형 TOP 8**")
                 ft = px.bar(proc_type,
                             x="loss_min",
                             y="loss_type_name",
                             orientation="h",
                             color="loss_type_name",
                             color_discrete_map=TYPE_COLOR,
-                            height=max(300, min(len(proc_type) * 38, 600)),   # ★ 최대 600px 제한
+                            height=350,   # ★ 옆 파이차트(350)와 높이를 맞춤
                             labels={"loss_min":"손실(분)", "loss_type_name":"유형"})
                 ft.update_layout(
                     showlegend=False,
