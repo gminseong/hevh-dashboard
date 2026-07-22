@@ -1328,12 +1328,12 @@ def dashboard():
             st.markdown("<hr class='section-divider'>", unsafe_allow_html=True)
             col_l, col_r = st.columns(2)
             with col_l:
-                st.markdown("#### 손실유형별 누계")
-                # ★ 유형이 20개 넘게 다 나오면 못 읽으니 상위 8개만 표시
+                st.markdown("#### 손실유형별 Top 10 누계")
+                # ★ 유형이 20개 넘게 다 나오면 못 읽으니 상위 10개만 표시
                 ts = (total_df.groupby("loss_type_name")["loss_min"]
                       .sum().reset_index()
                       .sort_values("loss_min", ascending=False)
-                      .head(8))
+                      .head(10))
                 ts["loss_min"] = ts["loss_min"].round(1)
                 ft = px.bar(ts,
                             x="loss_min",
@@ -1362,12 +1362,16 @@ def dashboard():
                              "loss_min","loss_detail"]].sort_values(["date","line"])
                         dd["loss_min"] = dd["loss_min"].round(1)
                         st.dataframe(dd.reset_index(drop=True),
-                                     use_container_width=True, height=250)
+                                     use_container_width=True, height=260)  # ★ 클릭 상세 표 높이 통일
 
             with col_r:
-                st.markdown("#### 라인별 누계 TOP 15")
-                ls = (total_df.groupby(["process","line"])["loss_min"]
-                      .sum().reset_index().sort_values("loss_min", ascending=False).head(15))
+                st.markdown("#### 라인별 누계 Top 15 (공정별 Top 5)")
+                # ★ 공정 하나가 라인 수가 많으면 TOP15를 다 차지해버려서
+                #   공정별로 정확히 5개씩만 뽑아 15개로 구성
+                ls = (total_df.groupby(["process","line"])["loss_min"].sum().reset_index()
+                      .sort_values("loss_min", ascending=False)
+                      .groupby("process", group_keys=False).head(5)
+                      .sort_values(["process","loss_min"], ascending=[True, False]))
                 ls["loss_min"] = ls["loss_min"].round(1)
                 fig2 = px.bar(ls, x="line", y="loss_min", color="process",
                               color_discrete_map=PROC_COLOR, height=500,
@@ -1388,7 +1392,7 @@ def dashboard():
                         ].sort_values(["date","time_slot"])
                         ld["loss_min"] = ld["loss_min"].round(1)
                         st.dataframe(ld.reset_index(drop=True),
-                                     use_container_width=True, height=280)
+                                     use_container_width=True, height=260)  # ★ 클릭 상세 표 높이 통일
 
             st.markdown("<hr class='section-divider'>", unsafe_allow_html=True)
             col_pie, col_type = st.columns(2)
@@ -1425,10 +1429,10 @@ def dashboard():
                              .groupby("loss_type_name")["loss_min"].sum()
                              .reset_index()
                              .sort_values("loss_min", ascending=False)
-                             .head(8)
+                             .head(10)
                              .sort_values("loss_min", ascending=True))
                 proc_type["loss_min"] = proc_type["loss_min"].round(1)
-                st.markdown(f"**{sel_proc} 손실유형 TOP 8**")
+                st.markdown(f"**{sel_proc} 손실유형 Top 10**")
                 ft = px.bar(proc_type,
                             x="loss_min",
                             y="loss_type_name",
@@ -1564,7 +1568,7 @@ def dashboard():
                                     ["date","line"])
                     dd_lt["loss_min"] = dd_lt["loss_min"].round(1)
                     st.dataframe(dd_lt.reset_index(drop=True),
-                                 use_container_width=True, height=280)
+                                 use_container_width=True, height=260)  # ★ 클릭 상세 표 높이 통일
 
                 st.markdown("<hr class='section-divider'>", unsafe_allow_html=True)
                 all_lines = sorted(line_df["line"].dropna().unique())
@@ -1867,13 +1871,13 @@ def dashboard():
                                 ["work_date","process","line","model","qty","comment"]
                             ].sort_values("work_date")
                             st.dataframe(cd.reset_index(drop=True),
-                                         use_container_width=True, height=200)
+                                         use_container_width=True, height=260)  # ★ 클릭 상세 표 높이 통일
                 with cb:
                     st.markdown("#### 라인별 TOP 15")
                     lg = (sdf2.groupby(["process","line"])["qty"].sum().reset_index()
                           .sort_values("qty", ascending=False).head(15))
                     fl = px.bar(lg, x="line", y="qty", color="process",
-                                color_discrete_map=PROC_COLOR, height=320,
+                                color_discrete_map=PROC_COLOR, height=360,  # ★ 옆 '원인별 파레토'와 높이 맞춤
                                 labels={"qty":"수량","line":"라인","process":"공정"})
                     fl.update_layout(margin=dict(l=0,r=0,t=10,b=0),
                                      yaxis=dict(rangemode="tozero"),
@@ -1888,7 +1892,7 @@ def dashboard():
                                 ["work_date","model","qty","cause_name","comment"]
                             ].sort_values("work_date")
                             st.dataframe(ld2.reset_index(drop=True),
-                                         use_container_width=True, height=220)
+                                         use_container_width=True, height=260)  # ★ 클릭 상세 표 높이 통일
 
                 st.markdown("#### 날짜별 트렌드")
                 dg = sdf2.groupby(["work_date","process"])["qty"].sum().reset_index()
