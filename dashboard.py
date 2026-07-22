@@ -1405,13 +1405,27 @@ def dashboard():
                                      use_container_width=True, height=260)  # ★ 클릭 상세 표 높이 통일
 
             st.markdown("<hr class='section-divider'>", unsafe_allow_html=True)
+            # ★ 이 버튼을 파이차트 컬럼 안에만 넣으면 옆 막대차트 컬럼과 콘텐츠 양이
+            #   달라져서 두 컬럼 높이가 어긋나 보였음 → 두 컬럼 위 공통 자리로 이동
+            pp_all = (total_df.groupby("process")["loss_min"].sum().reset_index())
+            proc_opts = [p for p in ["AI","SMT","MI"] if p in pp_all["process"].unique()]
+            if proc_opts:
+                btn_cols = st.columns(len(proc_opts))
+                for bc, p in zip(btn_cols, proc_opts):
+                    is_sel = st.session_state.get("sel_proc", "MI") == p
+                    if bc.button(p, key=f"sel_proc_btn_{p}",
+                                 type="primary" if is_sel else "secondary",
+                                 use_container_width=True):
+                        st.session_state["sel_proc"] = p
+                        st.rerun()
+
             col_pie, col_type = st.columns(2)
             with col_pie:
                 st.markdown("#### 공정별 비중")
-                pp = (total_df.groupby("process")["loss_min"].sum().reset_index())
+                pp = pp_all.copy()
                 pp["loss_min"] = pp["loss_min"].round(1)
                 fp = px.pie(pp, values="loss_min", names="process",
-                            color="process", color_discrete_map=PROC_COLOR, height=380)
+                            color="process", color_discrete_map=PROC_COLOR, height=300)  # ★ 도넛 크기 축소
                 fp.update_traces(textposition="inside", textinfo="percent+label")
                 fp.update_layout(margin=dict(l=0,r=0,t=10,b=0), showlegend=False)
                 cp = st.plotly_chart(fp, use_container_width=True,
@@ -1419,18 +1433,6 @@ def dashboard():
                 if cp and cp.get("selection",{}).get("points"):
                     sp = cp["selection"]["points"][0].get("label","")
                     if sp: st.session_state["sel_proc"] = sp
-
-                # ★ 파이차트 클릭이 안 먹힐 때를 대비해 버튼으로도 바로 전환 가능하게
-                proc_opts = [p for p in ["AI","SMT","MI"] if p in pp["process"].unique()]
-                if proc_opts:
-                    btn_cols = st.columns(len(proc_opts))
-                    for bc, p in zip(btn_cols, proc_opts):
-                        is_sel = st.session_state.get("sel_proc", "MI") == p
-                        if bc.button(p, key=f"sel_proc_btn_{p}",
-                                     type="primary" if is_sel else "secondary",
-                                     use_container_width=True):
-                            st.session_state["sel_proc"] = p
-                            st.rerun()
 
             with col_type:
                 sel_proc = st.session_state.get("sel_proc", "MI")
@@ -1449,7 +1451,7 @@ def dashboard():
                             orientation="h",
                             color="loss_type_name",
                             color_discrete_map=TYPE_COLOR,
-                            height=380,   # ★ 전체 차트 높이 통일
+                            height=300,   # ★ 옆 도넛(300)과 높이 맞춤
                             labels={"loss_min":"손실(분)", "loss_type_name":"유형"})
                 ft.update_layout(
                     showlegend=False,
