@@ -159,8 +159,8 @@ div[data-testid="stButton"] button {
 # ─────────────────────────────────────────────
 # 상수
 # ─────────────────────────────────────────────
-DAY_SLOTS   = ["A","B","C","D","E","F"]
-NIGHT_SLOTS = ["F","G","H","I","J","K"]
+DAY_SLOTS   = ["A","B","C","D","E"]
+NIGHT_SLOTS = ["F","G","H","I","J"]
 DB_PATH     = "losstime_db.csv"
 SCRAP_DB    = "scrap_db.csv"
 
