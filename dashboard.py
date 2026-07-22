@@ -1491,6 +1491,19 @@ def dashboard():
                 if cl_lt and cl_lt.get("selection",{}).get("points"):
                     sel_type = cl_lt["selection"]["points"][0].get("y","")
 
+                # ★ 막대 클릭 시 해당 손실유형의 상세 내역(날짜/라인/원인)을 바로 보여줌
+                #   (지금까지는 sel_type을 구해놓고 아무 데도 쓰지 않아서 클릭해도
+                #   아무 반응이 없었음 — 다른 탭의 클릭 상세 표와 동일한 방식으로 연결)
+                if sel_type:
+                    st.markdown(f'<div class="detail-box"><b>📋 {sel_type} 상세</b></div>',
+                                unsafe_allow_html=True)
+                    dd_lt = line_df[line_df["loss_type_name"] == sel_type][
+                        ["date","shift","process","line","loss_min",
+                         "loss_detail","action"]].sort_values(["date","line"])
+                    dd_lt["loss_min"] = dd_lt["loss_min"].round(1)
+                    st.dataframe(dd_lt.reset_index(drop=True),
+                                 use_container_width=True, height=280)
+
                 st.markdown("<hr class='section-divider'>", unsafe_allow_html=True)
                 all_lines = sorted(line_df["line"].dropna().unique())
                 col_sel, _ = st.columns([1,3])
@@ -1683,6 +1696,36 @@ def dashboard():
                         labels={"loss_min":"손실(분)","time_slot":"시간대","process":"공정"})
             fs.update_layout(margin=dict(l=0,r=0,t=10,b=0), yaxis=dict(rangemode="tozero"))
             st.plotly_chart(fs, use_container_width=True)
+
+            # ★ 시간대별로 어떤 손실유형이 큰지 바로 보이도록 유형별 누적 막대 추가
+            st.markdown("#### 시간대별 손실유형 집계")
+            st_type = (slot_df.groupby(["time_slot","loss_type_name"])["loss_min"]
+                       .sum().reset_index())
+            st_type["loss_min"] = st_type["loss_min"].round(1)
+            st_type["time_slot"] = pd.Categorical(st_type["time_slot"],
+                                                   categories=slot_order, ordered=True)
+            st_type = st_type.sort_values("time_slot")
+            fst = px.bar(st_type, x="time_slot", y="loss_min", color="loss_type_name",
+                         color_discrete_map=TYPE_COLOR, barmode="stack", height=380,
+                         labels={"loss_min":"손실(분)","time_slot":"시간대","loss_type_name":"유형"})
+            fst.update_layout(margin=dict(l=0,r=0,t=10,b=0), yaxis=dict(rangemode="tozero"),
+                              legend=dict(orientation="h", y=-0.25))
+            st.plotly_chart(fst, use_container_width=True)
+
+            # 손실이 가장 큰 시간대 상위 3개는 원인 TOP5를 바로 요약해서 보여줌
+            top_slots = (slot_df.groupby("time_slot")["loss_min"].sum()
+                         .sort_values(ascending=False).head(3))
+            st.markdown("##### 🔎 손실 최다 시간대 원인 TOP5")
+            cols_top = st.columns(len(top_slots))
+            for col_ts, (slot_name, slot_total) in zip(cols_top, top_slots.items()):
+                with col_ts:
+                    st.markdown(f"**{slot_name}시간대 — 총 {slot_total:,.0f}분**")
+                    top5 = (slot_df[slot_df["time_slot"] == slot_name]
+                            .groupby("loss_type_name")["loss_min"].sum()
+                            .sort_values(ascending=False).head(5))
+                    for tname, tmin in top5.items():
+                        pct = tmin / slot_total * 100 if slot_total else 0
+                        st.markdown(f"- {tname}: {tmin:,.0f}분 ({pct:.0f}%)")
 
             st.markdown("#### 타임별 상세")
             sd = (slot_df.groupby(["date","shift","line","time_slot",
