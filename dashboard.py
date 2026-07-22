@@ -159,8 +159,10 @@ div[data-testid="stButton"] button {
 # ─────────────────────────────────────────────
 # 상수
 # ─────────────────────────────────────────────
-DAY_SLOTS   = ["A","B","C","D","E"]
-NIGHT_SLOTS = ["F","G","H","I","J"]
+DAY_SLOTS      = ["A","B","C","D","E","F"]      # AI/SMT DAY: 6 real slots (A-F)
+NIGHT_SLOTS    = ["F","G","H","I","J","K"]      # AI/SMT NIGHT: 6 real slots (F-K)
+MI_DAY_SLOTS   = ["A","B","C","D","E"]          # MI DAY: only 5 real slots (A-E)
+MI_NIGHT_SLOTS = ["F","G","H","I","J"]          # MI NIGHT: only 5 real slots (F-J)
 DB_PATH     = "losstime_db.csv"
 SCRAP_DB    = "scrap_db.csv"
 
@@ -651,7 +653,10 @@ def extract_model_per_slot(model_row, slots):
 def parse_sheet(ws, process, date_str, shift):
     records = []
     rows    = list(ws.iter_rows(values_only=True))
-    slots   = NIGHT_SLOTS if shift == "NIGHT" else DAY_SLOTS
+    if process == "MI":
+        slots = MI_NIGHT_SLOTS if shift == "NIGHT" else MI_DAY_SLOTS
+    else:
+        slots = NIGHT_SLOTS if shift == "NIGHT" else DAY_SLOTS
     i = 0
     while i < len(rows):
         row = rows[i]; c1 = row[1] if len(row) > 1 else None
@@ -701,9 +706,6 @@ def parse_sheet(ws, process, date_str, shift):
                 total = sum(loss_vals)
             else:
                 total = sum(loss_vals)
-
-            if total == 0 and all(v == 0.0 for v in loss_vals):
-                i += 1; continue
 
             models      = extract_model_per_slot(model_row, slots)
             slot_causes = extract_slot_causes(cause_row, slots)
@@ -831,6 +833,21 @@ def parse_sheet(ws, process, date_str, shift):
                             "target_mi": 0, "actual_mi": 0,
                             "target_ate": 0, "actual_ate": 0,
                         })
+            else:
+                # ★ 로스타임이 0(계획 100% 달성)이어도 해당 라인의 target/actual은
+                #   집계에 반드시 포함되어야 하므로, 손실 상세 없이 TOTAL 1건만 남김
+                records.append({
+                    "date": date_str, "shift": shift, "process": process,
+                    "line": line, "time_slot": "TOTAL",
+                    "model": models.get(slots[0], ""),
+                    "loss_min": 0.0,
+                    "loss_type_code": "NO_PROBLEM", "loss_type_name": "문제없음",
+                    "complexity": "단일", "loss_detail": "",
+                    "sub_idx": 1, "action": action,
+                    "target": round(target_tot, 0), "actual": round(actual_tot, 0),
+                    "target_mi": round(target_mi, 0), "actual_mi": round(actual_mi, 0),
+                    "target_ate": round(target_ate, 0), "actual_ate": round(actual_ate, 0),
+                })
         i += 1
     return records
 
@@ -1173,14 +1190,20 @@ def dashboard():
     if fdf.empty:
         st.warning("조건에 맞는 데이터 없음"); return
 
+    # ★ target/actual은 원인(sub_idx)별로 라인 전체 값이 반복 저장되어 있으므로
+    #   (date,shift,process,line) 기준으로 한 줄만 남긴 뒤 합산해야 중복 합산을 피할 수 있음
+    tgt_key = ["date","shift","process","line"]
+    tgt_df  = (total_df.drop_duplicates(subset=tgt_key)
+               if not total_df.empty else total_df)
+
     # KPI
     total_min   = round(total_df["loss_min"].sum(), 1) if not total_df.empty else 0
     total_hr    = round(total_min / 60, 1)
     n_lines     = total_df["line"].nunique() if not total_df.empty else 0
     n_days      = fdf["date"].nunique()
     scrap_total = int(scrap_df["qty"].sum()) if not scrap_df.empty else 0
-    t_sum       = total_df["target"].sum()
-    a_sum       = total_df["actual"].sum()
+    t_sum       = tgt_df["target"].sum()
+    a_sum       = tgt_df["actual"].sum()
     ach_rate    = round(a_sum / t_sum * 100, 1) if t_sum > 0 else 0
 
     if "kpi_focus" not in st.session_state:
@@ -1505,13 +1528,16 @@ def dashboard():
             proc_pa = st.radio("공정",["전체","AI","SMT","MI"],horizontal=True,key="pa_proc")
             pa_df = total_df.copy() if proc_pa == "전체" else \
                     total_df[total_df["process"] == proc_pa].copy()
+            # ★ 위와 동일한 이유로 라인당 한 줄만 남긴 뒤 target/actual 합산
+            pa_tgt = (pa_df.drop_duplicates(subset=["date","shift","process","line"])
+                      if not pa_df.empty else pa_df)
 
             if proc_pa == "MI":
-                t_sum2  = pa_df["target_mi"].sum()
-                a_sum2  = pa_df["actual_mi"].sum()
+                t_sum2  = pa_tgt["target_mi"].sum()
+                a_sum2  = pa_tgt["actual_mi"].sum()
             else:
-                t_sum2 = pa_df["target"].sum()
-                a_sum2 = pa_df["actual"].sum()
+                t_sum2 = pa_tgt["target"].sum()
+                a_sum2 = pa_tgt["actual"].sum()
             gap2  = a_sum2 - t_sum2
             ach2  = round(a_sum2 / t_sum2 * 100, 1) if t_sum2 > 0 else 0
 
@@ -1534,7 +1560,7 @@ def dashboard():
 
             st.markdown("##### 날짜별 Target vs Actual")
             if proc_pa == "MI":
-                dt_pa = (pa_df.groupby("date")[["target_mi","actual_mi",
+                dt_pa = (pa_tgt.groupby("date")[["target_mi","actual_mi",
                                                  "target_ate","actual_ate"]].sum().reset_index())
                 fig_pa = go.Figure()
                 fig_pa.add_scatter(x=pd.to_datetime(dt_pa["date"]),y=dt_pa["target_mi"],
@@ -1548,7 +1574,7 @@ def dashboard():
                                    name="ATE Actual",line=dict(color="#3b82f6",width=2),
                                    mode="lines+markers")
             else:
-                dt_pa = (pa_df.groupby(["date","process"])[["target","actual"]].sum().reset_index())
+                dt_pa = (pa_tgt.groupby(["date","process"])[["target","actual"]].sum().reset_index())
                 fig_pa = go.Figure()
                 for proc in dt_pa["process"].unique():
                     sub = dt_pa[dt_pa["process"] == proc]
