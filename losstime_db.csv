@@ -1,1 +1,1089 @@
-﻿
+﻿date,shift,process,line,time_slot,model,loss_min,loss_type_code,loss_type_name,complexity,loss_detail,sub_idx,action,target,actual,target_mi,actual_mi,target_ate,actual_ate
+2026-07-01,DAY,MI,MI 2,TOTAL,"55""/3in1, M70H, HKC",32.0,ATE,ATE불량,복합,ict error (7min). Ate error (6min),1,,2870.0,2870.0,2870.0,2870.0,0.0,0.0
+2026-07-01,DAY,MI,MI 2,TOTAL,"55""/3in1, M70H, HKC",15.0,ETC,기타,복합,BOD,2,,2870.0,2870.0,2870.0,2870.0,0.0,0.0
+2026-07-01,DAY,MI,MI 2,A,"55""/3in1, M70H, HKC",13.0,ATE,ATE불량,복합,ict error (7min). Ate error (6min),1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-01,DAY,MI,MI 2,B,"55""/3in1, M70H, HKC",6.0,ATE,ATE불량,복합,ict error (7min). Ate error (6min),1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-01,DAY,MI,MI 2,C,"55""/3in1, M70H, HKC",13.0,ATE,ATE불량,복합,ict error (7min). Ate error (6min),1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-01,DAY,MI,MI 2,D,"55""/3in1, M70H, HKC",15.0,ETC,기타,복합,BOD,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-01,DAY,MI,MI 3,TOTAL,L75S7A_HVD,127.0,CHANGE_MODEL,모델교체,복합,"change model (20min), Ate error (51min), wave soler (5min), UV light (4min), ict (3min).",1,,2700.0,2700.0,2700.0,2700.0,2700.0,2579.0
+2026-07-01,DAY,MI,MI 3,TOTAL,L75S7A_HVD,18.0,WAVE,Wave Solder불량,복합,"burn in power off (9min), wave solder (13min).",2,,2700.0,2700.0,2700.0,2700.0,2700.0,2579.0
+2026-07-01,DAY,MI,MI 3,A,L75S7A_HVD,83.0,CHANGE_MODEL,모델교체,복합,"change model (20min), Ate error (51min), wave soler (5min), UV light (4min), ict (3min).",1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-01,DAY,MI,MI 3,B,L75S7A_HVD,22.0,CHANGE_MODEL,모델교체,복합,"change model (20min), Ate error (51min), wave soler (5min), UV light (4min), ict (3min).",1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-01,DAY,MI,MI 3,C,L75S7A_HVD,22.0,CHANGE_MODEL,모델교체,복합,"change model (20min), Ate error (51min), wave soler (5min), UV light (4min), ict (3min).",1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-01,DAY,MI,MI 3,D,L75S7N_HVD,18.0,WAVE,Wave Solder불량,복합,"burn in power off (9min), wave solder (13min).",1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-01,DAY,MI,MI 4,TOTAL,L55CA9N_HVD,18.0,ICT_FT,ICT/FT/HiPOT불량,단일,ict error (8min),1,,1400.0,1400.0,1400.0,1400.0,1400.0,1361.0
+2026-07-01,DAY,MI,MI 4,A,L55CA9N_HVD,8.0,ICT_FT,ICT/FT/HiPOT불량,복합,ict error (8min),1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-01,DAY,MI,MI 4,C,L55CA9N_HVD,10.0,ICT_FT,ICT/FT/HiPOT불량,복합,ict error (8min),1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-01,DAY,MI,MI 5,TOTAL,L65S7_HVD,416.0,WAITING_SMT,SMT대기,단일,waiting semi from smt,1,,1080.0,1012.0,1080.0,1012.0,1080.0,481.0
+2026-07-01,DAY,MI,MI 5,A,L65S7_HVD,95.0,WAITING_SMT,SMT대기,복합,waiting semi from smt,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-01,DAY,MI,MI 5,B,L65S7_HVD,96.0,WAITING_SMT,SMT대기,복합,waiting semi from smt,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-01,DAY,MI,MI 5,C,L65S7_HVD,140.0,WAITING_SMT,SMT대기,복합,waiting semi from smt,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-01,DAY,MI,MI 5,D,L55E70A_HVD,85.0,WAITING_SMT,SMT대기,복합,stop waiting semi from SMT,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-01,DAY,MI,MI 6,TOTAL,L65S8W_HVD,241.0,WAITING_SMT,SMT대기,복합,"waiting semi from smt (60min), hipot error (30min), coating error (10min), ft (5min)",1,,2655.0,2523.0,2655.0,2523.0,2655.0,2057.0
+2026-07-01,DAY,MI,MI 6,TOTAL,L65S8W_HVD,103.0,NEW_MODEL,신규모델,복합,"change model (58min), set up AOI --> Coating (24min),",2,,2655.0,2523.0,2655.0,2523.0,2655.0,2057.0
+2026-07-01,DAY,MI,MI 6,A,L65S8W_HVD,105.0,WAITING_SMT,SMT대기,복합,"waiting semi from smt (60min), hipot error (30min), coating error (10min), ft (5min)",1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-01,DAY,MI,MI 6,B,L65S8W_HVD,84.0,WAITING_SMT,SMT대기,복합,"waiting semi from smt (60min), hipot error (30min), coating error (10min), ft (5min)",1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-01,DAY,MI,MI 6,C,L65S8W_HVD,52.0,WAITING_SMT,SMT대기,복합,"waiting semi from smt (60min), hipot error (30min), coating error (10min), ft (5min)",1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-01,DAY,MI,MI 6,D,L65S8W_HVD,103.0,NEW_MODEL,신규모델,복합,"change model (58min), set up AOI --> Coating (24min),",1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-01,DAY,MI,MI 7,TOTAL,L48CA9N_HVD,84.0,ATE,ATE불량,복합,"Ate waiting stock (60min), vision error (20min), wave solder (4min)",1,,1236.0,1176.0,1236.0,1176.0,1236.0,773.0
+2026-07-01,DAY,MI,MI 7,TOTAL,L48CA9N_HVD,210.0,WAITING_SMT,SMT대기,복합,"Ate waiting stock (60min), vision error (20min), wave solder (4min) | change model (30min), waiting semi SMT (30min),",2,,1236.0,1176.0,1236.0,1176.0,1236.0,773.0
+2026-07-01,DAY,MI,MI 7,A,L48CA9N_HVD,84.0,ATE,ATE불량,복합,"Ate waiting stock (60min), vision error (20min), wave solder (4min)",1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-01,DAY,MI,MI 7,B,L48CA9N_HVD,60.0,ATE,ATE불량,복합,"Ate waiting stock (60min), vision error (20min), wave solder (4min)",1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-01,DAY,MI,MI 7,C,L48CA9N_HVD,150.0,ATE,ATE불량,복합,"Ate waiting stock (60min), vision error (20min), wave solder (4min)",1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-02,DAY,MI,MI 2,TOTAL,"55""/3in1, M70H, HKC",219.0,WAITING_SMT,SMT대기,복합,"Waiting semi smt, Change model 55pd 3in1",1,,2601.0,2518.0,2601.0,2518.0,1380.0,1380.0
+2026-07-02,DAY,MI,MI 2,TOTAL,"55""/3in1, M70H, HKC",15.0,NO_PROBLEM,문제없음,복합,No problem,2,,2601.0,2518.0,2601.0,2518.0,1380.0,1380.0
+2026-07-02,DAY,MI,MI 2,A,"55""/3in1, M70H, HKC",19.0,WAITING_SMT,SMT대기,복합,"Waiting semi smt, Change model 55pd 3in1",1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-02,DAY,MI,MI 2,C,"55""/3in1, M70H, HKC",20.0,WAITING_SMT,SMT대기,복합,"Waiting semi smt, Change model 55pd 3in1",1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-02,DAY,MI,MI 2,D,"55""/3in1, M70H, HKC",15.0,NO_PROBLEM,문제없음,복합,No problem,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-02,DAY,MI,MI 2,E,"55""/3in1, M70H, HKC",180.0,WAITING_SMT,SMT대기,복합,"Waiting semi smt, Change model 55pd 3in1",1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-02,DAY,MI,MI 3,TOTAL,L55S7_HVD,113.0,NEW_MODEL,신규모델,복합,"Set up model 55HVD 20 E từ ICT đến coating(60min), Set up ATE model 55HVD (40min)",1,,2730.0,2780.0,2730.0,2780.0,2730.0,2752.0
+2026-07-02,DAY,MI,MI 3,TOTAL,L55S7_HVD,18.0,ICT_FT,ICT/FT/HiPOT불량,복합,"Hipot error (5min), Wave solder error (3min)",2,,2730.0,2780.0,2730.0,2780.0,2730.0,2752.0
+2026-07-02,DAY,MI,MI 3,A,L55S7_HVD,100.0,NEW_MODEL,신규모델,복합,"Set up model 55HVD 20 E từ ICT đến coating(60min), Set up ATE model 55HVD (40min)",1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-02,DAY,MI,MI 3,B,L55S7_HVD,8.0,NEW_MODEL,신규모델,복합,"Set up model 55HVD 20 E từ ICT đến coating(60min), Set up ATE model 55HVD (40min)",1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-02,DAY,MI,MI 3,C,L55S7_HVD,5.0,NEW_MODEL,신규모델,복합,"Set up model 55HVD 20 E từ ICT đến coating(60min), Set up ATE model 55HVD (40min)",1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-02,DAY,MI,MI 3,D,L55S7_HVD,18.0,ICT_FT,ICT/FT/HiPOT불량,복합,"Hipot error (5min), Wave solder error (3min)",1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-02,DAY,MI,MI 4,TOTAL,L55E70NA_HVD,148.0,ICT_FT,ICT/FT/HiPOT불량,복합,Hipot error,1,,1205.0,1076.0,1205.0,1076.0,1210.0,1097.0
+2026-07-02,DAY,MI,MI 4,TOTAL,L55E70NA_HVD,125.0,NO_PROBLEM,문제없음,복합,No problem,2,,1205.0,1076.0,1205.0,1076.0,1210.0,1097.0
+2026-07-02,DAY,MI,MI 4,A,L55E70NA_HVD,55.0,ICT_FT,ICT/FT/HiPOT불량,복합,Hipot error,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-02,DAY,MI,MI 4,C,L55E70NA_HVD,93.0,ICT_FT,ICT/FT/HiPOT불량,복합,Hipot error,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-02,DAY,MI,MI 4,D,L55E70NA_HVD,125.0,NO_PROBLEM,문제없음,복합,No problem,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-02,DAY,MI,MI 5,TOTAL,L85E70NA_HVD,231.0,NEW_MODEL,신규모델,복합,"set up ATE (65min), Set up ICT (55min), Ate running 1 floor (28min).",1,,1720.0,1700.0,1720.0,1700.0,1720.0,1500.0
+2026-07-02,DAY,MI,MI 5,TOTAL,L85E70NA_HVD,112.0,ICT_FT,ICT/FT/HiPOT불량,복합,Ict error (8min) Coating error (5min),2,,1720.0,1700.0,1720.0,1700.0,1720.0,1500.0
+2026-07-02,DAY,MI,MI 5,A,L85E70NA_HVD,148.0,NEW_MODEL,신규모델,복합,"set up ATE (65min), Set up ICT (55min), Ate running 1 floor (28min).",1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-02,DAY,MI,MI 5,B,L85E70NA_HVD,13.0,NEW_MODEL,신규모델,복합,"set up ATE (65min), Set up ICT (55min), Ate running 1 floor (28min).",1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-02,DAY,MI,MI 5,C,L85E70NA_HVD,70.0,NEW_MODEL,신규모델,복합,"set up ATE (65min), Set up ICT (55min), Ate running 1 floor (28min).",1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-02,DAY,MI,MI 5,D,L85E70NA_HVD,112.0,ICT_FT,ICT/FT/HiPOT불량,복합,Ict error (8min) Coating error (5min),1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-02,DAY,MI,MI 6,TOTAL,L75E70NA_HVD,7.0,WAVE,Wave Solder불량,복합,Wave solder error,1,,1370.0,1372.0,1370.0,1372.0,1370.0,1453.0
+2026-07-02,DAY,MI,MI 6,TOTAL,L75E70NA_HVD,79.0,ICT_FT,ICT/FT/HiPOT불량,복합,Wave solder error | Hipot error (16min) Flux error (6min) Wave solder error (8min),2,,1370.0,1372.0,1370.0,1372.0,1370.0,1453.0
+2026-07-02,DAY,MI,MI 6,A,L75E70NA_HVD,7.0,WAVE,Wave Solder불량,복합,Wave solder error,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-02,DAY,MI,MI 6,B,L75E70NA_HVD,30.0,WAVE,Wave Solder불량,복합,Wave solder error,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-02,DAY,MI,MI 6,C,L75E70NA_HVD,35.0,WAVE,Wave Solder불량,복합,Wave solder error,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-02,DAY,MI,MI 6,D,L75E70NA_HVD,14.0,ICT_FT,ICT/FT/HiPOT불량,복합,Hipot error (16min) Flux error (6min) Wave solder error (8min),1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-02,DAY,MI,MI 7,TOTAL,L65E70A_HVD,265.0,CHANGE_MODEL,모델교체,복합,Change model 65E70A --> 65E70W,1,,1528.0,1528.0,1528.0,1528.0,1528.0,1513.0
+2026-07-02,DAY,MI,MI 7,TOTAL,L65E70A_HVD,10.0,WAVE,Wave Solder불량,복합,Flux error (44min) Wave solder (11min),2,,1528.0,1528.0,1528.0,1528.0,1528.0,1513.0
+2026-07-02,DAY,MI,MI 7,A,L65E70A_HVD,30.0,CHANGE_MODEL,모델교체,복합,Change model 65E70A --> 65E70W,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-02,DAY,MI,MI 7,B,L65E70A_HVD,55.0,CHANGE_MODEL,모델교체,복합,Change model 65E70A --> 65E70W,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-02,DAY,MI,MI 7,D,L55CA9N_FVD,10.0,WAVE,Wave Solder불량,복합,Flux error (44min) Wave solder (11min),1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-02,DAY,MI,MI 7,E,L55CA9N_FVD,180.0,CHANGE_MODEL,모델교체,복합,Change model 65E70A --> 65E70W,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-03,DAY,MI,MI 2,TOTAL,L55S7_HVD,37.0,ATE,ATE불량,단일,Ate running 1 floor (25min) Hipot error (5min),1,,2860.0,2897.0,2860.0,2897.0,2860.0,2866.0
+2026-07-03,DAY,MI,MI 2,A,L55S7_HVD,30.0,ATE,ATE불량,복합,Ate running 1 floor (25min) Hipot error (5min),1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-03,DAY,MI,MI 2,C,L55S7_HVD,7.0,ATE,ATE불량,복합,Ate running 1 floor (25min) Hipot error (5min),1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-03,DAY,MI,MI 3,TOTAL,L55S7_HVD,25.0,WAVE,Wave Solder불량,복합,Cooling (wave solder) error,1,,2328.0,2858.0,2328.0,2858.0,2860.0,2864.0
+2026-07-03,DAY,MI,MI 3,TOTAL,L55S7_HVD,30.0,ICT_FT,ICT/FT/HiPOT불량,복합,Cooling (wave solder) error | FT error,2,,2328.0,2858.0,2328.0,2858.0,2860.0,2864.0
+2026-07-03,DAY,MI,MI 3,A,L55S7_HVD,25.0,WAVE,Wave Solder불량,복합,Cooling (wave solder) error,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-03,DAY,MI,MI 3,B,L55S7_HVD,14.0,WAVE,Wave Solder불량,복합,Cooling (wave solder) error,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-03,DAY,MI,MI 3,C,L55S7_HVD,16.0,WAVE,Wave Solder불량,복합,Cooling (wave solder) error,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-03,DAY,MI,MI 4,TOTAL,L65CA9N_FVD,167.0,WAITING_SMT,SMT대기,단일,Stop waiting semi SMT,1,,1250.0,974.0,1250.0,974.0,1250.0,873.0
+2026-07-03,DAY,MI,MI 4,A,L65CA9N_FVD,47.0,WAITING_SMT,SMT대기,복합,Stop waiting semi SMT,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-03,DAY,MI,MI 4,B,L65CA9N_FVD,55.0,WAITING_SMT,SMT대기,복합,Stop waiting semi SMT,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-03,DAY,MI,MI 4,C,L65CA9N_FVD,65.0,WAITING_SMT,SMT대기,복합,Stop waiting semi SMT,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-03,DAY,MI,MI 5,TOTAL,L65S7N_HVD,281.0,CHANGE_MODEL,모델교체,단일,ICT/ FT/ COATING change model 65S7N,1,,1753.0,1724.0,1753.0,1724.0,1809.0,1737.0
+2026-07-03,DAY,MI,MI 5,A,L65S7N_HVD,48.0,CHANGE_MODEL,모델교체,복합,ICT/ FT/ COATING change model 65S7N,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-03,DAY,MI,MI 5,B,L65S7N_HVD,90.0,CHANGE_MODEL,모델교체,복합,ICT/ FT/ COATING change model 65S7N,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-03,DAY,MI,MI 5,C,L65S7N_HVD,73.0,CHANGE_MODEL,모델교체,복합,ICT/ FT/ COATING change model 65S7N,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-03,DAY,MI,MI 5,D,L65S7N_HVD,70.0,CHANGE_MODEL,모델교체,복합,ICT change model 65S7N (10min). ATE change model 65S7N (80min),1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-03,DAY,MI,MI 6,TOTAL,L65S8_HVD,142.0,ATE,ATE불량,복합,Hipot conveyor error (42min) Ate running 1 floor (7min) Hipot error from9:10 to now,1,,1429.0,1306.0,1429.0,1306.0,1779.0,1178.0
+2026-07-03,DAY,MI,MI 6,TOTAL,L65S8_HVD,37.0,ETC,기타,복합,hiipot error (42min),2,,1429.0,1306.0,1429.0,1306.0,1779.0,1178.0
+2026-07-03,DAY,MI,MI 6,A,L65S8_HVD,56.0,ATE,ATE불량,복합,Hipot conveyor error (42min) Ate running 1 floor (7min) Hipot error from9:10 to now,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-03,DAY,MI,MI 6,B,L65S8_HVD,42.0,ATE,ATE불량,복합,Hipot conveyor error (42min) Ate running 1 floor (7min) Hipot error from9:10 to now,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-03,DAY,MI,MI 6,C,L65S8_HVD,44.0,ATE,ATE불량,복합,Hipot conveyor error (42min) Ate running 1 floor (7min) Hipot error from9:10 to now,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-03,DAY,MI,MI 6,D,L65FE8N_HHS,37.0,ETC,기타,복합,hiipot error (42min),1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-03,DAY,MI,MI 7,TOTAL,L65E70A_HVD,80.0,NEW_MODEL,신규모델,복합,"set up line for audit | audit line, change model 65E70A",1,,1500.0,1500.0,1500.0,1500.0,1754.0,1113.0
+2026-07-03,DAY,MI,MI 7,TOTAL,L65E70A_HVD,182.0,CHANGE_MODEL,모델교체,복합,"audit line, change model 65E70A",2,,1500.0,1500.0,1500.0,1500.0,1754.0,1113.0
+2026-07-03,DAY,MI,MI 7,B,L65E70A_HVD,20.0,NEW_MODEL,신규모델,복합,set up line for audit,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-03,DAY,MI,MI 7,C,L65E70A_HVD,60.0,NEW_MODEL,신규모델,복합,set up line for audit,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-03,DAY,MI,MI 7,D,L65E70A_HVD,182.0,CHANGE_MODEL,모델교체,복합,"audit line, change model 65E70A",1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-04,DAY,MI,MI 2,TOTAL,L55S7_HVD,12.0,ICT_FT,ICT/FT/HiPOT불량,단일,Hipot error,1,,2860.0,2860.0,2860.0,2860.0,2860.0,2860.0
+2026-07-04,DAY,MI,MI 2,A,L55S7_HVD,12.0,ICT_FT,ICT/FT/HiPOT불량,복합,Hipot error,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-04,DAY,MI,MI 3,TOTAL,L55S7_HVD,44.0,NO_PROBLEM,문제없음,단일,No problem | No problem,1,,2328.0,2860.0,2328.0,2860.0,2860.0,3158.0
+2026-07-04,DAY,MI,MI 3,C,L55S7_HVD,30.0,NO_PROBLEM,문제없음,단일,No problem,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-04,DAY,MI,MI 3,D,L55S7_HVD,14.0,NO_PROBLEM,문제없음,단일,No problem,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-04,DAY,MI,MI 4,TOTAL,L65S7A_HVD,20.0,CHANGE_MODEL,모델교체,복합,Change model Ate,1,,2800.0,2775.0,2800.0,2775.0,2800.0,2685.0
+2026-07-04,DAY,MI,MI 4,TOTAL,L65S7A_HVD,122.0,WAITING_SMT,SMT대기,복합,Change model Ate | Waiting semi SMT,2,,2800.0,2775.0,2800.0,2775.0,2800.0,2685.0
+2026-07-04,DAY,MI,MI 4,A,L65S7A_HVD,20.0,CHANGE_MODEL,모델교체,복합,Change model Ate,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-04,DAY,MI,MI 4,B,L65S7A_HVD,57.0,CHANGE_MODEL,모델교체,복합,Change model Ate,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-04,DAY,MI,MI 4,C,L65S7A_HVD,51.0,CHANGE_MODEL,모델교체,복합,Change model Ate,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-04,DAY,MI,MI 4,D,L65S7A_HVD,14.0,WAITING_SMT,SMT대기,복합,Waiting semi SMT,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-04,DAY,MI,MI 5,TOTAL,L65S7A_HVD,117.0,WAITING_SMT,SMT대기,단일,Don't have stock | Waiting semi SMT,1,,2880.0,2215.0,2880.0,2215.0,2611.0,2062.0
+2026-07-04,DAY,MI,MI 5,B,L65S7A_HVD,54.0,ETC,기타,복합,Don't have stock,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-04,DAY,MI,MI 5,C,L65S7A_HVD,43.0,ETC,기타,복합,Don't have stock,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-04,DAY,MI,MI 5,D,L65S7A_HVD,20.0,WAITING_SMT,SMT대기,복합,Waiting semi SMT,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-04,DAY,MI,MI 6,TOTAL,L75E70NA_HVD,19.0,AOI_SAOI,AOI/S-AOI불량,복합,AOI error (15min) Wave solder error (4min),1,,1750.0,1743.0,1750.0,1743.0,1723.0,1269.0
+2026-07-04,DAY,MI,MI 6,TOTAL,L75E70NA_HVD,125.0,WAITING_SMT,SMT대기,복합,AOI error (15min) Wave solder error (4min) | Waiting semi SMT,2,,1750.0,1743.0,1750.0,1743.0,1723.0,1269.0
+2026-07-04,DAY,MI,MI 6,A,L75E70NA_HVD,19.0,AOI_SAOI,AOI/S-AOI불량,복합,AOI error (15min) Wave solder error (4min),1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-04,DAY,MI,MI 6,B,L75E70NA_HVD,31.0,AOI_SAOI,AOI/S-AOI불량,복합,AOI error (15min) Wave solder error (4min),1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-04,DAY,MI,MI 6,C,L75E70NA_HVD,40.0,AOI_SAOI,AOI/S-AOI불량,복합,AOI error (15min) Wave solder error (4min),1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-04,DAY,MI,MI 6,D,L75E70NA_HVD,54.0,WAITING_SMT,SMT대기,복합,Waiting semi SMT,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-04,DAY,MI,MI 7,TOTAL,L83CA9N_HVD,181.0,ATE,ATE불량,단일,Ate running 1 floor (15min) Flux error (75min),1,,1237.0,1237.0,1237.0,1237.0,1310.0,1071.0
+2026-07-04,DAY,MI,MI 7,A,L83CA9N_HVD,90.0,ATE,ATE불량,복합,Ate running 1 floor (15min) Flux error (75min),1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-04,DAY,MI,MI 7,B,L83CA9N_HVD,61.0,ATE,ATE불량,복합,Ate running 1 floor (15min) Flux error (75min),1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-04,DAY,MI,MI 7,C,L83CA9N_HVD,30.0,ATE,ATE불량,복합,Ate running 1 floor (15min) Flux error (75min),1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-06,DAY,MI,MI 2,TOTAL,"32""/3IN1, JDM_ROSE-SF,",31.0,ICT_FT,ICT/FT/HiPOT불량,단일,Coating error (15min) ICT error (7min) Wave solder error (9min). 3in 1,1,,2720.0,2720.0,2720.0,2720.0,0.0,0.0
+2026-07-06,DAY,MI,MI 2,A,"32""/3IN1, JDM_ROSE-SF,",31.0,ICT_FT,ICT/FT/HiPOT불량,복합,Coating error (15min) ICT error (7min) Wave solder error (9min). 3in 1,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-06,DAY,MI,MI 3,TOTAL,L55S7_HVD,82.0,ICT_FT,ICT/FT/HiPOT불량,복합,FT error (2times),1,,2860.0,2860.0,2860.0,2860.0,2860.0,2860.0
+2026-07-06,DAY,MI,MI 3,TOTAL,L55S7_HVD,95.0,ATE,ATE불량,복합,"FT error (2times) | FT error (70min) Ate error (4min), Aoi error (10min)",2,,2860.0,2860.0,2860.0,2860.0,2860.0,2860.0
+2026-07-06,DAY,MI,MI 3,A,L55S7_HVD,82.0,ICT_FT,ICT/FT/HiPOT불량,복합,FT error (2times),1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-06,DAY,MI,MI 3,B,L55S7_HVD,84.0,ICT_FT,ICT/FT/HiPOT불량,복합,FT error (2times),1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-06,DAY,MI,MI 3,C,L55S7_HVD,11.0,ICT_FT,ICT/FT/HiPOT불량,복합,FT error (2times),1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-06,DAY,MI,MI 4,TOTAL,L65CA9N_HVD,37.0,WAVE,Wave Solder불량,복합,Wave solder error,1,,1400.0,1400.0,1400.0,1400.0,1400.0,1382.0
+2026-07-06,DAY,MI,MI 4,TOTAL,L65CA9N_HVD,11.0,NO_PROBLEM,문제없음,복합,No problem,2,,1400.0,1400.0,1400.0,1400.0,1400.0,1382.0
+2026-07-06,DAY,MI,MI 4,A,L65CA9N_HVD,20.0,WAVE,Wave Solder불량,복합,Wave solder error,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-06,DAY,MI,MI 4,C,L65CA9N_HVD,5.0,WAVE,Wave Solder불량,복합,Wave solder error,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-06,DAY,MI,MI 4,D,L65CA9N_HVD,11.0,NO_PROBLEM,문제없음,복합,No problem,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-06,DAY,MI,MI 4,E,L65CA9N_HVD,12.0,WAVE,Wave Solder불량,복합,Wave solder error,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-06,DAY,MI,MI 5,TOTAL,L65S7A_HVD,50.0,AOI_SAOI,AOI/S-AOI불량,단일,AOI error,1,,2735.0,2701.0,2735.0,2701.0,2551.0,2760.0
+2026-07-06,DAY,MI,MI 5,A,L65S7A_HVD,25.0,AOI_SAOI,AOI/S-AOI불량,복합,AOI error,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-06,DAY,MI,MI 5,B,L65S7A_HVD,10.0,AOI_SAOI,AOI/S-AOI불량,복합,AOI error,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-06,DAY,MI,MI 5,C,L65S7A_HVD,15.0,AOI_SAOI,AOI/S-AOI불량,복합,AOI error,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-06,DAY,MI,MI 6,TOTAL,L55F70NA_HHS,108.0,ICT_FT,ICT/FT/HiPOT불량,복합,ICT error (3times),1,,1400.0,1400.0,1400.0,1400.0,1317.0,1387.0
+2026-07-06,DAY,MI,MI 6,TOTAL,L55F70NA_HHS,9.0,AOI_SAOI,AOI/S-AOI불량,복합,AOI error (9min) Wave solder (9min),2,,1400.0,1400.0,1400.0,1400.0,1317.0,1387.0
+2026-07-06,DAY,MI,MI 6,A,L55F70NA_HHS,73.0,ICT_FT,ICT/FT/HiPOT불량,복합,ICT error (3times),1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-06,DAY,MI,MI 6,B,L55F70NA_HHS,18.0,ICT_FT,ICT/FT/HiPOT불량,복합,ICT error (3times),1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-06,DAY,MI,MI 6,C,L55F70NA_HHS,17.0,ICT_FT,ICT/FT/HiPOT불량,복합,ICT error (3times),1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-06,DAY,MI,MI 6,D,L55F70NA_HHS,9.0,AOI_SAOI,AOI/S-AOI불량,복합,AOI error (9min) Wave solder (9min),1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-06,DAY,MI,MI 7,TOTAL,L55CA9N_FVD,405.0,CHANGE_MODEL,모델교체,복합,Change model 83CA9N FHS (120min) Wave solder error (10min). MI conveyor error (15min). Coating error (10min).,1,,1352.0,1350.0,1352.0,1350.0,1408.0,0.0
+2026-07-06,DAY,MI,MI 7,TOTAL,L55CA9N_FVD,90.0,WAVE,Wave Solder불량,복합,Wave solder error (2times),2,,1352.0,1350.0,1352.0,1350.0,1408.0,0.0
+2026-07-06,DAY,MI,MI 7,A,L55CA9N_FVD,155.0,CHANGE_MODEL,모델교체,복합,Change model 83CA9N FHS (120min) Wave solder error (10min). MI conveyor error (15min). Coating error (10min).,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-06,DAY,MI,MI 7,B,L55CA9N_FVD,70.0,CHANGE_MODEL,모델교체,복합,Change model 83CA9N FHS (120min) Wave solder error (10min). MI conveyor error (15min). Coating error (10min).,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-06,DAY,MI,MI 7,C,L55CA9N_FVD,180.0,CHANGE_MODEL,모델교체,복합,Change model 83CA9N FHS (120min) Wave solder error (10min). MI conveyor error (15min). Coating error (10min).,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-06,DAY,MI,MI 7,D,L55CA9N_HVD,90.0,WAVE,Wave Solder불량,복합,Wave solder error (2times),1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-07,DAY,MI,MI 2,TOTAL,"32""/3IN1, JDM_ROSE-SF",194.0,CHANGE_MODEL,모델교체,복합,Waiting component from Wip (18min) Change model (40min). Coating error (25min). Coating running 1 floor (7min).,1,,2730.0,2730.0,2730.0,2730.0,0.0,0.0
+2026-07-07,DAY,MI,MI 2,TOTAL,"32""/3IN1, JDM_ROSE-SF",5.0,ATE,ATE불량,복합,ICT error (13min) silicon (5min) ATE running 1 floor (11min),2,,2730.0,2730.0,2730.0,2730.0,0.0,0.0
+2026-07-07,DAY,MI,MI 2,A,"32""/3IN1, JDM_ROSE-SF",93.0,CHANGE_MODEL,모델교체,복합,Waiting component from Wip (18min) Change model (40min). Coating error (25min). Coating running 1 floor (7min).,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-07,DAY,MI,MI 2,B,"32""/3IN1, JDM_ROSE-SF",29.0,CHANGE_MODEL,모델교체,복합,Waiting component from Wip (18min) Change model (40min). Coating error (25min). Coating running 1 floor (7min).,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-07,DAY,MI,MI 2,C,"32""/3IN1, JDM_ROSE-SF",72.0,CHANGE_MODEL,모델교체,복합,Waiting component from Wip (18min) Change model (40min). Coating error (25min). Coating running 1 floor (7min).,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-07,DAY,MI,MI 2,D,"32""/3IN1, JDM_ROSE-SF",5.0,ATE,ATE불량,복합,ICT error (13min) silicon (5min) ATE running 1 floor (11min),1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-07,DAY,MI,MI 3,TOTAL,L55S7_HVD,15.0,WAITING_SMT,SMT대기,단일,waiting PCB from ICT to ATE,1,,2328.0,2860.0,2328.0,2860.0,2860.0,2935.0
+2026-07-07,DAY,MI,MI 3,A,L55S7_HVD,15.0,WAITING_SMT,SMT대기,복합,waiting PCB from ICT to ATE,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-07,DAY,MI,MI 4,TOTAL,L65CA9N_HVD,191.0,WAITING_SMT,SMT대기,단일,waiting semi SMT (10min) wave solder error (25min) Silicon error (7min),1,,1370.0,1283.0,1370.0,1283.0,1370.0,1216.0
+2026-07-07,DAY,MI,MI 4,A,L65CA9N_HVD,32.0,WAITING_SMT,SMT대기,복합,waiting semi SMT (10min) wave solder error (25min) Silicon error (7min),1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-07,DAY,MI,MI 4,B,L65CA9N_HVD,25.0,WAITING_SMT,SMT대기,복합,waiting semi SMT (10min) wave solder error (25min) Silicon error (7min),1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-07,DAY,MI,MI 4,C,L65CA9N_HVD,106.0,WAITING_SMT,SMT대기,복합,waiting semi SMT (10min) wave solder error (25min) Silicon error (7min),1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-07,DAY,MI,MI 4,D,L65CA9N_HVD,28.0,WAITING_SMT,SMT대기,복합,waiting semi SMT (10min) ICT error (15min),1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-07,DAY,MI,MI 5,TOTAL,L55E70A_HVD,51.0,MAGAZINE,Magazine부족,단일,The SMT sending wrong PCB (2 model in 1 magazine) (10min). Burn in error (10min).,1,,2000.0,1814.0,2000.0,1814.0,1977.0,1882.0
+2026-07-07,DAY,MI,MI 5,A,L55E70A_HVD,20.0,MAGAZINE,Magazine부족,복합,The SMT sending wrong PCB (2 model in 1 magazine) (10min). Burn in error (10min).,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-07,DAY,MI,MI 5,B,L55E70A_HVD,16.0,MAGAZINE,Magazine부족,복합,The SMT sending wrong PCB (2 model in 1 magazine) (10min). Burn in error (10min).,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-07,DAY,MI,MI 5,C,L55E70A_HVD,10.0,MAGAZINE,Magazine부족,복합,The SMT sending wrong PCB (2 model in 1 magazine) (10min). Burn in error (10min).,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-07,DAY,MI,MI 5,D,L55E70A_HVD,5.0,MAGAZINE,Magazine부족,복합,The SMT sending wrong PCB (2 model in 1 magazine) (16min),1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-07,DAY,MI,MI 6,TOTAL,L65S8N_HVD,121.0,WAITING_SMT,SMT대기,복합,waiting semi SMT (12min) Change model from 9h20 (not yet),1,,2194.0,1914.0,2194.0,1914.0,2776.0,1647.0
+2026-07-07,DAY,MI,MI 6,TOTAL,L65S8N_HVD,42.0,CHANGE_MODEL,모델교체,복합,Change model (30min) FT error (11min),2,,2194.0,1914.0,2194.0,1914.0,2776.0,1647.0
+2026-07-07,DAY,MI,MI 6,A,L65S8N_HVD,12.0,WAITING_SMT,SMT대기,복합,waiting semi SMT (12min) Change model from 9h20 (not yet),1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-07,DAY,MI,MI 6,B,L65S8N_HVD,41.0,WAITING_SMT,SMT대기,복합,waiting semi SMT (12min) Change model from 9h20 (not yet),1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-07,DAY,MI,MI 6,C,L65S8N_HVD,68.0,WAITING_SMT,SMT대기,복합,waiting semi SMT (12min) Change model from 9h20 (not yet),1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-07,DAY,MI,MI 6,D,L65S8N_HVD,42.0,CHANGE_MODEL,모델교체,복합,Change model (30min) FT error (11min),1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-07,DAY,MI,MI 7,TOTAL,L55CA9N_HVD,310.0,ATE,ATE불량,복합,Hipot error (5min) Ate error (52min) FT error (10min) Sorting the component floating (10min),1,,1260.0,1260.0,1260.0,1260.0,1260.0,1146.0
+2026-07-07,DAY,MI,MI 7,TOTAL,L55CA9N_HVD,79.0,ICT_FT,ICT/FT/HiPOT불량,복합,Hipot error (3min) ICT error (7min) Silicon error (18min),2,,1260.0,1260.0,1260.0,1260.0,1260.0,1146.0
+2026-07-07,DAY,MI,MI 7,A,L55CA9N_HVD,152.0,ATE,ATE불량,복합,Hipot error (5min) Ate error (52min) FT error (10min) Sorting the component floating (10min),1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-07,DAY,MI,MI 7,B,L55CA9N_HVD,28.0,ATE,ATE불량,복합,Hipot error (5min) Ate error (52min) FT error (10min) Sorting the component floating (10min),1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-07,DAY,MI,MI 7,C,L55CA9N_HVD,130.0,ATE,ATE불량,복합,Hipot error (5min) Ate error (52min) FT error (10min) Sorting the component floating (10min),1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-07,DAY,MI,MI 7,D,L55CA9N_HVD,79.0,ICT_FT,ICT/FT/HiPOT불량,복합,Hipot error (3min) ICT error (7min) Silicon error (18min),1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-08,DAY,MI,MI 2,TOTAL,"32""/3IN1, JDM_ROSE-SF",86.0,CHANGE_MODEL,모델교체,복합,"Change model 55(20E)-->32"" (45min) ICT error (17min) AOI error (24min)",1,,2341.0,2376.0,2341.0,2376.0,1500.0,1517.0
+2026-07-08,DAY,MI,MI 2,TOTAL,"32""/3IN1, JDM_ROSE-SF",290.0,WAITING_SMT,SMT대기,복합,"Change model 55(20E)-->32"" (45min) ICT error (17min) AOI error (24min) | Waiting semi SMT",2,,2341.0,2376.0,2341.0,2376.0,1500.0,1517.0
+2026-07-08,DAY,MI,MI 2,A,"32""/3IN1, JDM_ROSE-SF",86.0,CHANGE_MODEL,모델교체,복합,"Change model 55(20E)-->32"" (45min) ICT error (17min) AOI error (24min)",1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-08,DAY,MI,MI 2,B,"32""/3IN1, JDM_ROSE-SF",71.0,CHANGE_MODEL,모델교체,복합,"Change model 55(20E)-->32"" (45min) ICT error (17min) AOI error (24min)",1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-08,DAY,MI,MI 2,C,"32""/3IN1, JDM_ROSE-SF",139.0,CHANGE_MODEL,모델교체,복합,"Change model 55(20E)-->32"" (45min) ICT error (17min) AOI error (24min)",1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-08,DAY,MI,MI 2,D,"32""/3IN1, JDM_ROSE-SF",67.0,WAITING_SMT,SMT대기,복합,Waiting semi SMT,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-08,DAY,MI,MI 2,E,"32""/3IN1, JDM_ROSE-SF",13.0,CHANGE_MODEL,모델교체,복합,"Change model 55(20E)-->32"" (45min) ICT error (17min) AOI error (24min)",1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-08,DAY,MI,MI 3,TOTAL,L65S7N_HVD,56.0,WAITING_SMT,SMT대기,단일,Wave solder error (15min) Coating error (3min) Ate waiting PCB from ICT (15min),1,,2750.0,2751.0,2750.0,2751.0,2750.0,2688.0
+2026-07-08,DAY,MI,MI 3,A,L65S7N_HVD,33.0,WAITING_SMT,SMT대기,복합,Wave solder error (15min) Coating error (3min) Ate waiting PCB from ICT (15min),1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-08,DAY,MI,MI 3,B,L65S7N_HVD,16.0,WAITING_SMT,SMT대기,복합,Wave solder error (15min) Coating error (3min) Ate waiting PCB from ICT (15min),1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-08,DAY,MI,MI 3,C,L65S7N_HVD,7.0,WAITING_SMT,SMT대기,복합,Wave solder error (15min) Coating error (3min) Ate waiting PCB from ICT (15min),1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-08,DAY,MI,MI 4,TOTAL,L65CA9N_HVD,27.0,ICT_FT,ICT/FT/HiPOT불량,복합,silicon error (7min) AOI error (10min) ICT error (5min),1,,1600.0,1600.0,1600.0,1600.0,1600.0,1622.0
+2026-07-08,DAY,MI,MI 4,TOTAL,L65CA9N_HVD,51.0,NO_PROBLEM,문제없음,복합,No problem,2,,1600.0,1600.0,1600.0,1600.0,1600.0,1622.0
+2026-07-08,DAY,MI,MI 4,A,L65CA9N_HVD,22.0,ICT_FT,ICT/FT/HiPOT불량,복합,silicon error (7min) AOI error (10min) ICT error (5min),1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-08,DAY,MI,MI 4,C,L65CA9N_HVD,5.0,ICT_FT,ICT/FT/HiPOT불량,복합,silicon error (7min) AOI error (10min) ICT error (5min),1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-08,DAY,MI,MI 4,D,L65CA9N_HVD,51.0,NO_PROBLEM,문제없음,복합,No problem,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-08,DAY,MI,MI 5,TOTAL,L55E70A_HVD,18.0,ICT_FT,ICT/FT/HiPOT불량,단일,ICT error,1,,1920.0,1918.0,1920.0,1918.0,1920.0,1944.0
+2026-07-08,DAY,MI,MI 5,A,L55E70A_HVD,5.0,ICT_FT,ICT/FT/HiPOT불량,복합,ICT error,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-08,DAY,MI,MI 5,B,L55E70A_HVD,13.0,ICT_FT,ICT/FT/HiPOT불량,복합,ICT error,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-08,DAY,MI,MI 6,TOTAL,L75E70NA_HVD,102.0,CHANGE_MODEL,모델교체,복합,Wave solder error (9min) Change model L75E70NA (49min),1,,1830.0,1824.0,1830.0,1824.0,1830.0,1832.0
+2026-07-08,DAY,MI,MI 6,TOTAL,L75E70NA_HVD,6.0,ATE,ATE불량,복합,ATE error (4min) Wave solder error (7min),2,,1830.0,1824.0,1830.0,1824.0,1830.0,1832.0
+2026-07-08,DAY,MI,MI 6,A,L75E70NA_HVD,58.0,CHANGE_MODEL,모델교체,복합,Wave solder error (9min) Change model L75E70NA (49min),1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-08,DAY,MI,MI 6,B,L75E70NA_HVD,11.0,CHANGE_MODEL,모델교체,복합,Wave solder error (9min) Change model L75E70NA (49min),1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-08,DAY,MI,MI 6,C,L75E70NA_HVD,13.0,CHANGE_MODEL,모델교체,복합,Wave solder error (9min) Change model L75E70NA (49min),1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-08,DAY,MI,MI 6,D,L75E70NA_HVD,6.0,ATE,ATE불량,복합,ATE error (4min) Wave solder error (7min),1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-08,DAY,MI,MI 6,E,L75E70NA_HVD,20.0,CHANGE_MODEL,모델교체,복합,Wave solder error (9min) Change model L75E70NA (49min),1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-08,DAY,MI,MI 7,TOTAL,L55CA9N_HVD,178.0,ICT_FT,ICT/FT/HiPOT불량,단일,FT error (4min) Wave solder error (35min),1,,1560.0,1570.0,1560.0,1570.0,1560.0,1936.0
+2026-07-08,DAY,MI,MI 7,A,L55CA9N_HVD,39.0,ICT_FT,ICT/FT/HiPOT불량,복합,FT error (4min) Wave solder error (35min),1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-08,DAY,MI,MI 7,B,L55CA9N_HVD,10.0,ICT_FT,ICT/FT/HiPOT불량,복합,FT error (4min) Wave solder error (35min),1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-08,DAY,MI,MI 7,C,L55CA9N_HVD,36.0,ICT_FT,ICT/FT/HiPOT불량,복합,FT error (4min) Wave solder error (35min),1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-08,DAY,MI,MI 7,D,L55CA9N_HVD,43.0,ICT_FT,ICT/FT/HiPOT불량,복합,FT error,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-08,DAY,MI,MI 7,E,L55CA9N_HVD,50.0,ICT_FT,ICT/FT/HiPOT불량,복합,FT error (4min) Wave solder error (35min),1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-09,DAY,MI,MI 2,TOTAL,L55S7_HVD,10.0,SILCOAT,Silicon/Coating불량,단일,Cleaning Coating nozzle,1,,2880.0,2816.0,2880.0,2816.0,2880.0,2871.0
+2026-07-09,DAY,MI,MI 2,A,L55S7_HVD,10.0,SILCOAT,Silicon/Coating불량,복합,Cleaning Coating nozzle,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-09,DAY,MI,MI 3,TOTAL,L75S7A_HVD,70.0,ATE,ATE불량,복합,"ATE error (4min) Wave solder error (15min),",1,,2860.0,2777.0,2860.0,2777.0,2860.0,2802.0
+2026-07-09,DAY,MI,MI 3,TOTAL,L75S7A_HVD,26.0,WAVE,Wave Solder불량,복합,wave solder error,2,,2860.0,2777.0,2860.0,2777.0,2860.0,2802.0
+2026-07-09,DAY,MI,MI 3,A,L75S7A_HVD,19.0,ATE,ATE불량,복합,"ATE error (4min) Wave solder error (15min),",1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-09,DAY,MI,MI 3,B,L75S7A_HVD,25.0,ATE,ATE불량,복합,"ATE error (4min) Wave solder error (15min),",1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-09,DAY,MI,MI 3,C,L75S7A_HVD,26.0,ATE,ATE불량,복합,"ATE error (4min) Wave solder error (15min),",1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-09,DAY,MI,MI 3,D,L75S7A_HVD,26.0,WAVE,Wave Solder불량,복합,wave solder error,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-09,DAY,MI,MI 4,TOTAL,L65CA9N_HVD,22.0,ICT_FT,ICT/FT/HiPOT불량,단일,No problem | FT error,1,,1600.0,1601.0,1600.0,1601.0,1600.0,1600.0
+2026-07-09,DAY,MI,MI 4,B,L65CA9N_HVD,10.0,NO_PROBLEM,문제없음,복합,No problem,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-09,DAY,MI,MI 4,D,L65CA9N_HVD,12.0,ICT_FT,ICT/FT/HiPOT불량,복합,FT error,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-09,DAY,MI,MI 5,TOTAL,L55E70A_HVD,5.0,ATE,ATE불량,단일,No problem | Ate running 1 floor,1,,2100.0,2098.0,2100.0,2098.0,2100.0,2162.0
+2026-07-09,DAY,MI,MI 5,B,L55E70A_HVD,5.0,NO_PROBLEM,문제없음,복합,No problem,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-09,DAY,MI,MI 6,TOTAL,L65FE8N_HHS,42.0,NEW_MODEL,신규모델,복합,Wave solder error (7min) Set up model 65FE8N (35min).,1,,1530.0,1574.0,1530.0,1574.0,1530.0,1475.0
+2026-07-09,DAY,MI,MI 6,TOTAL,L65FE8N_HHS,128.0,WAITING_SMT,SMT대기,복합,Wave solder error (7min) Set up model 65FE8N (35min). | Waiting semi SMT (14min) Wave solder error (6min),2,,1530.0,1574.0,1530.0,1574.0,1530.0,1475.0
+2026-07-09,DAY,MI,MI 6,A,L65FE8N_HHS,42.0,NEW_MODEL,신규모델,복합,Wave solder error (7min) Set up model 65FE8N (35min).,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-09,DAY,MI,MI 6,B,L65FE8N_HHS,20.0,NEW_MODEL,신규모델,복합,Wave solder error (7min) Set up model 65FE8N (35min).,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-09,DAY,MI,MI 6,C,L65FE8N_HHS,75.0,NEW_MODEL,신규모델,복합,Wave solder error (7min) Set up model 65FE8N (35min).,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-09,DAY,MI,MI 6,D,L65FE8N_HHS,15.0,WAITING_SMT,SMT대기,복합,Waiting semi SMT (14min) Wave solder error (6min),1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-09,DAY,MI,MI 6,E,L65FE8N_HHS,18.0,NEW_MODEL,신규모델,복합,Wave solder error (7min) Set up model 65FE8N (35min).,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-09,DAY,MI,MI 7,TOTAL,L55CA9N_HVD,462.0,CHANGE_MODEL,모델교체,복합,Change model AOI-->ATE 83CA9N (69min). Change model 55CA9N (45min),1,,1463.0,1213.0,1463.0,1213.0,1723.0,1029.0
+2026-07-09,DAY,MI,MI 7,TOTAL,L55CA9N_HVD,164.0,WAVE,Wave Solder불량,복합,Wave solder error (30min) Flux error (20min). Silicon error (46min).,2,,1463.0,1213.0,1463.0,1213.0,1723.0,1029.0
+2026-07-09,DAY,MI,MI 7,A,L55CA9N_HVD,114.0,CHANGE_MODEL,모델교체,복합,Change model AOI-->ATE 83CA9N (69min). Change model 55CA9N (45min),1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-09,DAY,MI,MI 7,B,L55CA9N_HVD,96.0,CHANGE_MODEL,모델교체,복합,Change model AOI-->ATE 83CA9N (69min). Change model 55CA9N (45min),1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-09,DAY,MI,MI 7,C,L55CA9N_HVD,133.0,CHANGE_MODEL,모델교체,복합,Change model AOI-->ATE 83CA9N (69min). Change model 55CA9N (45min),1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-09,DAY,MI,MI 7,D,L55CA9N_HVD,164.0,WAVE,Wave Solder불량,복합,Wave solder error (30min) Flux error (20min). Silicon error (46min).,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-09,DAY,MI,MI 7,E,L55CA9N_HVD,119.0,CHANGE_MODEL,모델교체,복합,Change model AOI-->ATE 83CA9N (69min). Change model 55CA9N (45min),1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-10,DAY,MI,MI 2,TOTAL,L55S7N_HVD,74.0,SILCOAT,Silicon/Coating불량,단일,Coating error,1,,2880.0,1000.0,2880.0,1000.0,2800.0,766.0
+2026-07-10,DAY,MI,MI 2,A,L55S7N_HVD,74.0,SILCOAT,Silicon/Coating불량,단일,Coating error,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-10,DAY,MI,MI 3,TOTAL,L75S7A_HVD,128.0,WAITING_SMT,SMT대기,단일,waiting semi SMT,1,,2800.0,870.0,2800.0,870.0,2800.0,626.0
+2026-07-10,DAY,MI,MI 3,A,L75S7A_HVD,43.0,WAITING_SMT,SMT대기,복합,waiting semi SMT,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-10,DAY,MI,MI 3,B,L75S7A_HVD,85.0,WAITING_SMT,SMT대기,복합,waiting semi SMT,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-10,DAY,MI,MI 6,TOTAL,L65FE8N_HHS,10.0,ATE,ATE불량,단일,ICT error (4min) ATE error (6min),1,,1950.0,500.0,1950.0,500.0,1959.0,610.0
+2026-07-10,DAY,MI,MI 6,A,L65FE8N_HHS,10.0,ATE,ATE불량,복합,ICT error (4min) ATE error (6min),1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-10,DAY,MI,MI 7,TOTAL,L83CA9N_FHS,336.0,CHANGE_MODEL,모델교체,단일,Cover model 55CA9N (60min). Change model 55CA9N -> 83CN9n HVD -> 83CA9N FSH (165min). Wave solder error (15min),1,,1373.0,321.0,1373.0,321.0,1537.0,12.0
+2026-07-10,DAY,MI,MI 7,A,L83CA9N_FHS,240.0,CHANGE_MODEL,모델교체,복합,Cover model 55CA9N (60min). Change model 55CA9N -> 83CN9n HVD -> 83CA9N FSH (165min). Wave solder error (15min),1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-10,DAY,MI,MI 7,B,L83CA9N_FHS,96.0,CHANGE_MODEL,모델교체,복합,Cover model 55CA9N (60min). Change model 55CA9N -> 83CN9n HVD -> 83CA9N FSH (165min). Wave solder error (15min),1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-11,DAY,MI,MI 2,TOTAL,L55S7N_HVD,53.0,SILCOAT,Silicon/Coating불량,단일,Coating error,1,,2880.0,2859.0,2880.0,2859.0,2889.0,2969.0
+2026-07-11,DAY,MI,MI 2,A,L55S7N_HVD,53.0,SILCOAT,Silicon/Coating불량,복합,Coating error,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-11,DAY,MI,MI 3,TOTAL,L75S7_HVD,47.0,ICT_FT,ICT/FT/HiPOT불량,단일,Ict error (13min) Flux error (6min),1,,2860.0,2943.0,2860.0,2943.0,2860.0,2606.0
+2026-07-11,DAY,MI,MI 3,A,L75S7_HVD,18.0,ICT_FT,ICT/FT/HiPOT불량,복합,Ict error (13min) Flux error (6min),1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-11,DAY,MI,MI 3,B,L75S7_HVD,4.0,ICT_FT,ICT/FT/HiPOT불량,복합,Ict error (13min) Flux error (6min),1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-11,DAY,MI,MI 3,E,L75S7_HVD,25.0,ICT_FT,ICT/FT/HiPOT불량,복합,Ict error (13min) Flux error (6min),1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-11,DAY,MI,MI 4,TOTAL,L65CA9N_HVD,157.0,NEW_MODEL,신규모델,단일,No problem | Change model (37min) Set up model ICT --> coating (25min),1,,2000.0,1578.0,2000.0,1578.0,1940.0,1564.0
+2026-07-11,DAY,MI,MI 4,B,L65CA9N_HVD,62.0,NO_PROBLEM,문제없음,복합,No problem,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-11,DAY,MI,MI 4,C,L65CA9N_HVD,34.0,NO_PROBLEM,문제없음,복합,No problem,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-11,DAY,MI,MI 4,D,L65CA9N_HVD,3.0,NEW_MODEL,신규모델,복합,Change model (37min) Set up model ICT --> coating (25min),1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-11,DAY,MI,MI 4,E,L65CA9N_HVD,58.0,NO_PROBLEM,문제없음,복합,No problem,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-11,DAY,MI,MI 5,TOTAL,L55E70A_HVD,4.0,ICT_FT,ICT/FT/HiPOT불량,단일,Buffer FT error,1,,2200.0,2217.0,2200.0,2217.0,2258.0,2205.0
+2026-07-11,DAY,MI,MI 5,A,L55E70A_HVD,4.0,ICT_FT,ICT/FT/HiPOT불량,복합,Buffer FT error,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-11,DAY,MI,MI 6,TOTAL,L65FE8N_HHS,95.0,ICT_FT,ICT/FT/HiPOT불량,단일,No problem | ICT error,1,,1850.0,1687.0,1850.0,1687.0,1828.0,1350.0
+2026-07-11,DAY,MI,MI 6,B,L65FE8N_HHS,4.0,NO_PROBLEM,문제없음,복합,No problem,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-11,DAY,MI,MI 6,C,L65FE8N_HHS,20.0,NO_PROBLEM,문제없음,복합,No problem,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-11,DAY,MI,MI 6,D,L65FE8N_HHS,62.0,ICT_FT,ICT/FT/HiPOT불량,복합,ICT error,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-11,DAY,MI,MI 6,E,L65FE8N_HHS,9.0,NO_PROBLEM,문제없음,복합,No problem,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-11,DAY,MI,MI 7,TOTAL,L83CA9N_HVD,370.0,ICT_FT,ICT/FT/HiPOT불량,단일,UV error (12min) ICT error (46min) wave solder error (5min),1,,1573.0,1053.0,1573.0,1053.0,1896.0,1284.0
+2026-07-11,DAY,MI,MI 7,A,L83CA9N_HVD,63.0,ICT_FT,ICT/FT/HiPOT불량,복합,UV error (12min) ICT error (46min) wave solder error (5min),1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-11,DAY,MI,MI 7,B,L83CA9N_HVD,58.0,ICT_FT,ICT/FT/HiPOT불량,복합,UV error (12min) ICT error (46min) wave solder error (5min),1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-11,DAY,MI,MI 7,C,L83CA9N_HVD,188.0,ICT_FT,ICT/FT/HiPOT불량,복합,UV error (12min) ICT error (46min) wave solder error (5min),1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-11,DAY,MI,MI 7,D,L83CA9N_HVD,17.0,ICT_FT,ICT/FT/HiPOT불량,복합,Wave solder error (50min) FT error (3min) silicon error (5min).,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-11,DAY,MI,MI 7,E,L83CA9N_HVD,44.0,ICT_FT,ICT/FT/HiPOT불량,복합,UV error (12min) ICT error (46min) wave solder error (5min),1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-12,DAY,MI,MI 2,TOTAL,"55""/3in1, M70H, HKC",138.0,WAITING_SMT,SMT대기,복합,waiting semi SMT,1,,1552.0,994.0,1552.0,994.0,1368.0,933.0
+2026-07-12,DAY,MI,MI 2,TOTAL,"55""/3in1, M70H, HKC",49.0,WAVE,Wave Solder불량,복합,Wave solder error,2,,1552.0,994.0,1552.0,994.0,1368.0,933.0
+2026-07-12,DAY,MI,MI 2,A,"55""/3in1, M70H, HKC",80.0,WAITING_SMT,SMT대기,복합,waiting semi SMT,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-12,DAY,MI,MI 2,B,"55""/3in1, M70H, HKC",10.0,WAITING_SMT,SMT대기,복합,waiting semi SMT,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-12,DAY,MI,MI 2,C,"55""/3in1, M70H, HKC",48.0,WAITING_SMT,SMT대기,복합,waiting semi SMT,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-12,DAY,MI,MI 2,D,L65S7A_HVD,49.0,WAVE,Wave Solder불량,복합,Wave solder error,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-12,DAY,MI,MI 3,TOTAL,L65E70A_HVD,160.0,NEW_MODEL,신규모델,복합,set up model L65E70A ICT-->ATE (155min) Ate running 1 floor (15min),1,,2000.0,1232.0,2000.0,1232.0,2000.0,1209.0
+2026-07-12,DAY,MI,MI 3,TOTAL,L65E70A_HVD,78.0,WAITING_SMT,SMT대기,복합,set up model L65E70A ICT-->ATE (155min) Ate running 1 floor (15min) | waiting semi SMT,2,,2000.0,1232.0,2000.0,1232.0,2000.0,1209.0
+2026-07-12,DAY,MI,MI 3,A,L65E70A_HVD,160.0,NEW_MODEL,신규모델,복합,set up model L65E70A ICT-->ATE (155min) Ate running 1 floor (15min),1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-12,DAY,MI,MI 3,B,L65E70A_HVD,42.0,NEW_MODEL,신규모델,복합,set up model L65E70A ICT-->ATE (155min) Ate running 1 floor (15min),1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-12,DAY,MI,MI 3,C,L65E70A_HVD,22.0,NEW_MODEL,신규모델,복합,set up model L65E70A ICT-->ATE (155min) Ate running 1 floor (15min),1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-12,DAY,MI,MI 3,D,L65E70A_HVD,14.0,WAITING_SMT,SMT대기,복합,waiting semi SMT,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-12,DAY,MI,MI 4,TOTAL,L43E60A_HVD,100.0,NEW_MODEL,신규모델,복합,change model (30min) Set up model ICT -->coating (30min) Ate running 1 floor ( 40min),1,,2130.0,1672.0,2130.0,1672.0,2000.0,1705.0
+2026-07-12,DAY,MI,MI 4,TOTAL,L43E60A_HVD,14.0,NO_PROBLEM,문제없음,복합,No problem,2,,2130.0,1672.0,2130.0,1672.0,2000.0,1705.0
+2026-07-12,DAY,MI,MI 4,A,L43E60A_HVD,100.0,NEW_MODEL,신규모델,복합,change model (30min) Set up model ICT -->coating (30min) Ate running 1 floor ( 40min),1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-12,DAY,MI,MI 4,D,L43E60A_HVD,14.0,NO_PROBLEM,문제없음,복합,No problem,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-12,DAY,MI,MI 5,TOTAL,L55F70NA_HHS,370.0,WAITING_SMT,SMT대기,단일,Change model 55F70NA (30min) Change model Coating --> ICT (30min) Change model ATE (30min) waiting semi SMT (55min) ICT error (10min).,1,,2020.0,1100.0,2020.0,1100.0,2020.0,940.0
+2026-07-12,DAY,MI,MI 5,A,L55F70NA_HHS,155.0,WAITING_SMT,SMT대기,복합,Change model 55F70NA (30min) Change model Coating --> ICT (30min) Change model ATE (30min) waiting semi SMT (55min) ICT error (10min).,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-12,DAY,MI,MI 5,B,L55F70NA_HHS,91.0,WAITING_SMT,SMT대기,복합,Change model 55F70NA (30min) Change model Coating --> ICT (30min) Change model ATE (30min) waiting semi SMT (55min) ICT error (10min).,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-12,DAY,MI,MI 5,C,L55F70NA_HHS,74.0,WAITING_SMT,SMT대기,복합,Change model 55F70NA (30min) Change model Coating --> ICT (30min) Change model ATE (30min) waiting semi SMT (55min) ICT error (10min).,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-12,DAY,MI,MI 5,D,L55F70NA_HHS,50.0,WAITING_SMT,SMT대기,복합,Ate error (41min) waiting semi SMT (50min),1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-12,DAY,MI,MI 6,TOTAL,L75E70NA_HVD,168.0,WAITING_SMT,SMT대기,단일,waiting semi SMT,1,,2020.0,1019.0,2020.0,1019.0,2162.0,1315.0
+2026-07-12,DAY,MI,MI 6,A,L75E70NA_HVD,55.0,WAITING_SMT,SMT대기,단일,waiting semi SMT,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-12,DAY,MI,MI 6,B,L75E70NA_HVD,35.0,WAITING_SMT,SMT대기,단일,waiting semi SMT,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-12,DAY,MI,MI 6,C,L75E70NA_HVD,78.0,WAITING_SMT,SMT대기,단일,waiting semi SMT,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-12,DAY,MI,MI 7,TOTAL,L65CA9N_FVD,497.0,CHANGE_MODEL,모델교체,단일,Change line production (35min) ICT error (35min) Wave solder error (3min),1,,1794.0,746.0,1794.0,746.0,2219.0,1138.0
+2026-07-12,DAY,MI,MI 7,A,L65CA9N_FVD,73.0,CHANGE_MODEL,모델교체,복합,Change line production (35min) ICT error (35min) Wave solder error (3min),1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-12,DAY,MI,MI 7,B,L65CA9N_FVD,56.0,CHANGE_MODEL,모델교체,복합,Change line production (35min) ICT error (35min) Wave solder error (3min),1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-12,DAY,MI,MI 7,C,L65CA9N_FVD,68.0,CHANGE_MODEL,모델교체,복합,Change line production (35min) ICT error (35min) Wave solder error (3min),1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-12,DAY,MI,MI 7,D,L65CA9N_FVD,120.0,CHANGE_MODEL,모델교체,복합,Change model 48CA9N-->65CA9n (30min) waiting jig durastone (have only 10jig). (26min),1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-12,DAY,MI,MI 7,E,L65CA9N_FVD,180.0,CHANGE_MODEL,모델교체,복합,Change line production (35min) ICT error (35min) Wave solder error (3min),1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-13,DAY,MI,MI 2,TOTAL,"32""/3IN1, JDM_ROSE-SF,",113.0,WAITING_SMT,SMT대기,복합,Waiting semi SMT (40min) Hipot error (5min) Change model 55S7 (20min),1,,2720.0,2742.0,2720.0,2742.0,720.0,704.0
+2026-07-13,DAY,MI,MI 2,TOTAL,"32""/3IN1, JDM_ROSE-SF,",65.0,CHANGE_MODEL,모델교체,복합,Change model 55HVD,2,,2720.0,2742.0,2720.0,2742.0,720.0,704.0
+2026-07-13,DAY,MI,MI 2,A,"32""/3IN1, JDM_ROSE-SF,",65.0,WAITING_SMT,SMT대기,복합,Waiting semi SMT (40min) Hipot error (5min) Change model 55S7 (20min),1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-13,DAY,MI,MI 2,B,"32""/3IN1, JDM_ROSE-SF,",15.0,WAITING_SMT,SMT대기,복합,Waiting semi SMT (40min) Hipot error (5min) Change model 55S7 (20min),1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-13,DAY,MI,MI 2,C,"32""/3IN1, JDM_ROSE-SF,",5.0,WAITING_SMT,SMT대기,복합,Waiting semi SMT (40min) Hipot error (5min) Change model 55S7 (20min),1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-13,DAY,MI,MI 2,D,L55S7_HVD,65.0,CHANGE_MODEL,모델교체,복합,Change model 55HVD,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-13,DAY,MI,MI 2,E,L55S7_HVD,28.0,WAITING_SMT,SMT대기,복합,Waiting semi SMT (40min) Hipot error (5min) Change model 55S7 (20min),1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-13,DAY,MI,MI 3,TOTAL,L65E70A_HVD,90.0,WAITING_SMT,SMT대기,단일,Waiting semi SMT,1,,2580.0,2608.0,2580.0,2608.0,2580.0,2710.0
+2026-07-13,DAY,MI,MI 3,A,L65E70A_HVD,30.0,WAITING_SMT,SMT대기,복합,Waiting semi SMT,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-13,DAY,MI,MI 3,B,L65E70A_HVD,30.0,WAITING_SMT,SMT대기,복합,Waiting semi SMT,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-13,DAY,MI,MI 3,C,L65E70A_HVD,30.0,WAITING_SMT,SMT대기,복합,Waiting semi SMT,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-13,DAY,MI,MI 4,TOTAL,L75S7_HVD,49.0,MATERIAL,자재부족,단일,Flux error (11min) Waiting box packing (20min),1,,2860.0,2864.0,2860.0,2864.0,2860.0,2911.0
+2026-07-13,DAY,MI,MI 4,A,L75S7_HVD,31.0,MATERIAL,자재부족,복합,Flux error (11min) Waiting box packing (20min),1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-13,DAY,MI,MI 4,B,L75S7_HVD,8.0,MATERIAL,자재부족,복합,Flux error (11min) Waiting box packing (20min),1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-13,DAY,MI,MI 4,E,L75S7_HVD,10.0,MATERIAL,자재부족,복합,Flux error (11min) Waiting box packing (20min),1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-13,DAY,MI,MI 5,TOTAL,L65E70A_HVD,223.0,WAITING_SMT,SMT대기,단일,Wave solder (10min) Waiting semi SMT (31min),1,,2025.0,1607.0,2025.0,1607.0,2025.0,1798.0
+2026-07-13,DAY,MI,MI 5,A,L65E70A_HVD,41.0,WAITING_SMT,SMT대기,복합,Wave solder (10min) Waiting semi SMT (31min),1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-13,DAY,MI,MI 5,B,L65E70A_HVD,63.0,WAITING_SMT,SMT대기,복합,Wave solder (10min) Waiting semi SMT (31min),1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-13,DAY,MI,MI 5,C,L65E70A_HVD,39.0,WAITING_SMT,SMT대기,복합,Wave solder (10min) Waiting semi SMT (31min),1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-13,DAY,MI,MI 5,D,L65E70A_HVD,35.0,WAITING_SMT,SMT대기,복합,Waiting semi SMT (19min) ICT error (19min0 Waiting HS from MM/Wip (25min),1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-13,DAY,MI,MI 5,E,L65E70A_HVD,45.0,WAITING_SMT,SMT대기,복합,Wave solder (10min) Waiting semi SMT (31min),1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-13,DAY,MI,MI 6,TOTAL,"65""/PD, P6519_HHS",25.0,FLUX,Flux불량,단일,Flux error,1,,2100.0,2100.0,2100.0,2100.0,2100.0,2100.0
+2026-07-13,DAY,MI,MI 6,A,"65""/PD, P6519_HHS",5.0,FLUX,Flux불량,복합,Flux error,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-13,DAY,MI,MI 6,B,"65""/PD, P6519_HHS",20.0,FLUX,Flux불량,복합,Flux error,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-13,DAY,MI,MI 7,TOTAL,L50E60A_HVD,272.0,WAITING_SMT,SMT대기,단일,waiting semi SMT (75min) ICT error (9min) Coating error (11min).,1,,1820.0,1602.0,1820.0,1602.0,1820.0,1721.0
+2026-07-13,DAY,MI,MI 7,A,L50E60A_HVD,95.0,WAITING_SMT,SMT대기,복합,waiting semi SMT (75min) ICT error (9min) Coating error (11min).,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-13,DAY,MI,MI 7,B,L50E60A_HVD,26.0,WAITING_SMT,SMT대기,복합,waiting semi SMT (75min) ICT error (9min) Coating error (11min).,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-13,DAY,MI,MI 7,C,L50E60A_HVD,100.0,WAITING_SMT,SMT대기,복합,waiting semi SMT (75min) ICT error (9min) Coating error (11min).,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-13,DAY,MI,MI 7,E,L50E60A_HVD,51.0,WAITING_SMT,SMT대기,복합,waiting semi SMT (75min) ICT error (9min) Coating error (11min).,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-13,DAY,MI,MI 8,TOTAL,L55CA9N_HVD,366.0,NEW_OP,신규OP교육,단일,Training new OP Flux error (16min) Coating error (25min),1,,800.0,806.0,800.0,806.0,800.0,388.0
+2026-07-13,DAY,MI,MI 8,A,L55CA9N_HVD,41.0,NEW_OP,신규OP교육,복합,Training new OP Flux error (16min) Coating error (25min),1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-13,DAY,MI,MI 8,B,L55CA9N_HVD,95.0,NEW_OP,신규OP교육,복합,Training new OP Flux error (16min) Coating error (25min),1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-13,DAY,MI,MI 8,C,L55CA9N_HVD,135.0,NEW_OP,신규OP교육,복합,Training new OP Flux error (16min) Coating error (25min),1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-13,DAY,MI,MI 8,D,L55CA9N_HVD,50.0,NEW_OP,신규OP교육,복합,Training new OP PE set up ICT (95min),1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-13,DAY,MI,MI 8,E,L55CA9N_HVD,45.0,NEW_OP,신규OP교육,복합,Training new OP Flux error (16min) Coating error (25min),1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-14,DAY,MI,MI 2,TOTAL,"32""/3IN1, JDM_ROSE-SF",363.0,CHANGE_MODEL,모델교체,복합,"Change model 55hvd --> 32""SKW (30min) ICT error (30min) AOI error (43min) Flux error (4min)",1,,2610.0,2589.0,2610.0,2589.0,410.0,0.0
+2026-07-14,DAY,MI,MI 2,TOTAL,"32""/3IN1, JDM_ROSE-SF",120.0,ICT_FT,ICT/FT/HiPOT불량,복합,"ICT running 1 station, ICT false error (70min) AOI error (65min)",2,,2610.0,2589.0,2610.0,2589.0,410.0,0.0
+2026-07-14,DAY,MI,MI 2,A,"32""/3IN1, JDM_ROSE-SF",107.0,CHANGE_MODEL,모델교체,복합,"Change model 55hvd --> 32""SKW (30min) ICT error (30min) AOI error (43min) Flux error (4min)",1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-14,DAY,MI,MI 2,B,"32""/3IN1, JDM_ROSE-SF",135.0,CHANGE_MODEL,모델교체,복합,"Change model 55hvd --> 32""SKW (30min) ICT error (30min) AOI error (43min) Flux error (4min)",1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-14,DAY,MI,MI 2,C,"32""/3IN1, JDM_ROSE-SF",110.0,CHANGE_MODEL,모델교체,복합,"Change model 55hvd --> 32""SKW (30min) ICT error (30min) AOI error (43min) Flux error (4min)",1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-14,DAY,MI,MI 2,D,"32""/3IN1, JDM_ROSE-SF",120.0,ICT_FT,ICT/FT/HiPOT불량,복합,"ICT running 1 station, ICT false error (70min) AOI error (65min)",1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-14,DAY,MI,MI 2,E,"32""/3IN1, JDM_ROSE-SF",11.0,CHANGE_MODEL,모델교체,복합,"Change model 55hvd --> 32""SKW (30min) ICT error (30min) AOI error (43min) Flux error (4min)",1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-14,DAY,MI,MI 3,TOTAL,L65S7N_HVD,186.0,WAITING_SMT,SMT대기,단일,waiting semi smt,1,,2750.0,2641.0,2750.0,2641.0,2750.0,2048.0
+2026-07-14,DAY,MI,MI 3,A,L65S7N_HVD,14.0,WAITING_SMT,SMT대기,복합,waiting semi smt,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-14,DAY,MI,MI 3,B,L65S7N_HVD,88.0,WAITING_SMT,SMT대기,복합,waiting semi smt,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-14,DAY,MI,MI 3,C,L65S7N_HVD,35.0,WAITING_SMT,SMT대기,복합,waiting semi smt,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-14,DAY,MI,MI 3,E,L65S7N_HVD,49.0,WAITING_SMT,SMT대기,복합,waiting semi smt,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-14,DAY,MI,MI 4,TOTAL,L75S7_HVD,224.0,WAITING_SMT,SMT대기,단일,Silicon error (15min) waiting Semi SMT (34min),1,,2880.0,2567.0,2880.0,2567.0,2880.0,2886.0
+2026-07-14,DAY,MI,MI 4,A,L75S7_HVD,59.0,WAITING_SMT,SMT대기,복합,Silicon error (15min) waiting Semi SMT (34min),1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-14,DAY,MI,MI 4,B,L75S7_HVD,78.0,WAITING_SMT,SMT대기,복합,Silicon error (15min) waiting Semi SMT (34min),1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-14,DAY,MI,MI 4,E,L75S7_HVD,87.0,WAITING_SMT,SMT대기,복합,Silicon error (15min) waiting Semi SMT (34min),1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-14,DAY,MI,MI 5,TOTAL,L65E70A_HVD,28.0,FLUX,Flux불량,단일,Flux error,1,,2100.0,2123.0,2100.0,2123.0,2100.0,2110.0
+2026-07-14,DAY,MI,MI 5,A,L65E70A_HVD,12.0,FLUX,Flux불량,복합,Flux error,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-14,DAY,MI,MI 5,E,L65E70A_HVD,16.0,FLUX,Flux불량,복합,Flux error,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-14,DAY,MI,MI 6,TOTAL,L55E70NA_HVD,11.0,SILCOAT,Silicon/Coating불량,복합,Cleaning coating nozzle,1,,1730.0,1298.0,1730.0,1298.0,1795.0,1173.0
+2026-07-14,DAY,MI,MI 6,TOTAL,L55E70NA_HVD,166.0,CHANGE_MODEL,모델교체,복합,Cleaning coating nozzle | Change model AOI --> coating (30min) Change model Wave solder (34min) Change model ATE (16min),2,,1730.0,1298.0,1730.0,1298.0,1795.0,1173.0
+2026-07-14,DAY,MI,MI 6,A,L55E70NA_HVD,11.0,SILCOAT,Silicon/Coating불량,복합,Cleaning coating nozzle,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-14,DAY,MI,MI 6,B,L55E70NA_HVD,80.0,SILCOAT,Silicon/Coating불량,복합,Cleaning coating nozzle,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-14,DAY,MI,MI 6,C,L55E70NA_HVD,31.0,SILCOAT,Silicon/Coating불량,복합,Cleaning coating nozzle,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-14,DAY,MI,MI 6,D,L55E70NA_HVD,40.0,CHANGE_MODEL,모델교체,복합,Change model AOI --> coating (30min) Change model Wave solder (34min) Change model ATE (16min),1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-14,DAY,MI,MI 6,E,L55E70NA_HVD,15.0,SILCOAT,Silicon/Coating불량,복합,Cleaning coating nozzle,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-14,DAY,MI,MI 7,TOTAL,L50E60A_HVD,578.0,ICT_FT,ICT/FT/HiPOT불량,단일,Clean code L65CA9N-FVD shipment ICT error (60min) Flux error (63min),1,,2100.0,1367.0,2100.0,1367.0,2100.0,322.0
+2026-07-14,DAY,MI,MI 7,A,L50E60A_HVD,123.0,ICT_FT,ICT/FT/HiPOT불량,복합,Clean code L65CA9N-FVD shipment ICT error (60min) Flux error (63min),1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-14,DAY,MI,MI 7,B,L50E60A_HVD,84.0,ICT_FT,ICT/FT/HiPOT불량,복합,Clean code L65CA9N-FVD shipment ICT error (60min) Flux error (63min),1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-14,DAY,MI,MI 7,C,L50E60A_HVD,139.0,ICT_FT,ICT/FT/HiPOT불량,복합,Clean code L65CA9N-FVD shipment ICT error (60min) Flux error (63min),1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-14,DAY,MI,MI 7,D,L50E60A_HVD,142.0,ICT_FT,ICT/FT/HiPOT불량,복합,FT error,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-14,DAY,MI,MI 7,E,L50E60A_HVD,90.0,ICT_FT,ICT/FT/HiPOT불량,복합,Clean code L65CA9N-FVD shipment ICT error (60min) Flux error (63min),1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-14,DAY,MI,MI 8,TOTAL,L55CA9N_HVD,406.0,NEW_OP,신규OP교육,단일,Coating error Training new OP,1,,500.0,491.0,500.0,491.0,500.0,444.0
+2026-07-14,DAY,MI,MI 8,A,L55CA9N_HVD,61.0,NEW_OP,신규OP교육,복합,Coating error Training new OP,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-14,DAY,MI,MI 8,B,L55CA9N_HVD,17.0,NEW_OP,신규OP교육,복합,Coating error Training new OP,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-14,DAY,MI,MI 8,C,L55CA9N_HVD,105.0,NEW_OP,신규OP교육,복합,Coating error Training new OP,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-14,DAY,MI,MI 8,D,L55CA9N_HVD,108.0,NEW_OP,신규OP교육,복합,Running Sample line Training new OP,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-14,DAY,MI,MI 8,E,L55CA9N_HVD,115.0,NEW_OP,신규OP교육,복합,Coating error Training new OP,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-15,DAY,MI,MI 2,TOTAL,"32""/3IN1, JDM_ROSE-SF",200.0,CHANGE_MODEL,모델교체,복합,"Change model 55S7 --> 32""skw (37min) từ AOI --> ICT change model 55S7 từ FT-->coating (37min) Change model 55S7 ATE (33min)",1,,2537.0,2293.0,2537.0,2293.0,791.0,97.0
+2026-07-15,DAY,MI,MI 2,TOTAL,"32""/3IN1, JDM_ROSE-SF",85.0,ETC,기타,복합,3in1,2,,2537.0,2293.0,2537.0,2293.0,791.0,97.0
+2026-07-15,DAY,MI,MI 2,A,"32""/3IN1, JDM_ROSE-SF",107.0,CHANGE_MODEL,모델교체,복합,"Change model 55S7 --> 32""skw (37min) từ AOI --> ICT change model 55S7 từ FT-->coating (37min) Change model 55S7 ATE (33min)",1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-15,DAY,MI,MI 2,C,"32""/3IN1, JDM_ROSE-SF",93.0,CHANGE_MODEL,모델교체,복합,"Change model 55S7 --> 32""skw (37min) từ AOI --> ICT change model 55S7 từ FT-->coating (37min) Change model 55S7 ATE (33min)",1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-15,DAY,MI,MI 2,D,"32""/3IN1, JDM_ROSE-SF",85.0,ETC,기타,복합,3in1,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-15,DAY,MI,MI 3,TOTAL,L65S8N_HVD,17.0,ICT_FT,ICT/FT/HiPOT불량,단일,No problem | FT error (13min) Flux error (4min),1,,2604.0,2668.0,2604.0,2668.0,2625.0,2672.0
+2026-07-15,DAY,MI,MI 3,B,L65S8N_HVD,17.0,NO_PROBLEM,문제없음,복합,No problem,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-15,DAY,MI,MI 4,TOTAL,L75S7A_HVD,139.0,WAITING_SMT,SMT대기,단일,Waiting semi SMT (55min) ICT error (4min),1,,2175.0,2102.0,2175.0,2102.0,2319.0,2113.0
+2026-07-15,DAY,MI,MI 4,A,L75S7A_HVD,59.0,WAITING_SMT,SMT대기,복합,Waiting semi SMT (55min) ICT error (4min),1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-15,DAY,MI,MI 4,B,L75S7A_HVD,55.0,WAITING_SMT,SMT대기,복합,Waiting semi SMT (55min) ICT error (4min),1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-15,DAY,MI,MI 4,C,L75S7A_HVD,21.0,WAITING_SMT,SMT대기,복합,Waiting semi SMT (55min) ICT error (4min),1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-15,DAY,MI,MI 4,D,L75S7A_HVD,4.0,WAITING_SMT,SMT대기,복합,Change model (29min) Waiting semi SMT (26min),1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-15,DAY,MI,MI 5,TOTAL,L65E70A_HVD,20.0,NO_PROBLEM,문제없음,단일,No problem | No problem,1,,2100.0,1962.0,2100.0,1962.0,2100.0,2123.0
+2026-07-15,DAY,MI,MI 5,C,L65E70A_HVD,20.0,NO_PROBLEM,문제없음,단일,No problem,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-15,DAY,MI,MI 8,TOTAL,L55CA9N_HVD,144.0,NEW_OP,신규OP교육,단일,Traning new OP Coating error,1,,900.0,900.0,900.0,900.0,900.0,937.0
+2026-07-15,DAY,MI,MI 8,A,L55CA9N_HVD,50.0,NEW_OP,신규OP교육,복합,Traning new OP Coating error,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-15,DAY,MI,MI 8,B,L55CA9N_HVD,69.0,NEW_OP,신규OP교육,복합,Traning new OP Coating error,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-15,DAY,MI,MI 8,C,L55CA9N_HVD,25.0,NEW_OP,신규OP교육,복합,Traning new OP Coating error,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-16,DAY,MI,MI 2,TOTAL,L55S7_HVD,9.0,ICT_FT,ICT/FT/HiPOT불량,단일,ICT error (5min) FT error (4min),1,,2860.0,2860.0,2860.0,2860.0,2860.0,3129.0
+2026-07-16,DAY,MI,MI 2,A,L55S7_HVD,9.0,ICT_FT,ICT/FT/HiPOT불량,복합,ICT error (5min) FT error (4min),1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-16,DAY,MI,MI 3,TOTAL,"65""/3IN1, U8000F,",90.0,CHANGE_MODEL,모델교체,단일,Change model (30min) Change model from ICT-Coating (30min) Ict error (15min),1,,2504.0,2504.0,2504.0,2504.0,2030.0,1941.0
+2026-07-16,DAY,MI,MI 3,A,"65""/3IN1, U8000F,",75.0,CHANGE_MODEL,모델교체,복합,Change model (30min) Change model from ICT-Coating (30min) Ict error (15min),1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-16,DAY,MI,MI 3,E,L65S7N_HVD,15.0,CHANGE_MODEL,모델교체,복합,Change model (30min) Change model from ICT-Coating (30min) Ict error (15min),1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-16,DAY,MI,MI 4,TOTAL,L55E70A_HVD,34.0,CHANGE_MODEL,모델교체,복합,Change model (33min) FT error (1min) Clean code shipment 75''FVD 3IN1,1,,1870.0,1870.0,1870.0,1870.0,1830.0,1319.0
+2026-07-16,DAY,MI,MI 4,TOTAL,L55E70A_HVD,217.0,NEW_MODEL,신규모델,복합,"Change model (33min) FT error (1min) Clean code shipment 75''FVD 3IN1 | Set up ICT, coating, FT",2,,1870.0,1870.0,1870.0,1870.0,1830.0,1319.0
+2026-07-16,DAY,MI,MI 4,A,L55E70A_HVD,34.0,CHANGE_MODEL,모델교체,복합,Change model (33min) FT error (1min) Clean code shipment 75''FVD 3IN1,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-16,DAY,MI,MI 4,B,L55E70A_HVD,33.0,CHANGE_MODEL,모델교체,복합,Change model (33min) FT error (1min) Clean code shipment 75''FVD 3IN1,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-16,DAY,MI,MI 4,C,L55E70A_HVD,4.0,CHANGE_MODEL,모델교체,복합,Change model (33min) FT error (1min) Clean code shipment 75''FVD 3IN1,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-16,DAY,MI,MI 4,E,L55E70A_HVD,180.0,CHANGE_MODEL,모델교체,복합,Change model (33min) FT error (1min) Clean code shipment 75''FVD 3IN1,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-16,DAY,MI,MI 5,TOTAL,L65S7A_HVD,25.0,ICT_FT,ICT/FT/HiPOT불량,복합,ICT error (13min) FT error (12min),1,,1946.0,1946.0,1946.0,1946.0,1946.0,1636.0
+2026-07-16,DAY,MI,MI 5,TOTAL,L65S7A_HVD,180.0,WAITING_SMT,SMT대기,복합,ICT error (13min) FT error (12min) | Stop waiting semi SMT,2,,1946.0,1946.0,1946.0,1946.0,1946.0,1636.0
+2026-07-16,DAY,MI,MI 5,A,L65S7A_HVD,25.0,ICT_FT,ICT/FT/HiPOT불량,복합,ICT error (13min) FT error (12min),1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-16,DAY,MI,MI 5,B,L65S7A_HVD,46.0,ICT_FT,ICT/FT/HiPOT불량,복합,ICT error (13min) FT error (12min),1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-16,DAY,MI,MI 5,C,L65S7A_HVD,45.0,ICT_FT,ICT/FT/HiPOT불량,복합,ICT error (13min) FT error (12min),1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-16,DAY,MI,MI 5,D,L65S7A_HVD,29.0,WAITING_SMT,SMT대기,복합,Stop waiting semi SMT,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-16,DAY,MI,MI 5,E,L65S7A_HVD,60.0,ICT_FT,ICT/FT/HiPOT불량,복합,ICT error (13min) FT error (12min),1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-16,DAY,MI,MI 6,TOTAL,L65FE8N_HHS,31.0,ETC,기타,복합,stop line because no start/ end SMT,1,,1900.0,1900.0,1900.0,1900.0,1900.0,1759.0
+2026-07-16,DAY,MI,MI 6,TOTAL,L65FE8N_HHS,51.0,FLUX,Flux불량,복합,stop line because no start/ end SMT | Flux error,2,,1900.0,1900.0,1900.0,1900.0,1900.0,1759.0
+2026-07-16,DAY,MI,MI 6,A,L65FE8N_HHS,31.0,ETC,기타,복합,stop line because no start/ end SMT,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-16,DAY,MI,MI 6,B,L65FE8N_HHS,9.0,ETC,기타,복합,stop line because no start/ end SMT,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-16,DAY,MI,MI 6,C,L65FE8N_HHS,10.0,ETC,기타,복합,stop line because no start/ end SMT,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-16,DAY,MI,MI 6,D,L65FE8N_HHS,12.0,FLUX,Flux불량,복합,Flux error,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-16,DAY,MI,MI 6,E,L65FE8N_HHS,20.0,ETC,기타,복합,stop line because no start/ end SMT,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-16,DAY,MI,MI 7,TOTAL,L83CA9N_HVD,277.0,WAITING_SMT,SMT대기,복합,Flux error (11min) Waiting semi SMt (25min),1,,1401.0,739.0,1401.0,739.0,1500.0,805.0
+2026-07-16,DAY,MI,MI 7,TOTAL,L83CA9N_HVD,86.0,CHANGE_MODEL,모델교체,복합,Change model ICT--> coating 55E60A-->83CA9N (30min). Change model ATE 55E60A--> 83CA9N (30min) ICT error (30min) Flux error (7min) ATE error (19min).,2,,1401.0,739.0,1401.0,739.0,1500.0,805.0
+2026-07-16,DAY,MI,MI 7,A,L83CA9N_HVD,36.0,WAITING_SMT,SMT대기,복합,Flux error (11min) Waiting semi SMt (25min),1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-16,DAY,MI,MI 7,B,L83CA9N_HVD,116.0,WAITING_SMT,SMT대기,복합,Flux error (11min) Waiting semi SMt (25min),1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-16,DAY,MI,MI 7,C,L83CA9N_HVD,125.0,WAITING_SMT,SMT대기,복합,Flux error (11min) Waiting semi SMt (25min),1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-16,DAY,MI,MI 7,D,L83CA9N_HVD,86.0,CHANGE_MODEL,모델교체,복합,Change model ICT--> coating 55E60A-->83CA9N (30min). Change model ATE 55E60A--> 83CA9N (30min) ICT error (30min) Flux error (7min) ATE error (19min).,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-16,DAY,MI,MI 8,TOTAL,L48CA9N_HVD,243.0,WAITING_SMT,SMT대기,복합,Set up ICT program (100min) Waiting semi SMT (11min) Training new OP,1,,1000.0,883.0,1000.0,883.0,1000.0,122.0
+2026-07-16,DAY,MI,MI 8,TOTAL,L48CA9N_HVD,105.0,MATERIAL,자재부족,복합,Training new op stop ICT - packing (105min),2,,1000.0,883.0,1000.0,883.0,1000.0,122.0
+2026-07-16,DAY,MI,MI 8,A,L48CA9N_HVD,111.0,WAITING_SMT,SMT대기,복합,Set up ICT program (100min) Waiting semi SMT (11min) Training new OP,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-16,DAY,MI,MI 8,B,L48CA9N_HVD,105.0,WAITING_SMT,SMT대기,복합,Set up ICT program (100min) Waiting semi SMT (11min) Training new OP,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-16,DAY,MI,MI 8,C,L48CA9N_HVD,27.0,WAITING_SMT,SMT대기,복합,Set up ICT program (100min) Waiting semi SMT (11min) Training new OP,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-16,DAY,MI,MI 8,D,L48CA9N_HVD,105.0,MATERIAL,자재부족,복합,Training new op stop ICT - packing (105min),1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-17,DAY,MI,MI 2,TOTAL,L55S7_HVD,123.0,CHANGE_MODEL,모델교체,복합,Change model (60min) Clean stock shipment 3in1,1,,2598.0,2598.0,2598.0,2598.0,2500.0,2106.0
+2026-07-17,DAY,MI,MI 2,TOTAL,L55S7_HVD,19.0,NO_PROBLEM,문제없음,복합,No problem Clean stock shipment 3in1,2,,2598.0,2598.0,2598.0,2598.0,2500.0,2106.0
+2026-07-17,DAY,MI,MI 2,A,L55S7_HVD,60.0,CHANGE_MODEL,모델교체,복합,Change model (60min) Clean stock shipment 3in1,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-17,DAY,MI,MI 2,C,L55S7_HVD,63.0,CHANGE_MODEL,모델교체,복합,Change model (60min) Clean stock shipment 3in1,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-17,DAY,MI,MI 2,D,L55S7_HVD,19.0,NO_PROBLEM,문제없음,복합,No problem Clean stock shipment 3in1,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-17,DAY,MI,MI 3,TOTAL,L65S7_HVD,7.0,FLUX,Flux불량,단일,Flux error Don't have stock,1,,2860.0,2868.0,2860.0,2868.0,2860.0,2856.0
+2026-07-17,DAY,MI,MI 3,A,L65S7_HVD,7.0,FLUX,Flux불량,복합,Flux error Don't have stock,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-17,DAY,MI,MI 4,TOTAL,L55E70A_HVD,13.0,AOI_SAOI,AOI/S-AOI불량,복합,AOI error,1,,2100.0,2100.0,2100.0,2100.0,2100.0,2320.0
+2026-07-17,DAY,MI,MI 4,TOTAL,L55E70A_HVD,16.0,ICT_FT,ICT/FT/HiPOT불량,복합,AOI error | ICT error,2,,2100.0,2100.0,2100.0,2100.0,2100.0,2320.0
+2026-07-17,DAY,MI,MI 4,A,L55E70A_HVD,13.0,AOI_SAOI,AOI/S-AOI불량,복합,AOI error,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-17,DAY,MI,MI 4,B,L55E70A_HVD,10.0,AOI_SAOI,AOI/S-AOI불량,복합,AOI error,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-17,DAY,MI,MI 4,C,L55E70A_HVD,6.0,AOI_SAOI,AOI/S-AOI불량,복합,AOI error,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-17,DAY,MI,MI 5,TOTAL,L65S7A_HVD,145.0,WAITING_SMT,SMT대기,단일,Ate error (45min) Waiting semi SMT (15min),1,,2860.0,2860.0,2860.0,2860.0,2860.0,2890.0
+2026-07-17,DAY,MI,MI 5,A,L65S7A_HVD,50.0,WAITING_SMT,SMT대기,복합,Ate error (45min) Waiting semi SMT (15min),1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-17,DAY,MI,MI 5,B,L65S7A_HVD,85.0,WAITING_SMT,SMT대기,복합,Ate error (45min) Waiting semi SMT (15min),1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-17,DAY,MI,MI 5,D,L65S7A_HVD,10.0,WAITING_SMT,SMT대기,복합,Waiting semi SMT (70min) Ate error (15min),1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-17,DAY,MI,MI 6,TOTAL,L75E70NA_HVD,180.0,SILCOAT,Silicon/Coating불량,단일,No problem | Coating error,1,,2087.0,1645.0,2087.0,1645.0,2168.0,1871.0
+2026-07-17,DAY,MI,MI 6,B,L75E70NA_HVD,7.0,NO_PROBLEM,문제없음,복합,No problem,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-17,DAY,MI,MI 6,C,L75E70NA_HVD,31.0,NO_PROBLEM,문제없음,복합,No problem,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-17,DAY,MI,MI 6,D,L75E70NA_HVD,56.0,SILCOAT,Silicon/Coating불량,복합,Coating error,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-17,DAY,MI,MI 6,E,L75E70NA_HVD,86.0,NO_PROBLEM,문제없음,복합,No problem,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-17,DAY,MI,MI 7,TOTAL,L50E60NA_HVD,8.0,ICT_FT,ICT/FT/HiPOT불량,복합,FT error (6min) Coating error (2min),1,,1818.0,1480.0,1818.0,1480.0,1735.0,1964.0
+2026-07-17,DAY,MI,MI 7,TOTAL,L50E60NA_HVD,230.0,CHANGE_MODEL,모델교체,복합,FT error (6min) Coating error (2min) | Ate test floor #2 (3min) Silicon error (3min) FT error (2min) Change model 85E70NA-->65E70NA (30min),2,,1818.0,1480.0,1818.0,1480.0,1735.0,1964.0
+2026-07-17,DAY,MI,MI 7,A,L50E60NA_HVD,8.0,ICT_FT,ICT/FT/HiPOT불량,복합,FT error (6min) Coating error (2min),1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-17,DAY,MI,MI 7,B,L50E60NA_HVD,38.0,ICT_FT,ICT/FT/HiPOT불량,복합,FT error (6min) Coating error (2min),1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-17,DAY,MI,MI 7,C,L50E60NA_HVD,134.0,ICT_FT,ICT/FT/HiPOT불량,복합,FT error (6min) Coating error (2min),1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-17,DAY,MI,MI 7,E,L65E70NA_HVD,58.0,ICT_FT,ICT/FT/HiPOT불량,복합,FT error (6min) Coating error (2min),1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-17,DAY,MI,MI 8,TOTAL,L48CA9N_HVD,299.0,NEW_OP,신규OP교육,복합,Training new OP ICT error (60min) Wave solde error (32min),1,,1000.0,995.0,1000.0,995.0,1000.0,438.0
+2026-07-17,DAY,MI,MI 8,TOTAL,L48CA9N_HVD,152.0,ATE,ATE불량,복합,Ate error (14min) Wave solder error (13min),2,,1000.0,995.0,1000.0,995.0,1000.0,438.0
+2026-07-17,DAY,MI,MI 8,A,L48CA9N_HVD,92.0,NEW_OP,신규OP교육,복합,Training new OP ICT error (60min) Wave solde error (32min),1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-17,DAY,MI,MI 8,B,L48CA9N_HVD,27.0,NEW_OP,신규OP교육,복합,Training new OP ICT error (60min) Wave solde error (32min),1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-17,DAY,MI,MI 8,C,L48CA9N_HVD,120.0,NEW_OP,신규OP교육,복합,Training new OP ICT error (60min) Wave solde error (32min),1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-17,DAY,MI,MI 8,D,L48CA9N_HVD,152.0,ATE,ATE불량,복합,Ate error (14min) Wave solder error (13min),1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-17,DAY,MI,MI 8,E,L48CA9N_HVD,60.0,NEW_OP,신규OP교육,복합,Training new OP ICT error (60min) Wave solde error (32min),1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-18,DAY,MI,MI 2,TOTAL,L55S7N_HVD,56.0,NO_PROBLEM,문제없음,단일,No problem | No problem,1,,2608.0,2650.0,2608.0,2650.0,2560.0,2765.0
+2026-07-18,DAY,MI,MI 2,C,L55S7N_HVD,6.0,NO_PROBLEM,문제없음,단일,No problem,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-18,DAY,MI,MI 2,D,L55S7N_HVD,50.0,NO_PROBLEM,문제없음,단일,No problem,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-18,DAY,MI,MI 3,TOTAL,L65S7N_HVD,40.0,CHANGE_MODEL,모델교체,단일,Change model,1,,2672.0,2672.0,2672.0,2672.0,2888.0,2846.0
+2026-07-18,DAY,MI,MI 3,A,L65S7N_HVD,30.0,CHANGE_MODEL,모델교체,복합,Change model,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-18,DAY,MI,MI 3,B,L65S7N_HVD,10.0,CHANGE_MODEL,모델교체,복합,Change model,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-18,DAY,MI,MI 4,TOTAL,L65S7A_HVD,69.0,CHANGE_MODEL,모델교체,복합,Change model 65S7A,1,,2730.0,2730.0,2730.0,2730.0,2730.0,2730.0
+2026-07-18,DAY,MI,MI 4,TOTAL,L65S7A_HVD,3.0,ATE,ATE불량,복합,Ate error (9min) Hipot error (20min) FT error (7min),2,,2730.0,2730.0,2730.0,2730.0,2730.0,2730.0
+2026-07-18,DAY,MI,MI 4,A,L65S7A_HVD,32.0,CHANGE_MODEL,모델교체,복합,Change model 65S7A,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-18,DAY,MI,MI 4,B,L65S7A_HVD,37.0,CHANGE_MODEL,모델교체,복합,Change model 65S7A,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-18,DAY,MI,MI 4,D,L65S7A_HVD,3.0,ATE,ATE불량,복합,Ate error (9min) Hipot error (20min) FT error (7min),1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-18,DAY,MI,MI 5,TOTAL,L65S7A_HVD,15.0,FLUX,Flux불량,단일,Flux error,1,,2860.0,2860.0,2860.0,2860.0,2860.0,2860.0
+2026-07-18,DAY,MI,MI 5,A,L65S7A_HVD,15.0,FLUX,Flux불량,복합,Flux error,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-18,DAY,MI,MI 6,TOTAL,L43E60A_HVD,187.0,SILCOAT,Silicon/Coating불량,단일,Cleaning coating,1,,1951.0,1474.0,1951.0,1474.0,1968.0,1366.0
+2026-07-18,DAY,MI,MI 6,A,L43E60A_HVD,17.0,SILCOAT,Silicon/Coating불량,복합,Cleaning coating,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-18,DAY,MI,MI 6,C,L43E60A_HVD,70.0,SILCOAT,Silicon/Coating불량,복합,Cleaning coating,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-18,DAY,MI,MI 6,E,L43E60A_HVD,100.0,SILCOAT,Silicon/Coating불량,복합,Cleaning coating,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-18,DAY,MI,MI 7,TOTAL,L55E70A_HVD,64.0,CHANGE_MODEL,모델교체,단일,Ate error (3min) Change model ICT--> Coating 65E70a-->55E70A. (30min). Change model in manual operation step (15min).,1,,2000.0,1922.0,2000.0,1922.0,2050.0,1806.0
+2026-07-18,DAY,MI,MI 7,B,L55E70A_HVD,48.0,CHANGE_MODEL,모델교체,단일,Ate error (3min) Change model ICT--> Coating 65E70a-->55E70A. (30min). Change model in manual operation step (15min).,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-18,DAY,MI,MI 7,C,L55E70A_HVD,16.0,CHANGE_MODEL,모델교체,단일,Ate error (3min) Change model ICT--> Coating 65E70a-->55E70A. (30min). Change model in manual operation step (15min).,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-18,DAY,MI,MI 8,TOTAL,L48CA9N_HVD,50.0,WAITING_SMT,SMT대기,단일,Training new OP No problem | waiting semi smt,1,,720.0,720.0,720.0,720.0,1000.0,1076.0
+2026-07-18,DAY,MI,MI 8,B,L48CA9N_HVD,10.0,NEW_OP,신규OP교육,복합,Training new OP No problem,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-18,DAY,MI,MI 8,C,L48CA9N_HVD,40.0,NEW_OP,신규OP교육,복합,Training new OP No problem,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-19,DAY,MI,MI 2,TOTAL,L55S7_HVD,23.0,ICT_FT,ICT/FT/HiPOT불량,단일,Hipot error,1,,2200.0,2200.0,2200.0,2200.0,2200.0,2200.0
+2026-07-19,DAY,MI,MI 2,A,L55S7_HVD,18.0,ICT_FT,ICT/FT/HiPOT불량,복합,Hipot error,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-19,DAY,MI,MI 2,B,L55S7_HVD,5.0,ICT_FT,ICT/FT/HiPOT불량,복합,Hipot error,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-19,DAY,MI,MI 6,TOTAL,L85E70NW_HVD,20.0,ICT_FT,ICT/FT/HiPOT불량,복합,FT error,1,,447.0,767.0,447.0,767.0,1098.0,1611.0
+2026-07-19,DAY,MI,MI 6,TOTAL,L85E70NW_HVD,78.0,CHANGE_MODEL,모델교체,복합,FT error | Change model 75E70NA tại Ate (15min) ICT error (63min),2,,447.0,767.0,447.0,767.0,1098.0,1611.0
+2026-07-19,DAY,MI,MI 6,A,L85E70NW_HVD,20.0,ICT_FT,ICT/FT/HiPOT불량,복합,FT error,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-19,DAY,MI,MI 6,B,L85E70NW_HVD,78.0,ICT_FT,ICT/FT/HiPOT불량,복합,FT error,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-19,DAY,MI,MI 7,TOTAL,L50E60A_HVD,142.0,CHANGE_MODEL,모델교체,단일,No problem | Change model 55E70A sang 55E60W (37min) Change model 55E70A sang 55E60W từ ict đến coating (50min),1,,1050.0,1275.0,1050.0,1275.0,1345.0,1086.0
+2026-07-19,DAY,MI,MI 7,B,L50E60A_HVD,87.0,NO_PROBLEM,문제없음,복합,No problem,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-19,DAY,MI,MI 7,C,L50E60A_HVD,55.0,NO_PROBLEM,문제없음,복합,No problem,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-20,DAY,MI,MI 3,TOTAL,L65S7_HVD,2.0,NG_BUFFER,NG Buffer불량,복합,NG buffer (2min),1,,2730.0,2730.0,2730.0,2730.0,2730.0,2849.0
+2026-07-20,DAY,MI,MI 3,TOTAL,L65S7_HVD,3.0,MOUTER,Mouter불량,복합,NG buffer (2min) | Ate kẹt board,2,,2730.0,2730.0,2730.0,2730.0,2730.0,2849.0
+2026-07-20,DAY,MI,MI 3,A,L65S7_HVD,2.0,NG_BUFFER,NG Buffer불량,복합,NG buffer (2min),1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-20,DAY,MI,MI 3,B,L65S7_HVD,3.0,NG_BUFFER,NG Buffer불량,복합,NG buffer (2min),1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-20,DAY,MI,MI 4,TOTAL,L65CA9N_HVD,26.0,NG_BUFFER,NG Buffer불량,단일,Hipot error (10min) wave solder error (10min) ICT Buffer NG (6min),1,,1520.0,1520.0,1520.0,1520.0,1520.0,1520.0
+2026-07-20,DAY,MI,MI 4,A,L65CA9N_HVD,26.0,NG_BUFFER,NG Buffer불량,복합,Hipot error (10min) wave solder error (10min) ICT Buffer NG (6min),1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-20,DAY,MI,MI 5,TOTAL,L55E70A_HVD,18.0,ICT_FT,ICT/FT/HiPOT불량,복합,Wave solder (5min) ICT error (6min) Flux error (7min),1,,2020.0,2020.0,2020.0,2020.0,2000.0,2070.0
+2026-07-20,DAY,MI,MI 5,TOTAL,L55E70A_HVD,11.0,ATE,ATE불량,복합,Wave solder (5min) ICT error (6min) Flux error (7min) | Ate error (5min) Hipot error (6min),2,,2020.0,2020.0,2020.0,2020.0,2000.0,2070.0
+2026-07-20,DAY,MI,MI 5,A,L55E70A_HVD,18.0,ICT_FT,ICT/FT/HiPOT불량,복합,Wave solder (5min) ICT error (6min) Flux error (7min),1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-20,DAY,MI,MI 5,B,L55E70A_HVD,11.0,ICT_FT,ICT/FT/HiPOT불량,복합,Wave solder (5min) ICT error (6min) Flux error (7min),1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-20,DAY,MI,MI 6,TOTAL,L65S8_HVD,79.0,ICT_FT,ICT/FT/HiPOT불량,복합,ICT error (51min) Flux error (11min) Coating error (17min),1,,2730.0,2730.0,2730.0,2730.0,2730.0,2810.0
+2026-07-20,DAY,MI,MI 6,TOTAL,L65S8_HVD,22.0,ATE,ATE불량,복합,ICT error (51min) Flux error (11min) Coating error (17min) | Ate running 1 floor,2,,2730.0,2730.0,2730.0,2730.0,2730.0,2810.0
+2026-07-20,DAY,MI,MI 6,A,L65S8_HVD,79.0,ICT_FT,ICT/FT/HiPOT불량,복합,ICT error (51min) Flux error (11min) Coating error (17min),1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-20,DAY,MI,MI 6,B,L65S8_HVD,22.0,ICT_FT,ICT/FT/HiPOT불량,복합,ICT error (51min) Flux error (11min) Coating error (17min),1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-20,DAY,MI,MI 7,TOTAL,L65E70A_HVD,97.0,ATE,ATE불량,단일,Ate error (9min),1,,2020.0,2020.0,2020.0,2020.0,2020.0,1800.0
+2026-07-20,DAY,MI,MI 7,A,L65E70A_HVD,9.0,ATE,ATE불량,복합,Ate error (9min),1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-20,DAY,MI,MI 7,B,L65E70A_HVD,65.0,ATE,ATE불량,복합,Ate error (9min),1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-20,DAY,MI,MI 7,C,L65E70A_HVD,23.0,ATE,ATE불량,복합,Ate error (9min),1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-20,DAY,MI,MI 8,TOTAL,L55CA9N_HVD,87.0,ICT_FT,ICT/FT/HiPOT불량,복합,Silicon errror (14min) Coating error (42min) ICT error (12min) Flux error (10min) wave solder error (9min),1,,1420.0,1250.0,1420.0,1250.0,1420.0,1010.0
+2026-07-20,DAY,MI,MI 8,TOTAL,L55CA9N_HVD,18.0,ATE,ATE불량,복합,Silicon errror (14min) Coating error (42min) ICT error (12min) Flux error (10min) wave solder error (9min) | Ate error (10min) wave solder error (8min),2,,1420.0,1250.0,1420.0,1250.0,1420.0,1010.0
+2026-07-20,DAY,MI,MI 8,A,L55CA9N_HVD,87.0,ICT_FT,ICT/FT/HiPOT불량,복합,Silicon errror (14min) Coating error (42min) ICT error (12min) Flux error (10min) wave solder error (9min),1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-20,DAY,MI,MI 8,B,L55CA9N_HVD,18.0,ICT_FT,ICT/FT/HiPOT불량,복합,Silicon errror (14min) Coating error (42min) ICT error (12min) Flux error (10min) wave solder error (9min),1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-21,DAY,MI,MI 2,TOTAL,L55S7_HVD,2.0,AOI_SAOI,AOI/S-AOI불량,단일,No problem | AOI error,1,,2860.0,2894.0,2860.0,2894.0,2860.0,2858.0
+2026-07-21,DAY,MI,MI 2,B,L55S7_HVD,2.0,NO_PROBLEM,문제없음,복합,No problem,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-21,DAY,MI,MI 4,TOTAL,L65CA9N_HVD,66.0,MATERIAL,자재부족,복합,Hipot error (50min) Scan packing error (8min),1,,1600.0,1599.0,1600.0,1599.0,1600.0,1600.0
+2026-07-21,DAY,MI,MI 4,TOTAL,L65CA9N_HVD,15.0,NO_PROBLEM,문제없음,복합,No problem,2,,1600.0,1599.0,1600.0,1599.0,1600.0,1600.0
+2026-07-21,DAY,MI,MI 4,A,L65CA9N_HVD,58.0,MATERIAL,자재부족,복합,Hipot error (50min) Scan packing error (8min),1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-21,DAY,MI,MI 4,C,L65CA9N_HVD,8.0,MATERIAL,자재부족,복합,Hipot error (50min) Scan packing error (8min),1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-21,DAY,MI,MI 4,D,L65CA9N_HVD,15.0,NO_PROBLEM,문제없음,복합,No problem,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-21,DAY,MI,MI 5,TOTAL,"70""/3IN1, U8000F, EU DS",332.0,WAITING_SMT,SMT대기,단일,"Change mode 75FVD (30min) Change model ICT, ATE, Coating (60min) Waiting semi SMT (15min) ICT error (23min)",1,,1734.0,1591.0,1734.0,1591.0,965.0,440.0
+2026-07-21,DAY,MI,MI 5,A,"70""/3IN1, U8000F, EU DS",128.0,WAITING_SMT,SMT대기,복합,"Change mode 75FVD (30min) Change model ICT, ATE, Coating (60min) Waiting semi SMT (15min) ICT error (23min)",1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-21,DAY,MI,MI 5,B,"70""/3IN1, U8000F, EU DS",104.0,WAITING_SMT,SMT대기,복합,"Change mode 75FVD (30min) Change model ICT, ATE, Coating (60min) Waiting semi SMT (15min) ICT error (23min)",1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-21,DAY,MI,MI 5,D,"70""/3IN1, U8000F, EU DS
+65""/3IN1, U8000F,",55.0,WAITING_SMT,SMT대기,복합,3in1 ICT error (33min) Waiting semi smt (71min),1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-21,DAY,MI,MI 5,E,"70""/3IN1, U8000F, EU DS
+65""/3IN1, U8000F,",45.0,WAITING_SMT,SMT대기,복합,"Change mode 75FVD (30min) Change model ICT, ATE, Coating (60min) Waiting semi SMT (15min) ICT error (23min)",1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-21,DAY,MI,MI 7,TOTAL,L65E70A_HVD,205.0,ICT_FT,ICT/FT/HiPOT불량,복합,Hipot error,1,,1708.0,1603.0,1708.0,1603.0,1728.0,1341.0
+2026-07-21,DAY,MI,MI 7,TOTAL,L65E70A_HVD,39.0,NO_PROBLEM,문제없음,복합,No problem,2,,1708.0,1603.0,1708.0,1603.0,1728.0,1341.0
+2026-07-21,DAY,MI,MI 7,A,L65E70A_HVD,6.0,ICT_FT,ICT/FT/HiPOT불량,복합,Hipot error,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-21,DAY,MI,MI 7,C,L65E70A_HVD,158.0,ICT_FT,ICT/FT/HiPOT불량,복합,Hipot error,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-21,DAY,MI,MI 7,D,L65E70A_HVD,39.0,NO_PROBLEM,문제없음,복합,No problem,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-21,DAY,MI,MI 7,E,L65E70A_HVD,41.0,ICT_FT,ICT/FT/HiPOT불량,복합,Hipot error,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-21,DAY,MI,MI 8,TOTAL,L48CA9N_HVD,162.0,ATE,ATE불량,단일,Ate error (25min) Hipot error (18min),1,,1430.0,1399.0,1430.0,1399.0,1430.0,1323.0
+2026-07-21,DAY,MI,MI 8,A,L48CA9N_HVD,43.0,ATE,ATE불량,복합,Ate error (25min) Hipot error (18min),1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-21,DAY,MI,MI 8,B,L48CA9N_HVD,35.0,ATE,ATE불량,복합,Ate error (25min) Hipot error (18min),1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-21,DAY,MI,MI 8,C,L48CA9N_HVD,14.0,ATE,ATE불량,복합,Ate error (25min) Hipot error (18min),1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-21,DAY,MI,MI 8,D,L48CA9N_HVD,29.0,ATE,ATE불량,복합,Ate error (22min) MI conveyor error (13min),1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-21,DAY,MI,MI 8,E,L48CA9N_HVD,41.0,ATE,ATE불량,복합,Ate error (25min) Hipot error (18min),1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-01,NIGHT,MI,MI 2,TOTAL,"55""/3in1, M70H, HKC",60.0,WAITING_SMT,SMT대기,단일,No problem | Wwaiting semi SMT,1,,2664.0,2664.0,2664.0,2664.0,0.0,300.0
+2026-07-01,NIGHT,MI,MI 2,G,"55""/3in1, M70H, HKC",30.0,NO_PROBLEM,문제없음,복합,No problem,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-01,NIGHT,MI,MI 2,H,"55""/3in1, M70H, HKC",30.0,NO_PROBLEM,문제없음,복합,No problem,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-01,NIGHT,MI,MI 3,TOTAL,L75S7N_HVD,101.0,ICT_FT,ICT/FT/HiPOT불량,단일,FT error (20min) Sorting AI (11min),1,,2539.0,2539.0,2539.0,2539.0,2539.0,2462.0
+2026-07-01,NIGHT,MI,MI 3,F,L75S7N_HVD,31.0,ICT_FT,ICT/FT/HiPOT불량,복합,FT error (20min) Sorting AI (11min),1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-01,NIGHT,MI,MI 3,H,L75S7N_HVD,70.0,ICT_FT,ICT/FT/HiPOT불량,복합,FT error (20min) Sorting AI (11min),1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-01,NIGHT,MI,MI 6,TOTAL,L75E70NA_HVD,35.0,CHANGE_MODEL,모델교체,단일,Change model (30min) Hipot error (5min),1,,1660.0,1660.0,1660.0,1660.0,1660.0,1838.0
+2026-07-01,NIGHT,MI,MI 6,F,L75E70NA_HVD,35.0,CHANGE_MODEL,모델교체,복합,Change model (30min) Hipot error (5min),1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-01,NIGHT,MI,MI 7,TOTAL,L65E70A_HVD,6.0,ATE,ATE불량,복합,ATE error (6min),1,,1600.0,1660.0,1600.0,1660.0,1600.0,1836.0
+2026-07-01,NIGHT,MI,MI 7,TOTAL,L65E70A_HVD,19.0,NO_PROBLEM,문제없음,복합,No problem,2,,1600.0,1660.0,1600.0,1660.0,1600.0,1836.0
+2026-07-01,NIGHT,MI,MI 7,F,L65E70A_HVD,6.0,ATE,ATE불량,복합,ATE error (6min),1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-01,NIGHT,MI,MI 7,I,L65E70A_HVD,19.0,NO_PROBLEM,문제없음,복합,No problem,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-02,NIGHT,MI,MI 2,TOTAL,L55S7_HVD,15.0,CHANGE_MODEL,모델교체,단일,Change model (15min),1,,2700.0,2700.0,2700.0,2700.0,2700.0,2709.0
+2026-07-02,NIGHT,MI,MI 2,F,L55S7_HVD,15.0,CHANGE_MODEL,모델교체,복합,Change model (15min),1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-02,NIGHT,MI,MI 4,TOTAL,L65CA9N_HVD,128.0,WAITING_SMT,SMT대기,단일,Hipot error (23min) Waiting semi SMT (10min),1,,1480.0,1150.0,1480.0,1150.0,1480.0,1121.0
+2026-07-02,NIGHT,MI,MI 4,F,L65CA9N_HVD,33.0,WAITING_SMT,SMT대기,복합,Hipot error (23min) Waiting semi SMT (10min),1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-02,NIGHT,MI,MI 4,G,L65CA9N_HVD,64.0,WAITING_SMT,SMT대기,복합,Hipot error (23min) Waiting semi SMT (10min),1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-02,NIGHT,MI,MI 4,H,L65CA9N_HVD,15.0,WAITING_SMT,SMT대기,복합,Hipot error (23min) Waiting semi SMT (10min),1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-02,NIGHT,MI,MI 4,I,L65CA9N_HVD,16.0,WAITING_SMT,SMT대기,복합,Waiting semi SMT (64min),1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-02,NIGHT,MI,MI 5,TOTAL,L85E70NA_HVD,210.0,WAITING_SMT,SMT대기,단일,Waiting semi SMT (65min),1,,1520.0,1408.0,1520.0,1408.0,1524.0,1367.0
+2026-07-02,NIGHT,MI,MI 5,F,L85E70NA_HVD,65.0,WAITING_SMT,SMT대기,복합,Waiting semi SMT (65min),1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-02,NIGHT,MI,MI 5,G,L85E70NA_HVD,99.0,WAITING_SMT,SMT대기,복합,Waiting semi SMT (65min),1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-02,NIGHT,MI,MI 5,H,L85E70NA_HVD,34.0,WAITING_SMT,SMT대기,복합,Waiting semi SMT (65min),1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-02,NIGHT,MI,MI 5,J,L85E70NA_HVD,12.0,WAITING_SMT,SMT대기,복합,Waiting semi SMT (65min),1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-02,NIGHT,MI,MI 6,TOTAL,L75E70NA_HVD,40.0,NO_PROBLEM,문제없음,단일,No problem | No problem,1,,1340.0,1340.0,1340.0,1340.0,1340.0,1343.0
+2026-07-02,NIGHT,MI,MI 6,J,L75E70NA_HVD,40.0,NO_PROBLEM,문제없음,단일,No problem,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-02,NIGHT,MI,MI 7,TOTAL,L65E70W_HVD,371.0,ATE,ATE불량,단일,Sample ICT~ATE programme ICT~ATE (20:00~,1,,1676.0,930.0,1676.0,930.0,1675.0,700.0
+2026-07-02,NIGHT,MI,MI 7,F,L65E70W_HVD,120.0,ATE,ATE불량,단일,Sample ICT~ATE programme ICT~ATE (20:00~,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-02,NIGHT,MI,MI 7,G,L65E70W_HVD,110.0,ATE,ATE불량,단일,Sample ICT~ATE programme ICT~ATE (20:00~,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-02,NIGHT,MI,MI 7,H,L65E70W_HVD,105.0,ATE,ATE불량,단일,Sample ICT~ATE programme ICT~ATE (20:00~,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-02,NIGHT,MI,MI 7,I,L65E70W_HVD,36.0,ATE,ATE불량,단일,Sample ICT~ATE programme ICT~ATE (20:00~,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-03,NIGHT,MI,MI 2,TOTAL,L55S7_HVD,6.0,SILCOAT,Silicon/Coating불량,단일,Coating error (6min),1,,2700.0,2700.0,2700.0,2700.0,2700.0,2738.0
+2026-07-03,NIGHT,MI,MI 2,F,L55S7_HVD,6.0,SILCOAT,Silicon/Coating불량,복합,Coating error (6min),1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-03,NIGHT,MI,MI 4,TOTAL,L65CA9N_HVD,30.0,CHANGE_MODEL,모델교체,단일,Change model (30min),1,,1748.0,1748.0,1748.0,1748.0,1767.0,1790.0
+2026-07-03,NIGHT,MI,MI 4,F,L65CA9N_HVD,30.0,CHANGE_MODEL,모델교체,복합,Change model (30min),1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-03,NIGHT,MI,MI 5,TOTAL,L65S7A_HVD,60.0,ATE,ATE불량,단일,ATE test shipment (47min) Silicon error (13min),1,,1260.0,1260.0,1260.0,1260.0,1260.0,1392.0
+2026-07-03,NIGHT,MI,MI 5,F,L65S7A_HVD,60.0,ATE,ATE불량,복합,ATE test shipment (47min) Silicon error (13min),1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-03,NIGHT,MI,MI 6,TOTAL,L75E70NA_HVD,197.0,WAITING_SMT,SMT대기,단일,No problem | Waiting semi SMT (75min),1,,1430.0,848.0,1430.0,848.0,1430.0,1060.0
+2026-07-03,NIGHT,MI,MI 6,G,L75E70NA_HVD,75.0,NO_PROBLEM,문제없음,복합,No problem,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-03,NIGHT,MI,MI 6,H,L75E70NA_HVD,60.0,NO_PROBLEM,문제없음,복합,No problem,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-03,NIGHT,MI,MI 6,I,L75E70NA_HVD,62.0,WAITING_SMT,SMT대기,복합,Waiting semi SMT (75min),1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-03,NIGHT,MI,MI 7,TOTAL,L55E70A_HVD,30.0,CHANGE_MODEL,모델교체,복합,Change model (30min),1,,1380.0,1120.0,1380.0,1120.0,1380.0,1261.0
+2026-07-03,NIGHT,MI,MI 7,TOTAL,L55E70A_HVD,44.0,MATERIAL,자재부족,복합,Change model (30min) | Waiting materials (29min) Flux solder (15min),2,,1380.0,1120.0,1380.0,1120.0,1380.0,1261.0
+2026-07-03,NIGHT,MI,MI 7,F,L55E70A_HVD,30.0,CHANGE_MODEL,모델교체,복합,Change model (30min),1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-03,NIGHT,MI,MI 7,G,L55E70A_HVD,44.0,CHANGE_MODEL,모델교체,복합,Change model (30min),1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-04,NIGHT,MI,MI 2,TOTAL,L55S7_HVD,13.0,WAVE,Wave Solder불량,단일,Wave solder error (13min),1,,2700.0,2340.0,2700.0,2340.0,2700.0,2500.0
+2026-07-04,NIGHT,MI,MI 2,F,L55S7_HVD,13.0,WAVE,Wave Solder불량,복합,Wave solder error (13min),1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-04,NIGHT,MI,MI 4,TOTAL,L65S7A_HVD,280.0,WAITING_SMT,SMT대기,단일,Waiting semi SMT (120min),1,,2680.0,1287.0,2680.0,1287.0,2744.0,1195.0
+2026-07-04,NIGHT,MI,MI 4,F,L65S7A_HVD,120.0,WAITING_SMT,SMT대기,복합,Waiting semi SMT (120min),1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-04,NIGHT,MI,MI 4,G,L65S7A_HVD,110.0,WAITING_SMT,SMT대기,복합,Waiting semi SMT (120min),1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-04,NIGHT,MI,MI 4,H,L65S7A_HVD,50.0,WAITING_SMT,SMT대기,복합,Waiting semi SMT (120min),1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-04,NIGHT,MI,MI 5,TOTAL,L65S7A_HVD,58.0,WAITING_SMT,SMT대기,단일,Waiting semi SMT (33min),1,,2622.0,2765.0,2622.0,2765.0,2585.0,2495.0
+2026-07-04,NIGHT,MI,MI 5,F,L65S7A_HVD,33.0,WAITING_SMT,SMT대기,복합,Waiting semi SMT (33min),1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-04,NIGHT,MI,MI 5,J,L65S7A_HVD,25.0,WAITING_SMT,SMT대기,복합,Waiting semi SMT (33min),1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-04,NIGHT,MI,MI 6,TOTAL,L55F70NA,70.0,MATERIAL,자재부족,단일,change model (40min) Waiting box packing (30min),1,,1550.0,1550.0,1550.0,1550.0,1550.0,1566.0
+2026-07-04,NIGHT,MI,MI 6,F,L55F70NA,70.0,MATERIAL,자재부족,복합,change model (40min) Waiting box packing (30min),1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-04,NIGHT,MI,MI 7,TOTAL,L83CA9N_FHS,287.0,ATE,ATE불량,복합,Coaating error (20min) ATE error (7min) ATE running 1 floor from (30min),1,,1042.0,801.0,1042.0,801.0,1235.0,503.0
+2026-07-04,NIGHT,MI,MI 7,TOTAL,L83CA9N_FHS,110.0,NO_PROBLEM,문제없음,복합,No problem,2,,1042.0,801.0,1042.0,801.0,1235.0,503.0
+2026-07-04,NIGHT,MI,MI 7,F,L83CA9N_FHS,57.0,ATE,ATE불량,복합,Coaating error (20min) ATE error (7min) ATE running 1 floor from (30min),1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-04,NIGHT,MI,MI 7,H,L83CA9N_FHS,80.0,ATE,ATE불량,복합,Coaating error (20min) ATE error (7min) ATE running 1 floor from (30min),1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-04,NIGHT,MI,MI 7,I,L83CA9N_FHS,110.0,NO_PROBLEM,문제없음,복합,No problem,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-04,NIGHT,MI,MI 7,J,L83CA9N_FHS,150.0,ATE,ATE불량,복합,Coaating error (20min) ATE error (7min) ATE running 1 floor from (30min),1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-06,NIGHT,MI,MI 2,TOTAL,L55S7_HVD,75.0,CHANGE_MODEL,모델교체,단일,"Clean stock 32""/3IN1, JDM ICT~ATE Change model (34min) Coating error (14min)",1,,2560.0,2560.0,2560.0,2560.0,2560.0,2330.0
+2026-07-06,NIGHT,MI,MI 2,F,L55S7_HVD,34.0,CHANGE_MODEL,모델교체,복합,"Clean stock 32""/3IN1, JDM ICT~ATE Change model (34min) Coating error (14min)",1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-06,NIGHT,MI,MI 2,G,L55S7_HVD,41.0,CHANGE_MODEL,모델교체,복합,"Clean stock 32""/3IN1, JDM ICT~ATE Change model (34min) Coating error (14min)",1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-06,NIGHT,MI,MI 4,TOTAL,L65CA9N_HVD,11.0,ICT_FT,ICT/FT/HiPOT불량,단일,No problem | FT error (11min),1,,1400.0,1400.0,1400.0,1400.0,1400.0,1402.0
+2026-07-06,NIGHT,MI,MI 4,G,L65CA9N_HVD,11.0,NO_PROBLEM,문제없음,복합,No problem,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-06,NIGHT,MI,MI 5,TOTAL,L65S7A_HVD,53.0,NO_PROBLEM,문제없음,단일,No problem | No problem,1,,2615.0,2607.0,2615.0,2607.0,2615.0,2575.0
+2026-07-06,NIGHT,MI,MI 5,J,L65S7A_HVD,53.0,NO_PROBLEM,문제없음,단일,No problem,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-06,NIGHT,MI,MI 6,TOTAL,L65S8N_HVD,257.0,WAITING_SMT,SMT대기,단일,Waiting semi SMT (100min) FT error (20min),1,,2300.0,1800.0,2300.0,1800.0,2300.0,1478.0
+2026-07-06,NIGHT,MI,MI 6,F,L65S8N_HVD,120.0,WAITING_SMT,SMT대기,복합,Waiting semi SMT (100min) FT error (20min),1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-06,NIGHT,MI,MI 6,G,L65S8N_HVD,45.0,WAITING_SMT,SMT대기,복합,Waiting semi SMT (100min) FT error (20min),1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-06,NIGHT,MI,MI 6,H,L65S8N_HVD,15.0,WAITING_SMT,SMT대기,복합,Waiting semi SMT (100min) FT error (20min),1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-06,NIGHT,MI,MI 6,I,L65S8N_HVD,60.0,WAITING_SMT,SMT대기,복합,Waiting semi SMT (45min),1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-06,NIGHT,MI,MI 6,J,L65S8N_HVD,17.0,WAITING_SMT,SMT대기,복합,Waiting semi SMT (100min) FT error (20min),1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-07,NIGHT,MI,MI 2,TOTAL,L55S7_HVD,15.0,ATE,ATE불량,단일,"Clean stock 32""/3IN1, JDM ICT~ATE 20:00~22:00 | No problem",1,,2550.0,2550.0,2550.0,2550.0,2550.0,2521.0
+2026-07-07,NIGHT,MI,MI 2,H,L55S7_HVD,15.0,ATE,ATE불량,복합,"Clean stock 32""/3IN1, JDM ICT~ATE 20:00~22:00",1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-07,NIGHT,MI,MI 7,TOTAL,L55CA9N_HVD,58.0,ATE,ATE불량,단일,ICT~FT Loss of power source (20min) FT error (11min) ATE error (7min),1,,1430.0,1430.0,1430.0,1430.0,1430.0,1473.0
+2026-07-07,NIGHT,MI,MI 7,F,L55CA9N_HVD,38.0,ATE,ATE불량,복합,ICT~FT Loss of power source (20min) FT error (11min) ATE error (7min),1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-07,NIGHT,MI,MI 7,H,L55CA9N_HVD,20.0,ATE,ATE불량,복합,ICT~FT Loss of power source (20min) FT error (11min) ATE error (7min),1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-08,NIGHT,MI,MI 4,TOTAL,L65CA9N_HVD,28.0,NO_PROBLEM,문제없음,단일,No problem,1,,1480.0,1480.0,1480.0,1480.0,1480.0,1507.0
+2026-07-08,NIGHT,MI,MI 4,I,L65CA9N_HVD,28.0,NO_PROBLEM,문제없음,단일,No problem,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-08,NIGHT,MI,MI 7,TOTAL,L55CA9N_HVD,215.0,WAITING_SMT,SMT대기,단일,Waiting semi SMT (32min),1,,1290.0,1100.0,1290.0,1100.0,1290.0,1785.0
+2026-07-08,NIGHT,MI,MI 7,F,L55CA9N_HVD,32.0,WAITING_SMT,SMT대기,복합,Waiting semi SMT (32min),1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-08,NIGHT,MI,MI 7,G,L55CA9N_HVD,76.0,WAITING_SMT,SMT대기,복합,Waiting semi SMT (32min),1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-08,NIGHT,MI,MI 7,H,L55CA9N_HVD,34.0,WAITING_SMT,SMT대기,복합,Waiting semi SMT (32min),1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-08,NIGHT,MI,MI 7,I,L55CA9N_HVD,43.0,WAITING_SMT,SMT대기,복합,Waiting semi SMT (76min),1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-08,NIGHT,MI,MI 7,J,L55CA9N_HVD,30.0,WAITING_SMT,SMT대기,복합,Waiting semi SMT (32min),1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-09,NIGHT,MI,MI 2,TOTAL,L55S7_HVD,48.0,SILCOAT,Silicon/Coating불량,단일,No problem | Coating error (48min),1,,2670.0,2670.0,2670.0,2670.0,2709.0,2709.0
+2026-07-09,NIGHT,MI,MI 2,G,L55S7_HVD,48.0,NO_PROBLEM,문제없음,복합,No problem,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-09,NIGHT,MI,MI 3,TOTAL,L75S7A_HVD,51.0,ETC,기타,단일,"Pin hole, no solder Arising continuously | Pin hole, no solder Arising continuously",1,,2700.0,2700.0,2700.0,2700.0,2700.0,2700.0
+2026-07-09,NIGHT,MI,MI 3,G,L75S7A_HVD,20.0,ETC,기타,단일,"Pin hole, no solder Arising continuously",1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-09,NIGHT,MI,MI 3,I,L75S7A_HVD,31.0,ETC,기타,단일,"Pin hole, no solder Arising continuously",1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-09,NIGHT,MI,MI 6,TOTAL,L75E70NA_HVD,35.0,MATERIAL,자재부족,단일,Waiting box packing (35min),1,,1680.0,1680.0,1680.0,1680.0,1680.0,1636.0
+2026-07-09,NIGHT,MI,MI 6,F,L75E70NA_HVD,35.0,MATERIAL,자재부족,복합,Waiting box packing (35min),1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-09,NIGHT,MI,MI 7,TOTAL,L55CA9N_HVD,216.0,WAITING_SMT,SMT대기,단일,No problem | Waiting semi SMT (69min),1,,1332.0,1150.0,1332.0,1150.0,1332.0,1888.0
+2026-07-09,NIGHT,MI,MI 7,G,L55CA9N_HVD,69.0,NO_PROBLEM,문제없음,복합,No problem,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-09,NIGHT,MI,MI 7,H,L55CA9N_HVD,15.0,NO_PROBLEM,문제없음,복합,No problem,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-09,NIGHT,MI,MI 7,I,L55CA9N_HVD,72.0,WAITING_SMT,SMT대기,복합,Waiting semi SMT (69min),1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-09,NIGHT,MI,MI 7,J,L55CA9N_HVD,60.0,NO_PROBLEM,문제없음,복합,No problem,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-11,NIGHT,MI,MI 2,TOTAL,L55S7W_HVD,35.0,MATERIAL,자재부족,단일,"FT error, scan machine packing error",1,,2700.0,2180.0,2700.0,2180.0,2731.0,1928.0
+2026-07-11,NIGHT,MI,MI 2,F,L55S7W_HVD,35.0,MATERIAL,자재부족,복합,"FT error, scan machine packing error",1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-11,NIGHT,MI,MI 3,TOTAL,L75S7_HVD,30.0,WAVE,Wave Solder불량,단일,"wave solder error, nozzle coating error",1,,2700.0,2040.0,2700.0,2040.0,2700.0,2097.0
+2026-07-11,NIGHT,MI,MI 3,F,L75S7_HVD,15.0,WAVE,Wave Solder불량,복합,"wave solder error, nozzle coating error",1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-11,NIGHT,MI,MI 3,H,L75S7_HVD,15.0,WAVE,Wave Solder불량,복합,"wave solder error, nozzle coating error",1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-11,NIGHT,MI,MI 4,TOTAL,L65E70NA_HVD,141.0,WAITING_SMT,SMT대기,단일,"waiting semi SMT , change model",1,,1900.0,1202.0,1900.0,1202.0,1900.0,1112.0
+2026-07-11,NIGHT,MI,MI 4,F,L65E70NA_HVD,92.0,WAITING_SMT,SMT대기,복합,"waiting semi SMT , change model",1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-11,NIGHT,MI,MI 4,G,L65E70NA_HVD,25.0,WAITING_SMT,SMT대기,복합,"waiting semi SMT , change model",1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-11,NIGHT,MI,MI 4,H,L65E70NA_HVD,24.0,WAITING_SMT,SMT대기,복합,"waiting semi SMT , change model",1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-11,NIGHT,MI,MI 5,TOTAL,L55E70NA_HVD,47.0,WAVE,Wave Solder불량,단일,wave solder error,1,,2000.0,1460.0,2000.0,1460.0,2000.0,1387.0
+2026-07-11,NIGHT,MI,MI 5,F,L55E70NA_HVD,23.0,WAVE,Wave Solder불량,복합,wave solder error,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-11,NIGHT,MI,MI 5,G,L55E70NA_HVD,20.0,WAVE,Wave Solder불량,복합,wave solder error,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-11,NIGHT,MI,MI 5,I,L55E70NA_HVD,4.0,WAVE,Wave Solder불량,복합,"flux,wave solder error",1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-11,NIGHT,MI,MI 6,TOTAL,L75E70NA_HVD,8.0,WAVE,Wave Solder불량,복합,Wave solder error,1,,1700.0,1289.0,1700.0,1289.0,1700.0,1341.0
+2026-07-11,NIGHT,MI,MI 6,TOTAL,L75E70NA_HVD,38.0,ICT_FT,ICT/FT/HiPOT불량,복합,"Wave solder error | FT error,wave solder error",2,,1700.0,1289.0,1700.0,1289.0,1700.0,1341.0
+2026-07-11,NIGHT,MI,MI 6,F,L75E70NA_HVD,8.0,WAVE,Wave Solder불량,복합,Wave solder error,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-11,NIGHT,MI,MI 6,G,L75E70NA_HVD,24.0,WAVE,Wave Solder불량,복합,Wave solder error,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-11,NIGHT,MI,MI 6,I,L75E70NA_HVD,14.0,ICT_FT,ICT/FT/HiPOT불량,복합,"FT error,wave solder error",1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-11,NIGHT,MI,MI 7,TOTAL,L48CA9N_HVD,335.0,CHANGE_MODEL,모델교체,단일,"change model từ ICT-ATE (105min), wave solder error(41min)",1,,1833.0,1005.0,1833.0,1005.0,1833.0,575.0
+2026-07-11,NIGHT,MI,MI 7,F,L48CA9N_HVD,146.0,CHANGE_MODEL,모델교체,복합,"change model từ ICT-ATE (105min), wave solder error(41min)",1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-11,NIGHT,MI,MI 7,G,L48CA9N_HVD,95.0,CHANGE_MODEL,모델교체,복합,"change model từ ICT-ATE (105min), wave solder error(41min)",1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-11,NIGHT,MI,MI 7,H,L48CA9N_HVD,94.0,CHANGE_MODEL,모델교체,복합,"change model từ ICT-ATE (105min), wave solder error(41min)",1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-12,NIGHT,MI,MI 2,TOTAL,"32""/3IN1, JDM_ROSE-SF",445.0,WAITING_SMT,SMT대기,단일,waiting semi SMT,1,,500.0,0.0,500.0,0.0,1212.0,0.0
+2026-07-12,NIGHT,MI,MI 2,F,"32""/3IN1, JDM_ROSE-SF",120.0,WAITING_SMT,SMT대기,단일,waiting semi SMT,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-12,NIGHT,MI,MI 2,G,"32""/3IN1, JDM_ROSE-SF",110.0,WAITING_SMT,SMT대기,단일,waiting semi SMT,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-12,NIGHT,MI,MI 2,H,"32""/3IN1, JDM_ROSE-SF",105.0,WAITING_SMT,SMT대기,단일,waiting semi SMT,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-12,NIGHT,MI,MI 2,I,"32""/3IN1, JDM_ROSE-SF",110.0,WAITING_SMT,SMT대기,단일,waiting semi SMT,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-12,NIGHT,MI,MI 3,TOTAL,L65E70A_HVD,11.0,FLUX,Flux불량,복합,Flux fall board,1,,2000.0,1760.0,2000.0,1760.0,2000.0,1623.0
+2026-07-12,NIGHT,MI,MI 3,TOTAL,L65E70A_HVD,45.0,WAVE,Wave Solder불량,복합,Flux fall board | wave solder error,2,,2000.0,1760.0,2000.0,1760.0,2000.0,1623.0
+2026-07-12,NIGHT,MI,MI 3,F,L65E70A_HVD,11.0,FLUX,Flux불량,복합,Flux fall board,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-12,NIGHT,MI,MI 3,G,L65E70A_HVD,5.0,FLUX,Flux불량,복합,Flux fall board,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-12,NIGHT,MI,MI 3,I,L65E70A_HVD,40.0,WAVE,Wave Solder불량,복합,wave solder error,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-12,NIGHT,MI,MI 4,TOTAL,L43E60A_HVD,304.0,WAITING_SMT,SMT대기,단일,"waiting semi SMT, NG buffer FT error",1,,1970.0,1523.0,1970.0,1523.0,1970.0,1278.0
+2026-07-12,NIGHT,MI,MI 4,F,L43E60A_HVD,42.0,WAITING_SMT,SMT대기,복합,"waiting semi SMT, NG buffer FT error",1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-12,NIGHT,MI,MI 4,G,L43E60A_HVD,95.0,WAITING_SMT,SMT대기,복합,"waiting semi SMT, NG buffer FT error",1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-12,NIGHT,MI,MI 4,H,L43E60A_HVD,57.0,WAITING_SMT,SMT대기,복합,"waiting semi SMT, NG buffer FT error",1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-12,NIGHT,MI,MI 4,I,L43E60A_HVD,110.0,WAITING_SMT,SMT대기,복합,waiting semi SMT,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-12,NIGHT,MI,MI 5,TOTAL,L55F70NA_HHS,195.0,WAITING_SMT,SMT대기,복합,"waiting semi SMT , change model ,wave solder error",1,,2180.0,2062.0,2180.0,2062.0,2180.0,1590.0
+2026-07-12,NIGHT,MI,MI 5,TOTAL,L55F70NA_HHS,35.0,CHANGE_MODEL,모델교체,복합,"change model ICT-coating (87min), ATE program error (28min)",2,,2180.0,2062.0,2180.0,2062.0,2180.0,1590.0
+2026-07-12,NIGHT,MI,MI 5,F,L55F70NA_HHS,70.0,WAITING_SMT,SMT대기,복합,"waiting semi SMT , change model ,wave solder error",1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-12,NIGHT,MI,MI 5,G,L55F70NA_HHS,115.0,WAITING_SMT,SMT대기,복합,"waiting semi SMT , change model ,wave solder error",1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-12,NIGHT,MI,MI 5,H,L55F70NA_HHS,10.0,WAITING_SMT,SMT대기,복합,"waiting semi SMT , change model ,wave solder error",1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-12,NIGHT,MI,MI 5,I,L55F70NA_HHS,35.0,CHANGE_MODEL,모델교체,복합,"change model ICT-coating (87min), ATE program error (28min)",1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-12,NIGHT,MI,MI 6,TOTAL,"65""/PD, P6519_HHS",24.0,ATE,ATE불량,복합,"ATE error , wave solder error",1,,1900.0,1900.0,1900.0,1900.0,1900.0,2020.0
+2026-07-12,NIGHT,MI,MI 6,TOTAL,"65""/PD, P6519_HHS",156.0,CHANGE_MODEL,모델교체,복합,"ATE error , wave solder error | Change model (35min),ATE change model (83min) wave solder error(6min) ATE running 1 floor(15min), ATE error(17min)",2,,1900.0,1900.0,1900.0,1900.0,1900.0,2020.0
+2026-07-12,NIGHT,MI,MI 6,F,"65""/PD, P6519_HHS",24.0,ATE,ATE불량,복합,"ATE error , wave solder error",1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-12,NIGHT,MI,MI 6,G,"65""/PD, P6519_HHS",156.0,ATE,ATE불량,복합,"ATE error , wave solder error",1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-12,NIGHT,MI,MI 7,TOTAL,L50E60A_HVD,34.0,ATE,ATE불량,단일,ATE no have stock,1,,2000.0,2000.0,2000.0,2000.0,2000.0,2016.0
+2026-07-12,NIGHT,MI,MI 7,F,L50E60A_HVD,30.0,ATE,ATE불량,복합,ATE no have stock,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-12,NIGHT,MI,MI 7,H,L50E60A_HVD,4.0,ATE,ATE불량,복합,ATE no have stock,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-13,NIGHT,MI,MI 2,TOTAL,L55S7_HVD,150.0,CHANGE_MODEL,모델교체,단일,"Change model,Hipot error",1,,2700.0,2700.0,2700.0,2700.0,2700.0,2602.0
+2026-07-13,NIGHT,MI,MI 2,F,L55S7_HVD,93.0,CHANGE_MODEL,모델교체,복합,"Change model,Hipot error",1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-13,NIGHT,MI,MI 2,G,L55S7_HVD,16.0,CHANGE_MODEL,모델교체,복합,"Change model,Hipot error",1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-13,NIGHT,MI,MI 2,H,L55S7_HVD,41.0,CHANGE_MODEL,모델교체,복합,"Change model,Hipot error",1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-13,NIGHT,MI,MI 3,TOTAL,L65S7N_HVD,174.0,WAITING_SMT,SMT대기,단일,"waiting semi PCB, AOI error,ATE error",1,,2700.0,2229.0,2700.0,2229.0,2700.0,2210.0
+2026-07-13,NIGHT,MI,MI 3,F,L65S7N_HVD,55.0,WAITING_SMT,SMT대기,복합,"waiting semi PCB, AOI error,ATE error",1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-13,NIGHT,MI,MI 3,G,L65S7N_HVD,49.0,WAITING_SMT,SMT대기,복합,"waiting semi PCB, AOI error,ATE error",1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-13,NIGHT,MI,MI 3,H,L65S7N_HVD,40.0,WAITING_SMT,SMT대기,복합,"waiting semi PCB, AOI error,ATE error",1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-13,NIGHT,MI,MI 3,I,L65S7N_HVD,10.0,WAITING_SMT,SMT대기,복합,"FT error, waiting semi SMT",1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-13,NIGHT,MI,MI 3,J,L65S7N_HVD,20.0,WAITING_SMT,SMT대기,복합,"waiting semi PCB, AOI error,ATE error",1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-13,NIGHT,MI,MI 4,TOTAL,L75S7_HVD,69.0,ICT_FT,ICT/FT/HiPOT불량,단일,Hipot error,1,,2700.0,2700.0,2700.0,2700.0,2700.0,2492.0
+2026-07-13,NIGHT,MI,MI 4,F,L75S7_HVD,10.0,ICT_FT,ICT/FT/HiPOT불량,단일,Hipot error,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-13,NIGHT,MI,MI 4,G,L75S7_HVD,44.0,ICT_FT,ICT/FT/HiPOT불량,단일,Hipot error,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-13,NIGHT,MI,MI 4,H,L75S7_HVD,15.0,ICT_FT,ICT/FT/HiPOT불량,단일,Hipot error,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-13,NIGHT,MI,MI 5,TOTAL,L65E70A_HVD,272.0,CHANGE_MODEL,모델교체,단일,"Change model, ATE error",1,,2000.0,2000.0,2000.0,2000.0,2000.0,1761.0
+2026-07-13,NIGHT,MI,MI 5,F,L65E70A_HVD,98.0,CHANGE_MODEL,모델교체,복합,"Change model, ATE error",1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-13,NIGHT,MI,MI 5,G,L65E70A_HVD,46.0,CHANGE_MODEL,모델교체,복합,"Change model, ATE error",1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-13,NIGHT,MI,MI 5,H,L65E70A_HVD,128.0,CHANGE_MODEL,모델교체,복합,"Change model, ATE error",1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-13,NIGHT,MI,MI 6,TOTAL,"65""/PD, P6519_HHS",61.0,CHANGE_MODEL,모델교체,단일,"Change model ,ICT error,ATE running 1 floor",1,,2000.0,2000.0,2000.0,2000.0,2000.0,2016.0
+2026-07-13,NIGHT,MI,MI 6,F,"65""/PD, P6519_HHS",53.0,CHANGE_MODEL,모델교체,복합,"Change model ,ICT error,ATE running 1 floor",1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-13,NIGHT,MI,MI 6,G,"65""/PD, P6519_HHS",8.0,CHANGE_MODEL,모델교체,복합,"Change model ,ICT error,ATE running 1 floor",1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-13,NIGHT,MI,MI 7,TOTAL,L50E60A_HVD,432.0,WAITING_SMT,SMT대기,단일,"waiting semi PCB,change model 65CA9N FVD",1,,1800.0,1216.0,1800.0,1216.0,1800.0,1107.0
+2026-07-13,NIGHT,MI,MI 7,F,L50E60A_HVD,185.0,WAITING_SMT,SMT대기,복합,"waiting semi PCB,change model 65CA9N FVD",1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-13,NIGHT,MI,MI 7,G,L50E60A_HVD,195.0,WAITING_SMT,SMT대기,복합,"waiting semi PCB,change model 65CA9N FVD",1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-13,NIGHT,MI,MI 7,H,L50E60A_HVD,52.0,WAITING_SMT,SMT대기,복합,"waiting semi PCB,change model 65CA9N FVD",1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-13,NIGHT,MI,MI 8,TOTAL,L55CA9N_HVD,263.0,WAITING_SMT,SMT대기,단일,"waiting semi PCB, coating error",1,,750.0,571.0,750.0,571.0,750.0,802.0
+2026-07-13,NIGHT,MI,MI 8,F,L55CA9N_HVD,59.0,WAITING_SMT,SMT대기,복합,"waiting semi PCB, coating error",1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-13,NIGHT,MI,MI 8,G,L55CA9N_HVD,110.0,WAITING_SMT,SMT대기,복합,"waiting semi PCB, coating error",1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-13,NIGHT,MI,MI 8,H,L55CA9N_HVD,47.0,WAITING_SMT,SMT대기,복합,"waiting semi PCB, coating error",1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-13,NIGHT,MI,MI 8,I,L55CA9N_HVD,47.0,WAITING_SMT,SMT대기,복합,waiting semi SMT,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-14,NIGHT,MI,MI 2,TOTAL,L55S7_HVD,72.0,WAITING_SMT,SMT대기,복합,"clear stock 32""SKW 3in1, change model ,ATE running 1 floor",1,,2700.0,2700.0,2700.0,2700.0,2700.0,2874.0
+2026-07-14,NIGHT,MI,MI 2,TOTAL,L55S7_HVD,36.0,NO_PROBLEM,문제없음,복합,No problem,2,,2700.0,2700.0,2700.0,2700.0,2700.0,2874.0
+2026-07-14,NIGHT,MI,MI 2,F,L55S7_HVD,62.0,WAITING_SMT,SMT대기,복합,"clear stock 32""SKW 3in1, change model ,ATE running 1 floor",1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-14,NIGHT,MI,MI 2,H,L55S7_HVD,10.0,WAITING_SMT,SMT대기,복합,"clear stock 32""SKW 3in1, change model ,ATE running 1 floor",1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-14,NIGHT,MI,MI 2,I,L55S7_HVD,36.0,NO_PROBLEM,문제없음,복합,No problem,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-14,NIGHT,MI,MI 3,TOTAL,L65S7N_HVD,129.0,CHANGE_MODEL,모델교체,단일,"Change model, AOI error",1,,2560.0,2560.0,2560.0,2560.0,2560.0,2729.0
+2026-07-14,NIGHT,MI,MI 3,F,L65S7N_HVD,105.0,CHANGE_MODEL,모델교체,복합,"Change model, AOI error",1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-14,NIGHT,MI,MI 3,G,L65S7N_HVD,10.0,CHANGE_MODEL,모델교체,복합,"Change model, AOI error",1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-14,NIGHT,MI,MI 3,H,L65S7N_HVD,14.0,CHANGE_MODEL,모델교체,복합,"Change model, AOI error",1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-14,NIGHT,MI,MI 4,TOTAL,L75S7_HVD,68.0,ICT_FT,ICT/FT/HiPOT불량,단일,Hipot error,1,,2550.0,2550.0,2550.0,2550.0,2550.0,2462.0
+2026-07-14,NIGHT,MI,MI 4,F,L75S7_HVD,6.0,ICT_FT,ICT/FT/HiPOT불량,복합,Hipot error,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-14,NIGHT,MI,MI 4,G,L75S7_HVD,42.0,ICT_FT,ICT/FT/HiPOT불량,복합,Hipot error,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-14,NIGHT,MI,MI 4,H,L75S7_HVD,20.0,ICT_FT,ICT/FT/HiPOT불량,복합,Hipot error,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-14,NIGHT,MI,MI 5,TOTAL,L65E70A_HVD,18.0,AOI_SAOI,AOI/S-AOI불량,단일,No problem | AOI error,1,,2000.0,2000.0,2000.0,2000.0,2000.0,2000.0
+2026-07-14,NIGHT,MI,MI 5,G,L65E70A_HVD,5.0,NO_PROBLEM,문제없음,복합,No problem,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-14,NIGHT,MI,MI 5,H,L65E70A_HVD,13.0,NO_PROBLEM,문제없음,복합,No problem,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-14,NIGHT,MI,MI 6,TOTAL,L85E70NA_HVD,115.0,ICT_FT,ICT/FT/HiPOT불량,단일,"ICT error, wave solde error",1,,1900.0,1900.0,1900.0,1900.0,1900.0,1849.0
+2026-07-14,NIGHT,MI,MI 6,F,L85E70NA_HVD,22.0,ICT_FT,ICT/FT/HiPOT불량,복합,"ICT error, wave solde error",1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-14,NIGHT,MI,MI 6,G,L85E70NA_HVD,24.0,ICT_FT,ICT/FT/HiPOT불량,복합,"ICT error, wave solde error",1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-14,NIGHT,MI,MI 6,H,L85E70NA_HVD,40.0,ICT_FT,ICT/FT/HiPOT불량,복합,"ICT error, wave solde error",1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-14,NIGHT,MI,MI 6,I,L85E70NA_HVD,29.0,ICT_FT,ICT/FT/HiPOT불량,복합,"wave solder error , ICT error",1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-14,NIGHT,MI,MI 7,TOTAL,L50E60A_HVD,59.0,CHANGE_MODEL,모델교체,단일,"change model , ICT error, FT error",1,,1700.0,1700.0,1700.0,1700.0,1700.0,2088.0
+2026-07-14,NIGHT,MI,MI 7,F,L50E60A_HVD,46.0,CHANGE_MODEL,모델교체,복합,"change model , ICT error, FT error",1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-14,NIGHT,MI,MI 7,G,L50E60A_HVD,13.0,CHANGE_MODEL,모델교체,복합,"change model , ICT error, FT error",1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-14,NIGHT,MI,MI 8,TOTAL,L55CA9N_HVD,233.0,SAMPLE,샘플/테스트,단일,ME test sample,1,,750.0,750.0,750.0,750.0,750.0,882.0
+2026-07-14,NIGHT,MI,MI 8,F,L55CA9N_HVD,120.0,SAMPLE,샘플/테스트,단일,ME test sample,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-14,NIGHT,MI,MI 8,G,L55CA9N_HVD,60.0,SAMPLE,샘플/테스트,단일,ME test sample,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-14,NIGHT,MI,MI 8,H,L55CA9N_HVD,14.0,SAMPLE,샘플/테스트,단일,ME test sample,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-14,NIGHT,MI,MI 8,I,L55CA9N_HVD,39.0,SAMPLE,샘플/테스트,단일,ME test sample,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-15,NIGHT,MI,MI 2,TOTAL,L55S7_HVD,155.0,CHANGE_MODEL,모델교체,단일,"Change model ICT-ATE , 3in1",1,,2700.0,2700.0,2700.0,2700.0,2700.0,2645.0
+2026-07-15,NIGHT,MI,MI 2,F,L55S7_HVD,80.0,CHANGE_MODEL,모델교체,복합,"Change model ICT-ATE , 3in1",1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-15,NIGHT,MI,MI 2,G,L55S7_HVD,45.0,CHANGE_MODEL,모델교체,복합,"Change model ICT-ATE , 3in1",1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-15,NIGHT,MI,MI 2,H,L55S7_HVD,30.0,CHANGE_MODEL,모델교체,복합,"Change model ICT-ATE , 3in1",1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-15,NIGHT,MI,MI 3,TOTAL,L65S7N_HVD,10.0,WAVE,Wave Solder불량,복합,"wave solder error, coating error",1,,2700.0,2700.0,2700.0,2700.0,2700.0,2660.0
+2026-07-15,NIGHT,MI,MI 3,TOTAL,L65S7N_HVD,7.0,AOI_SAOI,AOI/S-AOI불량,복합,"wave solder error, coating error | AOI error",2,,2700.0,2700.0,2700.0,2700.0,2700.0,2660.0
+2026-07-15,NIGHT,MI,MI 3,F,L65S7N_HVD,10.0,WAVE,Wave Solder불량,복합,"wave solder error, coating error",1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-15,NIGHT,MI,MI 3,G,L65S7N_HVD,7.0,WAVE,Wave Solder불량,복합,"wave solder error, coating error",1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-15,NIGHT,MI,MI 4,TOTAL,L55E70A_HVD,84.0,CHANGE_MODEL,모델교체,단일,Change model,1,,1870.0,2062.0,1870.0,2062.0,1870.0,1760.0
+2026-07-15,NIGHT,MI,MI 4,F,L55E70A_HVD,15.0,CHANGE_MODEL,모델교체,복합,Change model,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-15,NIGHT,MI,MI 4,G,L55E70A_HVD,64.0,CHANGE_MODEL,모델교체,복합,Change model,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-15,NIGHT,MI,MI 4,H,L55E70A_HVD,5.0,CHANGE_MODEL,모델교체,복합,Change model,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-15,NIGHT,MI,MI 5,TOTAL,L65E70A_HVD,299.0,WAITING_SMT,SMT대기,단일,"waiting semi PCB ,ICT flase error",1,,2000.0,760.0,2000.0,760.0,2000.0,1333.0
+2026-07-15,NIGHT,MI,MI 5,F,L65E70A_HVD,79.0,WAITING_SMT,SMT대기,복합,"waiting semi PCB ,ICT flase error",1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-15,NIGHT,MI,MI 5,G,L65E70A_HVD,70.0,WAITING_SMT,SMT대기,복합,"waiting semi PCB ,ICT flase error",1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-15,NIGHT,MI,MI 5,H,L65E70A_HVD,60.0,WAITING_SMT,SMT대기,복합,"waiting semi PCB ,ICT flase error",1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-15,NIGHT,MI,MI 5,I,L65E70A_HVD,90.0,WAITING_SMT,SMT대기,복합,waiting semi PCB,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-15,NIGHT,MI,MI 6,TOTAL,L85E70NA_HVD,252.0,WAITING_SMT,SMT대기,복합,"waiting semi PCB ,change model, wave solder",1,,1845.0,1719.0,1845.0,1719.0,1845.0,1712.0
+2026-07-15,NIGHT,MI,MI 6,TOTAL,L85E70NA_HVD,15.0,ICT_FT,ICT/FT/HiPOT불량,복합,"flux error,FT error, AOI error",2,,1845.0,1719.0,1845.0,1719.0,1845.0,1712.0
+2026-07-15,NIGHT,MI,MI 6,F,L85E70NA_HVD,218.0,WAITING_SMT,SMT대기,복합,"waiting semi PCB ,change model, wave solder",1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-15,NIGHT,MI,MI 6,G,L85E70NA_HVD,19.0,WAITING_SMT,SMT대기,복합,"waiting semi PCB ,change model, wave solder",1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-15,NIGHT,MI,MI 6,H,L85E70NA_HVD,15.0,WAITING_SMT,SMT대기,복합,"waiting semi PCB ,change model, wave solder",1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-15,NIGHT,MI,MI 6,I,L65FE8N_HHS,15.0,ICT_FT,ICT/FT/HiPOT불량,복합,"flux error,FT error, AOI error",1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-15,NIGHT,MI,MI 7,TOTAL,L50E60A_HVD,10.0,NO_PROBLEM,문제없음,단일,No problem | No problem,1,,1667.0,1552.0,1667.0,1552.0,1667.0,2088.0
+2026-07-15,NIGHT,MI,MI 7,H,L50E60A_HVD,10.0,NO_PROBLEM,문제없음,단일,No problem,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-15,NIGHT,MI,MI 8,TOTAL,L48CA9N_HVD,445.0,CHANGE_MODEL,모델교체,단일,waiting PE change model 48CA9N,1,,904.0,879.0,904.0,879.0,904.0,10.0
+2026-07-15,NIGHT,MI,MI 8,F,L48CA9N_HVD,120.0,CHANGE_MODEL,모델교체,단일,waiting PE change model 48CA9N,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-15,NIGHT,MI,MI 8,G,L48CA9N_HVD,110.0,CHANGE_MODEL,모델교체,단일,waiting PE change model 48CA9N,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-15,NIGHT,MI,MI 8,H,L48CA9N_HVD,105.0,CHANGE_MODEL,모델교체,단일,waiting PE change model 48CA9N,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-15,NIGHT,MI,MI 8,I,L48CA9N_HVD,110.0,CHANGE_MODEL,모델교체,단일,waiting PE change model 48CA9N,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-16,NIGHT,MI,MI 2,TOTAL,L55S7_HVD,12.0,ICT_FT,ICT/FT/HiPOT불량,단일,ICT flase error,1,,2700.0,2700.0,2700.0,2700.0,2700.0,3091.0
+2026-07-16,NIGHT,MI,MI 2,F,L55S7_HVD,12.0,ICT_FT,ICT/FT/HiPOT불량,복합,ICT flase error,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-16,NIGHT,MI,MI 3,TOTAL,L65S7N_HVD,19.0,ATE,ATE불량,단일,"No problem | FT error, ATE error",1,,2700.0,2700.0,2700.0,2700.0,2700.0,2717.0
+2026-07-16,NIGHT,MI,MI 3,G,L65S7N_HVD,9.0,NO_PROBLEM,문제없음,복합,No problem,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-16,NIGHT,MI,MI 3,H,L65S7N_HVD,10.0,NO_PROBLEM,문제없음,복합,No problem,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-16,NIGHT,MI,MI 4,TOTAL,L55E70A_HVD,157.0,WAITING_SMT,SMT대기,복합,"ATE change model 75FVD , clear stock 3in1",1,,2000.0,2000.0,2000.0,2000.0,2000.0,1949.0
+2026-07-16,NIGHT,MI,MI 4,TOTAL,L55E70A_HVD,22.0,CHANGE_MODEL,모델교체,복합,"ATE Change model, ATE error",2,,2000.0,2000.0,2000.0,2000.0,2000.0,1949.0
+2026-07-16,NIGHT,MI,MI 4,F,L55E70A_HVD,120.0,WAITING_SMT,SMT대기,복합,"ATE change model 75FVD , clear stock 3in1",1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-16,NIGHT,MI,MI 4,G,L55E70A_HVD,37.0,WAITING_SMT,SMT대기,복합,"ATE change model 75FVD , clear stock 3in1",1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-16,NIGHT,MI,MI 4,I,L55E70A_HVD,22.0,CHANGE_MODEL,모델교체,복합,"ATE Change model, ATE error",1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-16,NIGHT,MI,MI 5,TOTAL,L65S7A_HVD,100.0,CHANGE_MODEL,모델교체,복합,"Flux error, ATE change model,ATE running 1 floor",1,,2700.0,2700.0,2700.0,2700.0,2700.0,2720.0
+2026-07-16,NIGHT,MI,MI 5,TOTAL,L65S7A_HVD,72.0,WAITING_SMT,SMT대기,복합,"Flux error, ATE change model,ATE running 1 floor | waiting semi SMT,hipot error, NG buffer FT error",2,,2700.0,2700.0,2700.0,2700.0,2700.0,2720.0
+2026-07-16,NIGHT,MI,MI 5,F,L65S7A_HVD,100.0,CHANGE_MODEL,모델교체,복합,"Flux error, ATE change model,ATE running 1 floor",1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-16,NIGHT,MI,MI 5,G,L65S7A_HVD,63.0,CHANGE_MODEL,모델교체,복합,"Flux error, ATE change model,ATE running 1 floor",1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-16,NIGHT,MI,MI 5,H,L65S7A_HVD,9.0,CHANGE_MODEL,모델교체,복합,"Flux error, ATE change model,ATE running 1 floor",1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-16,NIGHT,MI,MI 6,TOTAL,L65FE8N_HHS,18.0,SILCOAT,Silicon/Coating불량,복합,"nozzle coating error, Coating error",1,,1751.0,1694.0,1751.0,1694.0,1751.0,1523.0
+2026-07-16,NIGHT,MI,MI 6,TOTAL,L65FE8N_HHS,103.0,MATERIAL,자재부족,복합,"nozzle coating error, Coating error | CPU packing error , coating error",2,,1751.0,1694.0,1751.0,1694.0,1751.0,1523.0
+2026-07-16,NIGHT,MI,MI 6,F,L65FE8N_HHS,18.0,SILCOAT,Silicon/Coating불량,복합,"nozzle coating error, Coating error",1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-16,NIGHT,MI,MI 6,G,L65FE8N_HHS,21.0,SILCOAT,Silicon/Coating불량,복합,"nozzle coating error, Coating error",1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-16,NIGHT,MI,MI 6,H,L65FE8N_HHS,22.0,SILCOAT,Silicon/Coating불량,복합,"nozzle coating error, Coating error",1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-16,NIGHT,MI,MI 6,I,L65FE8N_HHS,60.0,MATERIAL,자재부족,복합,"CPU packing error , coating error",1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-16,NIGHT,MI,MI 7,TOTAL,L83CA9N_FHS,379.0,WAITING_SMT,SMT대기,복합,"ICT conveyor jam,waiting semi SMT,change model,ATE running 1 floor",1,,1607.0,1510.0,1607.0,1510.0,1607.0,525.0
+2026-07-16,NIGHT,MI,MI 7,TOTAL,L83CA9N_FHS,110.0,CHANGE_MODEL,모델교체,복합,"change model ,coaitng error , ict error",2,,1607.0,1510.0,1607.0,1510.0,1607.0,525.0
+2026-07-16,NIGHT,MI,MI 7,F,L83CA9N_FHS,182.0,WAITING_SMT,SMT대기,복합,"ICT conveyor jam,waiting semi SMT,change model,ATE running 1 floor",1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-16,NIGHT,MI,MI 7,G,L83CA9N_FHS,92.0,WAITING_SMT,SMT대기,복합,"ICT conveyor jam,waiting semi SMT,change model,ATE running 1 floor",1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-16,NIGHT,MI,MI 7,H,L83CA9N_FHS,105.0,WAITING_SMT,SMT대기,복합,"ICT conveyor jam,waiting semi SMT,change model,ATE running 1 floor",1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-16,NIGHT,MI,MI 7,I,L85E70NW_HVD,110.0,CHANGE_MODEL,모델교체,복합,"change model ,coaitng error , ict error",1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-16,NIGHT,MI,MI 8,TOTAL,L48CA9N_HVD,79.0,ATE,ATE불량,복합,"ATE error, ICT error",1,,1000.0,1000.0,1000.0,1000.0,1000.0,481.0
+2026-07-16,NIGHT,MI,MI 8,TOTAL,L48CA9N_HVD,20.0,ICT_FT,ICT/FT/HiPOT불량,복합,"FT no scan, ICT error",2,,1000.0,1000.0,1000.0,1000.0,1000.0,481.0
+2026-07-16,NIGHT,MI,MI 8,F,L48CA9N_HVD,35.0,ATE,ATE불량,복합,"ATE error, ICT error",1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-16,NIGHT,MI,MI 8,G,L48CA9N_HVD,10.0,ATE,ATE불량,복합,"ATE error, ICT error",1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-16,NIGHT,MI,MI 8,H,L48CA9N_HVD,34.0,ATE,ATE불량,복합,"ATE error, ICT error",1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-16,NIGHT,MI,MI 8,I,L48CA9N_HVD,20.0,ICT_FT,ICT/FT/HiPOT불량,복합,"FT no scan, ICT error",1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-18,NIGHT,MI,MI 2,TOTAL,L55S7_HVD,25.0,CHANGE_MODEL,모델교체,단일,Change model,1,,2555.0,2555.0,2555.0,2555.0,2555.0,2700.0
+2026-07-18,NIGHT,MI,MI 2,F,L55S7_HVD,25.0,CHANGE_MODEL,모델교체,복합,Change model,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-18,NIGHT,MI,MI 3,TOTAL,L65S7A_HVD,235.0,WAITING_SMT,SMT대기,단일,"waiting semi smt , ATE error",1,,2700.0,2704.0,2700.0,2704.0,2700.0,2717.0
+2026-07-18,NIGHT,MI,MI 3,F,L65S7A_HVD,28.0,WAITING_SMT,SMT대기,복합,"waiting semi smt , ATE error",1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-18,NIGHT,MI,MI 3,G,L65S7A_HVD,58.0,WAITING_SMT,SMT대기,복합,"waiting semi smt , ATE error",1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-18,NIGHT,MI,MI 3,H,L65S7A_HVD,85.0,WAITING_SMT,SMT대기,복합,"waiting semi smt , ATE error",1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-18,NIGHT,MI,MI 3,I,L65S7A_HVD,64.0,WAITING_SMT,SMT대기,복합,waiting semi smt,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-18,NIGHT,MI,MI 4,TOTAL,L65S7A_HVD,139.0,WAITING_SMT,SMT대기,단일,waiting semi smt,1,,2700.0,2425.0,2700.0,2425.0,2700.0,2457.0
+2026-07-18,NIGHT,MI,MI 4,F,L65S7A_HVD,7.0,WAITING_SMT,SMT대기,단일,waiting semi smt,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-18,NIGHT,MI,MI 4,G,L65S7A_HVD,35.0,WAITING_SMT,SMT대기,단일,waiting semi smt,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-18,NIGHT,MI,MI 4,H,L65S7A_HVD,75.0,WAITING_SMT,SMT대기,단일,waiting semi smt,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-18,NIGHT,MI,MI 4,I,L65S7A_HVD,22.0,WAITING_SMT,SMT대기,단일,waiting semi smt,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-18,NIGHT,MI,MI 5,TOTAL,L65S7A_HVD,163.0,WAITING_SMT,SMT대기,단일,waiting semi smt,1,,2700.0,2658.0,2700.0,2658.0,2700.0,2366.0
+2026-07-18,NIGHT,MI,MI 5,F,L65S7A_HVD,18.0,WAITING_SMT,SMT대기,단일,waiting semi smt,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-18,NIGHT,MI,MI 5,G,L65S7A_HVD,41.0,WAITING_SMT,SMT대기,단일,waiting semi smt,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-18,NIGHT,MI,MI 5,H,L65S7A_HVD,77.0,WAITING_SMT,SMT대기,단일,waiting semi smt,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-18,NIGHT,MI,MI 5,I,L65S7A_HVD,27.0,WAITING_SMT,SMT대기,단일,waiting semi smt,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-18,NIGHT,MI,MI 6,TOTAL,L65E70A_HVD,269.0,WAITING_SMT,SMT대기,복합,"waiting semi smt,change model,hipot error,wave solder error,ICT error",1,,1973.0,1740.0,1973.0,1740.0,1973.0,1097.0
+2026-07-18,NIGHT,MI,MI 6,TOTAL,L65E70A_HVD,32.0,CHANGE_MODEL,모델교체,복합,"ICT error , change model",2,,1973.0,1740.0,1973.0,1740.0,1973.0,1097.0
+2026-07-18,NIGHT,MI,MI 6,F,L65E70A_HVD,87.0,WAITING_SMT,SMT대기,복합,"waiting semi smt,change model,hipot error,wave solder error,ICT error",1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-18,NIGHT,MI,MI 6,G,L65E70A_HVD,84.0,WAITING_SMT,SMT대기,복합,"waiting semi smt,change model,hipot error,wave solder error,ICT error",1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-18,NIGHT,MI,MI 6,H,L65E70A_HVD,98.0,WAITING_SMT,SMT대기,복합,"waiting semi smt,change model,hipot error,wave solder error,ICT error",1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-18,NIGHT,MI,MI 6,I,L65E70A_HVD,32.0,CHANGE_MODEL,모델교체,복합,"ICT error , change model",1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-18,NIGHT,MI,MI 7,TOTAL,L55E70A_HVD,33.0,ATE,ATE불량,복합,vison false error . ATE error,1,,1906.0,1828.0,1906.0,1828.0,1906.0,2008.0
+2026-07-18,NIGHT,MI,MI 7,TOTAL,L55E70A_HVD,120.0,WAITING_SMT,SMT대기,복합,vison false error . ATE error | waiting semi smt,2,,1906.0,1828.0,1906.0,1828.0,1906.0,2008.0
+2026-07-18,NIGHT,MI,MI 7,F,L55E70A_HVD,33.0,ATE,ATE불량,복합,vison false error . ATE error,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-18,NIGHT,MI,MI 7,G,L55E70A_HVD,27.0,ATE,ATE불량,복합,vison false error . ATE error,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-18,NIGHT,MI,MI 7,H,L55E70A_HVD,57.0,ATE,ATE불량,복합,vison false error . ATE error,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-18,NIGHT,MI,MI 7,I,L55E70A_HVD,36.0,WAITING_SMT,SMT대기,복합,waiting semi smt,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-18,NIGHT,MI,MI 8,TOTAL,L48CA9N_HVD,69.0,ATE,ATE불량,단일,"silicon error, ATE error",1,,0.0,0.0,0.0,0.0,0.0,1153.0
+2026-07-18,NIGHT,MI,MI 8,F,L48CA9N_HVD,45.0,ATE,ATE불량,단일,"silicon error, ATE error",1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-18,NIGHT,MI,MI 8,H,L48CA9N_HVD,24.0,ATE,ATE불량,단일,"silicon error, ATE error",1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-20,NIGHT,MI,MI 3,TOTAL,L65S7_HVD,203.0,WAITING_SMT,SMT대기,단일,"FT no scan , waiting semi SMT,",1,,2300.0,2188.0,2300.0,2188.0,2300.0,2134.0
+2026-07-20,NIGHT,MI,MI 3,F,L65S7_HVD,40.0,WAITING_SMT,SMT대기,복합,"FT no scan , waiting semi SMT,",1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-20,NIGHT,MI,MI 3,G,L65S7_HVD,78.0,WAITING_SMT,SMT대기,복합,"FT no scan , waiting semi SMT,",1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-20,NIGHT,MI,MI 3,H,L65S7_HVD,19.0,WAITING_SMT,SMT대기,복합,"FT no scan , waiting semi SMT,",1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-20,NIGHT,MI,MI 3,I,L65S7_HVD,66.0,WAITING_SMT,SMT대기,복합,waitng semi SMT,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-20,NIGHT,MI,MI 4,TOTAL,L65CA9N_HVD,95.0,WAITING_SMT,SMT대기,복합,"ICT flase error,ATE waiting PCB",1,,1490.0,1490.0,1490.0,1490.0,1490.0,1342.0
+2026-07-20,NIGHT,MI,MI 4,TOTAL,L65CA9N_HVD,34.0,NO_PROBLEM,문제없음,복합,No problem,2,,1490.0,1490.0,1490.0,1490.0,1490.0,1342.0
+2026-07-20,NIGHT,MI,MI 4,F,L65CA9N_HVD,38.0,WAITING_SMT,SMT대기,복합,"ICT flase error,ATE waiting PCB",1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-20,NIGHT,MI,MI 4,H,L65CA9N_HVD,17.0,WAITING_SMT,SMT대기,복합,"ICT flase error,ATE waiting PCB",1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-20,NIGHT,MI,MI 4,I,L65CA9N_HVD,34.0,NO_PROBLEM,문제없음,복합,No problem,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-20,NIGHT,MI,MI 4,J,L65CA9N_HVD,40.0,WAITING_SMT,SMT대기,복합,"ICT flase error,ATE waiting PCB",1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-20,NIGHT,MI,MI 5,TOTAL,L55E70A_HVD,99.0,FLUX,Flux불량,단일,FLUX error,1,,1897.0,1748.0,1897.0,1748.0,1897.0,1684.0
+2026-07-20,NIGHT,MI,MI 5,F,L55E70A_HVD,10.0,FLUX,Flux불량,복합,FLUX error,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-20,NIGHT,MI,MI 5,G,L55E70A_HVD,20.0,FLUX,Flux불량,복합,FLUX error,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-20,NIGHT,MI,MI 5,H,L55E70A_HVD,8.0,FLUX,Flux불량,복합,FLUX error,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-20,NIGHT,MI,MI 5,I,L55E70A_HVD,61.0,FLUX,Flux불량,복합,"FLUX error , PCB no scan",1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-20,NIGHT,MI,MI 6,TOTAL,L65S8_HVD,111.0,ICT_FT,ICT/FT/HiPOT불량,단일,"ICT error ,wave solder error",1,,2700.0,2700.0,2700.0,2700.0,2700.0,2549.0
+2026-07-20,NIGHT,MI,MI 6,F,L65S8_HVD,21.0,ICT_FT,ICT/FT/HiPOT불량,복합,"ICT error ,wave solder error",1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-20,NIGHT,MI,MI 6,G,L65S8_HVD,29.0,ICT_FT,ICT/FT/HiPOT불량,복합,"ICT error ,wave solder error",1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-20,NIGHT,MI,MI 6,H,L65S8_HVD,16.0,ICT_FT,ICT/FT/HiPOT불량,복합,"ICT error ,wave solder error",1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-20,NIGHT,MI,MI 6,I,L65S8_HVD,5.0,ICT_FT,ICT/FT/HiPOT불량,복합,"ICT error , JIG hipot error",1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-20,NIGHT,MI,MI 6,J,L65S8_HVD,40.0,ICT_FT,ICT/FT/HiPOT불량,복합,"ICT error ,wave solder error",1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-20,NIGHT,MI,MI 7,TOTAL,L65E70A_HVD,8.0,ETC,기타,복합,over solder,1,,2000.0,2000.0,2000.0,2000.0,2000.0,2013.0
+2026-07-20,NIGHT,MI,MI 7,TOTAL,L65E70A_HVD,4.0,NO_PROBLEM,문제없음,복합,No problem,2,,2000.0,2000.0,2000.0,2000.0,2000.0,2013.0
+2026-07-20,NIGHT,MI,MI 7,F,L65E70A_HVD,8.0,ETC,기타,복합,over solder,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-20,NIGHT,MI,MI 7,I,L65E70A_HVD,4.0,NO_PROBLEM,문제없음,복합,No problem,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-20,NIGHT,MI,MI 8,TOTAL,L55CA9N_HVD.,276.0,CHANGE_MODEL,모델교체,단일,"wave solder error,Ate error, change model",1,,1470.0,1470.0,1470.0,1470.0,1470.0,658.0
+2026-07-20,NIGHT,MI,MI 8,F,L55CA9N_HVD.,61.0,CHANGE_MODEL,모델교체,복합,"wave solder error,Ate error, change model",1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-20,NIGHT,MI,MI 8,G,L55CA9N_HVD.,13.0,CHANGE_MODEL,모델교체,복합,"wave solder error,Ate error, change model",1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-20,NIGHT,MI,MI 8,H,L55CA9N_HVD.,115.0,CHANGE_MODEL,모델교체,복합,"wave solder error,Ate error, change model",1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-20,NIGHT,MI,MI 8,I,L48CA9N_HVD,87.0,CHANGE_MODEL,모델교체,복합,"change model , lỗi máy FLUX",1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-21,NIGHT,MI,MI 3,TOTAL,L65S7_HVD,105.0,ETC,기타,복합,ME test sameple,1,,2700.0,2700.0,2700.0,2700.0,2700.0,2700.0
+2026-07-21,NIGHT,MI,MI 3,TOTAL,L65S7_HVD,17.0,ATE,ATE불량,복합,ME test sameple | ATE error,2,,2700.0,2700.0,2700.0,2700.0,2700.0,2700.0
+2026-07-21,NIGHT,MI,MI 3,F,L65S7_HVD,105.0,ETC,기타,복합,ME test sameple,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-21,NIGHT,MI,MI 3,G,L65S7_HVD,3.0,ETC,기타,복합,ME test sameple,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-21,NIGHT,MI,MI 3,H,L65S7_HVD,14.0,ETC,기타,복합,ME test sameple,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-21,NIGHT,MI,MI 4,TOTAL,L65CA9N_HVD,223.0,ICT_FT,ICT/FT/HiPOT불량,단일,"FT error, ICT flase errror, Hipot error,",1,,1490.0,1240.0,1490.0,1240.0,1490.0,1297.0
+2026-07-21,NIGHT,MI,MI 4,F,L65CA9N_HVD,34.0,ICT_FT,ICT/FT/HiPOT불량,복합,"FT error, ICT flase errror, Hipot error,",1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-21,NIGHT,MI,MI 4,G,L65CA9N_HVD,4.0,ICT_FT,ICT/FT/HiPOT불량,복합,"FT error, ICT flase errror, Hipot error,",1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-21,NIGHT,MI,MI 4,H,L65CA9N_HVD,4.0,ICT_FT,ICT/FT/HiPOT불량,복합,"FT error, ICT flase errror, Hipot error,",1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-21,NIGHT,MI,MI 4,I,L65CA9N_HVD,31.0,ICT_FT,ICT/FT/HiPOT불량,복합,"hipot error, coating error",1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-21,NIGHT,MI,MI 4,J,L65CA9N_HVD,150.0,ICT_FT,ICT/FT/HiPOT불량,복합,"FT error, ICT flase errror, Hipot error,",1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-21,NIGHT,MI,MI 5,TOTAL,L65FE8N_HHS,38.0,WAVE,Wave Solder불량,복합,"Manual conveyor error,Flux-wave error",1,,2133.0,1871.0,2133.0,1871.0,2133.0,2213.0
+2026-07-21,NIGHT,MI,MI 5,TOTAL,L65FE8N_HHS,100.0,WAITING_SMT,SMT대기,복합,"Manual conveyor error,Flux-wave error | FT no scan, waiting semi SMT , PCB no scan",2,,2133.0,1871.0,2133.0,1871.0,2133.0,2213.0
+2026-07-21,NIGHT,MI,MI 5,F,L65FE8N_HHS,38.0,WAVE,Wave Solder불량,복합,"Manual conveyor error,Flux-wave error",1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-21,NIGHT,MI,MI 5,G,L65FE8N_HHS,32.0,WAVE,Wave Solder불량,복합,"Manual conveyor error,Flux-wave error",1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-21,NIGHT,MI,MI 5,H,L65FE8N_HHS,68.0,WAVE,Wave Solder불량,복합,"Manual conveyor error,Flux-wave error",1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-21,NIGHT,MI,MI 6,TOTAL,L65S8_HVD,79.0,NG_BUFFER,NG Buffer불량,단일,"ICT error , NG buffer ICT error",1,,2700.0,2700.0,2700.0,2700.0,2700.0,2553.0
+2026-07-21,NIGHT,MI,MI 6,F,L65S8_HVD,41.0,NG_BUFFER,NG Buffer불량,복합,"ICT error , NG buffer ICT error",1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-21,NIGHT,MI,MI 6,G,L65S8_HVD,23.0,NG_BUFFER,NG Buffer불량,복합,"ICT error , NG buffer ICT error",1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-21,NIGHT,MI,MI 6,H,L65S8_HVD,15.0,NG_BUFFER,NG Buffer불량,복합,"ICT error , NG buffer ICT error",1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-21,NIGHT,MI,MI 7,TOTAL,L83CA9N_HVD,46.0,ICT_FT,ICT/FT/HiPOT불량,복합,ICT conveyor board jam,1,,1567.0,1529.0,1567.0,1529.0,1567.0,1034.0
+2026-07-21,NIGHT,MI,MI 7,TOTAL,L83CA9N_HVD,99.0,WAITING_SMT,SMT대기,복합,"ICT conveyor board jam | waiting semi SMT , ICT ICT conveyor board jam , coating error",2,,1567.0,1529.0,1567.0,1529.0,1567.0,1034.0
+2026-07-21,NIGHT,MI,MI 7,F,L83CA9N_HVD,46.0,ICT_FT,ICT/FT/HiPOT불량,복합,ICT conveyor board jam,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-21,NIGHT,MI,MI 7,G,L83CA9N_HVD,30.0,ICT_FT,ICT/FT/HiPOT불량,복합,ICT conveyor board jam,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-21,NIGHT,MI,MI 7,H,L83CA9N_HVD,30.0,ICT_FT,ICT/FT/HiPOT불량,복합,ICT conveyor board jam,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-21,NIGHT,MI,MI 7,I,L83CA9N_HVD,39.0,WAITING_SMT,SMT대기,복합,"waiting semi SMT , ICT ICT conveyor board jam , coating error",1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-21,NIGHT,MI,MI 8,TOTAL,L55CA9N_HVD.,82.0,CHANGE_MODEL,모델교체,복합,"change model,wave solder error, ICT flase error,FT error,Ate error",1,,1400.0,1318.0,1400.0,1318.0,1400.0,969.0
+2026-07-21,NIGHT,MI,MI 8,TOTAL,L55CA9N_HVD.,61.0,ATE,ATE불량,복합,"ATE error, wave solder error",2,,1400.0,1318.0,1400.0,1318.0,1400.0,969.0
+2026-07-21,NIGHT,MI,MI 8,F,L55CA9N_HVD.,41.0,CHANGE_MODEL,모델교체,복합,"change model,wave solder error, ICT flase error,FT error,Ate error",1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-21,NIGHT,MI,MI 8,G,L55CA9N_HVD.,18.0,CHANGE_MODEL,모델교체,복합,"change model,wave solder error, ICT flase error,FT error,Ate error",1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-21,NIGHT,MI,MI 8,H,L55CA9N_HVD.,23.0,CHANGE_MODEL,모델교체,복합,"change model,wave solder error, ICT flase error,FT error,Ate error",1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-21,NIGHT,MI,MI 8,I,L48CA9N_HVD,61.0,ATE,ATE불량,복합,"ATE error, wave solder error",1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-21,DAY,SMT,PS03,TOTAL,L48CA9N-HVD,21.3,UPH,UPH미달,복합,Line không đáp ứng được UPH,1,,1100.0,963.0,0.0,0.0,0.0,0.0
+2026-07-21,DAY,SMT,PS03,TOTAL,L48CA9N-HVD,53.5,FEEDER,SMT Feeder불량,복합,"Line không đáp ứng được UPH Lỗi máy mounter feeder, Pickup",2,,1100.0,963.0,0.0,0.0,0.0,0.0
+2026-07-21,DAY,SMT,PS03,A,L48CA9N-HVD,8.2,UPH,UPH미달,복합,Line không đáp ứng được UPH,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-21,DAY,SMT,PS03,B,L48CA9N-HVD,1.6,UPH,UPH미달,복합,Line không đáp ứng được UPH,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-21,DAY,SMT,PS03,C,L48CA9N-HVD,11.5,UPH,UPH미달,복합,Line không đáp ứng được UPH,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-21,DAY,SMT,PS03,D,L48CA9N-HVD,44.7,FEEDER,SMT Feeder불량,복합,"Line không đáp ứng được UPH Lỗi máy mounter feeder, Pickup",1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-21,DAY,SMT,PS03,E,L48CA9N-HVD,8.7,UPH,UPH미달,복합,Line không đáp ứng được UPH,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-21,DAY,SMT,PS04,TOTAL,L55E70A_HVD,60.0,DONE_PLAN,계획완료,단일,Kết thúc Plan,1,,440.0,330.0,0.0,0.0,0.0,0.0
+2026-07-21,DAY,SMT,PS04,B,L55E70A_HVD,60.0,DONE_PLAN,계획완료,복합,Kết thúc Plan,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-21,DAY,SMT,PS05,TOTAL,L75E70NA_HVD,68.7,DONE_PLAN,계획완료,복합,Kết thúc lot change model L65S7_HVD,1,,1540.0,1143.0,0.0,0.0,0.0,0.0
+2026-07-21,DAY,SMT,PS05,TOTAL,L75E70NA_HVD,29.1,ETC,기타,복합,Sản xuất lúc 10:45,2,,1540.0,1143.0,0.0,0.0,0.0,0.0
+2026-07-21,DAY,SMT,PS05,TOTAL,L75E70NA_HVD,66.2,MOUTER,Mouter불량,복합,Stop line vender sử lý máy mounter,3,,1540.0,1143.0,0.0,0.0,0.0,0.0
+2026-07-21,DAY,SMT,PS05,A,L75E70NA_HVD,42.5,DONE_PLAN,계획완료,복합,Kết thúc lot change model L65S7_HVD,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-21,DAY,SMT,PS05,B,L65S7_HVD,29.1,ETC,기타,복합,Sản xuất lúc 10:45,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-21,DAY,SMT,PS05,C,L65S7_HVD,26.2,DONE_PLAN,계획완료,복합,Kết thúc lot change model L65S7_HVD,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-21,DAY,SMT,PS05,D,L65S7_HVD,66.2,MOUTER,Mouter불량,복합,Stop line vender sử lý máy mounter,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-21,DAY,SMT,PS06,TOTAL,L55S7_HVD,154.3,PRINTER,Printer불량,단일,Lỗi Printer Bắt PCB Lỗi Inloader | Lỗi Printer Bắt PCB,1,,1800.0,1337.0,0.0,0.0,0.0,0.0
+2026-07-21,DAY,SMT,PS06,B,L55S7_HVD,3.3,PRINTER,Printer불량,복합,Lỗi Printer Bắt PCB Lỗi Inloader,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-21,DAY,SMT,PS06,C,L55S7_HVD,73.3,PRINTER,Printer불량,복합,Lỗi Printer Bắt PCB Lỗi Inloader,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-21,DAY,SMT,PS06,D,L55S7_HVD,47.7,PRINTER,Printer불량,복합,Lỗi Printer Bắt PCB,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-21,DAY,SMT,PS06,E,L55S7_HVD,30.0,PRINTER,Printer불량,복합,Lỗi Printer Bắt PCB Lỗi Inloader,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-21,DAY,SMT,PS07,TOTAL,L65S8-HVD,67.9,INLOADER,Inloader불량,단일,Lỗi Inloader,1,,2200.0,1961.0,0.0,0.0,0.0,0.0
+2026-07-21,DAY,SMT,PS07,A,L65S8-HVD,57.3,INLOADER,Inloader불량,단일,Lỗi Inloader,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-21,DAY,SMT,PS07,B,L65S8-HVD,2.7,INLOADER,Inloader불량,단일,Lỗi Inloader,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-21,DAY,SMT,PS07,D,L65S8-HVD,7.9,INLOADER,Inloader불량,단일,Lỗi Inloader,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-21,DAY,SMT,PS08,TOTAL,L65S7_FVD,7.3,MOUTER,Mouter불량,복합,Máy Mounter#1 lổi kẹt board,1,,1770.0,1013.0,0.0,0.0,0.0,0.0
+2026-07-21,DAY,SMT,PS08,TOTAL,L65S7_FVD,120.0,CHANGE_MODEL,모델교체,복합,Change model L65 => L55,2,,1770.0,1013.0,0.0,0.0,0.0,0.0
+2026-07-21,DAY,SMT,PS08,TOTAL,L65S7_FVD,10.0,ETC,기타,복합,Line sản xuất lúc 11:40,3,,1770.0,1013.0,0.0,0.0,0.0,0.0
+2026-07-21,DAY,SMT,PS08,TOTAL,L65S7_FVD,115.7,PRINTER,Printer불량,복합,Printer quét tràng keo,4,,1770.0,1013.0,0.0,0.0,0.0,0.0
+2026-07-21,DAY,SMT,PS08,A,L65S7_FVD,7.3,MOUTER,Mouter불량,복합,Máy Mounter#1 lổi kẹt board,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-21,DAY,SMT,PS08,B,L55S7N_HVD,120.0,CHANGE_MODEL,모델교체,복합,Change model L65 => L55,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-21,DAY,SMT,PS08,C,L55S7N_HVD,10.0,ETC,기타,복합,Line sản xuất lúc 11:40,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-21,DAY,SMT,PS08,D,L55S7N_HVD,88.3,PRINTER,Printer불량,복합,Printer quét tràng keo,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-21,DAY,SMT,PS08,E,L55S7N_HVD,27.3,PRINTER,Printer불량,복합,Printer lổi lệch keo,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-21,DAY,SMT,PS10,TOTAL,L75S7_FVD,120.0,CHANGE_MODEL,모델교체,복합,Change model đối ứng Plan,1,,1340.0,466.0,0.0,0.0,0.0,0.0
+2026-07-21,DAY,SMT,PS10,TOTAL,L75S7_FVD,78.5,SPI,SPI불량,복합,Làm chương trình SPI Dipenser#1 lổi fiducimak line chạy chưa ổn định,2,,1340.0,466.0,0.0,0.0,0.0,0.0
+2026-07-21,DAY,SMT,PS10,TOTAL,L75S7_FVD,72.0,MOUTER,Mouter불량,복합,Máy Mounter#3 lổi kẹt board,3,,1340.0,466.0,0.0,0.0,0.0,0.0
+2026-07-21,DAY,SMT,PS10,A,L75S7_FVD,120.0,CHANGE_MODEL,모델교체,복합,Change model đối ứng Plan,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-21,DAY,SMT,PS10,C,L43E60A_HVD,78.5,SPI,SPI불량,복합,Làm chương trình SPI Dipenser#1 lổi fiducimak line chạy chưa ổn định,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-21,DAY,SMT,PS10,D,L43E60A_HVD,72.0,MOUTER,Mouter불량,복합,Máy Mounter#3 lổi kẹt board,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-21,DAY,SMT,PS11,TOTAL,L65FE8N_HVD,112.9,MOUTER,Mouter불량,단일,Kỹ thuật điều chỉnh máy mounter #3 Máy printer lệch keo,1,,1100.0,929.0,0.0,0.0,0.0,0.0
+2026-07-21,DAY,SMT,PS11,A,L65FE8N_HVD,65.5,MOUTER,Mouter불량,복합,Kỹ thuật điều chỉnh máy mounter #3 Máy printer lệch keo,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-21,DAY,SMT,PS11,B,L65FE8N_HVD,21.8,MOUTER,Mouter불량,복합,Lỗi ảo máy spi Lỗi pickup,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-21,DAY,SMT,PS11,C,L65FE8N_HVD,25.6,MOUTER,Mouter불량,복합,Kỹ thuật điều chỉnh máy mounter #3 Máy printer lệch keo,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-21,DAY,SMT,PS12,TOTAL,L65S7A_HVD,10.9,EQUIP_FAIL,설비고장(기타),복합,Chưa có WO để scan,1,,1320.0,1000.0,0.0,0.0,0.0,0.0
+2026-07-21,DAY,SMT,PS12,TOTAL,L65S7A_HVD,76.4,DONE_PLAN,계획완료,복합,Chưa có WO để scan | Kết thúc Plan,2,,1320.0,1000.0,0.0,0.0,0.0,0.0
+2026-07-21,DAY,SMT,PS12,A,L65S7A_HVD,10.9,EQUIP_FAIL,설비고장(기타),복합,Chưa có WO để scan,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-21,DAY,SMT,PS12,B,L65S7A_HVD,5.2,EQUIP_FAIL,설비고장(기타),복합,Chưa có WO để scan,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-21,DAY,SMT,PS12,C,L65S7A_HVD,71.2,DONE_PLAN,계획완료,복합,Kết thúc Plan,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-21,DAY,SMT,PS13,TOTAL,L55CA9N-HVD,96.0,FEEDER,SMT Feeder불량,복합,Lỗi mất nhiệt độ lò reflow Máy printer tràn keo Lỗi feeder và thay feeder liên tục Kẹt board máy inloader,1,,1100.0,912.0,0.0,0.0,0.0,0.0
+2026-07-21,DAY,SMT,PS13,TOTAL,L55CA9N-HVD,8.2,PRINTER,Printer불량,복합,Máy printer nghẹt keo,2,,1100.0,912.0,0.0,0.0,0.0,0.0
+2026-07-21,DAY,SMT,PS13,A,L55CA9N-HVD,76.4,FEEDER,SMT Feeder불량,복합,Lỗi mất nhiệt độ lò reflow Máy printer tràn keo Lỗi feeder và thay feeder liên tục Kẹt board máy inloader,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-21,DAY,SMT,PS13,B,L55CA9N-HVD,8.2,PRINTER,Printer불량,복합,Máy printer nghẹt keo,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-21,DAY,SMT,PS13,C,L55CA9N-HVD,19.6,FEEDER,SMT Feeder불량,복합,Lỗi mất nhiệt độ lò reflow Máy printer tràn keo Lỗi feeder và thay feeder liên tục Kẹt board máy inloader,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-21,NIGHT,SMT,PS02,TOTAL,L65CA9N-HVD,12.0,NEW_OP,신규OP교육,복합,OP mới,1,,880.0,767.0,0.0,0.0,0.0,0.0
+2026-07-21,NIGHT,SMT,PS02,TOTAL,L65CA9N-HVD,8.0,DONE_PLAN,계획완료,복합,OP mới | Kết thúc plan lúc 3:05,2,,880.0,767.0,0.0,0.0,0.0,0.0
+2026-07-21,NIGHT,SMT,PS02,F,L65CA9N-HVD,12.0,NEW_OP,신규OP교육,복합,OP mới,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-21,NIGHT,SMT,PS02,G,L65CA9N-HVD,5.0,NEW_OP,신규OP교육,복합,OP mới,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-21,NIGHT,SMT,PS02,H,L65CA9N-HVD,3.0,NEW_OP,신규OP교육,복합,OP mới,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-21,NIGHT,SMT,PS03,TOTAL,L48CA9N-HVD,22.0,ETC,기타,단일,,1,,1100.0,1049.0,0.0,0.0,0.0,0.0
+2026-07-21,NIGHT,SMT,PS03,F,L48CA9N-HVD,12.0,ETC,기타,단일,,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-21,NIGHT,SMT,PS03,J,L48CA9N-HVD,10.0,ETC,기타,단일,,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-21,NIGHT,SMT,PS05,TOTAL,L65E70A_HVD,15.0,DONE_PLAN,계획완료,복합,Kết thúc plan lúc 1:45 Change model L75E70NA,1,,1080.0,801.0,0.0,0.0,0.0,0.0
+2026-07-21,NIGHT,SMT,PS05,TOTAL,L65E70A_HVD,80.0,NEW_MODEL,신규모델,복합,Change model từ 1:45 - 2:20 Kỹ thuật set up máy tới 3:20,2,,1080.0,801.0,0.0,0.0,0.0,0.0
+2026-07-21,NIGHT,SMT,PS05,TOTAL,L65E70A_HVD,45.3,MOUTER,Mouter불량,복합,Lỗi pickup máy mounter #3,3,,1080.0,801.0,0.0,0.0,0.0,0.0
+2026-07-21,NIGHT,SMT,PS05,H,L65E70A_HVD,15.0,DONE_PLAN,계획완료,복합,Kết thúc plan lúc 1:45 Change model L75E70NA,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-21,NIGHT,SMT,PS05,I,L75E70NA_HVD,80.0,NEW_MODEL,신규모델,복합,Change model từ 1:45 - 2:20 Kỹ thuật set up máy tới 3:20,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-21,NIGHT,SMT,PS05,J,L75E70NA_HVD,45.3,MOUTER,Mouter불량,복합,Lỗi pickup máy mounter #3,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-21,NIGHT,SMT,PS06,TOTAL,L55S7_HVD,100.0,ETC,기타,단일,,1,,1800.0,1463.0,0.0,0.0,0.0,0.0
+2026-07-21,NIGHT,SMT,PS06,F,L55S7_HVD,35.0,ETC,기타,단일,,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-21,NIGHT,SMT,PS06,G,L55S7_HVD,10.0,ETC,기타,단일,,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-21,NIGHT,SMT,PS06,H,L55S7_HVD,40.0,ETC,기타,단일,,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-21,NIGHT,SMT,PS06,J,L55S7_HVD,15.0,ETC,기타,단일,,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-21,NIGHT,SMT,PS07,TOTAL,L65S8-HVD,110.0,ETC,기타,복합,Kĩ thuật lắp máy in loader,1,,2200.0,1034.0,0.0,0.0,0.0,0.0
+2026-07-21,NIGHT,SMT,PS07,TOTAL,L65S8-HVD,125.0,PRINTER,Printer불량,복합,lỗi printer liên tục,2,,2200.0,1034.0,0.0,0.0,0.0,0.0
+2026-07-21,NIGHT,SMT,PS07,TOTAL,L65S8-HVD,70.0,MOUTER,Mouter불량,복합,lỗi máy mounter cắm văng linh kiện,3,,2200.0,1034.0,0.0,0.0,0.0,0.0
+2026-07-21,NIGHT,SMT,PS07,F,L65S8-HVD,110.0,ETC,기타,복합,Kĩ thuật lắp máy in loader,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-21,NIGHT,SMT,PS07,G,L65S8-HVD,90.0,PRINTER,Printer불량,복합,lỗi printer liên tục,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-21,NIGHT,SMT,PS07,H,L65S8-HVD,35.0,PRINTER,Printer불량,복합,lỗi printer liên tục,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-21,NIGHT,SMT,PS07,I,L65S8-HVD,25.0,MOUTER,Mouter불량,복합,lỗi máy mounter cắm văng linh kiện,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-21,NIGHT,SMT,PS07,J,L65S8-HVD,45.0,ETC,기타,복합,Kĩ thuật lắp máy in loader,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-21,NIGHT,SMT,PS08,TOTAL,L55S7_HVD,130.0,WAITING_AI,AI대기,복합,Chờ board AI,1,,2200.0,1160.0,0.0,0.0,0.0,0.0
+2026-07-21,NIGHT,SMT,PS08,TOTAL,L55S7_HVD,120.0,NEW_MODEL,신규모델,복합,Change model từ 4:00 - 5:30 Kỹ thuật setup máy,2,,2200.0,1160.0,0.0,0.0,0.0,0.0
+2026-07-21,NIGHT,SMT,PS08,F,L55S7_HVD,80.0,WAITING_AI,AI대기,복합,Chờ board AI,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-21,NIGHT,SMT,PS08,G,L55S7_HVD,30.0,WAITING_AI,AI대기,복합,Chờ board AI,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-21,NIGHT,SMT,PS08,H,L55S7_HVD,20.0,WAITING_AI,AI대기,복합,Chờ board AI,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-21,NIGHT,SMT,PS08,J,L65S7_FVD,120.0,NEW_MODEL,신규모델,복합,Change model từ 4:00 - 5:30 Kỹ thuật setup máy,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-21,NIGHT,SMT,PS10,TOTAL,L65SD7_HVD,120.0,CHANGE_MODEL,모델교체,복합,Change model từ 21:30 - 22:30 Kỹ thuật làm chương trình máy dipenser,1,,1268.0,266.0,0.0,0.0,0.0,0.0
+2026-07-21,NIGHT,SMT,PS10,TOTAL,L65SD7_HVD,200.0,EQUIP_FAIL,설비고장(기타),복합,Kỹ thuật làm chương trình máy dipenser,2,,1268.0,266.0,0.0,0.0,0.0,0.0
+2026-07-21,NIGHT,SMT,PS10,TOTAL,L65SD7_HVD,64.8,PRINTER,Printer불량,복합,Lỗi tràn keo từ 4:00 - 5:00,3,,1268.0,266.0,0.0,0.0,0.0,0.0
+2026-07-21,NIGHT,SMT,PS10,G,L75S7_FVD,120.0,CHANGE_MODEL,모델교체,복합,Change model từ 21:30 - 22:30 Kỹ thuật làm chương trình máy dipenser,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-21,NIGHT,SMT,PS10,H,L75S7_FVD,120.0,EQUIP_FAIL,설비고장(기타),복합,Kỹ thuật làm chương trình máy dipenser,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-21,NIGHT,SMT,PS10,I,L75S7_FVD,80.0,EQUIP_FAIL,설비고장(기타),복합,Kỹ thuật làm chương trình máy dipenser,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-21,NIGHT,SMT,PS10,J,L75S7_FVD,64.8,PRINTER,Printer불량,복합,Lỗi tràn keo từ 4:00 - 5:00,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-21,NIGHT,SMT,PS11,TOTAL,L83CA9N_HVD,115.1,DONE_PLAN,계획완료,복합,Lỗi pickup OP mới | Line không đáp ứng UPH | Kết thúc model Change model L65FE8N lúc 3:00 | Change model L65FE8N lúc 3:00 - 4:30 Kỹ thuật setup máy,1,,1100.0,426.0,0.0,0.0,0.0,0.0
+2026-07-21,NIGHT,SMT,PS11,TOTAL,L83CA9N_HVD,70.0,NEW_OP,신규OP교육,복합,Lỗi pickup OP mới,2,,1100.0,426.0,0.0,0.0,0.0,0.0
+2026-07-21,NIGHT,SMT,PS11,TOTAL,L83CA9N_HVD,50.0,UPH,UPH미달,복합,Line không đáp ứng UPH,3,,1100.0,426.0,0.0,0.0,0.0,0.0
+2026-07-21,NIGHT,SMT,PS11,TOTAL,L83CA9N_HVD,94.9,NEW_MODEL,신규모델,복합,Change model L65FE8N lúc 3:00 - 4:30 Kỹ thuật setup máy,4,,1100.0,426.0,0.0,0.0,0.0,0.0
+2026-07-21,NIGHT,SMT,PS11,F,L83CA9N_HVD,55.1,NEW_OP,신규OP교육,복합,Lỗi pickup OP mới,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-21,NIGHT,SMT,PS11,G,L83CA9N_HVD,70.0,NEW_OP,신규OP교육,복합,Lỗi pickup OP mới,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-21,NIGHT,SMT,PS11,H,L83CA9N_HVD,50.0,UPH,UPH미달,복합,Line không đáp ứng UPH,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-21,NIGHT,SMT,PS11,I,L83CA9N_HVD,60.0,DONE_PLAN,계획완료,복합,Kết thúc model Change model L65FE8N lúc 3:00,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-21,NIGHT,SMT,PS11,J,L65FE8N_HVD,94.9,NEW_MODEL,신규모델,복합,Change model L65FE8N lúc 3:00 - 4:30 Kỹ thuật setup máy,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-21,NIGHT,SMT,PS12,TOTAL,L65S7A_HVD,110.0,CHANGE_MODEL,모델교체,복합,Change model đầu giờ tới 21:10 Kỹ thuật điều chỉnh máy,1,,2200.0,1189.0,0.0,0.0,0.0,0.0
+2026-07-21,NIGHT,SMT,PS12,TOTAL,L65S7A_HVD,120.0,ETC,기타,복합,Kỹ thuật điều chỉnh máy,2,,2200.0,1189.0,0.0,0.0,0.0,0.0
+2026-07-21,NIGHT,SMT,PS12,TOTAL,L65S7A_HVD,35.0,SPI,SPI불량,복합,Vừa chạy vừa chỉnh máy SPI,3,,2200.0,1189.0,0.0,0.0,0.0,0.0
+2026-07-21,NIGHT,SMT,PS12,F,L65S7A_HVD,110.0,CHANGE_MODEL,모델교체,복합,Change model đầu giờ tới 21:10 Kỹ thuật điều chỉnh máy,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-21,NIGHT,SMT,PS12,G,L65S7A_HVD,80.0,ETC,기타,복합,Kỹ thuật điều chỉnh máy,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-21,NIGHT,SMT,PS12,H,L65S7A_HVD,40.0,ETC,기타,복합,Kỹ thuật điều chỉnh máy,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-21,NIGHT,SMT,PS12,I,L65S7A_HVD,20.0,SPI,SPI불량,복합,Vừa chạy vừa chỉnh máy SPI,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-21,NIGHT,SMT,PS12,J,L65S7A_HVD,15.0,CHANGE_MODEL,모델교체,복합,Change model đầu giờ tới 21:10 Kỹ thuật điều chỉnh máy,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-21,NIGHT,SMT,PS13,TOTAL,L55CA9N-HVD,195.3,MOUTER,Mouter불량,복합,Máy mounter #2 treo máy,1,,1100.0,443.0,0.0,0.0,0.0,0.0
+2026-07-21,NIGHT,SMT,PS13,TOTAL,L55CA9N-HVD,20.0,PRINTER,Printer불량,복합,Dừng chỉnh tràn keo máy printer,2,,1100.0,443.0,0.0,0.0,0.0,0.0
+2026-07-21,NIGHT,SMT,PS13,TOTAL,L55CA9N-HVD,145.0,REFLOW,Reflow불량,복합,Lỗi mất nhiệt độ lò reflow từ 3:10 -,3,,1100.0,443.0,0.0,0.0,0.0,0.0
+2026-07-21,NIGHT,SMT,PS13,F,L55CA9N-HVD,120.0,MOUTER,Mouter불량,복합,Máy mounter #2 treo máy,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-21,NIGHT,SMT,PS13,G,L55CA9N-HVD,75.3,MOUTER,Mouter불량,복합,Máy mounter #2 treo máy,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-21,NIGHT,SMT,PS13,H,L55CA9N-HVD,20.0,PRINTER,Printer불량,복합,Dừng chỉnh tràn keo máy printer,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-21,NIGHT,SMT,PS13,I,L55CA9N-HVD,25.0,REFLOW,Reflow불량,복합,Lỗi mất nhiệt độ lò reflow từ 3:10 -,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-21,NIGHT,SMT,PS13,J,L55CA9N-HVD,120.0,REFLOW,Reflow불량,복합,Lỗi mất nhiệt độ lò reflow từ 3:10 -,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-21,DAY,AI,SA01,TOTAL,L65S8,8.0,FEEDER,SMT Feeder불량,단일,Rad feeder rớt liệu,1,,1855.0,1828.0,0.0,0.0,0.0,0.0
+2026-07-21,DAY,AI,SA01,A,L65S8,8.0,FEEDER,SMT Feeder불량,단일,Rad feeder rớt liệu,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-21,DAY,AI,SA02,TOTAL,L65S7,10.0,ETC,기타,단일,,1,,1855.0,1830.0,0.0,0.0,0.0,0.0
+2026-07-21,DAY,AI,SA02,D,L65S7,10.0,ETC,기타,단일,,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-21,DAY,AI,SA07,TOTAL,L55S7,7.0,ETC,기타,단일,,1,,1590.0,1766.0,0.0,0.0,0.0,0.0
+2026-07-21,DAY,AI,SA07,A,L55S7,7.0,ETC,기타,단일,,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-21,DAY,AI,SA08,TOTAL,L55S7N,164.0,INSERT_RAD,Radial불량,단일,Rh3 lỗi từ 8:00-10:30,1,,1590.0,1095.0,0.0,0.0,0.0,0.0
+2026-07-21,DAY,AI,SA08,A,L55S7N,68.0,INSERT_RAD,Radial불량,단일,Rh3 lỗi từ 8:00-10:30,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-21,DAY,AI,SA08,B,L55S7N,48.0,INSERT_RAD,Radial불량,단일,Rh3 lỗi từ 8:00-10:30,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-21,DAY,AI,SA08,C,L55S7,48.0,INSERT_RAD,Radial불량,단일,Rh3 lỗi từ 8:00-10:30,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-21,DAY,AI,SA10,TOTAL,L75E70,35.0,CHANGE_MODEL,모델교체,단일,Change model đầu ca,1,,1060.0,990.0,0.0,0.0,0.0,0.0
+2026-07-21,DAY,AI,SA10,A,L75E70,35.0,CHANGE_MODEL,모델교체,단일,Change model đầu ca,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-21,DAY,AI,SA11,TOTAL,L55CA9N,199.0,EYELET,아일렛/서포트불량,복합,Máy RL131 lỗi Eyelet kẹt liệu,1,,1060.0,445.0,0.0,0.0,0.0,0.0
+2026-07-21,DAY,AI,SA11,TOTAL,L55CA9N,27.0,QC_INSPECT,QC검사대기,복합,"RL 131 lỗi,vender dừng line xử lý",2,,1060.0,445.0,0.0,0.0,0.0,0.0
+2026-07-21,DAY,AI,SA11,A,L55CA9N,120.0,EYELET,아일렛/서포트불량,복합,Máy RL131 lỗi Eyelet kẹt liệu,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-21,DAY,AI,SA11,B,L55CA9N,27.0,QC_INSPECT,QC검사대기,복합,"RL 131 lỗi,vender dừng line xử lý",1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-21,DAY,AI,SA11,C,L55CA9N,21.0,EYELET,아일렛/서포트불량,복합,Máy RL131 lỗi Eyelet kẹt liệu,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-21,DAY,AI,SA11,D,L55CA9N,34.0,EYELET,아일렛/서포트불량,복합,Máy RL131 lỗi Eyelet kẹt liệu,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-21,DAY,AI,SA11,E,L55CA9N,24.0,EYELET,아일렛/서포트불량,복합,Máy RL131 lỗi Eyelet kẹt liệu,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-21,DAY,AI,SA12,TOTAL,L43E60,57.0,CHANGE_MODEL,모델교체,단일,Change model đầu ca,1,,1060.0,860.0,0.0,0.0,0.0,0.0
+2026-07-21,DAY,AI,SA12,A,L43E60,49.0,CHANGE_MODEL,모델교체,단일,Change model đầu ca,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-21,DAY,AI,SA12,D,L43E60,8.0,CHANGE_MODEL,모델교체,단일,Change model đầu ca,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-21,NIGHT,AI,SA02,TOTAL,L65S7_HVD,17.0,ETC,기타,단일,,1,,1769.0,1759.0,0.0,0.0,0.0,0.0
+2026-07-21,NIGHT,AI,SA02,F,L65S7_HVD,17.0,ETC,기타,단일,,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-21,NIGHT,AI,SA03,TOTAL,L65CA9N_HVD,11.0,INSERT_RAD,Radial불량,단일,RH3 CẮM RỚT,1,VỪA CHẠY VỪA XỬ LÝ,1020.0,1047.0,0.0,0.0,0.0,0.0
+2026-07-21,NIGHT,AI,SA03,F,L65CA9N_HVD,11.0,INSERT_RAD,Radial불량,단일,RH3 CẮM RỚT,1,VỪA CHẠY VỪA XỬ LÝ,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-21,NIGHT,AI,SA04,TOTAL,55HVD,48.0,CHANGE_MODEL,모델교체,단일,Change model 65A do hết PCB 55hvd,1,,1771.0,1687.0,0.0,0.0,0.0,0.0
+2026-07-21,NIGHT,AI,SA04,J,55HVD,48.0,CHANGE_MODEL,모델교체,단일,Change model 65A do hết PCB 55hvd,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-21,NIGHT,AI,SA05,TOTAL,L55CA9N_HVD,85.0,INSERT_RAD,Radial불량,단일,rg cắm rớt 20:00 -21:00,1,vừa chạy vừa xử lý,1020.0,726.0,0.0,0.0,0.0,0.0
+2026-07-21,NIGHT,AI,SA05,F,L55CA9N_HVD,38.0,INSERT_RAD,Radial불량,복합,rg cắm rớt 20:00 -21:00,1,vừa chạy vừa xử lý,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-21,NIGHT,AI,SA05,G,L55CA9N_HVD,19.0,INSERT_RAD,Radial불량,복합,Rh3 cắm lỗi .,1,vừa chạy vừa xử lý,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-21,NIGHT,AI,SA05,H,L55CA9N_HVD,22.0,INSERT_RAD,Radial불량,복합,Rh3 cắm rớt nhiều 0:20-1:00,1,vừa chạy vừa xử lý,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-21,NIGHT,AI,SA05,I,L55CA9N_HVD,6.0,INSERT_RAD,Radial불량,복합,rg cắm rớt 20:00 -21:00,1,vừa chạy vừa xử lý,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-21,NIGHT,AI,SA08,TOTAL,55HVD,123.0,INSERT_RAD,Radial불량,단일,RAD LỖI 20:30-21:30,1,BỐC THẢ SA7 COVER | Bốc hàng cover sa7,1769.0,1350.0,0.0,0.0,0.0,0.0
+2026-07-21,NIGHT,AI,SA08,F,55HVD,53.0,INSERT_RAD,Radial불량,복합,RAD LỖI 20:30-21:30,1,BỐC THẢ SA7 COVER | Bốc hàng cover sa7,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-21,NIGHT,AI,SA08,I,55HVD,30.0,INSERT_RAD,Radial불량,복합,Rh3 cắm rớt,1,BỐC THẢ SA7 COVER | Bốc hàng cover sa7,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-21,NIGHT,AI,SA08,J,55HVD,40.0,INSERT_RAD,Radial불량,복합,Rad cắm lỗi,1,BỐC THẢ SA7 COVER | Bốc hàng cover sa7,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-21,NIGHT,AI,SA10,TOTAL,L75E70NA_HVD,38.0,FEEDER,SMT Feeder불량,복합,Av cắm lỗi feeder,1,"thay feeder , vừa chạy vừa điều chỉnh | vừa chạy vừa xử lý",1155.0,762.0,0.0,0.0,0.0,0.0
+2026-07-21,NIGHT,AI,SA10,TOTAL,L75E70NA_HVD,75.0,INSERT_AXIAL,Axial불량,복합,Av cắm lỗi,2,"thay feeder , vừa chạy vừa điều chỉnh | vừa chạy vừa xử lý",1155.0,762.0,0.0,0.0,0.0,0.0
+2026-07-21,NIGHT,AI,SA10,F,L75E70NA_HVD,16.0,FEEDER,SMT Feeder불량,복합,Av cắm lỗi feeder,1,"thay feeder , vừa chạy vừa điều chỉnh | vừa chạy vừa xử lý",0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-21,NIGHT,AI,SA10,G,L75E70NA_HVD,4.0,FEEDER,SMT Feeder불량,복합,Av cắm lỗi feeder,1,"thay feeder , vừa chạy vừa điều chỉnh | vừa chạy vừa xử lý",0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-21,NIGHT,AI,SA10,H,L75E70NA_HVD,20.0,INSERT_AXIAL,Axial불량,복합,Av cắm lỗi,1,"thay feeder , vừa chạy vừa điều chỉnh | vừa chạy vừa xử lý",0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-21,NIGHT,AI,SA10,I,L75E70NA_HVD,18.0,FEEDER,SMT Feeder불량,복합,Av cắm lỗi feeder,1,"thay feeder , vừa chạy vừa điều chỉnh | vừa chạy vừa xử lý",0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-21,NIGHT,AI,SA10,J,L75E70NA_HVD,55.0,INSERT_AXIAL,Axial불량,복합,Av lỗi trục H,1,"thay feeder , vừa chạy vừa điều chỉnh | vừa chạy vừa xử lý",0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-21,NIGHT,AI,SA11,TOTAL,L55CA9N_HVD,103.0,INSERT_RAD,Radial불량,복합,RG CẮM LỖI,1,VỪA CHẠY VỪA XỬ LÝ,1020.0,544.0,0.0,0.0,0.0,0.0
+2026-07-21,NIGHT,AI,SA11,TOTAL,L55CA9N_HVD,33.0,EYELET,아일렛/서포트불량,복합,eye 2.0 lỗi,2,VỪA CHẠY VỪA XỬ LÝ,1020.0,544.0,0.0,0.0,0.0,0.0
+2026-07-21,NIGHT,AI,SA11,F,L55CA9N_HVD,42.0,INSERT_RAD,Radial불량,복합,RG CẮM LỖI,1,VỪA CHẠY VỪA XỬ LÝ,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-21,NIGHT,AI,SA11,G,L55CA9N_HVD,6.0,INSERT_RAD,Radial불량,복합,RG CẮM LỖI,1,VỪA CHẠY VỪA XỬ LÝ,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-21,NIGHT,AI,SA11,H,L55CA9N_HVD,39.0,INSERT_RAD,Radial불량,복합,RG cắm rớt không đủ tech cover,1,VỪA CHẠY VỪA XỬ LÝ,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-21,NIGHT,AI,SA11,I,L55CA9N_HVD,16.0,INSERT_RAD,Radial불량,복합,RG CẮM LỖI,1,VỪA CHẠY VỪA XỬ LÝ,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-21,NIGHT,AI,SA11,J,L55CA9N_HVD,33.0,EYELET,아일렛/서포트불량,복합,eye 2.0 lỗi,1,VỪA CHẠY VỪA XỬ LÝ,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-21,NIGHT,AI,SA12,TOTAL,L43E60A_HVD,140.0,INSERT_RAD,Radial불량,단일,Rg cắm rớt,1,VỪA CHẠY VỪA XỬ LÝ,1190.0,700.0,0.0,0.0,0.0,0.0
+2026-07-21,NIGHT,AI,SA12,F,L43E60A_HVD,19.0,INSERT_RAD,Radial불량,복합,Rg cắm rớt,1,VỪA CHẠY VỪA XỬ LÝ,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-21,NIGHT,AI,SA12,G,L43E60A_HVD,29.0,INSERT_RAD,Radial불량,복합,Rg cắm rớt giờ nghỉ không đủ tech cover,1,VỪA CHẠY VỪA XỬ LÝ,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-21,NIGHT,AI,SA12,H,L43E60A_HVD,25.0,INSERT_RAD,Radial불량,복합,"RG cắm rớt , văng nhiều không đủ tech cover",1,VỪA CHẠY VỪA XỬ LÝ,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-21,NIGHT,AI,SA12,I,L43E60A_HVD,43.0,INSERT_RAD,Radial불량,복합,Rg cắm rớt,1,VỪA CHẠY VỪA XỬ LÝ,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-21,NIGHT,AI,SA12,J,L43E60A_HVD,24.0,INSERT_RAD,Radial불량,복합,Rg cắm rớt,1,VỪA CHẠY VỪA XỬ LÝ,0.0,0.0,0.0,0.0,0.0,0.0
