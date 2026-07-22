@@ -1410,14 +1410,18 @@ def dashboard():
             pp_all = (total_df.groupby("process")["loss_min"].sum().reset_index())
             proc_opts = [p for p in ["AI","SMT","MI"] if p in pp_all["process"].unique()]
             if proc_opts:
-                btn_cols = st.columns(len(proc_opts))
-                for bc, p in zip(btn_cols, proc_opts):
-                    is_sel = st.session_state.get("sel_proc", "MI") == p
-                    if bc.button(p, key=f"sel_proc_btn_{p}",
-                                 type="primary" if is_sel else "secondary",
-                                 use_container_width=True):
-                        st.session_state["sel_proc"] = p
-                        st.rerun()
+                # ★ 버튼 줄을 전체 폭에 그대로 놓으면(st.columns(2)일 때 특히) 버튼이
+                #   거대한 막대처럼 늘어남 → 아래 파이차트 폭(절반)에 맞춰 좁은 영역 안에서만 배치
+                btn_area, _sp = st.columns(2)
+                with btn_area:
+                    btn_cols = st.columns(len(proc_opts))
+                    for bc, p in zip(btn_cols, proc_opts):
+                        is_sel = st.session_state.get("sel_proc", "MI") == p
+                        if bc.button(p, key=f"sel_proc_btn_{p}",
+                                     type="primary" if is_sel else "secondary",
+                                     use_container_width=True):
+                            st.session_state["sel_proc"] = p
+                            st.rerun()
 
             col_pie, col_type = st.columns(2)
             with col_pie:
