@@ -30,6 +30,35 @@
 2026-07-01,DAY,MI,MI 7,C,L48CA9N_HVD,150.0,ATE,ATE불량,복합,"Ate waiting stock (60min), vision error (20min), wave solder (4min)",1,,0.0,0.0,0.0,0.0,0.0,0.0
 2026-07-01,DAY,MI,MI 7,TOTAL,L48CA9N_HVD,84.0,ATE,ATE불량,복합,"Ate waiting stock (60min), vision error (20min), wave solder (4min)",1,,1236.0,1176.0,1236.0,1176.0,1236.0,773.0
 2026-07-01,DAY,MI,MI 7,TOTAL,L48CA9N_HVD,210.0,WAITING_SMT,SMT대기,복합,"Ate waiting stock (60min), vision error (20min), wave solder (4min) | change model (30min), waiting semi SMT (30min),",2,,1236.0,1176.0,1236.0,1176.0,1236.0,773.0
+2026-07-01,DAY,SMT,PS01,TOTAL,L55S7_HVD,0.0,NO_PROBLEM,문제없음,단일,,1,,2480.0,2480.0,0.0,0.0,0.0,0.0
+2026-07-01,DAY,SMT,PS02,E,L65E70W_HVD,20.0,PRINTER,Printer불량,복합,Lỗi printer nghẹt keo,1,Kỹ thuật điều chỉnh,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-01,DAY,SMT,PS02,TOTAL,L65E70A_HVD,20.0,PRINTER,Printer불량,단일,Lỗi printer nghẹt keo,1,Kỹ thuật điều chỉnh,1387.0,1347.0,0.0,0.0,0.0,0.0
+2026-07-01,DAY,SMT,PS03,A,L75S7N_HVD,26.0,MOUTER,Mouter불량,단일,Máy mounter #1 lỗi,1,Kỹ thuật điều chỉnh,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-01,DAY,SMT,PS03,TOTAL,L75S7N_HVD,26.0,MOUTER,Mouter불량,단일,Máy mounter #1 lỗi,1,Kỹ thuật điều chỉnh,1788.0,1788.0,0.0,0.0,0.0,0.0
+2026-07-01,DAY,SMT,PS04,A,L65FE8N_HHS,120.0,AI_STOCK,AI자재부족,복합,AI hết stock,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-01,DAY,SMT,PS04,B,L65FE8N_HHS,120.0,AI_STOCK,AI자재부족,복합,AI hết stock Cover 374EA model L65S8W Plan 30.June,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-01,DAY,SMT,PS04,C,L65S7_HVD,65.0,CHANGE_MODEL,모델교체,복합,Change model từ 11:30 - 12:45,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-01,DAY,SMT,PS04,D,L65S7N_HVD,32.0,CHANGE_MODEL,모델교체,복합,Change model từ 13:20 - 13:50,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-01,DAY,SMT,PS04,TOTAL,L65FE8N_HHS,240.0,AI_STOCK,AI자재부족,복합,AI hết stock,1,,2273.0,1239.0,0.0,0.0,0.0,0.0
+2026-07-01,DAY,SMT,PS04,TOTAL,L65FE8N_HHS,97.0,CHANGE_MODEL,모델교체,복합,Change model từ 11:30 - 12:45,2,,2273.0,1239.0,0.0,0.0,0.0,0.0
+2026-07-01,DAY,SMT,PS05,A,L55S7_HVD,67.0,CHANGE_MODEL,모델교체,복합,Change model từ 7:30 - 9:00,1,Kỹ thuật điều chỉnh,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-01,DAY,SMT,PS05,B,L55S7_HVD,6.0,CHANGE_MODEL,모델교체,복합,Change model từ 7:30 - 9:00,1,Kỹ thuật điều chỉnh,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-01,DAY,SMT,PS05,C,L55S7_HVD,24.0,PRINTER,Printer불량,복합,Lỗi printer nghẹt keo,1,Kỹ thuật điều chỉnh,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-01,DAY,SMT,PS05,TOTAL,L55S7_HVD,67.0,CHANGE_MODEL,모델교체,복합,Change model từ 7:30 - 9:00,1,Kỹ thuật điều chỉnh,2640.0,2280.0,0.0,0.0,0.0,0.0
+2026-07-01,DAY,SMT,PS05,TOTAL,L55S7_HVD,30.0,PRINTER,Printer불량,복합,Change model từ 7:30 - 9:00 | Lỗi printer nghẹt keo,2,Kỹ thuật điều chỉnh,2640.0,2280.0,0.0,0.0,0.0,0.0
+2026-07-01,DAY,SMT,PS06,TOTAL,L55S7_HVD,0.0,NO_PROBLEM,문제없음,단일,,1,,1000.0,1000.0,0.0,0.0,0.0,0.0
+2026-07-01,DAY,SMT,PS08,A,L55E70A_HVD,24.0,ETC,기타,복합,Op new,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-01,DAY,SMT,PS08,C,L55E70A_HVD,38.0,ETC,기타,복합,Op new,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-01,DAY,SMT,PS08,E,L55E70A_HVD,18.0,ETC,기타,복합,OP new sai thao tác,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-01,DAY,SMT,PS08,F,L55E70A_HVD,67.0,ETC,기타,복합,OP new,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-01,DAY,SMT,PS08,TOTAL,L55E70A_HVD,147.0,ETC,기타,단일,Op new,1,,1440.0,1158.0,0.0,0.0,0.0,0.0
+2026-07-01,DAY,SMT,PS10,TOTAL,,0.0,NO_PROBLEM,문제없음,단일,,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-01,DAY,SMT,PS11,C,L48CA9N_FVD,73.0,CHANGE_MODEL,모델교체,복합,Change model L48CA9N_FVD từ 10:10 - 12:00,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-01,DAY,SMT,PS11,E,L75E70NA_HVD,52.0,MOUTER,Mouter불량,복합,Change model L75E70NA_HVD từ 15:00 - 16:00 Kỹ thuật điều chỉnh máy mounter 20p,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-01,DAY,SMT,PS11,F,L75E70NA_HVD,49.6,NEW_OP,신규OP교육,복합,Lỗi pickup+lỗi feeder nhiều lần OP MỚI xử lí chậm,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-01,DAY,SMT,PS11,TOTAL,L83CA9N_FVD,73.0,CHANGE_MODEL,모델교체,복합,Change model L48CA9N_FVD từ 10:10 - 12:00,1,,942.0,366.0,0.0,0.0,0.0,0.0
+2026-07-01,DAY,SMT,PS11,TOTAL,L83CA9N_FVD,52.0,MOUTER,Mouter불량,복합,Change model L75E70NA_HVD từ 15:00 - 16:00 Kỹ thuật điều chỉnh máy mounter 20p,2,,942.0,366.0,0.0,0.0,0.0,0.0
+2026-07-01,DAY,SMT,PS11,TOTAL,L83CA9N_FVD,49.6,NEW_OP,신규OP교육,복합,Lỗi pickup+lỗi feeder nhiều lần OP MỚI xử lí chậm,3,,942.0,366.0,0.0,0.0,0.0,0.0
 2026-07-01,NIGHT,MI,MI 2,G,"55""/3in1, M70H, HKC",30.0,NO_PROBLEM,문제없음,복합,No problem,1,,0.0,0.0,0.0,0.0,0.0,0.0
 2026-07-01,NIGHT,MI,MI 2,H,"55""/3in1, M70H, HKC",30.0,NO_PROBLEM,문제없음,복합,No problem,1,,0.0,0.0,0.0,0.0,0.0,0.0
 2026-07-01,NIGHT,MI,MI 2,TOTAL,"55""/3in1, M70H, HKC",60.0,WAITING_SMT,SMT대기,단일,No problem | Wwaiting semi SMT,1,,2664.0,2664.0,2664.0,2664.0,0.0,300.0
@@ -44,6 +73,23 @@
 2026-07-01,NIGHT,MI,MI 7,I,L65E70A_HVD,19.0,NO_PROBLEM,문제없음,복합,No problem,1,,0.0,0.0,0.0,0.0,0.0,0.0
 2026-07-01,NIGHT,MI,MI 7,TOTAL,L65E70A_HVD,6.0,ATE,ATE불량,복합,ATE error (6min),1,,1600.0,1660.0,1600.0,1660.0,1600.0,1836.0
 2026-07-01,NIGHT,MI,MI 7,TOTAL,L65E70A_HVD,19.0,NO_PROBLEM,문제없음,복합,No problem,2,,1600.0,1660.0,1600.0,1660.0,1600.0,1836.0
+2026-07-01,NIGHT,SMT,PS01,H,L55S7_HVD,5.0,WAITING_AI,AI대기,복합,Chờ board AI,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-01,NIGHT,SMT,PS01,I,L55S7_HVD,22.0,WAITING_AI,AI대기,복합,Chờ board AI,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-01,NIGHT,SMT,PS01,TOTAL,L55S7_HVD,27.0,WAITING_AI,AI대기,단일,Chờ board AI,1,,2200.0,1710.0,0.0,0.0,0.0,0.0
+2026-07-01,NIGHT,SMT,PS02,TOTAL,L65E70W_HVD,0.0,NO_PROBLEM,문제없음,단일,,1,,1265.0,1310.0,0.0,0.0,0.0,0.0
+2026-07-01,NIGHT,SMT,PS03,G,3IN1_SKW_32Inch,25.0,PRINTER,Printer불량,복합,Printer qét tràn keo,1,Kỹ thuật xử lý,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-01,NIGHT,SMT,PS03,TOTAL,L75S7N_HVD,25.0,PRINTER,Printer불량,단일,Printer qét tràn keo,1,Kỹ thuật xử lý,2080.0,1756.0,0.0,0.0,0.0,0.0
+2026-07-01,NIGHT,SMT,PS04,G,L85E70NA_HVD,55.0,MOUTER,Mouter불량,복합,Mouter 3 và 1 lỗi kẹt board Mouter 1 lỗi pickup,1,Kỹ thuật xử lý | Kỹ thuật xử lý | Kỹ thuật xử lý | Kỹ thuật xử lý,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-01,NIGHT,SMT,PS04,H,L85E70NA_HVD,45.0,MOUTER,Mouter불량,복합,Mouter 3 cắm mất lệch linh kiện,1,Kỹ thuật xử lý | Kỹ thuật xử lý | Kỹ thuật xử lý | Kỹ thuật xử lý,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-01,NIGHT,SMT,PS04,I,L85E70NA_HVD,26.0,MOUTER,Mouter불량,복합,Máy mounter#3 lổi cắm văng linh kiện,1,Kỹ thuật xử lý | Kỹ thuật xử lý | Kỹ thuật xử lý | Kỹ thuật xử lý,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-01,NIGHT,SMT,PS04,TOTAL,65 3IN1_JDM,126.0,MOUTER,Mouter불량,단일,Mouter 3 và 1 lỗi kẹt board Mouter 1 lỗi pickup,1,Kỹ thuật xử lý | Kỹ thuật xử lý | Kỹ thuật xử lý | Kỹ thuật xử lý,1155.0,700.0,0.0,0.0,0.0,0.0
+2026-07-01,NIGHT,SMT,PS05,TOTAL,L55S7_HVD,0.0,NO_PROBLEM,문제없음,단일,,1,,2200.0,1467.0,0.0,0.0,0.0,0.0
+2026-07-01,NIGHT,SMT,PS06,TOTAL,L55S7_HVD,0.0,NO_PROBLEM,문제없음,단일,,1,,2200.0,780.0,0.0,0.0,0.0,0.0
+2026-07-01,NIGHT,SMT,PS08,TOTAL,L55E70A_HVD,0.0,NO_PROBLEM,문제없음,단일,,1,,1265.0,1290.0,0.0,0.0,0.0,0.0
+2026-07-01,NIGHT,SMT,PS10,TOTAL,,0.0,NO_PROBLEM,문제없음,단일,,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-01,NIGHT,SMT,PS11,G,75E70NA_HVD,10.0,MOUTER,Mouter불량,복합,Lỗi pickup linh kiện,1,Kỹ thuật xử lý | Kỹ thuật xử lý | Kỹ thuật xử lý,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-01,NIGHT,SMT,PS11,I,75E70NA_HVD,70.0,MOUTER,Mouter불량,복합,Máy Monnter#2 lổi treo máy lúc 2:50-4:00,1,Kỹ thuật xử lý | Kỹ thuật xử lý | Kỹ thuật xử lý,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-01,NIGHT,SMT,PS11,TOTAL,75E70NA_HVD,80.0,MOUTER,Mouter불량,단일,Lỗi pickup linh kiện,1,Kỹ thuật xử lý | Kỹ thuật xử lý | Kỹ thuật xử lý,1320.0,732.0,0.0,0.0,0.0,0.0
 2026-07-02,DAY,MI,MI 2,A,"55""/3in1, M70H, HKC",19.0,WAITING_SMT,SMT대기,복합,"Waiting semi smt, Change model 55pd 3in1",1,,0.0,0.0,0.0,0.0,0.0,0.0
 2026-07-02,DAY,MI,MI 2,C,"55""/3in1, M70H, HKC",20.0,WAITING_SMT,SMT대기,복합,"Waiting semi smt, Change model 55pd 3in1",1,,0.0,0.0,0.0,0.0,0.0,0.0
 2026-07-02,DAY,MI,MI 2,D,"55""/3in1, M70H, HKC",15.0,NO_PROBLEM,문제없음,복합,No problem,1,,0.0,0.0,0.0,0.0,0.0,0.0
@@ -79,6 +125,47 @@
 2026-07-02,DAY,MI,MI 7,E,L55CA9N_FVD,180.0,CHANGE_MODEL,모델교체,복합,Change model 65E70A --> 65E70W,1,,0.0,0.0,0.0,0.0,0.0,0.0
 2026-07-02,DAY,MI,MI 7,TOTAL,L65E70A_HVD,265.0,CHANGE_MODEL,모델교체,복합,Change model 65E70A --> 65E70W,1,,1528.0,1528.0,1528.0,1528.0,1528.0,1513.0
 2026-07-02,DAY,MI,MI 7,TOTAL,L65E70A_HVD,10.0,WAVE,Wave Solder불량,복합,Flux error (44min) Wave solder (11min),2,,1528.0,1528.0,1528.0,1528.0,1528.0,1513.0
+2026-07-02,DAY,SMT,PS01,A,L55CA9N_FVD,120.0,CHANGE_MODEL,모델교체,복합,Change model sample từ 7:30 - 9:00 Kỹ thuật điều chỉnh máy,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-02,DAY,SMT,PS01,C,L65CA9N_HVD,120.0,CHANGE_MODEL,모델교체,복합,Change model từ 11:50 - 14:45,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-02,DAY,SMT,PS01,D,L65CA9N_HVD,120.0,WAITING_AI,AI대기,복합,Change model từ 11:50 - 14:45 do thiếu kĩ thuật Chờ board AI,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-02,DAY,SMT,PS01,F,L65CA9N_HVD,48.5,WAITING_AI,AI대기,복합,Chờ board AI,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-02,DAY,SMT,PS01,TOTAL,L55CA9N_FVD,240.0,CHANGE_MODEL,모델교체,복합,Change model sample từ 7:30 - 9:00 Kỹ thuật điều chỉnh máy,1,,1051.0,278.0,0.0,0.0,0.0,0.0
+2026-07-02,DAY,SMT,PS01,TOTAL,L55CA9N_FVD,168.5,WAITING_AI,AI대기,복합,Change model từ 11:50 - 14:45 do thiếu kĩ thuật Chờ board AI,2,,1051.0,278.0,0.0,0.0,0.0,0.0
+2026-07-02,DAY,SMT,PS02,C,L83CA9N_FHS,120.0,CHANGE_MODEL,모델교체,복합,Change model từ 11:30 - 13:00 Kỹ thuật điều chỉnh máy,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-02,DAY,SMT,PS02,D,L83CA9N_FHS,120.0,MOUTER,Mouter불량,복합,Kỹ thuật điều chỉnh máy mounter,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-02,DAY,SMT,PS02,F,L83CA9N_FHS,120.0,MOUTER,Mouter불량,복합,Kỹ thuật điều chỉnh máy mounter,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-02,DAY,SMT,PS02,TOTAL,L65E70W_HVD,120.0,CHANGE_MODEL,모델교체,복합,Change model từ 11:30 - 13:00 Kỹ thuật điều chỉnh máy,1,,1415.0,572.0,0.0,0.0,0.0,0.0
+2026-07-02,DAY,SMT,PS02,TOTAL,L65E70W_HVD,240.0,MOUTER,Mouter불량,복합,Kỹ thuật điều chỉnh máy mounter,2,,1415.0,572.0,0.0,0.0,0.0,0.0
+2026-07-02,DAY,SMT,PS03,A,L65CA9N_HVD,92.0,CHANGE_MODEL,모델교체,복합,Change model đầu giờ - 9:00,1,Kỹ thuật xử lý,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-02,DAY,SMT,PS03,B,L65CA9N_HVD,54.0,WAITING_AI,AI대기,복합,Xe feeder lỗi mất kết nối chờ board AI,1,Kỹ thuật xử lý,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-02,DAY,SMT,PS03,C,L65CA9N_HVD,120.0,WAITING_AI,AI대기,복합,Chờ board AI,1,Kỹ thuật xử lý,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-02,DAY,SMT,PS03,D,L65CA9N_HVD,80.0,WAITING_AI,AI대기,복합,Chờ board AI,1,Kỹ thuật xử lý,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-02,DAY,SMT,PS03,E,L65CA9N_HVD,120.0,CHANGE_MODEL,모델교체,복합,Chạy đối ứng model L65CA9N_FVD Change model từ 15:50 - 16:30 Kỹ thuật điều chỉnh máy,1,Kỹ thuật xử lý,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-02,DAY,SMT,PS03,F,L65CA9N_HVD,150.0,CHANGE_MODEL,모델교체,복합,Change model đầu giờ - 9:00,1,Kỹ thuật xử lý,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-02,DAY,SMT,PS03,TOTAL,L65CA9N_HVD,212.0,CHANGE_MODEL,모델교체,복합,Change model đầu giờ - 9:00,1,Kỹ thuật xử lý,1375.0,232.0,0.0,0.0,0.0,0.0
+2026-07-02,DAY,SMT,PS03,TOTAL,L65CA9N_HVD,404.0,WAITING_AI,AI대기,복합,Xe feeder lỗi mất kết nối chờ board AI,2,Kỹ thuật xử lý,1375.0,232.0,0.0,0.0,0.0,0.0
+2026-07-02,DAY,SMT,PS04,A,L85E70NA_HVD,47.0,ETC,기타,복합,Bể ống khí,1,Kỹ thuật xử lý | Kỹ thuật điều chỉnh | Kỹ thuật điều chỉnh,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-02,DAY,SMT,PS04,B,L85E70NA_HVD,13.0,ETC,기타,복합,OP new,1,Kỹ thuật xử lý | Kỹ thuật điều chỉnh | Kỹ thuật điều chỉnh,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-02,DAY,SMT,PS04,C,L85E70NA_HVD,38.0,MOUTER,Mouter불량,복합,Lỗi pickup,1,Kỹ thuật xử lý | Kỹ thuật điều chỉnh | Kỹ thuật điều chỉnh,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-02,DAY,SMT,PS04,D,L85E70NA_HVD,30.0,ETC,기타,복합,OP new,1,Kỹ thuật xử lý | Kỹ thuật điều chỉnh | Kỹ thuật điều chỉnh,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-02,DAY,SMT,PS04,E,L85E70NA_HVD,45.0,MOUTER,Mouter불량,복합,Lỗi cắm văng linh kiện,1,Kỹ thuật xử lý | Kỹ thuật điều chỉnh | Kỹ thuật điều chỉnh,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-02,DAY,SMT,PS04,F,L85E70NA_HVD,26.7,ETC,기타,복합,OP new,1,Kỹ thuật xử lý | Kỹ thuật điều chỉnh | Kỹ thuật điều chỉnh,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-02,DAY,SMT,PS04,TOTAL,L85E70NA_HVD,116.7,ETC,기타,복합,Bể ống khí,1,Kỹ thuật xử lý | Kỹ thuật điều chỉnh | Kỹ thuật điều chỉnh,1375.0,998.0,0.0,0.0,0.0,0.0
+2026-07-02,DAY,SMT,PS04,TOTAL,L85E70NA_HVD,83.0,MOUTER,Mouter불량,복합,Lỗi pickup,2,Kỹ thuật xử lý | Kỹ thuật điều chỉnh | Kỹ thuật điều chỉnh,1375.0,998.0,0.0,0.0,0.0,0.0
+2026-07-02,DAY,SMT,PS05,E,L55S7_HVD,28.4,CHANGE_MODEL,모델교체,복합,Tách lót chạy hàng PD 330 board,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-02,DAY,SMT,PS05,F,L55S7_HVD,35.2,ETC,기타,복합,TÁCH LABEL 30 PHÚT,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-02,DAY,SMT,PS05,TOTAL,L55S7_HVD,28.4,CHANGE_MODEL,모델교체,복합,Tách lót chạy hàng PD 330 board | TÁCH LABEL 30 PHÚT,1,,2336.0,2235.0,0.0,0.0,0.0,0.0
+2026-07-02,DAY,SMT,PS05,TOTAL,L55S7_HVD,35.2,ETC,기타,복합,TÁCH LABEL 30 PHÚT,2,,2336.0,2235.0,0.0,0.0,0.0,0.0
+2026-07-02,DAY,SMT,PS06,F,L55S7_HVD,43.2,DONE_PLAN,계획완료,단일,Kết thúc plan lúc 19:15,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-02,DAY,SMT,PS06,TOTAL,L55S7_HVD,43.2,DONE_PLAN,계획완료,단일,Kết thúc plan lúc 19:15,1,,1310.0,1300.0,0.0,0.0,0.0,0.0
+2026-07-02,DAY,SMT,PS08,A,L55E70NA_HVD,20.0,ETC,기타,복합,OP new,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-02,DAY,SMT,PS08,D,L55E70NA_HVD,61.1,DONE_PLAN,계획완료,복합,Kết thúc plan lúc 14:30,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-02,DAY,SMT,PS08,TOTAL,L55E70NA_HVD,20.0,ETC,기타,복합,OP new,1,,1580.0,1435.0,0.0,0.0,0.0,0.0
+2026-07-02,DAY,SMT,PS08,TOTAL,L55E70NA_HVD,61.1,DONE_PLAN,계획완료,복합,Kết thúc plan lúc 14:30,2,,1580.0,1435.0,0.0,0.0,0.0,0.0
+2026-07-02,DAY,SMT,PS10,TOTAL,,0.0,NO_PROBLEM,문제없음,단일,,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-02,DAY,SMT,PS11,A,L75E70NA_HVD,13.0,ETC,기타,복합,OP new,1,Kỹ thuật điều chỉnh,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-02,DAY,SMT,PS11,F,L75E70NA_HVD,28.4,ETC,기타,복합,OP new,1,Kỹ thuật điều chỉnh,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-02,DAY,SMT,PS11,TOTAL,L75E70NA_HVD,41.4,ETC,기타,단일,OP new,1,Kỹ thuật điều chỉnh,1375.0,1242.0,0.0,0.0,0.0,0.0
 2026-07-02,NIGHT,MI,MI 2,F,L55S7_HVD,15.0,CHANGE_MODEL,모델교체,복합,Change model (15min),1,,0.0,0.0,0.0,0.0,0.0,0.0
 2026-07-02,NIGHT,MI,MI 2,TOTAL,L55S7_HVD,15.0,CHANGE_MODEL,모델교체,단일,Change model (15min),1,,2700.0,2700.0,2700.0,2700.0,2700.0,2709.0
 2026-07-02,NIGHT,MI,MI 3,TOTAL,L55S7_HVD,0.0,NO_PROBLEM,문제없음,단일,,1,,2700.0,2700.0,2700.0,2700.0,2700.0,2721.0
@@ -99,6 +186,21 @@
 2026-07-02,NIGHT,MI,MI 7,H,L65E70W_HVD,105.0,ATE,ATE불량,단일,Sample ICT~ATE programme ICT~ATE (20:00~,1,,0.0,0.0,0.0,0.0,0.0,0.0
 2026-07-02,NIGHT,MI,MI 7,I,L65E70W_HVD,36.0,ATE,ATE불량,단일,Sample ICT~ATE programme ICT~ATE (20:00~,1,,0.0,0.0,0.0,0.0,0.0,0.0
 2026-07-02,NIGHT,MI,MI 7,TOTAL,L65E70W_HVD,371.0,ATE,ATE불량,단일,Sample ICT~ATE programme ICT~ATE (20:00~,1,,1676.0,930.0,1676.0,930.0,1675.0,700.0
+2026-07-02,NIGHT,SMT,PS01,TOTAL,L65CA9N_HVD,0.0,NO_PROBLEM,문제없음,단일,,1,,1265.0,1260.0,0.0,0.0,0.0,0.0
+2026-07-02,NIGHT,SMT,PS02,TOTAL,L83CA9N_FHS,0.0,NO_PROBLEM,문제없음,단일,,1,kỉ thuật dừng điều chỉnh | kỉ thuật dừng điều chỉnh | kỉ thuật dừng điều chỉnh | kỉ thuật dừng điều chỉnh,1265.0,678.0,0.0,0.0,0.0,0.0
+2026-07-02,NIGHT,SMT,PS03,G,L65CA9N_FVD,64.0,AOI_SAOI,AOI/S-AOI불량,복합,kỹ thuật làm chương trình AOI,1,kỉ thuật điều chỉnh | kỉ thuật điều chỉnh | kỉ thuật điều chỉnh | kỉ thuật điều chỉnh | kỉ thuật điều chỉnh,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-02,NIGHT,SMT,PS03,TOTAL,L65CA9N_FVD,64.0,AOI_SAOI,AOI/S-AOI불량,단일,kỹ thuật làm chương trình AOI,1,kỉ thuật điều chỉnh | kỉ thuật điều chỉnh | kỉ thuật điều chỉnh | kỉ thuật điều chỉnh | kỉ thuật điều chỉnh,1265.0,483.0,0.0,0.0,0.0,0.0
+2026-07-02,NIGHT,SMT,PS04,I,L65FE8N-HHS,5.0,MOUTER,Mouter불량,복합,lổi pickup,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-02,NIGHT,SMT,PS04,J,L65FE8N-HHS,20.0,MOUTER,Mouter불량,복합,lổi pickup,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-02,NIGHT,SMT,PS04,K,L65FE8N-HHS,10.0,MOUTER,Mouter불량,복합,lổi pickup,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-02,NIGHT,SMT,PS04,TOTAL,L85E70NA_HVD,35.0,MOUTER,Mouter불량,단일,lổi pickup,1,,1265.0,985.0,0.0,0.0,0.0,0.0
+2026-07-02,NIGHT,SMT,PS05,TOTAL,L55S7_HVD,0.0,NO_PROBLEM,문제없음,단일,,1,,2200.0,2000.0,0.0,0.0,0.0,0.0
+2026-07-02,NIGHT,SMT,PS06,TOTAL,L55S7_HVD,0.0,NO_PROBLEM,문제없음,단일,,1,,1760.0,1755.0,0.0,0.0,0.0,0.0
+2026-07-02,NIGHT,SMT,PS08,G,L65S7N,54.0,MOUTER,Mouter불량,복합,Máy Mounter #3 lỗi sensor máy printer nghẹt keo,1,kỹ thuật điều chỉnh | kỹ thuật điều chỉnh | kỹ thuật điều chỉnh | kỹ thuật điều chỉnh | kỹ thuật điều chỉnh,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-02,NIGHT,SMT,PS08,TOTAL,L65S7N,54.0,MOUTER,Mouter불량,단일,Máy Mounter #3 lỗi sensor máy printer nghẹt keo,1,kỹ thuật điều chỉnh | kỹ thuật điều chỉnh | kỹ thuật điều chỉnh | kỹ thuật điều chỉnh | kỹ thuật điều chỉnh,2530.0,1190.0,0.0,0.0,0.0,0.0
+2026-07-02,NIGHT,SMT,PS10,TOTAL,,0.0,NO_PROBLEM,문제없음,단일,,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-02,NIGHT,SMT,PS11,G,L75E70NA_HVD,16.0,MOUTER,Mouter불량,복합,máy mounter #2 cắm văng linh kiện,1,kỹ thuật điều chỉnh | kỹ thuật điều chỉnh | kỹ thuật điều chỉnh,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-02,NIGHT,SMT,PS11,TOTAL,L75E70NA_HVD,16.0,MOUTER,Mouter불량,단일,máy mounter #2 cắm văng linh kiện,1,kỹ thuật điều chỉnh | kỹ thuật điều chỉnh | kỹ thuật điều chỉnh,1265.0,824.0,0.0,0.0,0.0,0.0
 2026-07-03,DAY,MI,MI 2,A,L55S7_HVD,30.0,ATE,ATE불량,복합,Ate running 1 floor (25min) Hipot error (5min),1,,0.0,0.0,0.0,0.0,0.0,0.0
 2026-07-03,DAY,MI,MI 2,C,L55S7_HVD,7.0,ATE,ATE불량,복합,Ate running 1 floor (25min) Hipot error (5min),1,,0.0,0.0,0.0,0.0,0.0,0.0
 2026-07-03,DAY,MI,MI 2,TOTAL,L55S7_HVD,37.0,ATE,ATE불량,단일,Ate running 1 floor (25min) Hipot error (5min),1,,2860.0,2897.0,2860.0,2897.0,2860.0,2866.0
@@ -127,6 +229,58 @@
 2026-07-03,DAY,MI,MI 7,D,L65E70A_HVD,182.0,CHANGE_MODEL,모델교체,복합,"audit line, change model 65E70A",1,,0.0,0.0,0.0,0.0,0.0,0.0
 2026-07-03,DAY,MI,MI 7,TOTAL,L65E70A_HVD,80.0,NEW_MODEL,신규모델,복합,"set up line for audit | audit line, change model 65E70A",1,,1500.0,1500.0,1500.0,1500.0,1754.0,1113.0
 2026-07-03,DAY,MI,MI 7,TOTAL,L65E70A_HVD,182.0,CHANGE_MODEL,모델교체,복합,"audit line, change model 65E70A",2,,1500.0,1500.0,1500.0,1500.0,1754.0,1113.0
+2026-07-03,DAY,SMT,PS01,A,L65CA9N_HVD,9.8,INLOADER,Inloader불량,복합,Lỗi kẹt inloader,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-03,DAY,SMT,PS01,C,L65CA9N_HVD,10.0,FEEDER,SMT Feeder불량,복합,lỗi feeder,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-03,DAY,SMT,PS01,D,L65CA9N_HVD,56.2,PRINTER,Printer불량,복합,lỗi priter tràn keo,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-03,DAY,SMT,PS01,E,L65CA9N_HVD,20.2,MOUTER,Mouter불량,복합,Lỗi pickup,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-03,DAY,SMT,PS01,F,L65CA9N_HVD,25.6,MOUTER,Mouter불량,복합,Lỗi pickup,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-03,DAY,SMT,PS01,TOTAL,L65CA9N_HVD,9.8,INLOADER,Inloader불량,복합,Lỗi kẹt inloader,1,,1375.0,1120.0,0.0,0.0,0.0,0.0
+2026-07-03,DAY,SMT,PS01,TOTAL,L65CA9N_HVD,10.0,FEEDER,SMT Feeder불량,복합,lỗi feeder,2,,1375.0,1120.0,0.0,0.0,0.0,0.0
+2026-07-03,DAY,SMT,PS01,TOTAL,L65CA9N_HVD,56.2,PRINTER,Printer불량,복합,lỗi priter tràn keo,3,,1375.0,1120.0,0.0,0.0,0.0,0.0
+2026-07-03,DAY,SMT,PS01,TOTAL,L65CA9N_HVD,45.8,MOUTER,Mouter불량,복합,Lỗi pickup,4,,1375.0,1120.0,0.0,0.0,0.0,0.0
+2026-07-03,DAY,SMT,PS02,A,L83CA9N_HVD,120.0,CHANGE_MODEL,모델교체,복합,Change model,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-03,DAY,SMT,PS02,B,L83CA9N_HVD,48.5,ETC,기타,복합,sản xuất lúc 10:25,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-03,DAY,SMT,PS02,C,L83CA9N_HVD,50.7,PRINTER,Printer불량,복합,Lỗi priter,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-03,DAY,SMT,PS02,D,L83CA9N_HVD,54.0,UPH,UPH미달,복합,LINE không đáp ứng được UPH,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-03,DAY,SMT,PS02,E,L83CA9N_HVD,60.5,UPH,UPH미달,복합,LINE không đáp ứng được UPH,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-03,DAY,SMT,PS02,F,L83CA9N_HVD,63.3,UPH,UPH미달,복합,LINE không đáp ứng được UPH,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-03,DAY,SMT,PS02,TOTAL,L83CA9N_HVD,120.0,CHANGE_MODEL,모델교체,복합,Change model,1,,1375.0,647.0,0.0,0.0,0.0,0.0
+2026-07-03,DAY,SMT,PS02,TOTAL,L83CA9N_HVD,48.5,ETC,기타,복합,sản xuất lúc 10:25,2,,1375.0,647.0,0.0,0.0,0.0,0.0
+2026-07-03,DAY,SMT,PS02,TOTAL,L83CA9N_HVD,50.7,PRINTER,Printer불량,복합,Lỗi priter,3,,1375.0,647.0,0.0,0.0,0.0,0.0
+2026-07-03,DAY,SMT,PS02,TOTAL,L83CA9N_HVD,177.8,UPH,UPH미달,복합,LINE không đáp ứng được UPH,4,,1375.0,647.0,0.0,0.0,0.0,0.0
+2026-07-03,DAY,SMT,PS03,A,L65CA9N_FVD,120.0,CHANGE_MODEL,모델교체,복합,Change model,1,kỹ thuật đang setup | kỹ thuật đang setup,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-03,DAY,SMT,PS03,B,L65CA9N_FVD,120.0,CHANGE_MODEL,모델교체,복합,Change model,1,kỹ thuật đang setup | kỹ thuật đang setup,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-03,DAY,SMT,PS03,C,L65CA9N_FVD,120.0,CHANGE_MODEL,모델교체,복합,Change model,1,kỹ thuật đang setup | kỹ thuật đang setup,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-03,DAY,SMT,PS03,D,L75E70NA_HVD,7.6,ETC,기타,복합,Sản xuất lúc 13:10,1,kỹ thuật đang setup | kỹ thuật đang setup,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-03,DAY,SMT,PS03,F,L75E70NA_HVD,31.1,FEEDER,SMT Feeder불량,복합,"Lỗi feeder 15 phút, lỗi pickup 15 phút",1,kỹ thuật đang setup | kỹ thuật đang setup,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-03,DAY,SMT,PS03,TOTAL,L65CA9N_FVD,360.0,CHANGE_MODEL,모델교체,복합,Change model,1,kỹ thuật đang setup | kỹ thuật đang setup,1375.0,642.0,0.0,0.0,0.0,0.0
+2026-07-03,DAY,SMT,PS03,TOTAL,L65CA9N_FVD,7.6,ETC,기타,복합,Sản xuất lúc 13:10,2,kỹ thuật đang setup | kỹ thuật đang setup,1375.0,642.0,0.0,0.0,0.0,0.0
+2026-07-03,DAY,SMT,PS03,TOTAL,L65CA9N_FVD,31.1,FEEDER,SMT Feeder불량,복합,"Lỗi feeder 15 phút, lỗi pickup 15 phút",3,kỹ thuật đang setup | kỹ thuật đang setup,1375.0,642.0,0.0,0.0,0.0,0.0
+2026-07-03,DAY,SMT,PS04,A,L65S7N-HVD,120.0,CHANGE_MODEL,모델교체,복합,Change model,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-03,DAY,SMT,PS04,B,L65S7N-HVD,36.0,ETC,기타,복합,Sản xuất lúc 10:10,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-03,DAY,SMT,PS04,C,L65S7N-HVD,26.7,PRINTER,Printer불량,복합,lỗi keo priter,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-03,DAY,SMT,PS04,D,L65S7N-HVD,40.4,PRINTER,Printer불량,복합,lỗi keo priter,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-03,DAY,SMT,PS04,E,L65S7N-HVD,49.6,CHANGE_MODEL,모델교체,복합,change model L65S8 từ 16:40,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-03,DAY,SMT,PS04,F,L65S8-HVD,27.3,ETC,기타,복합,tách label 2 lần 30 phút,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-03,DAY,SMT,PS04,TOTAL,L65S7N-HVD,169.6,CHANGE_MODEL,모델교체,복합,Change model,1,,2750.0,1650.0,0.0,0.0,0.0,0.0
+2026-07-03,DAY,SMT,PS04,TOTAL,L65S7N-HVD,63.3,ETC,기타,복합,Sản xuất lúc 10:10,2,,2750.0,1650.0,0.0,0.0,0.0,0.0
+2026-07-03,DAY,SMT,PS04,TOTAL,L65S7N-HVD,67.1,PRINTER,Printer불량,복합,lỗi keo priter,3,,2750.0,1650.0,0.0,0.0,0.0,0.0
+2026-07-03,DAY,SMT,PS05,F,L55S7-HVD,40.4,DONE_PLAN,계획완료,단일,"hết plan lúc 19:20, test hàng NG",1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-03,DAY,SMT,PS05,TOTAL,L55S7-HVD,40.4,DONE_PLAN,계획완료,단일,"hết plan lúc 19:20, test hàng NG",1,,2750.0,2640.0,0.0,0.0,0.0,0.0
+2026-07-03,DAY,SMT,PS06,E,L55S7-HVD,15.0,DONE_PLAN,계획완료,복합,hết plan lúc 17:15,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-03,DAY,SMT,PS06,TOTAL,L55S7-HVD,15.0,DONE_PLAN,계획완료,단일,hết plan lúc 17:15,1,,1000.0,1000.0,0.0,0.0,0.0,0.0
+2026-07-03,DAY,SMT,PS08,A,L55S7_HVD,120.0,CHANGE_MODEL,모델교체,복합,Change model,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-03,DAY,SMT,PS08,B,L55S7_HVD,23.5,ETC,기타,복합,Sản xuất lúc 10:00,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-03,DAY,SMT,PS08,D,L55S7_HVD,63.3,CHANGE_MODEL,모델교체,복합,change model L65E70A-HVD từ 14:20,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-03,DAY,SMT,PS08,E,L65E70A_HVD,17.5,ETC,기타,복합,sản xuất lúc 15:10,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-03,DAY,SMT,PS08,TOTAL,L55S7_HVD,183.3,CHANGE_MODEL,모델교체,복합,Change model,1,,2255.0,1469.0,0.0,0.0,0.0,0.0
+2026-07-03,DAY,SMT,PS08,TOTAL,L55S7_HVD,40.9,ETC,기타,복합,Sản xuất lúc 10:00,2,,2255.0,1469.0,0.0,0.0,0.0,0.0
+2026-07-03,DAY,SMT,PS10,TOTAL,,0.0,NO_PROBLEM,문제없음,단일,,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-03,DAY,SMT,PS11,A,L55E70A_HVD,47.5,NEW_OP,신규OP교육,단일,OP mới + kỹ thuật thiếu nhân lực,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-03,DAY,SMT,PS11,C,L55E70A_HVD,4.4,NEW_OP,신규OP교육,단일,OP mới + kỹ thuật thiếu nhân lực,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-03,DAY,SMT,PS11,E,L55E70A_HVD,6.0,NEW_OP,신규OP교육,단일,OP mới + kỹ thuật thiếu nhân lực,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-03,DAY,SMT,PS11,F,L55E70A_HVD,38.7,NEW_OP,신규OP교육,단일,OP mới + kỹ thuật thiếu nhân lực,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-03,DAY,SMT,PS11,TOTAL,L55E70A_HVD,96.5,NEW_OP,신규OP교육,단일,OP mới + kỹ thuật thiếu nhân lực,1,,1375.0,1200.0,0.0,0.0,0.0,0.0
 2026-07-03,NIGHT,MI,MI 2,F,L55S7_HVD,6.0,SILCOAT,Silicon/Coating불량,복합,Coating error (6min),1,,0.0,0.0,0.0,0.0,0.0,0.0
 2026-07-03,NIGHT,MI,MI 2,TOTAL,L55S7_HVD,6.0,SILCOAT,Silicon/Coating불량,단일,Coating error (6min),1,,2700.0,2700.0,2700.0,2700.0,2700.0,2738.0
 2026-07-03,NIGHT,MI,MI 3,TOTAL,L55S7_HVD,0.0,NO_PROBLEM,문제없음,단일,,1,,2700.0,2700.0,2700.0,2700.0,2700.0,2710.0
@@ -142,6 +296,44 @@
 2026-07-03,NIGHT,MI,MI 7,G,L55E70A_HVD,44.0,CHANGE_MODEL,모델교체,복합,Change model (30min),1,,0.0,0.0,0.0,0.0,0.0,0.0
 2026-07-03,NIGHT,MI,MI 7,TOTAL,L55E70A_HVD,30.0,CHANGE_MODEL,모델교체,복합,Change model (30min),1,,1380.0,1120.0,1380.0,1120.0,1380.0,1261.0
 2026-07-03,NIGHT,MI,MI 7,TOTAL,L55E70A_HVD,44.0,MATERIAL,자재부족,복합,Change model (30min) | Waiting materials (29min) Flux solder (15min),2,,1380.0,1120.0,1380.0,1120.0,1380.0,1261.0
+2026-07-03,NIGHT,SMT,PS01,TOTAL,L65CA9N_HVD,0.0,NO_PROBLEM,문제없음,단일,,1,,1100.0,1080.0,0.0,0.0,0.0,0.0
+2026-07-03,NIGHT,SMT,PS02,F,L83CA9N_HVD,40.0,FEEDER,SMT Feeder불량,복합,Máy mounter #3 lỗi xe feeder không có tín hiệu 21:10-21:50,1,Kỹ thuật diều chỉnh | Kỹ thuật diều chỉnh | Kỹ thuật diều chỉnh | Kỹ thuật diều chỉnh | Kỹ thuật diều chỉnh | Kỹ thuật diều chỉnh,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-03,NIGHT,SMT,PS02,G,L83CA9N_HVD,28.0,MOUTER,Mouter불량,복합,Lỗi pickup,1,Kỹ thuật diều chỉnh | Kỹ thuật diều chỉnh | Kỹ thuật diều chỉnh | Kỹ thuật diều chỉnh | Kỹ thuật diều chỉnh | Kỹ thuật diều chỉnh,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-03,NIGHT,SMT,PS02,H,L83CA9N_HVD,37.0,MOUTER,Mouter불량,복합,Lỗi pickup Lỗi máy printer nghẹt keo,1,Kỹ thuật diều chỉnh | Kỹ thuật diều chỉnh | Kỹ thuật diều chỉnh | Kỹ thuật diều chỉnh | Kỹ thuật diều chỉnh | Kỹ thuật diều chỉnh,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-03,NIGHT,SMT,PS02,I,L83CA9N_HVD,49.0,MOUTER,Mouter불량,복합,Kẹt board máy Reflow lỗi pickup,1,Kỹ thuật diều chỉnh | Kỹ thuật diều chỉnh | Kỹ thuật diều chỉnh | Kỹ thuật diều chỉnh | Kỹ thuật diều chỉnh | Kỹ thuật diều chỉnh,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-03,NIGHT,SMT,PS02,J,L83CA9N_HVD,10.0,MOUTER,Mouter불량,복합,Lỗi pickup,1,Kỹ thuật diều chỉnh | Kỹ thuật diều chỉnh | Kỹ thuật diều chỉnh | Kỹ thuật diều chỉnh | Kỹ thuật diều chỉnh | Kỹ thuật diều chỉnh,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-03,NIGHT,SMT,PS02,TOTAL,L83CA9N_HVD,40.0,FEEDER,SMT Feeder불량,복합,Máy mounter #3 lỗi xe feeder không có tín hiệu 21:10-21:50,1,Kỹ thuật diều chỉnh | Kỹ thuật diều chỉnh | Kỹ thuật diều chỉnh | Kỹ thuật diều chỉnh | Kỹ thuật diều chỉnh | Kỹ thuật diều chỉnh,1265.0,874.0,0.0,0.0,0.0,0.0
+2026-07-03,NIGHT,SMT,PS02,TOTAL,L83CA9N_HVD,124.0,MOUTER,Mouter불량,복합,Lỗi pickup,2,Kỹ thuật diều chỉnh | Kỹ thuật diều chỉnh | Kỹ thuật diều chỉnh | Kỹ thuật diều chỉnh | Kỹ thuật diều chỉnh | Kỹ thuật diều chỉnh,1265.0,874.0,0.0,0.0,0.0,0.0
+2026-07-03,NIGHT,SMT,PS03,F,L75E70NA_HVD,21.0,MOUTER,Mouter불량,복합,Lỗi pickup,1,Kỹ thuật diều chỉnh | Kỹ thuật diều chỉnh | Kỹ thuật diều chỉnh | Kỹ thuật diều chỉnh | Kỹ thuật diều chỉnh,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-03,NIGHT,SMT,PS03,G,L75E70NA_HVD,76.0,MOUTER,Mouter불량,복합,Lỗi pickup Lỗi máy printer bể ống khí lúc 23:10-24:00,1,Kỹ thuật diều chỉnh | Kỹ thuật diều chỉnh | Kỹ thuật diều chỉnh | Kỹ thuật diều chỉnh | Kỹ thuật diều chỉnh,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-03,NIGHT,SMT,PS03,H,L75E70NA_HVD,35.0,PRINTER,Printer불량,복합,Lỗi máy printer bể ống khí lúc 24:00-24:30,1,Kỹ thuật diều chỉnh | Kỹ thuật diều chỉnh | Kỹ thuật diều chỉnh | Kỹ thuật diều chỉnh | Kỹ thuật diều chỉnh,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-03,NIGHT,SMT,PS03,J,L75E70NA_HVD,15.0,MOUTER,Mouter불량,복합,máy mounter #1 kẹt board,1,Kỹ thuật diều chỉnh | Kỹ thuật diều chỉnh | Kỹ thuật diều chỉnh | Kỹ thuật diều chỉnh | Kỹ thuật diều chỉnh,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-03,NIGHT,SMT,PS03,TOTAL,L75E70NA_HVD,112.0,MOUTER,Mouter불량,복합,Lỗi pickup,1,Kỹ thuật diều chỉnh | Kỹ thuật diều chỉnh | Kỹ thuật diều chỉnh | Kỹ thuật diều chỉnh | Kỹ thuật diều chỉnh,1265.0,903.0,0.0,0.0,0.0,0.0
+2026-07-03,NIGHT,SMT,PS03,TOTAL,L75E70NA_HVD,35.0,PRINTER,Printer불량,복합,Lỗi máy printer bể ống khí lúc 24:00-24:30,2,Kỹ thuật diều chỉnh | Kỹ thuật diều chỉnh | Kỹ thuật diều chỉnh | Kỹ thuật diều chỉnh | Kỹ thuật diều chỉnh,1265.0,903.0,0.0,0.0,0.0,0.0
+2026-07-03,NIGHT,SMT,PS04,G,L65S7A-HVD,25.0,CHANGE_MODEL,모델교체,복합,Change model L65S7A lúc 22:20-22:45,1,Kỹ thuật diều chỉnh | Kỹ thuật diều chỉnh,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-03,NIGHT,SMT,PS04,H,L65S7A-HVD,27.0,MOUTER,Mouter불량,복합,Lỗi pickup,1,Kỹ thuật diều chỉnh | Kỹ thuật diều chỉnh,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-03,NIGHT,SMT,PS04,I,L65S7A-HVD,37.0,MOUTER,Mouter불량,복합,"Lỗi pickup , bắt mắt máy printer vừa chỉnh vừa chạy lúc 2:17-4:00",1,Kỹ thuật diều chỉnh | Kỹ thuật diều chỉnh,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-03,NIGHT,SMT,PS04,TOTAL,L65S7N-HVD,25.0,CHANGE_MODEL,모델교체,복합,Change model L65S7A lúc 22:20-22:45,1,Kỹ thuật diều chỉnh | Kỹ thuật diều chỉnh,2530.0,2114.0,0.0,0.0,0.0,0.0
+2026-07-03,NIGHT,SMT,PS04,TOTAL,L65S7N-HVD,64.0,MOUTER,Mouter불량,복합,Lỗi pickup,2,Kỹ thuật diều chỉnh | Kỹ thuật diều chỉnh,2530.0,2114.0,0.0,0.0,0.0,0.0
+2026-07-03,NIGHT,SMT,PS05,G,L55S7-HVD,30.0,COMP_ERR,부품불량,복합,Lỗi AI chân dài,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-03,NIGHT,SMT,PS05,TOTAL,L55S7-HVD,30.0,COMP_ERR,부품불량,단일,Lỗi AI chân dài,1,,2200.0,2138.0,0.0,0.0,0.0,0.0
+2026-07-03,NIGHT,SMT,PS06,TOTAL,L55S7-HVD,0.0,NO_PROBLEM,문제없음,단일,,1,,1000.0,1000.0,0.0,0.0,0.0,0.0
+2026-07-03,NIGHT,SMT,PS08,F,L65E70A_HVD,110.0,DONE_PLAN,계획완료,복합,Kết thúc lót chờ AI kiểm stock Changel model L55S7-HVD lúc 21:00-22:00,1,Kỹ thuật diều chỉnh | Kỹ thuật diều chỉnh | Kỹ thuật diều chỉnh | Kỹ thuật diều chỉnh,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-03,NIGHT,SMT,PS08,G,L55S7-HVD,20.0,CHANGE_MODEL,모델교체,복합,Change model L55S7-HVD lúc 22:20-22:40,1,Kỹ thuật diều chỉnh | Kỹ thuật diều chỉnh | Kỹ thuật diều chỉnh | Kỹ thuật diều chỉnh,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-03,NIGHT,SMT,PS08,H,L55S7-HVD,73.0,MOUTER,Mouter불량,복합,Lỗi kẹt board máy priter Lỗi máy printer tràn keo,1,Kỹ thuật diều chỉnh | Kỹ thuật diều chỉnh | Kỹ thuật diều chỉnh | Kỹ thuật diều chỉnh,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-03,NIGHT,SMT,PS08,I,L55S7-HVD,55.0,PRINTER,Printer불량,복합,Lỗi máy printer quét keo không đều lúc 3:05-4:00,1,Kỹ thuật diều chỉnh | Kỹ thuật diều chỉnh | Kỹ thuật diều chỉnh | Kỹ thuật diều chỉnh,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-03,NIGHT,SMT,PS08,J,L55S7-HVD,87.0,PRINTER,Printer불량,복합,Lỗi máy printer quét keo không đều lúc 4:00-5:25,1,Kỹ thuật diều chỉnh | Kỹ thuật diều chỉnh | Kỹ thuật diều chỉnh | Kỹ thuật diều chỉnh,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-03,NIGHT,SMT,PS08,TOTAL,L65E70A_HVD,110.0,DONE_PLAN,계획완료,복합,Kết thúc lót chờ AI kiểm stock Changel model L55S7-HVD lúc 21:00-22:00,1,Kỹ thuật diều chỉnh | Kỹ thuật diều chỉnh | Kỹ thuật diều chỉnh | Kỹ thuật diều chỉnh,2310.0,1015.0,0.0,0.0,0.0,0.0
+2026-07-03,NIGHT,SMT,PS08,TOTAL,L65E70A_HVD,20.0,CHANGE_MODEL,모델교체,복합,Change model L55S7-HVD lúc 22:20-22:40,2,Kỹ thuật diều chỉnh | Kỹ thuật diều chỉnh | Kỹ thuật diều chỉnh | Kỹ thuật diều chỉnh,2310.0,1015.0,0.0,0.0,0.0,0.0
+2026-07-03,NIGHT,SMT,PS08,TOTAL,L65E70A_HVD,73.0,MOUTER,Mouter불량,복합,Lỗi kẹt board máy priter Lỗi máy printer tràn keo,3,Kỹ thuật diều chỉnh | Kỹ thuật diều chỉnh | Kỹ thuật diều chỉnh | Kỹ thuật diều chỉnh,2310.0,1015.0,0.0,0.0,0.0,0.0
+2026-07-03,NIGHT,SMT,PS08,TOTAL,L65E70A_HVD,142.0,PRINTER,Printer불량,복합,Lỗi máy printer quét keo không đều lúc 3:05-4:00,4,Kỹ thuật diều chỉnh | Kỹ thuật diều chỉnh | Kỹ thuật diều chỉnh | Kỹ thuật diều chỉnh,2310.0,1015.0,0.0,0.0,0.0,0.0
+2026-07-03,NIGHT,SMT,PS10,TOTAL,,0.0,NO_PROBLEM,문제없음,단일,,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-03,NIGHT,SMT,PS11,H,L55S7-HVD,90.0,DONE_PLAN,계획완료,복합,Kết thúc lót Change model L55F70NA lúc 23:50 - 1:30 Kỹ thuật setup chỉnh máy chạy board đầu lúc 1:30-2:00,1,Kỹ thuật diều chỉnh | Kỹ thuật diều chỉnh,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-03,NIGHT,SMT,PS11,I,L55F70NA,75.0,NEW_MODEL,신규모델,복합,Kỹ thuật setup chỉnh máy chạy board đầu lúc 2:00-2:30 Model L55F70NA -HHS lần đầu chạy trên line,1,Kỹ thuật diều chỉnh | Kỹ thuật diều chỉnh,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-03,NIGHT,SMT,PS11,J,L55F70NA,30.0,MOUTER,Mouter불량,복합,Lỗi pickup Máy printer nghẹt keo,1,Kỹ thuật diều chỉnh | Kỹ thuật diều chỉnh,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-03,NIGHT,SMT,PS11,TOTAL,L55E70A_HVD,90.0,DONE_PLAN,계획완료,복합,Kết thúc lót Change model L55F70NA lúc 23:50 - 1:30 Kỹ thuật setup chỉnh máy chạy board đầu lúc 1:30-2:00,1,Kỹ thuật diều chỉnh | Kỹ thuật diều chỉnh,1265.0,840.0,0.0,0.0,0.0,0.0
+2026-07-03,NIGHT,SMT,PS11,TOTAL,L55E70A_HVD,75.0,NEW_MODEL,신규모델,복합,Kỹ thuật setup chỉnh máy chạy board đầu lúc 2:00-2:30 Model L55F70NA -HHS lần đầu chạy trên line,2,Kỹ thuật diều chỉnh | Kỹ thuật diều chỉnh,1265.0,840.0,0.0,0.0,0.0,0.0
+2026-07-03,NIGHT,SMT,PS11,TOTAL,L55E70A_HVD,30.0,MOUTER,Mouter불량,복합,Lỗi pickup Máy printer nghẹt keo,3,Kỹ thuật diều chỉnh | Kỹ thuật diều chỉnh,1265.0,840.0,0.0,0.0,0.0,0.0
 2026-07-04,DAY,MI,MI 2,A,L55S7_HVD,12.0,ICT_FT,ICT/FT/HiPOT불량,복합,Hipot error,1,,0.0,0.0,0.0,0.0,0.0,0.0
 2026-07-04,DAY,MI,MI 2,TOTAL,L55S7_HVD,12.0,ICT_FT,ICT/FT/HiPOT불량,단일,Hipot error,1,,2860.0,2860.0,2860.0,2860.0,2860.0,2860.0
 2026-07-04,DAY,MI,MI 3,C,L55S7_HVD,30.0,NO_PROBLEM,문제없음,단일,No problem,1,,0.0,0.0,0.0,0.0,0.0,0.0
@@ -167,6 +359,36 @@
 2026-07-04,DAY,MI,MI 7,B,L83CA9N_HVD,61.0,ATE,ATE불량,복합,Ate running 1 floor (15min) Flux error (75min),1,,0.0,0.0,0.0,0.0,0.0,0.0
 2026-07-04,DAY,MI,MI 7,C,L83CA9N_HVD,30.0,ATE,ATE불량,복합,Ate running 1 floor (15min) Flux error (75min),1,,0.0,0.0,0.0,0.0,0.0,0.0
 2026-07-04,DAY,MI,MI 7,TOTAL,L83CA9N_HVD,181.0,ATE,ATE불량,단일,Ate running 1 floor (15min) Flux error (75min),1,,1237.0,1237.0,1237.0,1237.0,1310.0,1071.0
+2026-07-04,DAY,SMT,PS01,TOTAL,L55S7_HVD,0.0,NO_PROBLEM,문제없음,단일,,1,,2040.0,2040.0,0.0,0.0,0.0,0.0
+2026-07-04,DAY,SMT,PS02,B,L83CA9N_HVD,40.9,QC_INSPECT,QC검사대기,복합,stop line do vendor mượn spare,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-04,DAY,SMT,PS02,C,L83CA9N_HVD,99.3,ETC,기타,복합,Đợi boar AI,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-04,DAY,SMT,PS02,D,L83CA9N_HVD,60.5,UPH,UPH미달,복합,Line không đáp ứng được UPH,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-04,DAY,SMT,PS02,E,L75S7A_HVD,120.0,AI_STOCK,AI자재부족,복합,"AI hết stock, chnage model từ 16:00-....",1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-04,DAY,SMT,PS02,F,L75S7A_HVD,107.3,NEW_MODEL,신규모델,복합,"Sản xuất lúc 19:00, model chạy lần đầu chưa ổn định",1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-04,DAY,SMT,PS02,TOTAL,L83CA9N_HVD,40.9,QC_INSPECT,QC검사대기,복합,stop line do vendor mượn spare,1,,1600.0,603.0,0.0,0.0,0.0,0.0
+2026-07-04,DAY,SMT,PS02,TOTAL,L83CA9N_HVD,99.3,ETC,기타,복합,Đợi boar AI,2,,1600.0,603.0,0.0,0.0,0.0,0.0
+2026-07-04,DAY,SMT,PS02,TOTAL,L83CA9N_HVD,60.5,UPH,UPH미달,복합,Line không đáp ứng được UPH,3,,1600.0,603.0,0.0,0.0,0.0,0.0
+2026-07-04,DAY,SMT,PS02,TOTAL,L83CA9N_HVD,120.0,AI_STOCK,AI자재부족,복합,"AI hết stock, chnage model từ 16:00-....",4,,1600.0,603.0,0.0,0.0,0.0,0.0
+2026-07-04,DAY,SMT,PS02,TOTAL,L83CA9N_HVD,107.3,NEW_MODEL,신규모델,복합,"Sản xuất lúc 19:00, model chạy lần đầu chưa ổn định",5,,1600.0,603.0,0.0,0.0,0.0,0.0
+2026-07-04,DAY,SMT,PS03,C,L75E70NA-HVD,60.0,MOUTER,Mouter불량,단일,MOUTOR KẸT BĂNG TẢI,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-04,DAY,SMT,PS03,TOTAL,L75E70NA-HVD,60.0,MOUTER,Mouter불량,단일,MOUTOR KẸT BĂNG TẢI,1,,1400.0,1295.0,0.0,0.0,0.0,0.0
+2026-07-04,DAY,SMT,PS04,TOTAL,L65S7A_HVD,0.0,NO_PROBLEM,문제없음,단일,,1,,2640.0,2640.0,0.0,0.0,0.0,0.0
+2026-07-04,DAY,SMT,PS05,A,L55E70A_HVD,120.0,CHANGE_MODEL,모델교체,복합,CHANGE MODEL,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-04,DAY,SMT,PS05,B,L55E70A_HVD,94.9,CHANGE_MODEL,모델교체,복합,change model L65S7A-HVD từ 10:10,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-04,DAY,SMT,PS05,C,L65S7A-HVD,2.7,ETC,기타,복합,Sản xuất lúc 11:35,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-04,DAY,SMT,PS05,TOTAL,L55E70A_HVD,214.9,CHANGE_MODEL,모델교체,복합,CHANGE MODEL,1,,2310.0,2030.0,0.0,0.0,0.0,0.0
+2026-07-04,DAY,SMT,PS05,TOTAL,L55E70A_HVD,2.7,ETC,기타,복합,Sản xuất lúc 11:35,2,,2310.0,2030.0,0.0,0.0,0.0,0.0
+2026-07-04,DAY,SMT,PS06,A,L55S7_HVD,111.8,ETC,기타,단일,TEST LINE,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-04,DAY,SMT,PS06,B,L55S7_HVD,87.3,ETC,기타,단일,TEST LINE,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-04,DAY,SMT,PS06,TOTAL,L55S7_HVD,199.1,ETC,기타,단일,TEST LINE,1,,2750.0,2000.0,0.0,0.0,0.0,0.0
+2026-07-04,DAY,SMT,PS08,A,L55S7_HVD,90.5,CHANGE_MODEL,모델교체,복합,CHANGE MODEL TỪ 07:30-09:00,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-04,DAY,SMT,PS08,B,L55S7_HVD,65.2,PRINTER,Printer불량,복합,lỗi keo printer,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-04,DAY,SMT,PS08,C,L55S7_HVD,26.5,NEW_OP,신규OP교육,복합,OP MỚI,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-04,DAY,SMT,PS08,TOTAL,L55S7_HVD,90.5,CHANGE_MODEL,모델교체,복합,CHANGE MODEL TỪ 07:30-09:00,1,,2750.0,2200.0,0.0,0.0,0.0,0.0
+2026-07-04,DAY,SMT,PS08,TOTAL,L55S7_HVD,65.2,PRINTER,Printer불량,복합,lỗi keo printer,2,,2750.0,2200.0,0.0,0.0,0.0,0.0
+2026-07-04,DAY,SMT,PS08,TOTAL,L55S7_HVD,26.5,NEW_OP,신규OP교육,복합,OP MỚI,3,,2750.0,2200.0,0.0,0.0,0.0,0.0
+2026-07-04,DAY,SMT,PS10,TOTAL,,0.0,NO_PROBLEM,문제없음,단일,,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-04,DAY,SMT,PS11,TOTAL,L55F70NA_HHS,0.0,NO_PROBLEM,문제없음,단일,,1,,1400.0,1314.0,0.0,0.0,0.0,0.0
 2026-07-04,NIGHT,MI,MI 2,F,L55S7_HVD,13.0,WAVE,Wave Solder불량,복합,Wave solder error (13min),1,,0.0,0.0,0.0,0.0,0.0,0.0
 2026-07-04,NIGHT,MI,MI 2,TOTAL,L55S7_HVD,13.0,WAVE,Wave Solder불량,단일,Wave solder error (13min),1,,2700.0,2340.0,2700.0,2340.0,2700.0,2500.0
 2026-07-04,NIGHT,MI,MI 3,TOTAL,L55S7_HVD,0.0,NO_PROBLEM,문제없음,단일,,1,,2700.0,2360.0,2700.0,2360.0,2700.0,2539.0
@@ -185,6 +407,40 @@
 2026-07-04,NIGHT,MI,MI 7,J,L83CA9N_FHS,150.0,ATE,ATE불량,복합,Coaating error (20min) ATE error (7min) ATE running 1 floor from (30min),1,,0.0,0.0,0.0,0.0,0.0,0.0
 2026-07-04,NIGHT,MI,MI 7,TOTAL,L83CA9N_FHS,287.0,ATE,ATE불량,복합,Coaating error (20min) ATE error (7min) ATE running 1 floor from (30min),1,,1042.0,801.0,1042.0,801.0,1235.0,503.0
 2026-07-04,NIGHT,MI,MI 7,TOTAL,L83CA9N_FHS,110.0,NO_PROBLEM,문제없음,복합,No problem,2,,1042.0,801.0,1042.0,801.0,1235.0,503.0
+2026-07-04,NIGHT,SMT,PS01,TOTAL,L55S7_HVD,0.0,NO_PROBLEM,문제없음,단일,,1,,2000.0,2000.0,0.0,0.0,0.0,0.0
+2026-07-04,NIGHT,SMT,PS02,F,L75S7A_HVD,55.0,MOUTER,Mouter불량,복합,Máy mounter #4 lỗi pickup vừa chỉnh vừa chạy,1,kỹ thuật điều chỉnh,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-04,NIGHT,SMT,PS02,TOTAL,L75S7A_HVD,55.0,MOUTER,Mouter불량,단일,Máy mounter #4 lỗi pickup vừa chỉnh vừa chạy,1,kỹ thuật điều chỉnh,1440.0,1440.0,0.0,0.0,0.0,0.0
+2026-07-04,NIGHT,SMT,PS03,F,L75E70NA-HVD,38.0,MOUTER,Mouter불량,복합,Máy mounter #2 lỗi pickup vừa chỉnh vừa chạy,1,kỹ thuật điều chỉnh | kỹ thuật điều chỉnh | kỹ thuật điều chỉnh,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-04,NIGHT,SMT,PS03,G,L75E70NA-HVD,10.0,MOUTER,Mouter불량,복합,Lỗi pickup,1,kỹ thuật điều chỉnh | kỹ thuật điều chỉnh | kỹ thuật điều chỉnh,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-04,NIGHT,SMT,PS03,K,L75E70NA-HVD,54.0,MOUTER,Mouter불량,복합,"lỗi đùn board máy printer , lỗi pickup",1,kỹ thuật điều chỉnh | kỹ thuật điều chỉnh | kỹ thuật điều chỉnh,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-04,NIGHT,SMT,PS03,TOTAL,L75E70NA-HVD,102.0,MOUTER,Mouter불량,단일,Máy mounter #2 lỗi pickup vừa chỉnh vừa chạy,1,kỹ thuật điều chỉnh | kỹ thuật điều chỉnh | kỹ thuật điều chỉnh,1265.0,1162.0,0.0,0.0,0.0,0.0
+2026-07-04,NIGHT,SMT,PS04,F,L65S7A_HVD,10.0,MOUTER,Mouter불량,복합,Lỗi pickup,1,kỹ thuật điều chỉnh,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-04,NIGHT,SMT,PS04,TOTAL,L65S7A_HVD,10.0,MOUTER,Mouter불량,단일,Lỗi pickup,1,kỹ thuật điều chỉnh,2400.0,2400.0,0.0,0.0,0.0,0.0
+2026-07-04,NIGHT,SMT,PS05,F,L65S7A_HVD,50.0,PRINTER,Printer불량,복합,Lỗi máy printer nghẹt keo,1,kỹ thuật điều chỉnh | kỹ thuật điều chỉnh | kỹ thuật điều chỉnh | kỹ thuật điều chỉnh,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-04,NIGHT,SMT,PS05,G,L65S7A_HVD,25.0,MOUTER,Mouter불량,복합,Mouter 1 kẹt board,1,kỹ thuật điều chỉnh | kỹ thuật điều chỉnh | kỹ thuật điều chỉnh | kỹ thuật điều chỉnh,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-04,NIGHT,SMT,PS05,H,L65S7A_HVD,15.0,MOUTER,Mouter불량,복합,Lỗi pickup,1,kỹ thuật điều chỉnh | kỹ thuật điều chỉnh | kỹ thuật điều chỉnh | kỹ thuật điều chỉnh,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-04,NIGHT,SMT,PS05,J,L65S7A_HVD,45.0,MOUTER,Mouter불량,복합,"lỗi kẹt board đầu line , scan thiếu công đoạn AI",1,kỹ thuật điều chỉnh | kỹ thuật điều chỉnh | kỹ thuật điều chỉnh | kỹ thuật điều chỉnh,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-04,NIGHT,SMT,PS05,K,L65S7A_HVD,44.0,WAITING_AI,AI대기,복합,vừa chạy vừa chờ board từ AI,1,kỹ thuật điều chỉnh | kỹ thuật điều chỉnh | kỹ thuật điều chỉnh | kỹ thuật điều chỉnh,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-04,NIGHT,SMT,PS05,TOTAL,L65S7A_HVD,50.0,PRINTER,Printer불량,복합,Lỗi máy printer nghẹt keo,1,kỹ thuật điều chỉnh | kỹ thuật điều chỉnh | kỹ thuật điều chỉnh | kỹ thuật điều chỉnh,2530.0,1858.0,0.0,0.0,0.0,0.0
+2026-07-04,NIGHT,SMT,PS05,TOTAL,L65S7A_HVD,85.0,MOUTER,Mouter불량,복합,Mouter 1 kẹt board,2,kỹ thuật điều chỉnh | kỹ thuật điều chỉnh | kỹ thuật điều chỉnh | kỹ thuật điều chỉnh,2530.0,1858.0,0.0,0.0,0.0,0.0
+2026-07-04,NIGHT,SMT,PS05,TOTAL,L65S7A_HVD,44.0,WAITING_AI,AI대기,복합,vừa chạy vừa chờ board từ AI,3,kỹ thuật điều chỉnh | kỹ thuật điều chỉnh | kỹ thuật điều chỉnh | kỹ thuật điều chỉnh,2530.0,1858.0,0.0,0.0,0.0,0.0
+2026-07-04,NIGHT,SMT,PS06,H,L55S7_HVD,34.0,MOUTER,Mouter불량,복합,lỗi pickup vừa chỉnh vừa chạy,1,kỹ thuật điều chỉnh,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-04,NIGHT,SMT,PS06,J,L55S7_HVD,11.0,WAITING_AI,AI대기,복합,vừa chạy vừa chờ board từ AI,1,kỹ thuật điều chỉnh,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-04,NIGHT,SMT,PS06,TOTAL,L55S7_HVD,34.0,MOUTER,Mouter불량,복합,lỗi pickup vừa chỉnh vừa chạy,1,kỹ thuật điều chỉnh,2400.0,2154.0,0.0,0.0,0.0,0.0
+2026-07-04,NIGHT,SMT,PS06,TOTAL,L55S7_HVD,11.0,WAITING_AI,AI대기,복합,vừa chạy vừa chờ board từ AI,2,kỹ thuật điều chỉnh,2400.0,2154.0,0.0,0.0,0.0,0.0
+2026-07-04,NIGHT,SMT,PS08,F,L55S7_HVD,30.0,MOUTER,Mouter불량,복합,"Lỗi pickup , máy printer kẹt board",1,kỹ thuật điều chỉnh | kỹ thuật điều chỉnh | kỹ thuật điều chỉnh,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-04,NIGHT,SMT,PS08,H,L55S7_HVD,24.0,COMP_ERR,부품불량,복합,lỗi cắm lệch linh kiện,1,kỹ thuật điều chỉnh | kỹ thuật điều chỉnh | kỹ thuật điều chỉnh,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-04,NIGHT,SMT,PS08,I,L55S7_HVD,10.0,MOUTER,Mouter불량,복합,Lỗi pickup,1,kỹ thuật điều chỉnh | kỹ thuật điều chỉnh | kỹ thuật điều chỉnh,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-04,NIGHT,SMT,PS08,TOTAL,L55S7_HVD,40.0,MOUTER,Mouter불량,복합,"Lỗi pickup , máy printer kẹt board",1,kỹ thuật điều chỉnh | kỹ thuật điều chỉnh | kỹ thuật điều chỉnh,2000.0,1741.0,0.0,0.0,0.0,0.0
+2026-07-04,NIGHT,SMT,PS08,TOTAL,L55S7_HVD,24.0,COMP_ERR,부품불량,복합,lỗi cắm lệch linh kiện,2,kỹ thuật điều chỉnh | kỹ thuật điều chỉnh | kỹ thuật điều chỉnh,2000.0,1741.0,0.0,0.0,0.0,0.0
+2026-07-04,NIGHT,SMT,PS10,TOTAL,,0.0,NO_PROBLEM,문제없음,단일,,1,,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-04,NIGHT,SMT,PS11,F,L55F70NA,11.0,MOUTER,Mouter불량,복합,máy mounter #1 kẹt board,1,kỹ thuật điều chỉnh | kỹ thuật điều chỉnh | kỹ thuật điều chỉnh,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-04,NIGHT,SMT,PS11,G,L55F70NA,3.0,MOUTER,Mouter불량,복합,máy mounter #1 kẹt board,1,kỹ thuật điều chỉnh | kỹ thuật điều chỉnh | kỹ thuật điều chỉnh,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-04,NIGHT,SMT,PS11,H,L55F70NA,5.0,MOUTER,Mouter불량,복합,máy mounter #1 kẹt board,1,kỹ thuật điều chỉnh | kỹ thuật điều chỉnh | kỹ thuật điều chỉnh,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-04,NIGHT,SMT,PS11,I,L55F70NA,11.0,COMP_ERR,부품불량,복합,lỗi cắm lệch linh kiện,1,kỹ thuật điều chỉnh | kỹ thuật điều chỉnh | kỹ thuật điều chỉnh,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-04,NIGHT,SMT,PS11,K,L55F70NA,19.0,MOUTER,Mouter불량,복합,Lỗi pickup,1,kỹ thuật điều chỉnh | kỹ thuật điều chỉnh | kỹ thuật điều chỉnh,0.0,0.0,0.0,0.0,0.0,0.0
+2026-07-04,NIGHT,SMT,PS11,TOTAL,L55F70NA,38.0,MOUTER,Mouter불량,복합,máy mounter #1 kẹt board,1,kỹ thuật điều chỉnh | kỹ thuật điều chỉnh | kỹ thuật điều chỉnh,1260.0,1175.0,0.0,0.0,0.0,0.0
+2026-07-04,NIGHT,SMT,PS11,TOTAL,L55F70NA,11.0,COMP_ERR,부품불량,복합,lỗi cắm lệch linh kiện,2,kỹ thuật điều chỉnh | kỹ thuật điều chỉnh | kỹ thuật điều chỉnh,1260.0,1175.0,0.0,0.0,0.0,0.0
 2026-07-06,DAY,MI,MI 2,A,"32""/3IN1, JDM_ROSE-SF,",31.0,ICT_FT,ICT/FT/HiPOT불량,복합,Coating error (15min) ICT error (7min) Wave solder error (9min). 3in 1,1,,0.0,0.0,0.0,0.0,0.0,0.0
 2026-07-06,DAY,MI,MI 2,TOTAL,"32""/3IN1, JDM_ROSE-SF,",31.0,ICT_FT,ICT/FT/HiPOT불량,단일,Coating error (15min) ICT error (7min) Wave solder error (9min). 3in 1,1,,2720.0,2720.0,2720.0,2720.0,0.0,0.0
 2026-07-06,DAY,MI,MI 3,A,L55S7_HVD,82.0,ICT_FT,ICT/FT/HiPOT불량,복합,FT error (2times),1,,0.0,0.0,0.0,0.0,0.0,0.0
