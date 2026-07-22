@@ -623,10 +623,19 @@ def sheet_title_date(ws):
 def normalize_line(raw):
     s = str(raw).strip()
     s = re.sub(r':.*$', '', s).strip()
-    s = re.sub(r'(?i)^PA\s*0*(\d+)', lambda m: f"SA{int(m.group(1)):02d}", s)
-    s = re.sub(r'(?i)^SA\s*0*(\d+)', lambda m: f"SA{int(m.group(1)):02d}", s)
-    s = re.sub(r'(?i)^PS\s*0*(\d+)', lambda m: f"PS{int(m.group(1)):02d}", s)
-    s = re.sub(r'(?i)^MI\s*0*(\d+)', lambda m: f"MI {m.group(1)}", s)
+    # ★ 코드 패턴(SA/PA/PS/MI + 번호 + 선택적 단일 접미문자)만 뽑아내고
+    #   뒤에 붙은 부가설명("PS12 Plan line 13")이나 "+PS07" 같은 병기는 버린다.
+    #   (안 그러면 "PS12 Plan line 13", "PS06+PS07" 같은 값이 그대로 별도
+    #   라인으로 취급되어 히트맵/라인목록에 유령 라인이 생겼음)
+    m = re.match(r'(?i)^(SA|PA|PS|MI)\s*0*(\d+)([A-Z]?)(?![a-zA-Z])', s)
+    if m:
+        prefix, num, suffix = m.group(1).upper(), int(m.group(2)), m.group(3).upper()
+        if prefix in ("PA", "SA"):
+            return f"SA{num:02d}{suffix}"
+        if prefix == "PS":
+            return f"PS{num:02d}{suffix}"
+        if prefix == "MI":
+            return f"MI {num}{suffix}"
     return s.strip()
 
 def is_line_cell(val):
@@ -1476,30 +1485,68 @@ def dashboard():
                 lt_proc = (line_df.groupby("loss_type_name")["loss_min"]
                            .sum().reset_index().sort_values("loss_min", ascending=False))
                 lt_proc["loss_min"] = lt_proc["loss_min"].round(1)
-                fig_lt = px.bar(lt_proc, x="loss_min", y="loss_type_name",
-                                orientation="h", color="loss_type_name",
-                                color_discrete_map=TYPE_COLOR,
-                                height=max(400, len(lt_proc)*28), text="loss_min",
-                                labels={"loss_min":"손실(분)","loss_type_name":"유형"})
-                fig_lt.update_traces(texttemplate="%{text:,.0f}", textposition="outside")
-                fig_lt.update_layout(margin=dict(l=150,r=20,t=30,b=0),
-                                     showlegend=False, xaxis=dict(rangemode="tozero"))
-                st.markdown("##### 손실 유형별 집계 (전 라인)")
+                total_lt = lt_proc["loss_min"].sum()
+                lt_proc["cum_pct"] = lt_proc["loss_min"].cumsum() / total_lt * 100 if total_lt else 0
+
+                # ★ 유형이 20개 넘게 뒤섞여 있으면 막대만 봐서는 인사이트가 안 나와서,
+                #   상위 N개 + "기타(그외 묶음)"로 압축하고 파레토 누적선을 같이 보여준다.
+                TOP_N = 8
+                top_names = lt_proc.head(TOP_N)["loss_type_name"].tolist()
+                disp = lt_proc.head(TOP_N)[["loss_type_name","loss_min"]].copy()
+                rest = lt_proc.iloc[TOP_N:]
+                if not rest.empty:
+                    disp = pd.concat([disp, pd.DataFrame([{
+                        "loss_type_name": f"기타(그외 {len(rest)}종)",
+                        "loss_min": round(rest["loss_min"].sum(), 1)
+                    }])], ignore_index=True)
+                disp["cum_pct"] = round(disp["loss_min"].cumsum() / total_lt * 100, 1) if total_lt else 0
+
+                # 80% 지점까지 몇 개 유형이 필요한지 → 핵심 인사이트 문구
+                n80 = int((lt_proc["cum_pct"] <= 80).sum()) + 1
+                n80 = min(n80, len(lt_proc))
+                top_for_insight = lt_proc.head(n80)
+                pct80 = top_for_insight["loss_min"].sum() / total_lt * 100 if total_lt else 0
+                names_str = ", ".join(top_for_insight["loss_type_name"].tolist())
+                st.markdown(
+                    f'<div class="detail-box">📌 <b>{n80}개 유형</b>이 전체 손실의 '
+                    f'<b>{pct80:.0f}%</b>를 차지합니다: {names_str}</div>',
+                    unsafe_allow_html=True
+                )
+
+                st.markdown("##### 손실 유형별 집계 — 상위 유형 + 누적비중(파레토)")
+                fig_lt = go.Figure()
+                fig_lt.add_bar(x=disp["loss_type_name"], y=disp["loss_min"],
+                               marker_color=[TYPE_COLOR.get(n, "#94a3b8") for n in disp["loss_type_name"]],
+                               name="손실(분)", text=disp["loss_min"],
+                               texttemplate="%{text:,.0f}", textposition="outside")
+                fig_lt.add_scatter(x=disp["loss_type_name"], y=disp["cum_pct"],
+                                    name="누적비중(%)", mode="lines+markers",
+                                    line=dict(color="#dc2626", width=2), yaxis="y2")
+                fig_lt.update_layout(
+                    height=440, margin=dict(l=20, r=40, t=20, b=100),
+                    xaxis=dict(tickangle=-30),
+                    yaxis=dict(title="손실(분)", rangemode="tozero"),
+                    yaxis2=dict(title="누적비중(%)", overlaying="y", side="right",
+                                range=[0, 105]),
+                    legend=dict(orientation="h", y=1.1), showlegend=True,
+                )
                 cl_lt = st.plotly_chart(fig_lt, use_container_width=True,
                                         on_select="rerun", key="lt_tab_chart")
                 sel_type = ""
                 if cl_lt and cl_lt.get("selection",{}).get("points"):
-                    sel_type = cl_lt["selection"]["points"][0].get("y","")
+                    sel_type = cl_lt["selection"]["points"][0].get("x","")
 
-                # ★ 막대 클릭 시 해당 손실유형의 상세 내역(날짜/라인/원인)을 바로 보여줌
-                #   (지금까지는 sel_type을 구해놓고 아무 데도 쓰지 않아서 클릭해도
-                #   아무 반응이 없었음 — 다른 탭의 클릭 상세 표와 동일한 방식으로 연결)
+                # ★ 막대 클릭 시 해당 손실유형(또는 "기타" 묶음)의 상세 내역을 바로 보여줌
                 if sel_type:
                     st.markdown(f'<div class="detail-box"><b>📋 {sel_type} 상세</b></div>',
                                 unsafe_allow_html=True)
-                    dd_lt = line_df[line_df["loss_type_name"] == sel_type][
-                        ["date","shift","process","line","loss_min",
-                         "loss_detail","action"]].sort_values(["date","line"])
+                    if sel_type.startswith("기타(그외"):
+                        dd_lt = line_df[~line_df["loss_type_name"].isin(top_names)]
+                    else:
+                        dd_lt = line_df[line_df["loss_type_name"] == sel_type]
+                    dd_lt = dd_lt[["date","shift","process","line","loss_min",
+                                    "loss_type_name","loss_detail","action"]].sort_values(
+                                    ["date","line"])
                     dd_lt["loss_min"] = dd_lt["loss_min"].round(1)
                     st.dataframe(dd_lt.reset_index(drop=True),
                                  use_container_width=True, height=280)
@@ -1680,10 +1727,21 @@ def dashboard():
             pivot = (slot_df.groupby(["line","time_slot"])["loss_min"].sum().reset_index())
             pt = pivot.pivot(index="line", columns="time_slot", values="loss_min").fillna(0).round(1)
             pt = pt[[c for c in slot_order if c in pt.columns]]
-            fh = px.imshow(pt, color_continuous_scale="Reds", aspect="auto",
-                           height=max(380, len(pt)*28),
+            # ★ 손실 큰 라인 순으로 정렬하고, 화면을 다 차지하지 않도록 기본은 상위 20개만
+            #   표시 (라인이 30개 넘으면 한 화면에 다 넣어도 어차피 안 읽힘).
+            pt = pt.loc[pt.sum(axis=1).sort_values(ascending=False).index]
+            show_all_lines = False
+            if len(pt) > 20:
+                show_all_lines = st.checkbox(
+                    f"전체 {len(pt)}개 라인 다 보기 (기본: 손실 큰 상위 20개만)",
+                    key="heatmap_show_all")
+            pt_disp = pt if show_all_lines else pt.head(20)
+            fh = px.imshow(pt_disp, color_continuous_scale="Reds", aspect="auto",
+                           height=min(650, max(320, len(pt_disp)*24)),
                            labels={"x":"시간대","y":"라인","color":"손실(분)"})
-            fh.update_layout(margin=dict(l=0,r=0,t=10,b=0))
+            fh.update_layout(margin=dict(l=0,r=0,t=10,b=0),
+                              yaxis=dict(categoryorder="array",
+                                         categoryarray=pt_disp.index[::-1]))
             st.plotly_chart(fh, use_container_width=True)
 
             st.markdown("#### 시간대별 합계")
