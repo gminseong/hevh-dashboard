@@ -584,11 +584,16 @@ def detect_shift(sn, fn):
     return "DAY"
 
 def find_date_in_sheet(ws):
+    # ★ REPORT/PRODUCTION 제목 셀에서만 날짜를 찾는다. 예전엔 시트 전체 셀을 훑으며
+    #   parse_date()의 느슨한 "숫자.숫자" 패턴까지 썼는데, UPH 환산값("4.5") 같은
+    #   평범한 소수를 "5월 4일"로 오인해서 엉뚱한 5월 데이터가 DB에 섞여 들어갔었다.
     rows = list(ws.iter_rows(values_only=True, max_row=20))
     for row in rows:
         for cell in row:
             if cell is None: continue
             s = str(cell)
+            if not re.search(r'REPORT|PRODUCTION', s, re.I):
+                continue
             m = re.search(r'\((\d{1,2})/(\d{1,2})\)', s)
             if m:
                 a, b = int(m.group(1)), int(m.group(2))
@@ -942,6 +947,11 @@ def parse_files(uploaded_files):
             for sn in wb.sheetnames:
                 ws = wb[sn]
                 if isinstance(ws, Chartsheet): continue
+                # ★ "MẪU"(샘플/템플릿) 시트는 실제 데이터가 아니라 양식 견본이므로
+                #   시트 제목에 날짜가 남아있어도 무조건 건너뜀
+                if re.search(r'mẫu|mau|sample|template', sn, re.I):
+                    status.info(f"템플릿 시트 스킵: {fn} [{sn}]")
+                    continue
                 shift = detect_shift(sn, fn)
                 # ★ 날짜는 파일명 기준으로만 정리한다.
                 #   시트 안 제목(REPORT BY TIME ...) 날짜는 갱신 안 된 채로 남아있는
@@ -1173,21 +1183,21 @@ def dashboard():
         st.divider()
 
         # DB 현황
-        cd1, cd2 = st.columns(2)
-        with cd1:
-            dba = load_db()
-            if not dba.empty:
-                st.info(f"LOSS: {len(dba):,}건\n{dba['date'].nunique()}일 {dba['line'].nunique()}개 라인")
-            if st.button("🗑️ LOSSTIME 초기화"):
-                github_save_csv(pd.DataFrame(), DB_PATH, "초기화")
-                st.session_state.pop("df", None); st.success("완료"); st.rerun()
-        with cd2:
-            sdba = load_scrap_db()
-            if not sdba.empty:
-                st.info(f"SCRAP: {len(sdba):,}건\n{sdba['line'].nunique()}개 라인")
-            if st.button("🗑️ SCRAP 초기화"):
-                github_save_csv(pd.DataFrame(), SCRAP_DB, "초기화")
-                st.session_state.pop("scrap_df", None); st.success("완료"); st.rerun()
+        # ★ 정보박스가 있을 때/없을 때 버튼 위치가 서로 다르게 밀리는 문제가 있어서
+        #   좌우 2열 대신 세로로 순서를 고정 (정보박스 유무와 무관하게 항상 같은 자리)
+        dba = load_db()
+        st.info(f"LOSS: {len(dba):,}건 · {dba['date'].nunique()}일 · {dba['line'].nunique()}개 라인"
+                if not dba.empty else "LOSS: 데이터 없음")
+        if st.button("🗑️ LOSSTIME 초기화", use_container_width=True):
+            github_save_csv(pd.DataFrame(), DB_PATH, "초기화")
+            st.session_state.pop("df", None); st.success("완료"); st.rerun()
+
+        sdba = load_scrap_db()
+        st.info(f"SCRAP: {len(sdba):,}건 · {sdba['line'].nunique()}개 라인"
+                if not sdba.empty else "SCRAP: 데이터 없음")
+        if st.button("🗑️ SCRAP 초기화", use_container_width=True):
+            github_save_csv(pd.DataFrame(), SCRAP_DB, "초기화")
+            st.session_state.pop("scrap_df", None); st.success("완료"); st.rerun()
 
     # ════════════════════════════════════════
     # 메인 데이터 필터
@@ -1290,7 +1300,7 @@ def dashboard():
                 # ★ v5.1: string → datetime 변환 (7월 표시 보장)
                 dt["date"] = pd.to_datetime(dt["date"])
                 fig_t = px.line(dt, x="date", y="loss_min", color="process",
-                                color_discrete_map=PROC_COLOR, markers=True, height=320,
+                                color_discrete_map=PROC_COLOR, markers=True, height=380,
                                 labels={"loss_min":"손실(분)","date":"날짜","process":"공정"})
                 fig_t.update_layout(
                     margin=dict(l=0,r=0,t=10,b=0),
@@ -1316,7 +1326,7 @@ def dashboard():
                                                      categories=slot_order, ordered=True)
                     ss = ss.sort_values("time_slot")
                     fig_s = px.bar(ss, x="time_slot", y="loss_min", color="process",
-                                   color_discrete_map=PROC_COLOR, barmode="stack", height=320,
+                                   color_discrete_map=PROC_COLOR, barmode="stack", height=380,
                                    labels={"loss_min":"손실(분)","time_slot":"시간대","process":"공정"})
                     fig_s.update_layout(margin=dict(l=0,r=0,t=10,b=0),
                                         yaxis=dict(rangemode="tozero"),
@@ -1341,7 +1351,7 @@ def dashboard():
                             orientation="h",
                             color="loss_type_name",
                             color_discrete_map=TYPE_COLOR,
-                            height=500,   # ★ 옆 '라인별 누계 TOP 15' 차트와 높이를 맞춤
+                            height=380,   # ★ 전체 차트 높이 통일
                             labels={"loss_min":"손실(분)", "loss_type_name":"유형"})
                 ft.update_layout(
                     showlegend=False,
@@ -1374,7 +1384,7 @@ def dashboard():
                       .sort_values(["process","loss_min"], ascending=[True, False]))
                 ls["loss_min"] = ls["loss_min"].round(1)
                 fig2 = px.bar(ls, x="line", y="loss_min", color="process",
-                              color_discrete_map=PROC_COLOR, height=500,
+                              color_discrete_map=PROC_COLOR, height=380,
                               labels={"loss_min":"손실(분)","line":"라인"})
                 fig2.update_layout(margin=dict(l=0,r=0,t=10,b=0),
                                    yaxis=dict(rangemode="tozero"),
@@ -1401,7 +1411,7 @@ def dashboard():
                 pp = (total_df.groupby("process")["loss_min"].sum().reset_index())
                 pp["loss_min"] = pp["loss_min"].round(1)
                 fp = px.pie(pp, values="loss_min", names="process",
-                            color="process", color_discrete_map=PROC_COLOR, height=350)
+                            color="process", color_discrete_map=PROC_COLOR, height=380)
                 fp.update_traces(textposition="inside", textinfo="percent+label")
                 fp.update_layout(margin=dict(l=0,r=0,t=10,b=0), showlegend=False)
                 cp = st.plotly_chart(fp, use_container_width=True,
@@ -1432,14 +1442,14 @@ def dashboard():
                              .head(10)
                              .sort_values("loss_min", ascending=True))
                 proc_type["loss_min"] = proc_type["loss_min"].round(1)
-                st.markdown(f"**{sel_proc} 손실유형 Top 10**")
+                st.markdown(f"#### {sel_proc} 손실유형 Top 10")
                 ft = px.bar(proc_type,
                             x="loss_min",
                             y="loss_type_name",
                             orientation="h",
                             color="loss_type_name",
                             color_discrete_map=TYPE_COLOR,
-                            height=350,   # ★ 옆 파이차트(350)와 높이를 맞춤
+                            height=380,   # ★ 전체 차트 높이 통일
                             labels={"loss_min":"손실(분)", "loss_type_name":"유형"})
                 ft.update_layout(
                     showlegend=False,
@@ -1459,7 +1469,7 @@ def dashboard():
                 dt2["date"] = pd.to_datetime(dt2["date"])  # ★ v5.1
                 fig_d2 = px.bar(dt2, x="date", y="loss_min", color="shift",
                                 color_discrete_map={"DAY":"#f59e0b","NIGHT":"#6366f1"},
-                                height=300, barmode="stack",
+                                height=380, barmode="stack",
                                 labels={"loss_min":"손실(분)","date":"날짜","shift":"구분"})
                 fig_d2.update_layout(margin=dict(l=0,r=0,t=10,b=0),
                                      yaxis=dict(rangemode="tozero"),
@@ -1473,7 +1483,7 @@ def dashboard():
                 sc["loss_min"] = sc["loss_min"].round(1)
                 fig5 = px.bar(sc, x="loss_type_name", y="loss_min", color="shift",
                               color_discrete_map={"DAY":"#f59e0b","NIGHT":"#6366f1"},
-                              barmode="group", height=300,
+                              barmode="group", height=380,
                               labels={"loss_min":"손실(분)","loss_type_name":"손실유형","shift":"구분"})
                 fig5.update_layout(margin=dict(l=0,r=0,t=10,b=0),
                                    xaxis_tickangle=-30, yaxis=dict(rangemode="tozero"))
@@ -1542,7 +1552,7 @@ def dashboard():
                                     name="누적비중(%)", mode="lines+markers",
                                     line=dict(color="#dc2626", width=2), yaxis="y2")
                 fig_lt.update_layout(
-                    height=440, margin=dict(l=20, r=40, t=20, b=100),
+                    height=380, margin=dict(l=20, r=40, t=20, b=100),
                     xaxis=dict(tickangle=-30),
                     yaxis=dict(title="손실(분)", rangemode="tozero"),
                     yaxis2=dict(title="누적비중(%)", overlaying="y", side="right",
@@ -1600,7 +1610,7 @@ def dashboard():
                         lt2["loss_min"] = lt2["loss_min"].round(1)
                         fp2 = px.pie(lt2, values="loss_min", names="loss_type_name",
                                      color="loss_type_name", color_discrete_map=TYPE_COLOR,
-                                     height=300)
+                                     height=380)
                         fp2.update_traces(textposition="inside", textinfo="percent+label")
                         fp2.update_layout(margin=dict(l=0,r=0,t=10,b=0), showlegend=False)
                         st.plotly_chart(fp2, use_container_width=True)
@@ -1611,7 +1621,7 @@ def dashboard():
                         dt_l["date"] = pd.to_datetime(dt_l["date"])  # ★ v5.1
                         fig_dt = px.bar(dt_l, x="date", y="loss_min", color="shift",
                                         color_discrete_map={"DAY":"#f59e0b","NIGHT":"#6366f1"},
-                                        height=300, barmode="stack",
+                                        height=380, barmode="stack",
                                         labels={"loss_min":"손실(분)","date":"날짜","shift":"구분"})
                         fig_dt.update_layout(margin=dict(l=0,r=0,t=10,b=0),
                                              yaxis=dict(rangemode="tozero"),
@@ -1686,7 +1696,7 @@ def dashboard():
                                        name=f"{proc} Actual",
                                        line=dict(color=c,width=2),mode="lines+markers")
             fig_pa.update_layout(margin=dict(l=0,r=0,t=10,b=0),
-                                 yaxis=dict(rangemode="tozero"),height=360,
+                                 yaxis=dict(rangemode="tozero"),height=380,
                                  xaxis=dict(tickformat="%m/%d"),
                                  legend=dict(orientation="h",y=1.05),
                                  plot_bgcolor="#f8fafc")
@@ -1721,7 +1731,7 @@ def dashboard():
                          .sum().nlargest(8).index.tolist())
             dt2_top = dt2[dt2["loss_type_name"].isin(top_types)]
             fig4b = px.line(dt2_top, x="date", y="loss_min", color="loss_type_name",
-                            color_discrete_map=TYPE_COLOR, markers=True, height=360,
+                            color_discrete_map=TYPE_COLOR, markers=True, height=380,
                             labels={"loss_min":"손실(분)","date":"날짜","loss_type_name":"유형"})
             fig4b.update_layout(margin=dict(l=0,r=0,t=10,b=0),
                                 yaxis=dict(rangemode="tozero"),
@@ -1756,7 +1766,7 @@ def dashboard():
                     key="heatmap_show_all")
             pt_disp = pt if show_all_lines else pt.head(20)
             fh = px.imshow(pt_disp, color_continuous_scale="Reds", aspect="auto",
-                           height=min(650, max(320, len(pt_disp)*24)),
+                           height=min(500, max(320, len(pt_disp)*24)),  # ★ 최대 높이 축소
                            labels={"x":"시간대","y":"라인","color":"손실(분)"})
             fh.update_layout(margin=dict(l=0,r=0,t=10,b=0),
                               yaxis=dict(categoryorder="array",
@@ -1769,7 +1779,7 @@ def dashboard():
             ss["time_slot"] = pd.Categorical(ss["time_slot"], categories=slot_order, ordered=True)
             ss = ss.sort_values("time_slot")
             fs = px.bar(ss, x="time_slot", y="loss_min", color="process",
-                        color_discrete_map=PROC_COLOR, barmode="stack", height=320,
+                        color_discrete_map=PROC_COLOR, barmode="stack", height=380,
                         labels={"loss_min":"손실(분)","time_slot":"시간대","process":"공정"})
             fs.update_layout(margin=dict(l=0,r=0,t=10,b=0), yaxis=dict(rangemode="tozero"))
             st.plotly_chart(fs, use_container_width=True)
@@ -1809,7 +1819,7 @@ def dashboard():
                                     "loss_type_name","loss_detail"])["loss_min"]
                   .sum().reset_index().sort_values(["date","line","time_slot"]))
             sd["loss_min"] = sd["loss_min"].round(1)
-            st.dataframe(sd, use_container_width=True, height=360)
+            st.dataframe(sd, use_container_width=True, height=380)
 
     # ════════ TAB6 - 스크랩 ════════
     with tab6:
@@ -1859,7 +1869,7 @@ def dashboard():
                                    line=dict(color="#1e3a5f",width=2))
                     fp.update_layout(
                         yaxis2=dict(overlaying="y",side="right",range=[0,110],ticksuffix="%"),
-                        yaxis=dict(rangemode="tozero"), height=360,
+                        yaxis=dict(rangemode="tozero"), height=380,
                         margin=dict(l=0,r=0,t=10,b=0), xaxis_tickangle=-30)
                     cc2 = st.plotly_chart(fp, use_container_width=True,
                                           on_select="rerun", key="scrap_cause_chart")
@@ -1877,7 +1887,7 @@ def dashboard():
                     lg = (sdf2.groupby(["process","line"])["qty"].sum().reset_index()
                           .sort_values("qty", ascending=False).head(15))
                     fl = px.bar(lg, x="line", y="qty", color="process",
-                                color_discrete_map=PROC_COLOR, height=360,  # ★ 옆 '원인별 파레토'와 높이 맞춤
+                                color_discrete_map=PROC_COLOR, height=380,  # ★ 옆 '원인별 파레토'와 높이 맞춤
                                 labels={"qty":"수량","line":"라인","process":"공정"})
                     fl.update_layout(margin=dict(l=0,r=0,t=10,b=0),
                                      yaxis=dict(rangemode="tozero"),
@@ -1897,7 +1907,7 @@ def dashboard():
                 st.markdown("#### 날짜별 트렌드")
                 dg = sdf2.groupby(["work_date","process"])["qty"].sum().reset_index()
                 fdt = px.line(dg, x="work_date", y="qty", color="process",
-                              color_discrete_map=PROC_COLOR, markers=True, height=300,
+                              color_discrete_map=PROC_COLOR, markers=True, height=380,
                               labels={"qty":"수량","work_date":"날짜","process":"공정"})
                 fdt.update_layout(margin=dict(l=0,r=0,t=10,b=0), yaxis=dict(rangemode="tozero"))
                 st.plotly_chart(fdt, use_container_width=True)
